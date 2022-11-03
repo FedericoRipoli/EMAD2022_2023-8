@@ -1,0 +1,83 @@
+Utente
+    Username
+    Password
+    Admin
+    ENTE
+Ente
+    Denominazione
+    Descrizione
+    P.IVA/CF
+    Immagine sfondo(MEDIA)
+    Logo(MEDIA)
+    CONTATTO
+Categoria
+    Nome
+    Padre
+    Colore(per mappa)
+Tipologia
+    Nome
+    Padre
+    Colore(per mappa)
+Posizione
+    Indirizzo
+    Coordinate
+Media
+    Host
+    RelativePath
+Contatto
+    Denominazione
+    Email
+    Cellulare
+    Telefono
+    Pec
+    SitoWeb
+Servizio
+    Nome
+    Descrizione
+    Foto*(MEDIA)
+    POSIZIONE*
+    CONTATTO*
+    Visibile
+    CATEGORIA
+    TIPOLOGIA
+    ENTE
+Evento
+    Nome
+    Descrizione
+    Indirizzo
+    Foto*(MEDIA)
+    POSIZIONE*
+    Data Inizio
+    Data Fine
+    CONTATTO*
+    Visibile
+    CATEGORIA
+    TIPOLOGIA
+    ENTE
+News
+    Titolo
+    Descrizione(html)
+    Data inserimento
+    Foto*(MEDIA)
+NewsLetter
+    Email
+    DataIscrizione
+    Consenso GDPR?
+StoricoOperazioniServizo
+    SERVIZIO
+    Data
+    Stato(da_approvare,approvato,in_modifica,annullato)
+    EffettutataDa(Utente)
+    Note
+StoricoOperazioniEvento
+    EVENTO
+    Data
+    Stato(da_approvare,approvato,in_modifica,annullato)
+    EffettutataDa(Utente)
+    Note
+
+
+
+Legenda
+* Multiple
+OGGETTO riferimento tabella

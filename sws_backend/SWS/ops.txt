@@ -1,0 +1,67 @@
+Base /api
+Utente
+    Login /auth/login POST *
+    Refresh Token /auth/token POST auth
+    Crea /auth/register POST admin
+    Modifica /users/{id} PUT admin
+    Elimina /users/{id} DELETE admin
+    Lista /users GET admin
+    Singolo /users/{id} GET admin
+
+Ente /enti
+    Crea POST admin
+    Modifica /{id} PUT admin
+    Elimina /{id} DELETE admin
+    Lista GET *
+    Singolo /{id} GET *
+
+Categoria /categorie
+    Crea POST admin
+    Modifica /{id} PUT admin
+    Elimina /{id} DELETE admin
+    Lista GET *
+    Singolo /{id} GET *
+
+Tipologia /tipologie
+    Crea POST admin
+    Modifica /{id} PUT admin
+    Elimina /{id} DELETE admin
+    Lista GET *
+    Singolo /{id} GET *
+
+Servizio /servizi
+    Crea POST admin, auth
+    Modifica /{id} PUT admin, auth
+    Elimina /{id} DELETE admin
+    Lista GET *
+    Singolo /{id} GET *
+
+Servizio /storicoservizi
+    Modifica /{id} PUT admin, auth
+
+Evento /eventi
+    Crea POST admin, auth
+    Modifica /{id} PUT admin, auth
+    Elimina /{id} DELETE admin
+    Lista GET *
+    Singolo /{id} GET *
+
+Servizio /storicoeventi
+    Modifica /{id} PUT admin, auth
+
+News /news
+    Crea POST admin
+    Modifica /{id} PUT admin
+    Elimina /{id} DELETE admin
+    Lista GET *
+    Singolo /{id} GET *
+
+News /newsletter
+    Crea POST *
+    Elimina /{id} DELETE *
+    Lista GET admin
+
+
+Legenda
+auth utente autenticato (token)
+* libero
