@@ -10,14 +10,14 @@ Ente
     Immagine sfondo(MEDIA)
     Logo(MEDIA)
     CONTATTO
-Categoria
+Ambito
     Nome
     Padre
-    Colore(per mappa)
+    Figli
 Tipologia
     Nome
     Padre
-    Colore(per mappa)
+    Figli
 Posizione
     Indirizzo
     Coordinate
@@ -38,7 +38,8 @@ Servizio
     POSIZIONE*
     CONTATTO*
     Visibile
-    CATEGORIA
+    Tags
+    AMBITO
     TIPOLOGIA
     ENTE
 Evento
@@ -51,7 +52,8 @@ Evento
     Data Fine
     CONTATTO*
     Visibile
-    CATEGORIA
+    Tags
+    AMBITO
     TIPOLOGIA
     ENTE
 News

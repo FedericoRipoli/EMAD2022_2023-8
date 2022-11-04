@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -47,7 +48,8 @@ public class WebSecurity {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .antMatchers("/api/auth/login").permitAll()
-                        .antMatchers("/api/auth/register").hasAuthority("ADMIN")
+                        .antMatchers(HttpMethod.GET,"/api/enti").permitAll()
+                        .antMatchers(HttpMethod.GET,"/api/enti/{id}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf().disable()

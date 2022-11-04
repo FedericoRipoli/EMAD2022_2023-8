@@ -5,6 +5,7 @@ import it.unisa.emad.comunesalerno.sws.dto.TokenDTO;
 import it.unisa.emad.comunesalerno.sws.entity.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -27,6 +28,11 @@ public class TokenGenerator {
     @Qualifier("jwtRefreshTokenEncoder")
     JwtEncoder refreshTokenEncoder;
 
+    @Value("${app.jwt.token.expiredMinutes}")
+    int expiredMinutes;
+    @Value("${app.jwt.token.expiredRefreshDays}")
+    int expiredRefreshDays;
+
     private String createAccessToken(Authentication authentication) {
         Utente user = (Utente) authentication.getPrincipal();
         Instant now = Instant.now();
@@ -34,7 +40,7 @@ public class TokenGenerator {
         JwtClaimsSet claimsSet = JwtClaimsSet.builder()
                 .issuer("sws")
                 .issuedAt(now)
-                .expiresAt(now.plus(5, ChronoUnit.MINUTES))
+                .expiresAt(now.plus(expiredMinutes, ChronoUnit.MINUTES))
                 .subject(user.getId())
                 .claim("name",user.getUsername())
                 .claim("role",user.isAdmin()?"ADMIN":"")
@@ -50,7 +56,7 @@ public class TokenGenerator {
         JwtClaimsSet claimsSet = JwtClaimsSet.builder()
                 .issuer("sws")
                 .issuedAt(now)
-                .expiresAt(now.plus(30, ChronoUnit.DAYS))
+                .expiresAt(now.plus(expiredRefreshDays, ChronoUnit.DAYS))
                 .subject(user.getId())
                 .claim("name",user.getUsername())
                 .claim("role",user.isAdmin()?"ADMIN":"")

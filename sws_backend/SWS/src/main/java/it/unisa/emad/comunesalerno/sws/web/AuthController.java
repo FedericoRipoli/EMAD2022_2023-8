@@ -5,10 +5,12 @@ import it.unisa.emad.comunesalerno.sws.dto.LoginDTO;
 import it.unisa.emad.comunesalerno.sws.dto.SignupDTO;
 import it.unisa.emad.comunesalerno.sws.dto.TokenDTO;
 import it.unisa.emad.comunesalerno.sws.entity.Utente;
+import it.unisa.emad.comunesalerno.sws.repository.EnteRepository;
 import it.unisa.emad.comunesalerno.sws.security.TokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -29,6 +31,8 @@ public class AuthController {
     @Autowired
     UserDetailsManager userDetailsManager;
     @Autowired
+    EnteRepository enteRepository;
+    @Autowired
     TokenGenerator tokenGenerator;
     @Autowired
     DaoAuthenticationProvider daoAuthenticationProvider;
@@ -38,15 +42,16 @@ public class AuthController {
 
 
     @PostMapping("/register")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity register(@RequestBody SignupDTO signupDTO) {
         Utente user = new Utente();
         user.setPassword(signupDTO.getPassword());
         user.setUsername(signupDTO.getUsername());
+        if(signupDTO.getIdEnte()!=null && !signupDTO.getIdEnte().isEmpty() && enteRepository.existsById(signupDTO.getIdEnte())){
+            user.setEnte(enteRepository.findById(signupDTO.getIdEnte()).orElseThrow());
+        }
         userDetailsManager.createUser(user);
-
-        Authentication authentication = UsernamePasswordAuthenticationToken.authenticated(user, signupDTO.getPassword(), Collections.EMPTY_LIST);
-
-        return ResponseEntity.ok(tokenGenerator.createToken(authentication));
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping("/login")
@@ -59,6 +64,7 @@ public class AuthController {
     }
 
     @PostMapping("/token")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity token(@RequestBody TokenDTO tokenDTO) {
         Authentication authentication = refreshTokenAuthProvider.authenticate(new BearerTokenAuthenticationToken(tokenDTO.getRefreshToken()));
         Jwt jwt = (Jwt) authentication.getCredentials();

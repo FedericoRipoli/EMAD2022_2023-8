@@ -35,6 +35,9 @@ public class Utente implements UserDetails {
 
     private boolean admin;
 
+    @OneToOne
+    private Ente ente;
+
 
 
     @Override

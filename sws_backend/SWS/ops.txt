@@ -15,7 +15,7 @@ Ente /enti
     Lista GET *
     Singolo /{id} GET *
 
-Categoria /categorie
+Ambito /ambiti
     Crea POST admin
     Modifica /{id} PUT admin
     Elimina /{id} DELETE admin
@@ -45,6 +45,14 @@ Evento /eventi
     Elimina /{id} DELETE admin
     Lista GET *
     Singolo /{id} GET *
+
+Contatto /contatti
+     Crea POST admin, auth
+     Modifica /{id} PUT admin, auth
+     Elimina /{id} DELETE admin, auth
+     Lista GET *
+     Singolo /{id} GET
+
 
 Servizio /storicoeventi
     Modifica /{id} PUT admin, auth

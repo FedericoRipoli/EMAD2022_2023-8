@@ -19,3 +19,8 @@ spring:
 logging:
   level:
     org.springframework.security: DEBUG
+app:
+  jwt:
+    token:
+      expiredMinutes: ${JWT_TOKEN_EXPIRE_MINUTES}
+      expiredRefreshDays: ${JWT_TOKEN_REFRESH_EXPIRE_DAYS}

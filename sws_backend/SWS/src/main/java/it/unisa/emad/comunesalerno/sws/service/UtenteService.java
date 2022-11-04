@@ -1,7 +1,9 @@
 package it.unisa.emad.comunesalerno.sws.service;
 
 
+import it.unisa.emad.comunesalerno.sws.entity.Ente;
 import it.unisa.emad.comunesalerno.sws.entity.Utente;
+import it.unisa.emad.comunesalerno.sws.repository.EnteRepository;
 import it.unisa.emad.comunesalerno.sws.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +18,8 @@ import java.text.MessageFormat;
 public class UtenteService implements UserDetailsManager {
     @Autowired
     UtenteRepository userRepository;
-
+    @Autowired
+    EnteRepository enteRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -28,6 +31,17 @@ public class UtenteService implements UserDetailsManager {
 
     @Override
     public void updateUser(UserDetails user) {
+        Utente utente=((Utente)user);
+        String id=utente.getId();
+        Ente ente=utente.getEnte();
+        if(id!=null && userRepository.existsById(id)){
+            utente.setPassword(passwordEncoder.encode(user.getPassword()));
+            if(ente!=null && enteRepository.existsById(ente.getId())){
+                utente.setEnte(enteRepository.findById(ente.getId()).get());
+            }
+            userRepository.save(utente);
+        }
+
 
     }
 
