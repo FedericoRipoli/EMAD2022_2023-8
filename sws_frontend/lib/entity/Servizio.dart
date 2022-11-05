@@ -1,51 +1,103 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
+import 'package:frontend_sws/entity/Ente.dart';
+import 'Contatto.dart';
 
-class Service extends StatelessWidget {
-  final String? image, monthyear, oldprice;
-  final String? name, discount, newprice;
+class Servizio extends StatelessWidget {
+  final String id;
+  final String? nome, contenuto;
+  final List<AssetImage>? immagini;
+  final List<Contatto>? contatti;
+  final bool visibile;
+  final String? tags, ambito, tipologia;
+  final Ente? ente;
+  /*
+  * private List<Contatto> contatti;
+     private Ambito ambito;
+    @OneToOne
+    private Tipologia tipologia;
+    @OneToOne
+    private Ente ente;
+    @OneToMany
+    private List<OperazioneServizio> operazioni;
+  *
+  * */
 
-  const Service(
-      {Key? key,
-      this.image,
-      this.monthyear,
-      this.oldprice,
-      this.name,
-      this.discount,
-      this.newprice})
-      : super(key: key);
+  const Servizio({
+    Key? key,
+    required this.id,
+    this.nome,
+    this.contenuto,
+    this.immagini,
+    this.contatti,
+    required this.visibile,
+    this.tags,
+    this.ambito,
+    this.tipologia,
+    this.ente,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Column c = Column(children: [
+    return Column(children: [
       GestureDetector(
         onTap: () {},
         child: Container(
-          width: 300,
-          height: 220,
+          width: 330,
+          height: 240,
           child: Card(
             clipBehavior: Clip.antiAliasWithSaveLayer,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
             elevation: 5,
-            margin: const EdgeInsets.all(10),
+            margin: const EdgeInsets.all(12),
             child: Column(
               children: [
                 SizedBox(
                   width: 335,
                   height: 110,
                   child: Image.asset(
-                    image!,
+                    "assets/images/welfare.jpg",
                     fit: BoxFit.fitWidth,
                   ),
                 ),
                 const SizedBox(
-                  height: 16,
+                  height: 6,
                 ),
                 Column(children: [
-                  Text(name!),
-                  Text('Descrizione servizio'),
-                  Text('Ente Responsabile')
+                  Row(children: [
+                    Container(
+                      margin: const EdgeInsets.all(4),
+                      child: Chip(
+                        label: Text(ambito!),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(4),
+                      child: Chip(
+                        label: Text(tipologia!),
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(4),
+                      child: Chip(
+                        label: Text(tags!),
+                      ),
+                    ),
+                  ]),
+                  Row(children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.all(2),
+                      alignment: Alignment.center,
+                      child: Text(
+                        nome!,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ]),
                 ])
               ],
             ),
@@ -53,8 +105,6 @@ class Service extends StatelessWidget {
         ),
       ),
     ]);
-
-    return c;
   }
 }
 
