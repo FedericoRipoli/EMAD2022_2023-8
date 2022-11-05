@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Entity
-@Data
+@Data()
 @RequiredArgsConstructor
 public class Utente implements UserDetails {
 

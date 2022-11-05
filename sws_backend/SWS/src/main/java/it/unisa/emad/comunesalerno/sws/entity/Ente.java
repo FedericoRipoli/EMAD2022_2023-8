@@ -1,8 +1,8 @@
 package it.unisa.emad.comunesalerno.sws.entity;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -10,7 +10,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @RequiredArgsConstructor
 public class Ente {
     @Id
@@ -31,9 +32,10 @@ public class Ente {
     private Contatto contatto;
     @OneToOne(cascade = CascadeType.ALL)
     private ImageData logo;
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImageData> immagini;
-
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "enteProprietario")
+    private List<Contatto> contatti;
 
 
 }

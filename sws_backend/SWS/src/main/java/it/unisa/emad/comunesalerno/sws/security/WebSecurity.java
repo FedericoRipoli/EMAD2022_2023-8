@@ -50,6 +50,8 @@ public class WebSecurity {
                         .antMatchers("/api/auth/login").permitAll()
                         .antMatchers(HttpMethod.GET,"/api/enti").permitAll()
                         .antMatchers(HttpMethod.GET,"/api/enti/{id}").permitAll()
+                        .antMatchers(HttpMethod.GET,"/api/contatti").permitAll()
+                        .antMatchers(HttpMethod.GET,"/api/contatti/{id}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf().disable()

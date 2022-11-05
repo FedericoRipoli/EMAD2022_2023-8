@@ -1,5 +1,6 @@
 package it.unisa.emad.comunesalerno.sws.security;
 
+import it.unisa.emad.comunesalerno.sws.entity.Ente;
 import it.unisa.emad.comunesalerno.sws.entity.Utente;
 import it.unisa.emad.comunesalerno.sws.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 
 @Component
 public class JwtToUserConverter implements Converter<Jwt, UsernamePasswordAuthenticationToken> {
@@ -33,6 +33,7 @@ public class JwtToUserConverter implements Converter<Jwt, UsernamePasswordAuthen
         user.setId(jwt.getSubject());
         user.setUsername(jwt.getClaimAsString("name"));
         user.setAdmin(jwt.getClaimAsString("role").equals("ADMIN"));
+        user.setEnte(dbUser.getEnte());
         return new UsernamePasswordAuthenticationToken(user, jwt, user.getAuthorities());
     }
 }

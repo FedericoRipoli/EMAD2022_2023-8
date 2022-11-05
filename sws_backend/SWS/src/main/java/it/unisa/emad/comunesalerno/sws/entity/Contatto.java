@@ -1,13 +1,13 @@
 package it.unisa.emad.comunesalerno.sws.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.context.annotation.Lazy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -28,4 +28,8 @@ public class Contatto {
     private String telefono;
     private String pec;
     private String sitoWeb;
+    @ManyToOne
+    @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Ente enteProprietario;
 }

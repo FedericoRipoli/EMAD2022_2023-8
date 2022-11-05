@@ -124,7 +124,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:8080/api/enti/1e12250a-9a69-4d06-a8e0-2fb9a7c13064",
+							"raw": "localhost:8080/api/enti/e3bccce1-e974-4d25-91ee-94e24851b210",
 							"host": [
 								"localhost"
 							],
@@ -132,7 +132,7 @@
 							"path": [
 								"api",
 								"enti",
-								"1e12250a-9a69-4d06-a8e0-2fb9a7c13064"
+								"e3bccce1-e974-4d25-91ee-94e24851b210"
 							]
 						}
 					},
@@ -222,7 +222,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6IkFETUlOIiwiaXNzIjoic3dzIiwibmFtZSI6ImFkbWluIiwiZXhwIjoxNjY3NjIxMTIyLCJpYXQiOjE2Njc1OTExMjJ9.CrJTtHnkMRdzMaqJRCStmAwNjc9AXSRadA8qyPbLQsRmYNOIklNJ5TLLQCV_453-STrzv8iwRzTrdUW6vEE4IDodVuJHHl_MdkePsXRWRWJTI5uuMujJ1aMJ6IfY-lN2lcsmYZbNdH2yzWr_PRZ8I2mAzRs8LbMAAVtnzw3dwSj7W3gpaB7QCQgJbRnoY-9Oa4NEtpRSbxDByrSSGAeI1g-ow-T1OlpvSPcYXzzMf_CZ_oJa8WSEFYezuWa6ZC0za5Xt8k46TvVhBPZydv-pMvtajq4pJ8BMUZd0gvqqRpBQoXTv963309oKiGHhvPTIj0HV0rdDikpT5nG-ujQ2IQ",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwNWM2OWMzMS0yMjc5LTQ0YmItYjQyNy1hMjM2MDQ0ZWMxN2IiLCJyb2xlIjoiQURNSU4iLCJpc3MiOiJzd3MiLCJuYW1lIjoiYWRtaW4yIiwiZXhwIjoxNjY3Njc3MTE2LCJpYXQiOjE2Njc2NDcxMTZ9.AiUJHfgJnKyGEhOGLszQAiPg1hHDgQJIbg7WJz8YSGqrS8BNaihfMlL1PzP8f1ylgmb2U-BFL2PZKxnb_Tbm5IetXb6AKm-RwgzfAzMB0TMnre9cll8e2THMHOKNtc_gkvh1qe3utiVXOBJennj4Us_D9-m_sG6JjGJNioRVjTqvBPGijtEwm8gXoB3MqS_wSLfNgMSZ9MLnGOFtMoEII-b2x4rxTFaKKlzBE0yWVX8CelCWyyHm-PYJ8ezFhk9vwEl8r-ezCwViPJu1Y34P58aVJQDwA0LpgzqFv-fbLoD2Gq_8_2LYJB_ipnfIUDft476Mp8IFGO-bZCqKu8_n6A",
 									"type": "string"
 								}
 							]
@@ -231,7 +231,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\":\"admin2\",\r\n    \"admin\":true,\r\n    \"ente\":{\r\n        \"id\":\"e3bccce1-e974-4d25-91ee-94e24851b210\"\r\n    }\r\n}",
+							"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\":\"admin\",\r\n    \"admin\":true,\r\n    \"ente\":{\r\n        \"id\":\"e3bccce1-e974-4d25-91ee-94e24851b210\"\r\n    }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -239,7 +239,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:8080/api/users/1",
+							"raw": "localhost:8080/api/users/6854d8eb-491b-41f9-acb0-a6acd6854159",
 							"host": [
 								"localhost"
 							],
@@ -247,7 +247,7 @@
 							"path": [
 								"api",
 								"users",
-								"1"
+								"6854d8eb-491b-41f9-acb0-a6acd6854159"
 							]
 						}
 					},
@@ -321,8 +321,184 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwNWM2OWMzMS0yMjc5LTQ0YmItYjQyNy1hMjM2MDQ0ZWMxN2IiLCJyb2xlIjoiQURNSU4iLCJpc3MiOiJzd3MiLCJuYW1lIjoiYWRtaW4yIiwiZXhwIjoxNjY3Njc0MDk3LCJpYXQiOjE2Njc2NDQwOTd9.NzZwRKaSdoH7DSXIJ00ah5wQWK5ITi6437zhyme_aVvUOrkQ5Cjrtz_nVEx2bwIEls1gOkhzBZFv7Wp7ZtlL41O-_dUmNqFx-3EY9M5RxwSGzQIbz_8zNWJAMDc1Wt3vRUFeacqjPkr9dfJ9z7VsbquS-SDHHC-yjRPP4sUTkQcaq43g6TGDrzSJ2xhyWLz_GJExJAX1HM-xug0Z_pZ5cJ3qd1rWHngkctPWpUemjtrG8U6nuO5453igE87zduBhxShOc0ztdsTSaFeqmCfElyvq6ymiyzahC1wGo7vsl0JTeocyD66rc8FyJVP-x1Jq9z1RSedYwNr3nl04oSGQLw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
 				}
 			]
+		},
+		{
+			"name": "Contatti",
+			"item": [
+				{
+					"name": "Edit contatto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI2ODU0ZDhlYi00OTFiLTQxZjktYWNiMC1hNmFjZDY4NTQxNTkiLCJyb2xlIjoiIiwiaXNzIjoic3dzIiwibmFtZSI6ImFkbWluIiwiZXhwIjoxNjY3Njc4MTEwLCJpYXQiOjE2Njc2NDgxMTB9.aOsLdxLQp7cqTBaeK3mFLm2lWHLuTW7PMJQ0eNw3vSh2KKqpV23Iqr_zSUASSNUBHv6KbGOZzRxbOLEb3PxVg95xG03UXcUyqo78UqjH5VLL7mdbUxr6QOcMH4EW-JByVis_YU15hAEfuPZ4WhOH4oI09GDVqFAGhtqJej7oSDcmM0kem7VPUQsvI9unMlpACpJjCzx7SzgddaBOdKO57srEZYWmrj3PbHJBxK4CNDnXI7E1g5Ef7FdrFHgesEIYlP8b5XVJPdizehLG14VkatuXx01Qmg-lWV1dqvTfq2wVxuT6zf8JKuQhwqAvSUuDwZvJMtQ3YNc5kWKeBIHBXQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"denominazione\":\"Comune\",\r\n        \"email\":\"\",\r\n        \"cellulare\":\"\",\r\n        \"telefono\":\"\",\r\n        \"pec\":\"\",\r\n        \"sitoWeb\":\"www.salerno.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/contatti/d9096c4d-0927-4e6d-aa1b-635496606cf0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contatti",
+								"d9096c4d-0927-4e6d-aa1b-635496606cf0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create contatto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI2ODU0ZDhlYi00OTFiLTQxZjktYWNiMC1hNmFjZDY4NTQxNTkiLCJyb2xlIjoiIiwiaXNzIjoic3dzIiwibmFtZSI6ImFkbWluIiwiZXhwIjoxNjY3Njc4MTEwLCJpYXQiOjE2Njc2NDgxMTB9.aOsLdxLQp7cqTBaeK3mFLm2lWHLuTW7PMJQ0eNw3vSh2KKqpV23Iqr_zSUASSNUBHv6KbGOZzRxbOLEb3PxVg95xG03UXcUyqo78UqjH5VLL7mdbUxr6QOcMH4EW-JByVis_YU15hAEfuPZ4WhOH4oI09GDVqFAGhtqJej7oSDcmM0kem7VPUQsvI9unMlpACpJjCzx7SzgddaBOdKO57srEZYWmrj3PbHJBxK4CNDnXI7E1g5Ef7FdrFHgesEIYlP8b5XVJPdizehLG14VkatuXx01Qmg-lWV1dqvTfq2wVxuT6zf8JKuQhwqAvSUuDwZvJMtQ3YNc5kWKeBIHBXQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"denominazione\":\"Comune\",\r\n        \"email\":\"\",\r\n        \"cellulare\":\"\",\r\n        \"telefono\":\"\",\r\n        \"pec\":\"\",\r\n        \"sitoWeb\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/contatti/e3bccce1-e974-4d25-91ee-94e24851b210",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contatti",
+								"e3bccce1-e974-4d25-91ee-94e24851b210"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete contatti",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwNWM2OWMzMS0yMjc5LTQ0YmItYjQyNy1hMjM2MDQ0ZWMxN2IiLCJyb2xlIjoiQURNSU4iLCJpc3MiOiJzd3MiLCJuYW1lIjoiYWRtaW4yIiwiZXhwIjoxNjY3Njc3MTE2LCJpYXQiOjE2Njc2NDcxMTZ9.AiUJHfgJnKyGEhOGLszQAiPg1hHDgQJIbg7WJz8YSGqrS8BNaihfMlL1PzP8f1ylgmb2U-BFL2PZKxnb_Tbm5IetXb6AKm-RwgzfAzMB0TMnre9cll8e2THMHOKNtc_gkvh1qe3utiVXOBJennj4Us_D9-m_sG6JjGJNioRVjTqvBPGijtEwm8gXoB3MqS_wSLfNgMSZ9MLnGOFtMoEII-b2x4rxTFaKKlzBE0yWVX8CelCWyyHm-PYJ8ezFhk9vwEl8r-ezCwViPJu1Y34P58aVJQDwA0LpgzqFv-fbLoD2Gq_8_2LYJB_ipnfIUDft476Mp8IFGO-bZCqKu8_n6A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/contatti/156e2ebd-37a0-4770-b499-41ca560698ad",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contatti",
+								"156e2ebd-37a0-4770-b499-41ca560698ad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get contatti",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIwNWM2OWMzMS0yMjc5LTQ0YmItYjQyNy1hMjM2MDQ0ZWMxN2IiLCJyb2xlIjoiQURNSU4iLCJpc3MiOiJzd3MiLCJuYW1lIjoiYWRtaW4yIiwiZXhwIjoxNjY3Njc0MDk3LCJpYXQiOjE2Njc2NDQwOTd9.NzZwRKaSdoH7DSXIJ00ah5wQWK5ITi6437zhyme_aVvUOrkQ5Cjrtz_nVEx2bwIEls1gOkhzBZFv7Wp7ZtlL41O-_dUmNqFx-3EY9M5RxwSGzQIbz_8zNWJAMDc1Wt3vRUFeacqjPkr9dfJ9z7VsbquS-SDHHC-yjRPP4sUTkQcaq43g6TGDrzSJ2xhyWLz_GJExJAX1HM-xug0Z_pZ5cJ3qd1rWHngkctPWpUemjtrG8U6nuO5453igE87zduBhxShOc0ztdsTSaFeqmCfElyvq6ymiyzahC1wGo7vsl0JTeocyD66rc8FyJVP-x1Jq9z1RSedYwNr3nl04oSGQLw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/contatti/156e2ebd-37a0-4770-b499-41ca560698ad",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"contatti",
+								"156e2ebd-37a0-4770-b499-41ca560698ad"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "News",
+			"item": []
 		}
 	]
 }
