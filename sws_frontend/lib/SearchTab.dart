@@ -1,4 +1,4 @@
-import 'entity/Servizio.dart';
+import 'Service.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
 
@@ -51,23 +51,29 @@ class StackDown extends StatelessWidget {
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
               children: const <Widget>[
-                Servizio(
-                  id: "00001",
-                  nome: "Mensa",
-                  contenuto: "Servizio mensa per i senzadimora",
-                  visibile: true,
-                  tags: "senzadimora",
-                  ambito: "SA",
-                  tipologia: "Mensa",
+                Service(
+                  image: "assets/images/servizi-sociali.jpg",
+                  name: "Mensa",
+                  monthyear: "19:00-21:00",
+                  oldprice: "Gratis",
+                  newprice: "Salerno",
+                  discount: "SA",
                 ),
-                Servizio(
-                  id: "00002",
-                  nome: "Trasporto Anziani",
-                  contenuto: "Servizio di trasporto per gli anziani",
-                  visibile: true,
-                  tags: "anziani",
-                  ambito: "AZ",
-                  tipologia: "Trasporto",
+                Service(
+                  image: "assets/images/welfare.jpg",
+                  name: "Taxi",
+                  monthyear: "Prenota",
+                  oldprice: "Gratis",
+                  newprice: "Pellezzano",
+                  discount: "SA",
+                ),
+                Service(
+                  image: "assets/images/servizi-sociali.jpg",
+                  name: "Mensa",
+                  monthyear: "12:00-15:00",
+                  oldprice: "Gratis",
+                  newprice: "Salerno",
+                  discount: "SA",
                 ),
               ],
             )

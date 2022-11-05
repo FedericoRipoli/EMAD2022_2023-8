@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // pagine app
 import 'screens/Map.dart';
@@ -9,7 +8,7 @@ import 'screens/Options.dart';
 
 // utilities class
 import 'SearchTab.dart';
-import 'entity/Servizio.dart';
+import 'Service.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -26,7 +25,6 @@ ThemeData appTheme = ThemeData(
   secondaryHeaderColor: const Color(0xFF28759E) /* Colors.teal*/
   ,
   scaffoldBackgroundColor: Colors.white,
-  visualDensity: VisualDensity.adaptivePlatformDensity,
   // fontFamily:
 );
 
@@ -172,27 +170,8 @@ class HomeTop extends StatefulWidget {
 
 // parte superiore della Home
 class _HomeTop extends State<HomeTop> {
-  // Initial Selected Value
-  String dropdownvalue = 'Trasporto';
-  // List of items in our dropdown menu
-  var items = [
-    'Trasporto',
-    'Mensa',
-    'Svago',
-    'Assistenza',
-  ];
-
-  String dropdownvalue2 = 'Anziani';
-  // List of items in our dropdown menu
-  var items2 = [
-    'Anziani',
-    'Giovani',
-    'Disabilità Motorie',
-    'Autismo',
-  ];
   var isServiceSelected = true;
   TextEditingController c = TextEditingController(text: services[2]);
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -291,8 +270,7 @@ class _HomeTop extends State<HomeTop> {
                               horizontal: 32, vertical: 13),
                           suffixIcon: Material(
                             elevation: 2.0,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(30)),
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
                             child: InkWell(
                               child: const Icon(
                                 Icons.search,
@@ -317,67 +295,29 @@ class _HomeTop extends State<HomeTop> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     InkWell(
-                      child: DropdownButton(
-                        // Initial Value
-                        value: dropdownvalue,
-                        dropdownColor: appTheme.primaryColor,
-                        // Down Arrow Icon
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Colors.white,
-                        ),
-
-                        // Array list of items
-                        items: items.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
-                          );
-                        }).toList(),
-                        // After selecting the desired option,it will
-                        // change button value to selected value
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue = newValue!;
-                          });
-                        },
-                      ),
+                      child: Choice08(
+                          icon: Icons.filter_1,
+                          text: "Filtro 1",
+                          selected: isServiceSelected),
+                      onTap: () {
+                        setState(() {
+                          isServiceSelected = true;
+                        });
+                      },
                     ),
                     SizedBox(
                       width: width! * 0.055,
                     ),
                     InkWell(
-                      child: DropdownButton(
-                        // Initial Value
-                        value: dropdownvalue2,
-                        dropdownColor: appTheme.primaryColor,
-                        // Down Arrow Icon
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Colors.white,
-                        ),
-
-                        // Array list of items
-                        items: items2.map((String items) {
-                          return DropdownMenuItem(
-                            value: items,
-                            child: Text(items,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
-                          );
-                        }).toList(),
-                        // After selecting the desired option,it will
-                        // change button value to selected value
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            dropdownvalue2 = newValue!;
-                          });
-                        },
-                      ),
+                      child: Choice08(
+                          icon: Icons.filter_2,
+                          text: "Filtro 2",
+                          selected: !isServiceSelected),
+                      onTap: () {
+                        setState(() {
+                          isServiceSelected = false;
+                        });
+                      },
                     ),
                   ],
                 )
@@ -494,7 +434,7 @@ var homeDown = Column(
       //height: height! * .25 < 170 ? height! * .25 : 170,
       //height: height! * .25 < 300 ? height! * .25 : 300,
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: 280, minHeight: height! * .10),
+        constraints: BoxConstraints(maxHeight: 250, minHeight: height! * .13),
         child: ListView.builder(
             itemBuilder: (context, index) => listServices[index],
             shrinkWrap: true,
@@ -506,23 +446,29 @@ var homeDown = Column(
   ],
 );
 
-List<Servizio> listServices = [
-  const Servizio(
-    id: "00001",
-    nome: "Mensa",
-    contenuto: "Servizio mensa per i senzadimora",
-    visibile: true,
-    tags: "senzadimora",
-    ambito: "SA",
-    tipologia: "Mensa",
+List<Service> listServices = [
+  const Service(
+    image: "assets/images/servizi-sociali.jpg",
+    name: "Mensa",
+    monthyear: "19:00-21:00",
+    oldprice: "Gratis",
+    newprice: "Salerno",
+    discount: "SA",
   ),
-  const Servizio(
-    id: "00002",
-    nome: "Trasporto Anziani",
-    contenuto: "Servizio di trasporto per gli anziani",
-    visibile: true,
-    tags: "anziani",
-    ambito: "AZ",
-    tipologia: "Trasporto",
+  const Service(
+    image: "assets/images/welfare.jpg",
+    name: "Taxi",
+    monthyear: "Prenota",
+    oldprice: "Gratis",
+    newprice: "Pellezzano",
+    discount: "SA",
+  ),
+  const Service(
+    image: "assets/images/servizi-sociali.jpg",
+    name: "Mensa",
+    monthyear: "12:00-15:00",
+    oldprice: "Gratis",
+    newprice: "Salerno",
+    discount: "SA",
   ),
 ];
