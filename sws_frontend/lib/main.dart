@@ -1,7 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // pagine app
-import 'screens/Map.dart';
-import 'screens/News.dart';
+import 'screens/Servizi.dart';
 import 'screens/Introduction.dart';
 import 'screens/Events.dart';
 import 'screens/Options.dart';
@@ -15,7 +15,7 @@ void main() {
     debugShowCheckedModeBanner: false,
     home: const Introduction(),
     theme: appTheme,
-    title: "Salerno Welfare Services",
+    title: "Servizi Salerno",
   ));
 }
 
@@ -29,10 +29,14 @@ ThemeData appTheme = ThemeData(
   // fontFamily:
 );
 
-int sel = 0;
+int sel = 1;
 double? width;
 double? height;
-final screens = [const HomeScreen(), const Map(), const Events(), const News()];
+final screens = [
+  const Servizi(),
+  const HomeScreen(),
+  const Events(),
+];
 
 // Barra di navigazione
 class BottomNav extends StatefulWidget {
@@ -47,24 +51,24 @@ class _BottomNavState extends State<BottomNav> {
     List<BottomNavigationBarItem> items = [];
     items.add(BottomNavigationBarItem(
         activeIcon: Icon(
-          Icons.home,
+          Icons.location_history,
           color: appTheme.primaryColor,
         ),
         icon: const Icon(
-          Icons.home,
+          Icons.location_history,
           color: Colors.black,
         ),
         label: "Servizi"));
     items.add(BottomNavigationBarItem(
         activeIcon: Icon(
-          Icons.location_on,
+          Icons.home_filled,
           color: appTheme.primaryColor,
         ),
         icon: const Icon(
-          Icons.location_on,
+          Icons.home_filled,
           color: Colors.black,
         ),
-        label: "Mappa"));
+        label: "HomePage"));
     items.add(BottomNavigationBarItem(
         activeIcon: Icon(
           Icons.event,
@@ -75,24 +79,13 @@ class _BottomNavState extends State<BottomNav> {
           color: Colors.black,
         ),
         label: "Eventi"));
-    items.add(BottomNavigationBarItem(
-        activeIcon: Icon(
-          Icons.newspaper,
-          color: appTheme.primaryColor,
-        ),
-        icon: const Icon(
-          Icons.newspaper,
-          color: Colors.black,
-        ),
-        label: "News"));
     return items;
   }
-
-  //manuelle cuozzo
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: screens.elementAt(sel),
         bottomNavigationBar: BottomNavigationBar(
           items: createItems(),
@@ -123,10 +116,9 @@ class HomeScreen extends StatelessWidget {
 
     width = MediaQuery.of(context).size.shortestSide;
     height = MediaQuery.of(context).size.longestSide;
-    double h = 50;
-    double w = 50;
     return Scaffold(
       // bottomNavigationBar: /*NavigationTest()*/Navigation(),
+      resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
         elevation: 0,
         hoverElevation: 0,
@@ -135,7 +127,7 @@ class HomeScreen extends StatelessWidget {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: const Text("Hai bisogno di più informazioni?"),
+                title: const Text("Pagina chatbot"),
                 content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: const <Widget>[Text("info")],
@@ -144,8 +136,8 @@ class HomeScreen extends StatelessWidget {
             },
           );
         },
-        backgroundColor: appTheme.primaryColor.withOpacity(.9),
-        child: const Icon(Icons.info_outlined),
+        backgroundColor: appTheme.primaryColor,
+        child: const Icon(Icons.chat),
       ),
 
       body: SingleChildScrollView(
@@ -223,18 +215,8 @@ class _HomeTop extends State<HomeTop> {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return AlertDialog(
-                                title: const Text(
-                                  "Area Login",
-                                  style: TextStyle(),
-                                ),
-                                content: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: const <Widget>[
-                                    Text("form login"),
-                                  ],
-                                ),
+                              return const AlertDialog(
+                                content: LoginForm(),
                               );
                             },
                           );
@@ -265,7 +247,7 @@ class _HomeTop extends State<HomeTop> {
                 const Text(
                   'Bentornatə!👋\nDi quali servizi\nhai bisogno oggi?',
                   style: TextStyle(
-                    fontSize: 22.0,
+                    fontSize: 26.0,
                     color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
@@ -417,49 +399,6 @@ class Clipper08 extends CustomClipper<Path> {
   }
 }
 
-class Choice08 extends StatefulWidget {
-  final IconData? icon;
-  final String? text;
-  final bool? selected;
-  const Choice08({super.key, this.icon, this.text, this.selected});
-  @override
-  State<Choice08> createState() => _Choice08State();
-}
-
-class _Choice08State extends State<Choice08>
-    with SingleTickerProviderStateMixin {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-      decoration: widget.selected!
-          ? BoxDecoration(
-              color: Colors.white.withOpacity(.30),
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-            )
-          : null,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Icon(
-            widget.icon,
-            size: 20,
-            color: Colors.white,
-          ),
-          SizedBox(
-            width: width! * .025,
-          ),
-          Text(
-            widget.text!,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
-          )
-        ],
-      ),
-    );
-  }
-}
-
 var homeDown = Column(
   children: <Widget>[
     Padding(
@@ -467,25 +406,16 @@ var homeDown = Column(
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
+        children: const <Widget>[
           // SizedBox(
           //   width: width! * 0.05,
           // ),
-          const Text(
+          Text(
             "I Servizi più recenti",
             style: TextStyle(
                 color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const Spacer(),
-          IconButton(
-            // <-- TextButton
-            onPressed: () {},
-            icon: const Icon(
-              Icons.more_horiz,
-              color: Colors.black,
-            ),
-            iconSize: 28,
-          ),
+          Spacer(),
         ],
       ),
     ),
@@ -525,3 +455,112 @@ List<Servizio> listServices = [
     tipologia: "Trasporto",
   ),
 ];
+
+class LoginForm extends StatefulWidget {
+  const LoginForm({Key? key}) : super(key: key);
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.all(6),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
+              height: 480,
+              child: Column(
+                children: [
+                  Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        'Accedi a SWS',
+                        style: TextStyle(
+                            color: appTheme.primaryColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 30),
+                      )),
+                  Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(10),
+                      child: const Text(
+                        'Inserisci le credenziali fornite dal Comune di Salerno:',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      )),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    child: TextField(
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'E-mail',
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    child: TextField(
+                      obscureText: true,
+                      controller: passwordController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Password',
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      //forgot password screen
+                    },
+                    child: Text(
+                      'Ho dimenticato la mia Password',
+                      style: TextStyle(color: appTheme.primaryColor),
+                    ),
+                  ),
+                  Container(
+                      height: 50,
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: appTheme.primaryColor,
+                            textStyle: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                        child: const Text('Accedi'),
+                        onPressed: () {
+                          if (kDebugMode) {
+                            print(emailController.text);
+                            print(passwordController.text);
+                          }
+                        },
+                      )),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text('Non possiedi le credenziali?'),
+                      TextButton(
+                        child: Text(
+                          'Richiedi il tuo account',
+                          style: TextStyle(
+                              fontSize: 14, color: appTheme.primaryColor),
+                        ),
+                        onPressed: () {
+                          //signup screen
+                        },
+                      )
+                    ],
+                  ),
+                ],
+              )),
+        ));
+  }
+}
