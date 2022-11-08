@@ -30,7 +30,10 @@ public class Evento {
     private Date dataInizio;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataFine;
-    private boolean visibile;
+    @Enumerated(EnumType.STRING)
+    private StatoOperazione stato;
+    @Lob
+    private String note;
     private String tags;
     @OneToOne
     private Ambito ambito;
@@ -38,6 +41,20 @@ public class Evento {
     private Tipologia tipologia;
     @OneToOne
     private Ente ente;
-    @OneToMany
-    private List<OperazioneEvento> operazioni;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCreazione;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltimaModifica;
+
+    @PrePersist
+    public void prePersist(){
+        this.dataCreazione=new Date();
+        this.dataUltimaModifica=new Date();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        this.dataUltimaModifica=new Date();
+    }
 }

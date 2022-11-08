@@ -20,14 +20,23 @@ public class News {
     private String titolo;
     @Lob
     private String contenuto;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date data;
+
     @OneToMany
     private List<ImageData> immagini;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCreazione;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltimaModifica;
 
     @PrePersist
     public void prePersist(){
-        this.data=new Date();
+        this.dataCreazione=new Date();
+        this.dataUltimaModifica=new Date();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        this.dataUltimaModifica=new Date();
     }
 }

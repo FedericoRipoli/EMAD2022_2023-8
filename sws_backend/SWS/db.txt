@@ -45,7 +45,6 @@ Servizio
 Evento
     Nome
     Descrizione
-    Indirizzo
     Foto*(MEDIA)
     POSIZIONE*
     Data Inizio

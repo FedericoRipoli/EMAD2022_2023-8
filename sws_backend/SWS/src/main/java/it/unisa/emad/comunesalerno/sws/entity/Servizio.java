@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -25,8 +26,10 @@ public class Servizio {
     private List<Posizione> posizioni;
     @OneToMany
     private List<Contatto> contatti;
-
-    private boolean visibile;
+    @Enumerated(EnumType.STRING)
+    private StatoOperazione stato;
+    @Lob
+    private String note;
     private String tags;
     @OneToOne
     private Ambito ambito;
@@ -34,7 +37,20 @@ public class Servizio {
     private Tipologia tipologia;
     @OneToOne
     private Ente ente;
-    @OneToMany
-    private List<OperazioneServizio> operazioni;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCreazione;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataUltimaModifica;
+
+    @PrePersist
+    public void prePersist(){
+        this.dataCreazione=new Date();
+        this.dataUltimaModifica=new Date();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        this.dataUltimaModifica=new Date();
+    }
 }

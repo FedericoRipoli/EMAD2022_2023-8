@@ -30,16 +30,15 @@ public class ImageData {
     private byte[] imageData;
 
 
-
     @PrePersist
     @PreUpdate
-    public void compressImage(){
-        this.imageData= ImageUtil.compressImage(imageData);
+    public void compressImage() {
+        this.imageData = ImageUtil.compressImage(imageData);
     }
 
     @PostLoad
-    public void decompressImage(){
-        this.imageData= ImageUtil.decompressImage(imageData);
+    public void decompressImage() {
+        this.imageData = ImageUtil.decompressImage(imageData);
 
     }
 
