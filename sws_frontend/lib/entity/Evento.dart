@@ -1,45 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/entity/Ente.dart';
-import 'Contatto.dart';
 
-class Servizio extends StatelessWidget {
-  final String id;
-  final String? nome, contenuto;
-  final List<AssetImage>? immagini;
-  final List<Contatto>? contatti;
-  final bool visibile;
-  final String? tags, ambito, tipologia;
-  final Ente? ente;
-  /*
-  * private List<Contatto> contatti;
-     private Ambito ambito;
-    @OneToOne
-    private Tipologia tipologia;
-    @OneToOne
-    private Ente ente;
-    @OneToMany
-    private List<OperazioneServizio> operazioni;
-  *
-  * */
+class Evento extends StatelessWidget {
+  final String id, nome, contenuto, tags;
+  const Evento(
+      {Key? key,
+      required this.id,
+      required this.nome,
+      required this.contenuto,
+      required this.tags})
+      : super(key: key);
 
-  const Servizio({
-    Key? key,
-    required this.id,
-    this.nome,
-    this.contenuto,
-    this.immagini,
-    this.contatti,
-    required this.visibile,
-    this.tags,
-    this.ambito,
-    this.tipologia,
-    this.ente,
-  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const InfoEvento()),
+          );
+        },
         child: Container(
           width: 330,
           height: 240,
@@ -56,7 +36,7 @@ class Servizio extends StatelessWidget {
                   width: 335,
                   height: 110,
                   child: Image.asset(
-                    "assets/images/service_default.png",
+                    "assets/images/event_default.png",
                     fit: BoxFit.fitWidth,
                   ),
                 ),
@@ -68,13 +48,13 @@ class Servizio extends StatelessWidget {
                     Container(
                       margin: const EdgeInsets.all(4),
                       child: Chip(
-                        label: Text(ambito!),
+                        label: Text(id!),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.all(4),
                       child: Chip(
-                        label: Text(tipologia!),
+                        label: Text(tags!),
                       ),
                     ),
                     Container(
@@ -105,5 +85,41 @@ class Servizio extends StatelessWidget {
         ),
       ),
     ]);
+  }
+}
+
+/*
+  *     @OneToMany
+    private List<ImageData> immagini;
+    @OneToMany
+    private List<Posizione> posizioni;
+    @OneToMany
+    private List<Contatto> contatti;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataInizio;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataFine;
+    private boolean visibile;
+    private String tags;
+    @OneToOne
+    private Ambito ambito;
+    @OneToOne
+    private Tipologia tipologia;
+    @OneToOne
+    private Ente ente;
+    @OneToMany
+    private List<OperazioneEvento> operazioni;*/
+
+class InfoEvento extends StatelessWidget {
+  const InfoEvento({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Center(
+        child: Text("Sezione Info evento"),
+      ),
+    );
   }
 }

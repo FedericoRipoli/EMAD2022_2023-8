@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:flutter/foundation.dart';
-import 'package:frontend_sws/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'Home.dart';
 
 class Introduction extends StatelessWidget {
   const Introduction({Key? key}) : super(key: key);
@@ -18,14 +17,16 @@ class Introduction extends StatelessWidget {
               title: 'Benvenutə👋 in Salerno Welfare Services',
               body:
                   "L'applicazione dove puoi cercare e informarti su tutti gli "
-                  'eventi e i servizi dei comuni di Salerno e Pellezzano per le politiche giovanili e sociali',
+                  'eventi e i servizi dei comuni di Salerno e Pellezzano per le politiche Giovanili e Sociali',
               image: buildImage("assets/images/intro_welcome.png"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
               title: "Che cos'è Salerno Welfare Services?",
-              body: "Descrizione di come è divisa l'app",
+              body:
+                  "A portata di smartphone tutti i servizi che il Comune di Salerno offre ai suoi cittadini. Cerca i servizi"
+                  " filtrando le informazioni che ti interessano, prenota, visualizza gli eventi in programma nel mese corrente...",
               image: buildImage("assets/images/intro_explainer.png"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
@@ -33,23 +34,17 @@ class Introduction extends StatelessWidget {
             PageViewModel(
               title: "Focus sull'accessibilità",
               body:
-                  "SWS pone particolare attenzione sull'accessibilità, rendendo l'esperienza d'utilizzo semplice per tutti",
+                  "L'app pone particolare attenzione sull'accessibilità, rendere l'esperienza d'utilizzo semplice "
+                  "e intuitiva per tutte le tipologie di utente è l'obiettivo primario",
               image: buildImage("assets/images/intro_access.png"),
-              //getPageDecoration, a method to customise the page style
-              decoration: getPageDecoration(),
-            ),
-            PageViewModel(
-              title: 'Iscriviti alla nostra newsletter',
-              body:
-                  'Aggiungi la tua e-mail e ricevi tutte le news e gli avvisi direttamente sulla tua e-mail',
-              image: buildImage("assets/images/intro_newsletter.png"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
               title: 'Chiedi aiuto al nostro chatbot',
               body:
-                  'Hai dubbi o domande sui servizi offerti dal Comune di Salerno?',
+                  'Hai dubbi o domande sui servizi offerti dal Comune di Salerno o su come cercare? Interagisci'
+                  'con il nostro chatbot che ti aiuterà nella ricerca del servizio migliore per te',
               image: buildImage("assets/images/intro_chatbot.png"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
@@ -118,7 +113,7 @@ class Introduction extends StatelessWidget {
       child: Image.asset(
         imagePath,
         width: 650,
-        height: 380,
+        height: 390,
       ),
     );
   }

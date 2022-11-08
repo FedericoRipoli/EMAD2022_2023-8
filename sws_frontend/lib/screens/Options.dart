@@ -26,15 +26,19 @@ class Options extends StatelessWidget {
         title: Text(
           'Impostazioni App',
           style: TextStyle(
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: FontWeight.w600,
               color: appTheme.primaryColor),
         ),
       ),
       body: SettingsList(
+        applicationType: ApplicationType.both,
         sections: [
           SettingsSection(
-            title: Text('Generali'),
+            title: Text(
+              'Generali',
+              style: TextStyle(fontSize: 22, color: appTheme.primaryColor),
+            ),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
                 leading: Icon(Icons.language),
@@ -42,6 +46,25 @@ class Options extends StatelessWidget {
                 value: Text('Italiano'),
               ),
               SettingsTile.switchTile(
+                activeSwitchColor: appTheme.primaryColor,
+                onToggle: (value) {},
+                initialValue: true,
+                leading: Icon(Icons.format_paint),
+                title: Text('Enable custom theme'),
+              ),
+            ],
+          ),
+          SettingsSection(
+            title: Text('Accessibilità',
+                style: TextStyle(fontSize: 22, color: appTheme.primaryColor)),
+            tiles: <SettingsTile>[
+              SettingsTile.navigation(
+                leading: Icon(Icons.language),
+                title: Text('Lingua'),
+                value: Text('Italiano'),
+              ),
+              SettingsTile.switchTile(
+                activeSwitchColor: appTheme.primaryColor,
                 onToggle: (value) {},
                 initialValue: true,
                 leading: Icon(Icons.format_paint),
