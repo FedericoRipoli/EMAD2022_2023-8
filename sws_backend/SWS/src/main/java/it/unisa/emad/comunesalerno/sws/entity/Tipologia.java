@@ -1,5 +1,7 @@
 package it.unisa.emad.comunesalerno.sws.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,6 +12,7 @@ import java.util.List;
 @Entity
 @Data
 @RequiredArgsConstructor
+@JsonIgnoreProperties(value = { "padre" })
 public class Tipologia {
     @Id
     @GeneratedValue(generator = "uuid")
@@ -24,4 +27,8 @@ public class Tipologia {
 
     @ManyToOne
     private Tipologia padre;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String idPadre;
 }

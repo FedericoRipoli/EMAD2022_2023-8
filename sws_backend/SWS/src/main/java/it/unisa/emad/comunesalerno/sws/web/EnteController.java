@@ -6,6 +6,7 @@ import it.unisa.emad.comunesalerno.sws.entity.Utente;
 import it.unisa.emad.comunesalerno.sws.repository.EnteRepository;
 import it.unisa.emad.comunesalerno.sws.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,8 +26,8 @@ public class EnteController {
         return ResponseEntity.ok(ente);
     }
     @GetMapping
-    public ResponseEntity listEnti(){
-        return  ResponseEntity.ok(enteRepository.findAll());
+    public ResponseEntity listEnti(@RequestParam(value = "name",required = false) String name, Pageable pageable){
+        return  ResponseEntity.ok(enteRepository.findAllByDenominazioneContains(name, pageable));
     }
     @GetMapping("/{id}")
     public ResponseEntity listEnti(@PathVariable String id){
