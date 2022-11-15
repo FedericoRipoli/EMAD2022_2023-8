@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 import 'screens/Introduction.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
   runApp(MaterialApp(
+    builder: (context, child) => ResponsiveWrapper.builder(
+      child,
+      maxWidth: 1200,
+      minWidth: 480,
+      defaultScale: true,
+      breakpoints: [
+        const ResponsiveBreakpoint.resize(480, name: MOBILE),
+        const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+        const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+        const ResponsiveBreakpoint.autoScale(2460, name: '4K'),
+      ],
+    ),
     debugShowCheckedModeBanner: false,
     home: const Introduction(),
     theme: appTheme,
-    title: "Servizi Salerno",
+    title: "Salerno Amica",
   ));
 }
 
@@ -17,5 +30,5 @@ ThemeData appTheme = ThemeData(
   ,
   scaffoldBackgroundColor: Colors.white,
   visualDensity: VisualDensity.adaptivePlatformDensity,
-  // fontFamily:
 );
+// E0E3EC

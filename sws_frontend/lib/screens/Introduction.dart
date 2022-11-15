@@ -14,7 +14,7 @@ class Introduction extends StatelessWidget {
       body: IntroductionScreen(
           pages: [
             PageViewModel(
-              title: 'Benvenutə👋 in Salerno Welfare Services',
+              title: 'Benvenutə👋 in Salerno Amica',
               body:
                   "L'applicazione dove puoi cercare e informarti su tutti gli "
                   'eventi e i servizi dei comuni di Salerno e Pellezzano per le politiche Giovanili e Sociali',
@@ -23,7 +23,7 @@ class Introduction extends StatelessWidget {
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: "Che cos'è Salerno Welfare Services?",
+              title: "Che cos'è Salerno Amica?",
               body:
                   "A portata di smartphone tutti i servizi che il Comune di Salerno offre ai suoi cittadini. Cerca i servizi"
                   " filtrando le informazioni che ti interessano, prenota, visualizza gli eventi in programma nel mese corrente...",

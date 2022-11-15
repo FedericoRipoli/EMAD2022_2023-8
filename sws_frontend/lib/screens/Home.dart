@@ -4,7 +4,6 @@ import '../entity/Evento.dart';
 import 'Servizi.dart';
 import 'Events.dart';
 import 'Options.dart';
-import '../SearchTab.dart';
 import 'package:flutter/foundation.dart';
 import '../entity/Servizio.dart';
 
@@ -182,8 +181,6 @@ List<Evento> listEventi = [
 ];
 
 // selezione servizi
-var selectedService = 0;
-List<String> services = ['Mensa', 'Taxi', 'Mensa'];
 
 class HomeTop extends StatefulWidget {
   const HomeTop({super.key});
@@ -194,27 +191,6 @@ class HomeTop extends StatefulWidget {
 
 // parte superiore della Home
 class _HomeTop extends State<HomeTop> {
-  var isServiceSelected = true;
-  // Initial Selected Value
-  String dropdownvalue = 'Trasporto';
-  // List of items in our dropdown menu
-  var items = [
-    'Trasporto',
-    'Mensa',
-    'Svago',
-    'Assistenza',
-  ];
-
-  String dropdownvalue2 = 'Anziani';
-  // List of items in our dropdown menu
-  var items2 = [
-    'Anziani',
-    'Giovani',
-    'Disabilità Motorie',
-    'Autismo',
-  ];
-
-  TextEditingController c = TextEditingController(text: services[2]);
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -222,7 +198,7 @@ class _HomeTop extends State<HomeTop> {
         ClipPath(
           clipper: Clipper08(),
           child: Container(
-            height: height! * .65 < 430 ? height! * .65 : 480, //400
+            height: height! * .65 < 460 ? height! * .65 : 500, //400
             //color: Colors.tealAccent,
             decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
@@ -235,13 +211,13 @@ class _HomeTop extends State<HomeTop> {
                   height: height! / 16,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: const EdgeInsets.all(12.0),
                   child: Row(
                     children: <Widget>[
                       IconButton(
                         icon: const Icon(Icons.account_circle_rounded),
                         color: Colors.white,
-                        iconSize: 30,
+                        iconSize: 32,
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -257,18 +233,6 @@ class _HomeTop extends State<HomeTop> {
                         width: width! * 0.05,
                       ),
                       const Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.settings),
-                        iconSize: 30,
-                        color: Colors.white,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Options()),
-                          );
-                        },
-                      )
                     ],
                   ),
                 ),
@@ -278,14 +242,14 @@ class _HomeTop extends State<HomeTop> {
                 Center(
                   child: Image.asset(
                     "assets/images/logo.png",
-                    width: 140,
-                    height: 140,
+                    width: 150,
+                    height: 150,
                   ),
                 ),
                 const Text(
-                  'Bentornatə!👋\n\nDi quali servizi\nnecessiti oggi?',
+                  'Bentornatə in\nSalerno Amica!👋',
                   style: TextStyle(
-                    fontSize: 26.0,
+                    fontSize: 28.0,
                     color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
@@ -345,12 +309,15 @@ class HomeDown extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                "$itemLabel più recenti",
-                style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold),
+              Container(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(
+                  "$itemLabel più recenti",
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
               const Spacer(),
             ],
@@ -401,7 +368,7 @@ class _LoginFormState extends State<LoginForm> {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        'Accedi a SWS',
+                        'Accedi a Salerno Amica',
                         style: TextStyle(
                             color: appTheme.primaryColor,
                             fontWeight: FontWeight.w500,
@@ -411,7 +378,7 @@ class _LoginFormState extends State<LoginForm> {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.all(10),
                       child: const Text(
-                        'Inserisci le credenziali fornite dal Comune di Salerno:',
+                        'Inserisci le credenziali fornite\ndal Comune di Salerno:',
                         style: TextStyle(
                           fontSize: 16,
                         ),

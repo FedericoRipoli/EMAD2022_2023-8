@@ -39,7 +39,12 @@ class Servizio extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const InfoServizio()),
+          );
+        },
         child: Container(
           width: 330,
           height: 240,
@@ -105,5 +110,14 @@ class Servizio extends StatelessWidget {
         ),
       ),
     ]);
+  }
+}
+
+class InfoServizio extends StatelessWidget {
+  const InfoServizio({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(resizeToAvoidBottomInset: false, body: Container());
   }
 }

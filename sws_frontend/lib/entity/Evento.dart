@@ -48,19 +48,19 @@ class Evento extends StatelessWidget {
                     Container(
                       margin: const EdgeInsets.all(4),
                       child: Chip(
-                        label: Text(id!),
+                        label: Text(id),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.all(4),
                       child: Chip(
-                        label: Text(tags!),
+                        label: Text(tags),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.all(4),
                       child: Chip(
-                        label: Text(tags!),
+                        label: Text(tags),
                       ),
                     ),
                   ]),
@@ -70,7 +70,7 @@ class Evento extends StatelessWidget {
                       padding: const EdgeInsets.all(2),
                       alignment: Alignment.center,
                       child: Text(
-                        nome!,
+                        nome,
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

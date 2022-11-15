@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sws.frontend_sws">
    <application
-        android:label="Salerno Welfare Services"
+        android:label="Salerno Amica"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -41,16 +41,16 @@ class Options extends StatelessWidget {
             ),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
-                leading: Icon(Icons.language),
-                title: Text('Lingua'),
-                value: Text('Italiano'),
+                leading: const Icon(Icons.language),
+                title: const Text('Lingua'),
+                value: const Text('Italiano'),
               ),
               SettingsTile.switchTile(
                 activeSwitchColor: appTheme.primaryColor,
                 onToggle: (value) {},
                 initialValue: true,
-                leading: Icon(Icons.format_paint),
-                title: Text('Enable custom theme'),
+                leading: const Icon(Icons.format_paint),
+                title: const Text('Enable custom theme'),
               ),
             ],
           ),
@@ -59,16 +59,16 @@ class Options extends StatelessWidget {
                 style: TextStyle(fontSize: 22, color: appTheme.primaryColor)),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
-                leading: Icon(Icons.language),
-                title: Text('Lingua'),
-                value: Text('Italiano'),
+                leading: const Icon(Icons.language),
+                title: const Text('Lingua'),
+                value: const Text('Italiano'),
               ),
               SettingsTile.switchTile(
                 activeSwitchColor: appTheme.primaryColor,
                 onToggle: (value) {},
                 initialValue: true,
-                leading: Icon(Icons.format_paint),
-                title: Text('Enable custom theme'),
+                leading: const Icon(Icons.format_paint),
+                title: const Text('Enable custom theme'),
               ),
             ],
           ),
