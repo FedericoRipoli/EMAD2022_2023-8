@@ -6,6 +6,7 @@ import 'Servizi.dart';
 import 'Events.dart';
 import 'package:flutter/foundation.dart';
 import '../entity/Servizio.dart';
+import 'package:sidebarx/sidebarx.dart';
 
 int sel = 1;
 double? width;
@@ -180,7 +181,7 @@ class HomeTop extends StatefulWidget {
   const HomeTop({super.key});
 
   @override
-  State<HomeTop> createState() => _HomeTop();
+  State<HomeTop> createState() => _HomeTopAdmin();
 }
 
 // parte superiore della Home
@@ -254,6 +255,150 @@ class _HomeTop extends State<HomeTop> {
           ),
         )
       ],
+    );
+  }
+}
+
+class _HomeTopAdmin extends State<HomeTop> {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        ClipPath(
+          clipper: Clipper08(),
+          child: Container(
+            height: height! * .65 < 460 ? height! * .65 : 500, //400
+            //color: Colors.tealAccent,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  appTheme.primaryColor,
+                  appTheme.secondaryHeaderColor
+                ])),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: height! / 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(Icons.account_circle_rounded),
+                        color: Colors.white,
+                        iconSize: 32,
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SideBarLaterale();
+                            },
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        width: width! * 0.05,
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: height! / 24,
+                ),
+                Center(
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    width: 150,
+                    height: 150,
+                  ),
+                ),
+                const Text(
+                  'Bentornatə in\nSalerno Amica!👋',
+                  style: TextStyle(
+                    fontSize: 28.0,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: height! * 0.0375),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class SideBarLaterale extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        // Remove padding
+        padding: EdgeInsets.only(right: 250),
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: Text('Admin'),
+            accountEmail: Text('admin@gmail.com'),
+            currentAccountPicture: CircleAvatar(
+              child: ClipOval(
+                child: Image.network(
+                  'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
+                  fit: BoxFit.cover,
+                  width: 90,
+                  height: 90,
+                ),
+              ),
+            ),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(
+                      'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg')
+              ),
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text('Favorites'),
+            onTap: () => null,
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Friends'),
+            onTap: () => null,
+          ),
+          ListTile(
+            leading: Icon(Icons.share),
+            title: Text('Share'),
+            onTap: () => null,
+          ),
+          ListTile(
+            leading: Icon(Icons.notifications),
+            title: Text('Request'),
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Settings'),
+            onTap: () => null,
+          ),
+          ListTile(
+            leading: Icon(Icons.description),
+            title: Text('Policies'),
+            onTap: () => null,
+          ),
+          Divider(),
+          ListTile(
+            title: Text('Exit'),
+            leading: Icon(Icons.exit_to_app),
+            onTap: () => null,
+          ),
+        ],
+      ),
     );
   }
 }
