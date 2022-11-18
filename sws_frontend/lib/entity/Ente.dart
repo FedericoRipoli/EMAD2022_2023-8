@@ -7,6 +7,7 @@ class Ente extends StatefulWidget {
   final Contatto? contatto;
   final ImageIcon? logo;
   final List<AssetImage>? immagini;
+  final List<Contatto>? contatti;
 
   const Ente(
       {Key? key,
@@ -17,7 +18,8 @@ class Ente extends StatefulWidget {
       this.cf,
       this.contatto,
       this.logo,
-      this.immagini})
+      this.immagini,
+      this.contatti})
       : super(key: key);
 
   @override

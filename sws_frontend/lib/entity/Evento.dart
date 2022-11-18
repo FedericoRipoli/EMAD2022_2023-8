@@ -1,13 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/entity/Tipologia.dart';
+
+import 'Ambito.dart';
+import 'Contatto.dart';
+import 'Ente.dart';
+import 'Posizione.dart';
+import 'StatoOperazione.dart';
 
 class Evento extends StatelessWidget {
   final String id, nome, contenuto, tags;
+  final List<AssetImage>? immagini;
+  final List<Posizione>? posizioni;
+  final List<Contatto>? contatti;
+  final DateTime? dataInizio, dataFine;
+  final StatoOperazione? state;
+  final String? note;
+  final Ambito? ambito;
+  final Tipologia? tipologia;
+  final Ente? ente;
+  final DateTime? dataCreazione, dataUltimaModifica;
+
   const Evento(
       {Key? key,
       required this.id,
       required this.nome,
       required this.contenuto,
-      required this.tags})
+      required this.tags,
+      this.immagini,
+      this.posizioni,
+      this.contatti,
+      this.dataInizio,
+      this.dataFine,
+      this.state,
+      this.note,
+      this.ambito,
+      this.tipologia,
+      this.ente,
+      this.dataCreazione,
+      this.dataUltimaModifica})
       : super(key: key);
 
   @override
@@ -87,28 +117,6 @@ class Evento extends StatelessWidget {
     ]);
   }
 }
-
-/*
-  *     @OneToMany
-    private List<ImageData> immagini;
-    @OneToMany
-    private List<Posizione> posizioni;
-    @OneToMany
-    private List<Contatto> contatti;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInizio;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataFine;
-    private boolean visibile;
-    private String tags;
-    @OneToOne
-    private Ambito ambito;
-    @OneToOne
-    private Tipologia tipologia;
-    @OneToOne
-    private Ente ente;
-    @OneToMany
-    private List<OperazioneEvento> operazioni;*/
 
 class InfoEvento extends StatelessWidget {
   const InfoEvento({Key? key}) : super(key: key);

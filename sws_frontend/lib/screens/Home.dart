@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:frontend_sws/main.dart';
 import '../entity/Evento.dart';
 import 'Servizi.dart';
 import 'Events.dart';
-import 'Options.dart';
 import 'package:flutter/foundation.dart';
 import '../entity/Servizio.dart';
 
@@ -90,8 +90,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Navigation.selIndex=0;
-
     width = MediaQuery.of(context).size.shortestSide;
     height = MediaQuery.of(context).size.longestSide;
     return Scaffold(
@@ -145,8 +143,6 @@ List<Servizio> listServices = [
     contenuto: "Servizio mensa per i senzadimora",
     visibile: true,
     tags: "senzadimora",
-    ambito: "SA",
-    tipologia: "Mensa",
   ),
   const Servizio(
     id: "00002",
@@ -154,8 +150,6 @@ List<Servizio> listServices = [
     contenuto: "Servizio di trasporto per gli anziani",
     visibile: true,
     tags: "anziani",
-    ambito: "AZ",
-    tipologia: "Trasporto",
   ),
 ];
 

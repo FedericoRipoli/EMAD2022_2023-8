@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 import 'screens/Home.dart';
 
+double? width;
+double? height;
+
 final Color background = appTheme.primaryColor;
 final Color chipBackground = appTheme.secondaryHeaderColor.withOpacity(.2);
 final Color borderColor = appTheme.primaryColor.withAlpha(100);
@@ -17,7 +20,9 @@ class SearchTab extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: background,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
+            icon: const Icon(
+              Icons.arrow_back,
+            ),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -59,8 +64,6 @@ class StackDown extends StatelessWidget {
                   contenuto: "Servizio mensa per i senzadimora",
                   visibile: true,
                   tags: "senzadimora",
-                  ambito: "SA",
-                  tipologia: "Mensa",
                 ),
                 Servizio(
                   id: "00002",
@@ -68,8 +71,6 @@ class StackDown extends StatelessWidget {
                   contenuto: "Servizio di trasporto per gli anziani",
                   visibile: true,
                   tags: "anziani",
-                  ambito: "AZ",
-                  tipologia: "Trasporto",
                 ),
               ],
             )

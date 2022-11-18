@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'screens/Introduction.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -24,11 +25,16 @@ void main() {
 }
 
 ThemeData appTheme = ThemeData(
-  primaryColor: const Color(0xFF0059B3),
-  /* Colors.tealAccent,*/
-  secondaryHeaderColor: const Color(0xFF28759E) /* Colors.teal*/
-  ,
-  scaffoldBackgroundColor: Colors.white,
-  visualDensity: VisualDensity.adaptivePlatformDensity,
-);
+    primaryColor: const Color(0xFF0059B3),
+    /* Colors.tealAccent,*/
+    secondaryHeaderColor: const Color(0xFF28759E) /* Colors.teal*/
+    ,
+    scaffoldBackgroundColor: Colors.white,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    appBarTheme: const AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light),
+    ));
 // E0E3EC

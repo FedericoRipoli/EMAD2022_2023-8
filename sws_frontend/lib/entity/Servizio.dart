@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:frontend_sws/entity/Ente.dart';
+import 'package:frontend_sws/entity/StatoOperazione.dart';
+import 'package:frontend_sws/entity/Tipologia.dart';
+import 'package:frontend_sws/main.dart';
+import 'Ambito.dart';
 import 'Contatto.dart';
+import 'Posizione.dart';
+
+double? width;
+double? height;
 
 class Servizio extends StatelessWidget {
   final String id;
-  final String? nome, contenuto;
+  final String? nome, contenuto, tags;
   final List<AssetImage>? immagini;
   final List<Contatto>? contatti;
   final bool visibile;
-  final String? tags, ambito, tipologia;
   final Ente? ente;
+  final List<Posizione>? posizioni;
+  final StatoOperazione? stato;
+  final String? note;
+  final Ambito? ambito;
+  final Tipologia? tipologia;
+  final DateTime? dataCreazione, dataUltimaModifica;
+
   /*
   * private List<Contatto> contatti;
      private Ambito ambito;
@@ -34,6 +49,11 @@ class Servizio extends StatelessWidget {
     this.ambito,
     this.tipologia,
     this.ente,
+    this.posizioni,
+    this.stato,
+    this.note,
+    this.dataCreazione,
+    this.dataUltimaModifica,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -73,13 +93,13 @@ class Servizio extends StatelessWidget {
                     Container(
                       margin: const EdgeInsets.all(4),
                       child: Chip(
-                        label: Text(ambito!),
+                        label: Text("ambito"),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.all(4),
                       child: Chip(
-                        label: Text(tipologia!),
+                        label: Text("tipologia!"),
                       ),
                     ),
                     Container(
@@ -118,6 +138,199 @@ class InfoServizio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(resizeToAvoidBottomInset: false, body: Container());
+    width = MediaQuery.of(context).size.shortestSide;
+    height = MediaQuery.of(context).size.longestSide;
+    return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(180),
+          child: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back, size: 32, color: Colors.white),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            backgroundColor: appTheme.primaryColor,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(50),
+            )),
+          ),
+        ),
+        extendBodyBehindAppBar: false,
+        resizeToAvoidBottomInset: false,
+        floatingActionButton: FloatingActionButton.extended(
+          elevation: 0,
+          hoverElevation: 0,
+          onPressed: () {},
+          backgroundColor: Colors.green,
+          label: Row(
+            children: const [
+              Padding(
+                padding: EdgeInsets.only(right: 5.0),
+                child: Icon(
+                  Icons.call,
+                  size: 20,
+                ),
+              ),
+              Text(
+                "Contatta",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: const [InfoServiziDown()],
+          ),
+        ));
   }
 }
+
+class InfoServiziTop extends StatelessWidget {
+  const InfoServiziTop({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text("data");
+  }
+}
+
+class InfoServiziDown extends StatelessWidget {
+  const InfoServiziDown({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(30),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Titolo",
+            style: TextStyle(
+                color: appTheme.primaryColor,
+                fontSize: 28,
+                fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          Text("Ente",
+              style: TextStyle(color: appTheme.primaryColor, fontSize: 22)),
+          const SizedBox(height: 18),
+          const Text("Descrizione",
+              style: TextStyle(color: Colors.black, fontSize: 18)),
+          const SizedBox(height: 18),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Icon(
+                    Icons.calendar_month,
+                    size: 32,
+                    color: appTheme.primaryColor,
+                  ),
+                  const Text(
+                    'Dal 22 dicembre',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              ),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Icon(
+                    Icons.access_time,
+                    size: 32,
+                    color: appTheme.primaryColor,
+                  ),
+                  const Text(
+                    '19:00 - 21:00',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              )
+            ],
+          ), // riga dei chip
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Chip(
+                label: Text("tipologia"),
+                labelStyle:
+                    TextStyle(color: appTheme.primaryColor, fontSize: 18),
+              ),
+              Chip(
+                label: Text("ambito"),
+                labelStyle:
+                    TextStyle(color: appTheme.primaryColor, fontSize: 18),
+              ),
+              const Chip(
+                label: Text("stato"),
+                labelStyle: TextStyle(color: Colors.white, fontSize: 18),
+                backgroundColor: Colors.green,
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.start,
+            children: [
+              Icon(
+                Icons.location_on,
+                size: 20,
+                color: appTheme.primaryColor,
+              ),
+              Text(
+                'Dove viene erogato il servizio?',
+                style: TextStyle(fontSize: 20, color: appTheme.primaryColor),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [desc],
+              )),
+              Flexible(
+                child: Image.asset("assets/images/welfare.jpg"),
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.start,
+            children: [
+              Icon(
+                Icons.info_outlined,
+                size: 20,
+                color: appTheme.primaryColor,
+              ),
+              Text(
+                'Hai bisogno di maggiori informazioni?',
+                style: TextStyle(fontSize: 20, color: appTheme.primaryColor),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          const Text("telefono, email ....")
+        ],
+      ),
+    );
+  }
+}
+
+const Text desc = Text(
+  "Via Garibaldi 2\nVia Roma 3\nPiazza Plebiscito 51",
+  style: TextStyle(fontSize: 16),
+);

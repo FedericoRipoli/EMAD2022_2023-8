@@ -91,7 +91,7 @@ class Introduction extends StatelessWidget {
   // crea la route con la relativa animazione
   Route _createRoute() {
     return PageRouteBuilder(
-      transitionDuration: const Duration(milliseconds: 800),
+      transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (context, animation, secondaryAnimation) =>
           const BottomNav(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {

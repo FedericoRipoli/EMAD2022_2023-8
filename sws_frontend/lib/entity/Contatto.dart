@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
+import 'Ente.dart';
+
 class Contatto extends StatefulWidget {
   final String id;
-  final String? denominazione, email, cellulare, telefono, pec, sitoWeb;
+  final String denominazione, email, cellulare, telefono, pec, sitoWeb;
+  final Ente enteProprietario;
 
   const Contatto(
       {Key? key,
       required this.id,
-      this.denominazione,
-      this.email,
-      this.cellulare,
-      this.telefono,
-      this.pec,
-      this.sitoWeb})
+      required this.denominazione,
+      required this.email,
+      required this.cellulare,
+      required this.telefono,
+      required this.pec,
+      required this.sitoWeb,
+      required this.enteProprietario})
       : super(key: key);
 
   @override
