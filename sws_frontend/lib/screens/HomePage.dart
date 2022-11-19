@@ -91,9 +91,125 @@ class _BottomNavState2 extends State<BottomNav2> {
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   @override
-  State<StatefulWidget> createState() => _HomeScreen();
+  State<StatefulWidget> createState() => _HomeScreenAdmin();
 }
-class _HomeScreen extends State<HomeScreen>{
+class _HomeScreenUnlogged extends State<HomeScreen>{
+
+  @override
+  Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.shortestSide;
+    height = MediaQuery.of(context).size.longestSide;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: appTheme.primaryColor,
+        elevation: 30,
+      ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: <Widget>[
+            ClipPath(
+              clipper: Clipper08(),
+              child: Container(
+                height: height! * .65 < 360 ? height! * .65 : 380, //400
+                //color: Colors.tealAccent,
+                decoration: BoxDecoration(
+                    gradient: RadialGradient(colors: [
+                      appTheme.secondaryHeaderColor,
+                      appTheme.primaryColor
+                    ])),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: height! / 16,
+                    ),
+
+                    Center(
+                      child: Image.asset(
+                        "assets/images/logo.png",
+                        width: 150,
+                        height: 150,
+                      ),
+                    ),
+                    const Text(
+                      'Bentornatə in\nSalerno Amica!👋',
+                      style: TextStyle(
+                        fontSize: 28.0,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+
+                  ],
+                ),
+              ),
+            ),
+            HomeDown(
+                itemList: listServices,
+                itemLabel: "Servizi"),
+            HomeDown(
+                itemList: listEventi,
+                itemLabel: "Eventi")
+
+          ],
+        ),
+      ),
+      drawer: GFDrawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            GFDrawerHeader(
+              currentAccountPicture: GFAvatar(
+                radius: 70.0,
+                backgroundImage: NetworkImage(""),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Text('',style: TextStyle(color: Colors.white))                   ,
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.login_rounded),
+              title: Text('Login'),
+              onTap: () => {
+                showDialog(
+                context: context,
+                builder: (context) {
+                  return const AlertDialog(
+                    content: LoginForm(),
+                  );
+                },
+                )
+              },
+            ),
+          ],
+        ),
+      ),
+      resizeToAvoidBottomInset: false,
+      floatingActionButton: FloatingActionButton(
+        elevation: 0,
+        hoverElevation: 0,
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const ChatBot();
+          }));
+        },
+        backgroundColor: appTheme.primaryColor,
+        child: const ImageIcon(
+          AssetImage("assets/images/chatbot.png"),
+          size: 28,
+        ),
+      ),
+    );
+  }
+}
+
+class _HomeScreenAdmin extends State<HomeScreen>{
 
   @override
   Widget build(BuildContext context) {
@@ -165,7 +281,7 @@ class _HomeScreen extends State<HomeScreen>{
               ),
               otherAccountsPictures: <Widget>[
                 GFAvatar(
-                  child: Text("ab"),
+                  child: Text("UA"),
                 )
               ],
               child: Column(
@@ -174,19 +290,41 @@ class _HomeScreen extends State<HomeScreen>{
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(top: 15),
-                    child: Text('user name',style: TextStyle(color: Colors.white))                   ,
+                    child: Text('Username Admin',style: TextStyle(color: Colors.white))                   ,
                   ),
                 ],
               ),
             ),
             ListTile(
-              title: Text('Item 1'),
+              leading: Icon(Icons.add_chart),
+              title: Text('Gestione Servizi'),
               onTap: null,
             ),
             ListTile(
-              title: Text('Item 2'),
+              leading: Icon(Icons.event_rounded),
+              title: Text('Gestione Eventi'),
               onTap: null,
             ),
+            ListTile(
+              leading: Icon(Icons.business_sharp),
+              title: Text('Gestione Enti'),
+              onTap: null,
+            ),
+            ListTile(
+              leading: Icon(Icons.verified_outlined),
+              title: Text('Approvazioni'),
+              onTap: null,
+            ),
+            ListTile(
+              leading: Icon(Icons.add),
+              title: Text('Aggiungi Responsabile'),
+              onTap: null,
+            ),
+            ListTile(
+              leading: Icon(Icons.logout_rounded),
+              title: Text('Logout'),
+              onTap: null,
+            )
           ],
         ),
       ),
@@ -208,6 +346,7 @@ class _HomeScreen extends State<HomeScreen>{
     );
   }
 }
+
 
 List<Servizio> listServices = [
   const Servizio(
