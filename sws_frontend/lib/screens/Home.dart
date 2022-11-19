@@ -4,6 +4,7 @@ import 'package:frontend_sws/main.dart';
 import '../entity/Evento.dart';
 import 'Servizi.dart';
 import 'Events.dart';
+import 'Chatbot.dart';
 import 'package:flutter/foundation.dart';
 import '../entity/Servizio.dart';
 import 'package:sidebarx/sidebarx.dart';
@@ -94,24 +95,16 @@ class HomeScreen extends StatelessWidget {
     width = MediaQuery.of(context).size.shortestSide;
     height = MediaQuery.of(context).size.longestSide;
     return Scaffold(
+      drawer: SideBarLaterale(),
       // bottomNavigationBar: /*NavigationTest()*/Navigation(),
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
         elevation: 0,
         hoverElevation: 0,
         onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text("Pagina chatbot"),
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const <Widget>[Text("CHAT")],
-                ),
-              );
-            },
-          );
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return const ChatBot();
+          }));
         },
         backgroundColor: appTheme.primaryColor,
         child: const ImageIcon(
@@ -193,7 +186,7 @@ class _HomeTop extends State<HomeTop> {
         ClipPath(
           clipper: Clipper08(),
           child: Container(
-            height: height! * .65 < 460 ? height! * .65 : 500, //400
+            height: height! * .65 < 360 ? height! * .65 : 420, //400
             //color: Colors.tealAccent,
             decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
@@ -206,13 +199,13 @@ class _HomeTop extends State<HomeTop> {
                   height: height! / 16,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: <Widget>[
                       IconButton(
                         icon: const Icon(Icons.account_circle_rounded),
                         color: Colors.white,
-                        iconSize: 32,
+                        iconSize: 36,
                         onPressed: () {
                           showDialog(
                             context: context,
@@ -267,31 +260,31 @@ class _HomeTopAdmin extends State<HomeTop> {
         ClipPath(
           clipper: Clipper08(),
           child: Container(
-            height: height! * .65 < 460 ? height! * .65 : 500, //400
+            height: height! * .65 < 350 ? height! * .65 : 450, //400
             //color: Colors.tealAccent,
             decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
-                  appTheme.primaryColor,
-                  appTheme.secondaryHeaderColor
-                ])),
+              appTheme.primaryColor,
+              appTheme.secondaryHeaderColor
+            ])),
             child: Column(
               children: <Widget>[
-                SizedBox(
-                  height: height! / 16,
+                const SizedBox(
+                  height: 5,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: <Widget>[
                       IconButton(
-                        icon: const Icon(Icons.account_circle_rounded),
+                        icon: const Icon(Icons.menu),
                         color: Colors.white,
-                        iconSize: 32,
+                        iconSize: 36,
                         onPressed: () {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return SideBarLaterale();
+                              return const SideBarLaterale();
                             },
                           );
                         },
@@ -332,33 +325,28 @@ class _HomeTopAdmin extends State<HomeTop> {
 }
 
 class SideBarLaterale extends StatelessWidget {
+  const SideBarLaterale({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         // Remove padding
-        padding: EdgeInsets.only(right: 250),
+        padding: const EdgeInsets.only(right: 250),
         children: [
           UserAccountsDrawerHeader(
             accountName: Text('Admin'),
             accountEmail: Text('admin@gmail.com'),
-            currentAccountPicture: CircleAvatar(
+            currentAccountPicture: const CircleAvatar(
               child: ClipOval(
-                child: Image.network(
-                  'https://oflutter.com/wp-content/uploads/2021/02/girl-profile.png',
-                  fit: BoxFit.cover,
-                  width: 90,
-                  height: 90,
+                child: Icon(
+                  Icons.account_circle_rounded,
+                  size: 56,
                 ),
               ),
             ),
             decoration: BoxDecoration(
-              color: Colors.blue,
-              image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(
-                      'https://oflutter.com/wp-content/uploads/2021/02/profile-bg3.jpg')
-              ),
+              color: appTheme.primaryColor,
             ),
           ),
           ListTile(

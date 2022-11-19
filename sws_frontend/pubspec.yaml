@@ -16,9 +16,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   introduction_screen: ^3.0.2
   shared_preferences: ^2.0.15
-  settings_ui: ^2.0.2
   responsive_framework: ^0.2.0
   sidebarx: ^0.14.0
+  getwidget: ^2.0.4
+  flutter_map: ^3.0.0
+  latlong2: ^0.8.1
 
 dev_dependencies:
   flutter_launcher_icons: "^0.10.0"
