@@ -6,13 +6,13 @@ import 'package:getwidget/getwidget.dart';
 import '../entity/Servizio.dart';
 import '../entity/Evento.dart';
 // screens
-import 'ChatBot.dart';
+import 'package:frontend_sws/screens/Chat.dart';
 //components
 import 'package:frontend_sws/components/Clipper08.dart';
 import 'package:frontend_sws/components/CardList.dart';
 import 'package:frontend_sws/components/LoginForm.dart';
 
-bool admin = false;
+bool admin = true;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -73,7 +73,7 @@ class _HomeState extends State<Home> {
           if (mounted) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ChatBot()),
+              MaterialPageRoute(builder: (context) => const ChatPage()),
             );
           }
         },
