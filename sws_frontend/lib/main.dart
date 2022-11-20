@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend_sws/components/Splash.dart';
+import 'package:frontend_sws/screens/InitApp.dart';
 import 'screens/Introduction.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -18,23 +20,17 @@ void main() {
       ],
     ),
     debugShowCheckedModeBanner: false,
-    home: const Introduction(),
+    home: Splash(),
     theme: appTheme,
     title: "Salerno Amica",
   ));
 }
 
 ThemeData appTheme = ThemeData(
-    primaryColor: const Color(0xFF0059B3),
-    /* Colors.tealAccent,*/
-    secondaryHeaderColor: const Color(0xFF28759E) /* Colors.teal*/
-    ,
-    scaffoldBackgroundColor: Colors.white,
-    visualDensity: VisualDensity.adaptivePlatformDensity,
-    appBarTheme: const AppBarTheme(
-      systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light),
-    ));
+  primaryColor: const Color(0xFF0059B3),
+  /* Colors.tealAccent,*/
+  secondaryHeaderColor: const Color(0xFF28759E),
+  scaffoldBackgroundColor: Colors.white,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+);
 // E0E3EC

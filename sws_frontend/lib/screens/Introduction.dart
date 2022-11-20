@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/screens/InitApp.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:flutter/foundation.dart';
-import 'Home.dart';
+import 'HomeScreen.dart';
 
 class Introduction extends StatelessWidget {
   const Introduction({Key? key}) : super(key: key);
@@ -92,8 +93,7 @@ class Introduction extends StatelessWidget {
   Route _createRoute() {
     return PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const BottomNav(),
+      pageBuilder: (context, animation, secondaryAnimation) => const InitApp(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;

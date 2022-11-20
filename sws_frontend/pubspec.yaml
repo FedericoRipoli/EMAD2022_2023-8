@@ -1,7 +1,6 @@
 name: frontend_sws
 description: Frontend of the Salerno Welfare Services project
 
-
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
@@ -21,6 +20,8 @@ dependencies:
   getwidget: ^2.0.4
   flutter_map: ^3.0.0
   latlong2: ^0.8.1
+  after_layout: ^1.2.0
+  loading_animation_widget: ^1.2.0+3
 
 dev_dependencies:
   flutter_launcher_icons: "^0.10.0"
@@ -34,11 +35,11 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/icons/icon-512.png"
+  image_path: "assets/images/logo.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/icons/icon-512.png"
+    image_path: "assets/images/logo.png"
     background_color: "#fff"
     theme_color: "#fff"
 

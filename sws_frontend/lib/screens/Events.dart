@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:frontend_sws/components/Clipper07.dart';
 
 class Events extends StatelessWidget {
   const Events({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final List<String> entries = <String>['Mensa', 'Potito'];
+    final List<String> entries = <String>['Mensa', 'Potito', 'Akask'];
 
     return Scaffold(
       appBar: GFAppBar(
-        leading: GFIconButton(
-          icon: const Icon(
-            Icons.menu,
-            color: Colors.white,
-          ),
-          onPressed: () {},
-          type: GFButtonType.transparent,
-        ),
+        elevation: 0,
         searchBar: true,
         backgroundColor: appTheme.primaryColor,
         title: const Text("Sezione Eventi"),
@@ -37,16 +31,22 @@ class Events extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.only(top: 18, bottom: 18),
-                  child: Text(
-                    "Filtra per:",
-                    style:
-                        TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            Stack(
+              children: <Widget>[
+                ClipPath(
+                  clipper: Clipper07(),
+                  child: Container(
+                    height: 130, //400
+                    color: appTheme.primaryColor,
+                    child: const Center(
+                      child: Text(
+                        "Filtra per",
+                        style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -54,14 +54,16 @@ class Events extends StatelessWidget {
             ListView.separated(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              padding: const EdgeInsets.all(12),
+              physics: const ScrollPhysics(),
+              padding: const EdgeInsets.all(14),
               itemCount: entries.length,
               itemBuilder: (BuildContext context, int index) {
                 return GFCard(
                   color: Colors.white,
                   boxFit: BoxFit.cover,
                   titlePosition: GFPosition.start,
-                  elevation: 5,
+                  borderRadius: const BorderRadius.all(Radius.circular(50)),
+                  elevation: 2,
                   borderOnForeground: true,
                   image: Image.asset(
                     'assets/images/servizi-sociali.jpg',
