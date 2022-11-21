@@ -56,6 +56,8 @@ public class WebSecurity {
                         .antMatchers(HttpMethod.GET,"/api/ambiti/{id}").permitAll()
                         .antMatchers(HttpMethod.GET,"/api/tipologie").permitAll()
                         .antMatchers(HttpMethod.GET,"/api/tipologie/{id}").permitAll()
+                        .antMatchers(HttpMethod.GET,"/api/servizi").permitAll()
+                        .antMatchers(HttpMethod.GET,"/api/servizi/{id}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf().disable()

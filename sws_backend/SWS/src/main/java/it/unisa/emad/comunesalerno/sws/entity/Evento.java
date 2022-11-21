@@ -34,7 +34,8 @@ public class Evento {
     private StatoOperazione stato;
     @Lob
     private String note;
-    private String tags;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> hashtags;
     @OneToOne
     private Ambito ambito;
     @OneToOne
