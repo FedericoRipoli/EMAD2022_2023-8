@@ -115,13 +115,18 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    floatingActionButton: FloatingActionButton(
-      backgroundColor: Colors.red,
-      onPressed:
-      // If not yet listening for speech start, otherwise stop
-      _speechToText.isNotListening ? _startListening : _stopListening,
-      tooltip: 'Listen',
-      child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
+    floatingActionButton:
+    Container(
+      height: 70,
+      width: 70,
+      child: FloatingActionButton(
+        backgroundColor: Colors.red,
+        onPressed:
+        // If not yet listening for speech start, otherwise stop
+        _speechToText.isNotListening ? _startListening : _stopListening,
+        tooltip: 'Listen',
+        child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
+      )
     ),
     appBar: GFAppBar(
       leading: GFIconButton(
