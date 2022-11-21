@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:bubble/bubble.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -141,6 +142,7 @@ class _ChatPageState extends State<ChatPage> {
       decoration: BoxDecoration(color: Color.fromARGB(255,29,28,33)),
       padding: EdgeInsets.only(bottom: 80),
       child: Chat(
+        bubbleBuilder: _bubbleBuilder,
         messages: _messages,
         //onAttachmentPressed: _handleAttachmentPressed, //Upload images and files
         //onMessageTap: _handleMessageTap,
@@ -152,4 +154,27 @@ class _ChatPageState extends State<ChatPage> {
       ),
     ),
   );
+  Widget _bubbleBuilder(
+      Widget child, {
+        required message,
+        required nextMessageInGroup,
+      }) =>
+      Bubble(
+        child: child,
+        radius: Radius.circular(40),
+        nipHeight: 40,
+        nipWidth: 5,
+        color: _user.id != message.author.id ||
+            message.type == types.MessageType.image
+            ? const Color.fromARGB(255,125,125,125)
+            : const Color.fromARGB(255,0,89,179),
+        margin: nextMessageInGroup
+            ? const BubbleEdges.symmetric(horizontal: 6)
+            : null,
+        nip: nextMessageInGroup
+            ? BubbleNip.no
+            : _user.id != message.author.id
+            ? BubbleNip.leftBottom
+            : BubbleNip.rightBottom,
+      );
 }
