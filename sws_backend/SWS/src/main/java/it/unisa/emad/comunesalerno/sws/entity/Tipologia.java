@@ -2,6 +2,9 @@ package it.unisa.emad.comunesalerno.sws.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.unisa.emad.comunesalerno.sws.entity.serializer.AmbitoSerializer;
+import it.unisa.emad.comunesalerno.sws.entity.serializer.TipologiaSerializer;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -12,7 +15,7 @@ import java.util.List;
 @Entity
 @Data
 @RequiredArgsConstructor
-@JsonIgnoreProperties(value = { "padre" })
+@JsonSerialize(using = TipologiaSerializer.class)
 public class Tipologia {
     @Id
     @GeneratedValue(generator = "uuid")

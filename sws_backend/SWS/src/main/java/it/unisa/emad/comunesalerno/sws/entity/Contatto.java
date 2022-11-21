@@ -2,6 +2,8 @@ package it.unisa.emad.comunesalerno.sws.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.unisa.emad.comunesalerno.sws.entity.serializer.ContattoSerializer;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -14,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @RequiredArgsConstructor
+@JsonSerialize(using = ContattoSerializer.class)
 public class Contatto {
     @Id
     @GeneratedValue(generator = "uuid")
