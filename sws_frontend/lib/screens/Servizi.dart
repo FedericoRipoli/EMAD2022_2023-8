@@ -33,31 +33,40 @@ class _ServiziState extends State<Servizi> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70.0),
+        preferredSize: const Size.fromHeight(80.0),
         child: GFAppBar(
           backgroundColor: appTheme.primaryColor,
           searchBar: true,
           searchHintText: "Cerca...",
-          searchHintStyle: const TextStyle(fontSize: 16, color: Colors.white),
-          searchTextStyle: const TextStyle(fontSize: 16, color: Colors.white),
+          searchHintStyle: const TextStyle(fontSize: 18, color: Colors.white),
+          searchTextStyle: const TextStyle(fontSize: 18, color: Colors.white),
           searchBarColorTheme: GFColors.WHITE,
           leading: const Icon(Icons.map),
           automaticallyImplyLeading: true,
           title: GFSegmentTabs(
+            height: 35,
             tabController: tabController,
             tabBarColor: appTheme.primaryColor,
             labelColor: appTheme.primaryColor,
-            labelStyle:
-                const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            labelPadding: const EdgeInsets.all(8),
+            labelStyle: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
             unselectedLabelColor: GFColors.WHITE,
             indicator: const BoxDecoration(
               color: GFColors.WHITE,
               borderRadius: BorderRadius.all(
-                Radius.circular(50),
+                Radius.circular(40),
               ),
             ),
-            indicatorPadding: const EdgeInsets.all(3.0),
-            indicatorWeight: 1.0,
+            indicatorPadding: const EdgeInsets.all(0.6),
+            indicatorWeight: 4,
+            indicatorSize: TabBarIndicatorSize.tab,
             border: Border.all(color: appTheme.primaryColor, width: 0.5),
             length: 2,
             tabs: const <Widget>[
