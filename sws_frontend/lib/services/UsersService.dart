@@ -17,7 +17,18 @@ class UserService{
 
 
 
+  Future<String?> getToken() async{
+    if(isLogged()){
+      TokenDto? token=tokenDtoFromJson(SharedPreferencesUtils.prefs.getString(SharedPreferencesUtils.user_logged)!);
+      bool? exp=isExpired();
+      if(exp!=null && exp){
+        token= await refreshToken(token);
 
+      }
+      return token?.accessToken;
+    }
+    return null;
+  }
 
 
   Future<TokenDto?> login(String username, String password) async {

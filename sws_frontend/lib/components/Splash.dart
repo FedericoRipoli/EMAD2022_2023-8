@@ -14,7 +14,7 @@ class Splash extends StatefulWidget {
 
 class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
   Future checkFirstSeen() async {
-    SharedPreferencesUtils.init();
+    await SharedPreferencesUtils.init();
     bool _seen = (SharedPreferencesUtils.prefs.getBool(SharedPreferencesUtils.splash_viewed) ?? false);
 
     if (_seen) {
