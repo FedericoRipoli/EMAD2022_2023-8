@@ -1,7 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sws.frontend_sws">
     <uses-permission android:name="android.permission.INTERNET"/>
-   <application
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Permissions options for the `storage` group -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- Permissions options for the `camera` group -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- Permissions options for the `RECORD_AUDIO` group -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <application
         android:label="Salerno Amica"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">

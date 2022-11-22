@@ -4,12 +4,6 @@ description: Frontend of the Salerno Welfare Services project
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
-it:
-  unisa:
-    emad:
-      comunesalerno:
-        sws:
-          backendurl: 'localhost:8080/api'
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -38,8 +32,8 @@ dependencies:
   path_provider: ^2.0.11
   uuid: ^3.0.6
   file_picker: ^5.2.2
-  logging: ^1.1.0
-  jwt_decoder: ^2.0.1
+  speech_to_text: ^6.1.0
+  bubble: ^1.2.1
 
 dev_dependencies:
   flutter_launcher_icons: "^0.10.0"
