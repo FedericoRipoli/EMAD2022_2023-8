@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:frontend_sws/screens/Introduction.dart';
 import 'package:frontend_sws/screens/InitApp.dart';
 import 'package:frontend_sws/main.dart';
+import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -14,8 +14,8 @@ class Splash extends StatefulWidget {
 
 class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
   Future checkFirstSeen() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool _seen = (prefs.getBool('seen') ?? false);
+    SharedPreferencesUtils.init();
+    bool _seen = (SharedPreferencesUtils.prefs.getBool(SharedPreferencesUtils.splash_viewed) ?? false);
 
     if (_seen) {
       Timer(
@@ -23,7 +23,7 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
           () => Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (BuildContext context) => const InitApp())));
     } else {
-      await prefs.setBool('seen', true);
+      await SharedPreferencesUtils.prefs.setBool('seen', true);
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => const Introduction()));
     }

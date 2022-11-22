@@ -48,6 +48,7 @@ public class WebSecurity {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .antMatchers("/api/auth/login").permitAll()
+                        .antMatchers("/api/auth/token").permitAll()
                         .antMatchers(HttpMethod.GET,"/api/enti").permitAll()
                         .antMatchers(HttpMethod.GET,"/api/enti/{id}").permitAll()
                         .antMatchers(HttpMethod.GET,"/api/contatti").permitAll()
