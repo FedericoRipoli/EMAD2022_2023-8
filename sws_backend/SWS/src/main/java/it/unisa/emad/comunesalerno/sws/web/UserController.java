@@ -4,6 +4,7 @@ package it.unisa.emad.comunesalerno.sws.web;
 
 import it.unisa.emad.comunesalerno.sws.dto.UtenteDTO;
 import it.unisa.emad.comunesalerno.sws.entity.Utente;
+import it.unisa.emad.comunesalerno.sws.repository.EnteRepository;
 import it.unisa.emad.comunesalerno.sws.repository.UtenteRepository;
 import it.unisa.emad.comunesalerno.sws.repository.search.specification.UtenteSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     UtenteRepository userRepository;
+    @Autowired
+    EnteRepository enteRepository;
     @Autowired
     UserDetailsManager userDetailsManager;
     @GetMapping("/{id}")
@@ -43,6 +46,9 @@ public class UserController {
     public ResponseEntity updateUser(@PathVariable String id, @RequestBody Utente utente) {
         if(userRepository.existsById(id)){
             utente.setId(id);
+            if(utente.getIdEnte()!=null && enteRepository.existsById(utente.getIdEnte())){
+                utente.setEnte(enteRepository.findById(utente.getIdEnte()).orElseThrow());
+            }
             userDetailsManager.updateUser(utente);
             return ResponseEntity.ok(utente);
         }

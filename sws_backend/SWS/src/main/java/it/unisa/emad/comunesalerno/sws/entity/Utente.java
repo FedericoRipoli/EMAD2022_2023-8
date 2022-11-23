@@ -1,5 +1,6 @@
 package it.unisa.emad.comunesalerno.sws.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import it.unisa.emad.comunesalerno.sws.entity.serializer.TipologiaSerializer;
 import it.unisa.emad.comunesalerno.sws.entity.serializer.UtenteSerializer;
@@ -35,14 +36,19 @@ public class Utente implements UserDetails {
     @NotNull
     private String username;
 
-    @NotNull
+
     private String password;
+
+
 
     private boolean admin;
 
     @OneToOne
     private Ente ente;
 
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String idEnte;
 
 
     @Override
