@@ -4,11 +4,13 @@ import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
 
 // entity
+import '../components/DrawerMenu.dart';
 import '../entity/Servizio.dart';
 import '../entity/Evento.dart';
 
 // screens
 import 'package:frontend_sws/screens/Chat.dart';
+import '../admin_screens/GestioneAdminEnti.dart';
 
 //components
 import 'package:frontend_sws/components/Clipper08.dart';
@@ -30,49 +32,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.dark),
-    );
     return Scaffold(
       key: _scaffoldKey,
       endDrawerEnableOpenDragGesture: false,
-      drawer: GFDrawer(
-        elevation: 1,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            GFDrawerHeader(
-              currentAccountPicture: const GFAvatar(
-                radius: 80.0,
-                backgroundImage: NetworkImage(
-                    "https://cdn.pixabay.com/photo/2017/12/03/18/04/christmas-balls-2995437_960_720.jpg"),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('user name'),
-                  Text(userService.getName()??""),
-                ],
-              ),
-            ),
-            const ListTile(
-              title: Text('Item 1'),
-              onTap: null,
-            ),
-            ListTile(
-              title: const Text('Logout'),
-              onTap: () {
-                userService.logout();
-                setState(() {});
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: const DrawerMenu(),
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
         elevation: 0,
@@ -165,7 +128,7 @@ class _HomeState extends State<Home> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 2),
+                        const SizedBox(height: 2),
                       ],
                     ),
                   ),

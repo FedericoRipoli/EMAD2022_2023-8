@@ -36,14 +36,14 @@ class Events extends StatelessWidget {
                 ClipPath(
                   clipper: Clipper07(),
                   child: Container(
-                    height: 130, //400
+                    height: 100, //400
                     color: appTheme.primaryColor,
                     child: const Center(
                       child: Text(
                         "Filtra per",
                         style: TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.normal,
                             color: Colors.white),
                       ),
                     ),
@@ -63,7 +63,7 @@ class Events extends StatelessWidget {
                   boxFit: BoxFit.cover,
                   titlePosition: GFPosition.start,
                   borderRadius: const BorderRadius.all(Radius.circular(50)),
-                  elevation: 2,
+                  elevation: 10,
                   borderOnForeground: true,
                   image: Image.asset(
                     'assets/images/servizi-sociali.jpg',
@@ -74,10 +74,11 @@ class Events extends StatelessWidget {
                   showImage: true,
                   title: GFListTile(
                     avatar: const GFAvatar(
-                      backgroundImage: AssetImage('assets/images/logo.png'),
+                      shape: GFAvatarShape.standard,
+                      child: Text("AB"),
                     ),
                     titleText: 'Evento ${entries[index]}',
-                    subTitleText: 'Nome Ente',
+                    subTitleText: 'Ente Mirò',
                   ),
                   content: const Text("Descrizione evento"),
                   buttonBar: const GFButtonBar(
@@ -92,7 +93,7 @@ class Events extends StatelessWidget {
                       GFAvatar(
                         backgroundColor: GFColors.SECONDARY,
                         child: Icon(
-                          Icons.search,
+                          Icons.info_outlined,
                           color: Colors.white,
                         ),
                       ),

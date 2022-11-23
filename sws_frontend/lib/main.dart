@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend_sws/components/Splash.dart';
-import 'package:frontend_sws/screens/InitApp.dart';
-import 'screens/Introduction.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
@@ -28,9 +26,15 @@ void main() {
 
 ThemeData appTheme = ThemeData(
   primaryColor: const Color(0xFF0059B3),
-  /* Colors.tealAccent,*/
   secondaryHeaderColor: const Color(0xFF28759E),
   scaffoldBackgroundColor: Colors.white,
   visualDensity: VisualDensity.adaptivePlatformDensity,
+  splashColor: Colors.white,
+  appBarTheme: const AppBarTheme(
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+    ),
+  ),
 );
 // E0E3EC

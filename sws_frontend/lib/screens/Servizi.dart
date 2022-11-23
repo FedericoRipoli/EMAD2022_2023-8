@@ -4,6 +4,8 @@ import 'package:getwidget/getwidget.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../entity/Servizio.dart';
+
 class Servizi extends StatefulWidget {
   const Servizi({Key? key}) : super(key: key);
 
@@ -27,6 +29,24 @@ class _ServiziState extends State<Servizi> with TickerProviderStateMixin {
 
   final List<String> entries = <String>['A', 'B', 'C'];
   final List<int> colorCodes = <int>[600, 500, 100];
+
+  List<Servizio> listServices = [
+    const Servizio(
+      id: "00001",
+      nome: "Mensa",
+      contenuto:
+          "Servizio mensa per i senzadimora si mangiano tante cose, tante cibarie, devo scrivere un altro pò di cose per capire quanto testo mi serve aoh la carbonara cor guanciale croccante",
+      visibile: true,
+      tags: "senzadimora",
+    ),
+    const Servizio(
+      id: "00002",
+      nome: "Trasporto Anziani",
+      contenuto: "Servizio di trasporto per gli anziani",
+      visibile: true,
+      tags: "anziani",
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -131,16 +151,9 @@ class _ServiziState extends State<Servizi> with TickerProviderStateMixin {
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(12),
-                itemCount: entries.length,
+                itemCount: listServices.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return GFListTile(
-                      titleText: 'Elemento ${entries[index]}',
-                      color: Color(0xffD3D3D3),
-                      description: const Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing'),
-                      subTitleText:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing',
-                      icon: const Icon(Icons.location_on));
+                  return listServices[index];
                 },
                 separatorBuilder: (BuildContext context, int index) =>
                     const Divider(),
