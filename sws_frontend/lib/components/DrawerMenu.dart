@@ -22,8 +22,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
       elevation: 4,
       child: ListView(
         padding: EdgeInsets.zero,
-        children: userService.isAdmin()!
-            ? <Widget>[
+        children: <Widget>[
                 GFDrawerHeader(
                   currentAccountPicture: GFAvatar(
                     shape: GFAvatarShape.standard,
@@ -74,12 +73,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     position: GFPosition.start,
                     onPressed: () {
                       userService.logout();
-                      setState(() {});
-                      Navigator.pop(context);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const InitApp()));
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => const InitApp()), (route) => false);
                     },
                     text: "Esci",
                     textStyle: const TextStyle(
@@ -91,57 +85,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   ),
                 ),
               ]
-            : <Widget>[
-                GFDrawerHeader(
-                  currentAccountPicture: GFAvatar(
-                    shape: GFAvatarShape.standard,
-                    child: Text(
-                        userService.getName()!.substring(0, 2).toUpperCase()),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      GFTypography(
-                        text: userService.getName() ?? "",
-                        textColor: Colors.white,
-                        type: GFTypographyType.typo4,
-                      ),
-                    ],
-                  ),
-                ),
-                ListTile(
-                  title: GFTypography(
-                    text: 'Il mio Ente',
-                    dividerWidth: 120,
-                    dividerColor: appTheme.primaryColor,
-                    textColor: Colors.black,
-                    type: GFTypographyType.typo4,
-                  ),
-                  onTap: () {},
-                ),
-                ListTile(
-                  title: GFButton(
-                    position: GFPosition.start,
-                    onPressed: () {
-                      userService.logout();
-                      setState(() {});
-                      Navigator.pop(context);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const InitApp()));
-                    },
-                    text: "Esci",
-                    textStyle: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
-                    icon: const Icon(
-                      Icons.logout,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
+
       ),
     );
   }

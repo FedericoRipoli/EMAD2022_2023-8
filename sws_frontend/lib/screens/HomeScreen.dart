@@ -25,9 +25,10 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class _HomeState extends State<Home> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   UserService userService = UserService();
 
   @override
@@ -35,7 +36,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       key: _scaffoldKey,
       endDrawerEnableOpenDragGesture: false,
-      drawer: const DrawerMenu(),
+      drawer: userService.isLogged()?const DrawerMenu():null,
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
         elevation: 0,

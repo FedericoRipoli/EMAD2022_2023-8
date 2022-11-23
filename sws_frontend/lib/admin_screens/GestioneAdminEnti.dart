@@ -10,9 +10,10 @@ class GestioneAdminEnti extends StatefulWidget {
   State<GestioneAdminEnti> createState() => _GestioneAdminEntiState();
 }
 
-GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
 
 class _GestioneAdminEntiState extends State<GestioneAdminEnti> {
+  final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
