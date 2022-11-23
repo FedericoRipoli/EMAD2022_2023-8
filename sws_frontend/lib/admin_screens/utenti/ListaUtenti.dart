@@ -110,6 +110,5 @@ class _ListaUtentiState extends State<ListaUtenti> {
   }
   Future<void> _pullRefresh() async {
     _pagingController.refresh();
-    // why use freshNumbers var? https://stackoverflow.com/a/52992836/2301224
   }
 }
