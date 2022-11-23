@@ -27,6 +27,7 @@ class _ModificaServizio extends State<ModificaServizio>{
       appBar: GFAppBar(),
       floatingActionButton: GFFloatingWidget(),
       body: SingleChildScrollView(
+        physics: const ScrollPhysics(),
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
@@ -37,6 +38,34 @@ class _ModificaServizio extends State<ModificaServizio>{
                   hintStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), //hint text style
                   labelStyle: TextStyle(fontSize: 13, color: Colors.redAccent), //label style
                 )
+            ),
+            GFTextField(
+                decoration: InputDecoration(
+                  labelText: "Descrizione", //babel text
+                  hintText: "Mensa", //hint text
+                  hintStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), //hint text style
+                  labelStyle: TextStyle(fontSize: 13, color: Colors.redAccent), //label style
+                )
+            ),
+            Row(
+              children: [
+                GFTextField(
+                    decoration: InputDecoration(
+                      labelText: "Ambito", //babel text
+                      hintText: "", //hint text
+                      hintStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), //hint text style
+                      labelStyle: TextStyle(fontSize: 13, color: Colors.redAccent), //label style
+                    )
+                ),
+                GFTextField(
+                    decoration: InputDecoration(
+                      labelText: "Tipologia Utente", //babel text
+                      hintText: "", //hint text
+                      hintStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), //hint text style
+                      labelStyle: TextStyle(fontSize: 13, color: Colors.redAccent), //label style
+                    )
+                )
+              ],
             )
           ],
         ),
