@@ -35,6 +35,18 @@ class _ChatPageState extends State<ChatPage> {
     _initSpeech();
     _loadMessages();
     _ttsManager = TtsManager();
+    if (_messages.isEmpty) {
+      _addMessage(
+          types.TextMessage(
+            author: _bot,
+            createdAt: DateTime
+                .now()
+                .millisecondsSinceEpoch,
+            id: const Uuid().v4(),
+            text: "Ciao sono Olivia!\nCome posso aiutarti.",
+          )
+      );
+    }
   }
 
   @override
@@ -91,6 +103,10 @@ class _ChatPageState extends State<ChatPage> {
   List<types.Message> _messages = [];
   final _user = const types.User(
     id: '82091008-a484-4a89-ae75-a22bf8d6f3ac',
+  );
+  final _bot = const types.User(
+    id: '82091008-a484-4a89-ae75-a22bf8d6f3aa',
+    firstName: 'HelpBot',
   );
 
   void _handleSendPressed(types.PartialText message) {
