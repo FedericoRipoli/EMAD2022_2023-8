@@ -1,0 +1,12 @@
+ACCESS_TOKEN_PRIVATE_KEY_PATH: "access-refresh-token-keys/access-token-private.key"
+ACCESS_TOKEN_PUBLIC_KEY_PATH: "access-refresh-token-keys/access-token-public.key"
+REFRESH_TOKEN_PRIVATE_KEY_PATH: "access-refresh-token-keys/refresh-token-private.key"
+REFRESH_TOKEN_PUBLIC_KEY_PATH: "access-refresh-token-keys/refresh-token-public.key"
+MYSQL_USERNAME: "fluflu"
+MYSQL_PASSWORD: "Oliviaisthebest!"
+MYSQL_HOST: "emadsalerno.mysql.database.azure.com"
+MYSQL_PORT: '3306'
+MYSQL_DB: "emad"
+JPA_SHOW_SQL: true
+JWT_TOKEN_EXPIRE_MINUTES: 500
+JWT_TOKEN_REFRESH_EXPIRE_DAYS: 3

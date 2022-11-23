@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:frontend_sws/services/UsersService.dart';
+import 'package:frontend_sws/services/UserService.dart';
 import 'package:frontend_sws/services/dto/TokenDTO.dart';
+import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
 
 void main() {
   test("Login" , () async{
+    await SharedPreferencesUtils.init();
     var service=UserService();
     print(await service.login("admin", "admin"));
 

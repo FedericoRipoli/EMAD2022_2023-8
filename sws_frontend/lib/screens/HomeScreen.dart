@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
+
 // entity
 import '../entity/Servizio.dart';
 import '../entity/Evento.dart';
+
 // screens
 import 'package:frontend_sws/screens/Chat.dart';
+
 //components
 import 'package:frontend_sws/components/Clipper08.dart';
 import 'package:frontend_sws/components/CardList.dart';
 import 'package:frontend_sws/components/LoginForm.dart';
-
-bool admin = true;
+import 'package:frontend_sws/services/UserService.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -24,6 +26,8 @@ class Home extends StatefulWidget {
 final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class _HomeState extends State<Home> {
+  UserService userService = UserService();
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -50,17 +54,21 @@ class _HomeState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text('user name'),
-                  Text('user@userid.com'),
+                  Text(userService.getName()??""),
                 ],
               ),
             ),
-            ListTile(
+            const ListTile(
               title: Text('Item 1'),
               onTap: null,
             ),
             ListTile(
-              title: Text('Item 2'),
-              onTap: null,
+              title: const Text('Logout'),
+              onTap: () {
+                userService.logout();
+                setState(() {});
+                Navigator.pop(context);
+              },
             ),
           ],
         ),
@@ -84,7 +92,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       appBar: GFAppBar(
-        leading: admin
+        leading: userService.isLogged()
             ? GFIconButton(
                 icon: const Icon(
                   Icons.menu,
@@ -104,11 +112,11 @@ class _HomeState extends State<Home> {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return const AlertDialog(
-                        content: LoginForm(),
+                      return AlertDialog(
+                        content: LoginForm(userService: userService),
                       );
                     },
-                  );
+                  ).then((value) => setState(() => {}));
                 },
                 type: GFButtonType.transparent,
               ),
