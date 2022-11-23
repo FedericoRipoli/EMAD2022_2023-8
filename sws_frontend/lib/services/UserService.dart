@@ -9,9 +9,10 @@ import 'dto/TokenDTO.dart';
 import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
 import 'package:frontend_sws/util/JwtUtil.dart';
 
-final log = Logger('UserServiceLogger');
 
 class UserService {
+
+  final log = Logger('UserServiceLogger');
   Future<String?> getUser() async {
     if (isLogged()) {
       TokenDto? token = tokenDtoFromJson(SharedPreferencesUtils.prefs
