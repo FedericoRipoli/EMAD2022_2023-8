@@ -17,7 +17,20 @@ class UtenteService {
       String? username, String? ente, bool? admin, int page) async {
     String? token = await userService.getUser();
     try {
-      var response = await http.get(RestURL.utenteService,
+
+      String query="page=$page";
+      if(username!=null){
+        query+="&username=$username";
+      }
+      if(admin!=null){
+        query+="&admin=$admin";
+      }
+      if(ente!=null){
+        query+="&ente=$ente";
+      }
+      Uri u=Uri.parse("${RestURL.utenteService}?$query");
+      var response = await http.get(
+          u,
           headers: RestURL.authHeader(token!));
       if (response.statusCode == 200) {
         ListResponse<Utente> l = ListResponse<Utente>.fromJson(
@@ -34,7 +47,7 @@ class UtenteService {
     String? token = await userService.getUser();
     try {
       var response = await http.get(
-          Uri.parse("${RestURL.utenteService.path}/$id"),
+          Uri.parse("${RestURL.utenteService.toString()}/$id"),
           headers: RestURL.authHeader(token!));
       if (response.statusCode == 200) {
         return utenteFromJson(response.body);
@@ -64,7 +77,7 @@ class UtenteService {
     String? token = await userService.getUser();
     try {
       var response = await http.delete(
-          Uri.parse("${RestURL.utenteService.path}/$id"),
+          Uri.parse("${RestURL.utenteService}/$id"),
           headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
@@ -79,7 +92,7 @@ class UtenteService {
     String? token = await userService.getUser();
     try {
       var response = await http.delete(
-          Uri.parse("${RestURL.utenteService.path}/${utente.id}"),
+          Uri.parse("${RestURL.utenteService}/${utente.id}"),
           headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {

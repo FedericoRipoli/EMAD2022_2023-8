@@ -5,7 +5,8 @@ class RestURL {
   static Uri login = Uri.parse("${baseURL}auth/login");
   static Uri register = Uri.parse("${baseURL}auth/register");
   static Uri refreshToken = Uri.parse("${baseURL}auth/token");
-  static Uri utenteService = Uri.parse("${baseURL}users");
+
+  static String utenteService = "${baseURL}users";
 
 
 

@@ -12,13 +12,14 @@ class CustomMenuItem extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: GFTypography(
+      /*title: GFTypography(
         text: text,
         textColor: Colors.black,
         dividerWidth: 120,
         dividerColor: appTheme.primaryColor,
         type: GFTypographyType.typo4,
-      ),
+      ),*/
+      title:Text(text),
       onTap: f
     );
   }
