@@ -9,7 +9,7 @@ import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
 
 class Splash extends StatefulWidget {
   @override
-  SplashState createState() => new SplashState();
+  SplashState createState() => SplashState();
 }
 
 class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {

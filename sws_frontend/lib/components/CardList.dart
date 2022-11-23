@@ -35,7 +35,7 @@ class CardList extends StatelessWidget {
           //height: height! * .25 < 170 ? height! * .25 : 170,
           //height: height! * .25 < 300 ? height! * .25 : 300,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 280, minHeight: 120),
+            constraints: const BoxConstraints(maxHeight: 370, minHeight: 120),
             child: ListView.builder(
                 itemBuilder: (context, index) => itemList[index],
                 shrinkWrap: true,

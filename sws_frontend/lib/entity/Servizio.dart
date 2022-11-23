@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend_sws/entity/Ente.dart';
 import 'package:frontend_sws/entity/StatoOperazione.dart';
 import 'package:frontend_sws/entity/Tipologia.dart';
 import 'package:frontend_sws/main.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'Ambito.dart';
 import 'Contatto.dart';
 import 'Posizione.dart';
@@ -65,64 +69,32 @@ class _ServizioState extends State<Servizio> {
           );
         },
         child: SizedBox(
-          width: 330,
-          height: 240,
-          child: Card(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
+          width: 380,
+          height: 320,
+          child: GFCard(
+            boxFit: BoxFit.cover,
+            titlePosition: GFPosition.start,
+            showOverlayImage: false,
+            color: Colors.white,
+            elevation: 14,
+            title: GFListTile(
+              avatar: GFAvatar(
+                shape: GFAvatarShape.standard,
+                backgroundColor: appTheme.primaryColor,
+                child: const Text("AD"),
+              ),
+              titleText: widget.nome!,
+              subTitleText: widget.tags!,
+              icon: const Icon(Icons.accessible),
             ),
-            elevation: 5,
-            margin: const EdgeInsets.all(12),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: 335,
-                  height: 110,
-                  child: Image.asset(
-                    "assets/images/service_default.png",
-                    fit: BoxFit.fitWidth,
-                  ),
+            content: Text(widget.contenuto!),
+            buttonBar: GFButtonBar(
+              children: <Widget>[
+                Chip(
+                  label: Text("Ambito"),
                 ),
-                const SizedBox(
-                  height: 6,
-                ),
-                Column(children: [
-                  Row(children: [
-                    Container(
-                      margin: const EdgeInsets.all(4),
-                      child: Chip(
-                        label: Text("ambito"),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.all(4),
-                      child: Chip(
-                        label: Text("tipologia!"),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.all(4),
-                      child: Chip(
-                        label: Text(widget.tags!),
-                      ),
-                    ),
-                  ]),
-                  Row(children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      padding: const EdgeInsets.all(2),
-                      alignment: Alignment.center,
-                      child: Text(
-                        widget.nome!,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ]),
-                ])
+                Chip(label: Text("Tipologia")),
+                Chip(label: Text(widget.tags!)),
               ],
             ),
           ),
@@ -139,41 +111,44 @@ class InfoServizio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(180),
-          child: AppBar(
-            leading: IconButton(
-                icon:
-                    const Icon(Icons.arrow_back, size: 32, color: Colors.white),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                }),
-            backgroundColor: appTheme.primaryColor,
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(50),
-            )),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        appBar: GFAppBar(
+          leading: GFIconButton(
+            icon: const Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            type: GFButtonType.transparent,
           ),
+          searchBar: false,
+          elevation: 1,
+          backgroundColor: appTheme.primaryColor,
         ),
         extendBodyBehindAppBar: false,
         resizeToAvoidBottomInset: false,
         floatingActionButton: FloatingActionButton.extended(
-          elevation: 0,
-          hoverElevation: 0,
+          elevation: 8,
+          hoverElevation: 8,
           onPressed: () {},
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.green.shade700,
           label: Row(
             children: const [
               Padding(
-                padding: EdgeInsets.only(right: 5.0),
+                padding: EdgeInsets.only(right: 6.0),
                 child: Icon(
                   Icons.call,
-                  size: 20,
+                  size: 18,
                 ),
               ),
               Text(
                 "Contatta",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               )
             ],
           ),
@@ -181,140 +156,146 @@ class InfoServizio extends StatelessWidget {
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Container(
-            child: Container(
-              padding: const EdgeInsets.all(30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    servizio.nome!,
-                    style: TextStyle(
-                        color: appTheme.primaryColor,
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Text("Ente",
-                      style: TextStyle(
-                          color: appTheme.primaryColor, fontSize: 22)),
-                  const SizedBox(height: 18),
-                  const Text("Descrizione",
-                      style: TextStyle(color: Colors.black, fontSize: 18)),
-                  const SizedBox(height: 18),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.calendar_month,
-                            size: 32,
-                            color: appTheme.primaryColor,
-                          ),
-                          const Text(
-                            'Dal 22 dicembre',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ],
-                      ),
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.access_time,
-                            size: 32,
-                            color: appTheme.primaryColor,
-                          ),
-                          const Text(
-                            '19:00 - 21:00',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ],
-                      )
-                    ],
-                  ), // riga dei chip
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Chip(
-                        label: Text("tipologia"),
-                        labelStyle: TextStyle(
-                            color: appTheme.primaryColor, fontSize: 18),
-                      ),
-                      Chip(
-                        label: Text("ambito"),
-                        labelStyle: TextStyle(
-                            color: appTheme.primaryColor, fontSize: 18),
-                      ),
-                      const Chip(
-                        label: Text("stato"),
-                        labelStyle:
-                            TextStyle(color: Colors.white, fontSize: 18),
-                        backgroundColor: Colors.green,
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        size: 20,
+            padding: const EdgeInsets.all(0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: <Widget>[
+                    ClipPath(
+                      clipper: WaveClipperOne(flip: true),
+                      child: Container(
+                        height: 80, //400
                         color: appTheme.primaryColor,
                       ),
-                      Text(
-                        'Dove viene erogato il servizio?',
-                        style: TextStyle(
-                            fontSize: 20, color: appTheme.primaryColor),
-                      ),
-                    ],
+                    ),
+                  ],
+                ),
+                GFListTile(
+                  avatar: const GFAvatar(
+                    shape: GFAvatarShape.standard,
+                    child: Text("EA"),
                   ),
-                  const SizedBox(height: 8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                            Text(
-                                "Via Garibaldi 2\nVia Roma 3\nPiazza Plebiscito 51",
-                                style: TextStyle(fontSize: 16))
-                          ])),
-                      Flexible(
-                        child: Image.asset("assets/images/welfare.jpg"),
-                      )
-                    ],
+                  color: Colors.white,
+                  title: GFTypography(
+                    text: 'Nome Servizio',
+                    type: GFTypographyType.typo2,
+                    showDivider: false,
+                    textColor: appTheme.primaryColor,
                   ),
-                  const SizedBox(height: 20),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.info_outlined,
-                        size: 20,
+                  subTitle: GFTypography(
+                    text: 'Nome Ente',
+                    type: GFTypographyType.typo4,
+                    icon: Icon(
+                      Icons.home_work_rounded,
+                      color: appTheme.primaryColor,
+                    ),
+                    dividerColor: appTheme.primaryColor,
+                    textColor: appTheme.primaryColor,
+                    fontWeight: FontWeight.normal,
+                    dividerWidth: 130.0,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                GFListTile(
+                  description: GFTypography(
+                    text: descrizione,
+                    type: GFTypographyType.typo4,
+                    fontWeight: FontWeight.normal,
+                    showDivider: false,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Chip(
+                      elevation: 6,
+                      padding: const EdgeInsets.all(10),
+                      backgroundColor: Colors.white,
+                      shadowColor: Colors.black,
+                      avatar: Icon(
+                        Icons.access_time,
                         color: appTheme.primaryColor,
                       ),
-                      Text(
-                        'Hai bisogno di maggiori informazioni?',
-                        style: TextStyle(
-                            fontSize: 20, color: appTheme.primaryColor),
+                      label: const Text(
+                        '12:00 - 15:00',
+                        style: TextStyle(fontSize: 20),
+                      ), //Text
+                    ),
+                    Chip(
+                      elevation: 8,
+                      padding: const EdgeInsets.all(10),
+                      backgroundColor: Colors.white,
+                      shadowColor: Colors.black,
+                      avatar: Icon(
+                        Icons.calendar_month,
+                        color: appTheme.primaryColor,
                       ),
-                    ],
+                      label: const Text(
+                        'dal 22 Dicembre',
+                        style: TextStyle(fontSize: 20),
+                      ), //Text
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Chip(
+                      padding: const EdgeInsets.all(8),
+                      label: Text(
+                        "Ambito",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    Chip(
+                      padding: const EdgeInsets.all(8),
+                      label: Text(
+                        "Tipologia",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    Chip(
+                      padding: const EdgeInsets.all(8),
+                      label: Text(
+                        "#TAGS",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                    Chip(
+                      padding: const EdgeInsets.all(8),
+                      backgroundColor: Colors.green.shade700,
+                      label: Text(
+                        "Active",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                GFListTile(
+                  title: GFTypography(
+                    text: 'Dove puoi usufruire del servizio?',
+                    type: GFTypographyType.typo2,
+                    showDivider: false,
+                    textColor: appTheme.primaryColor,
                   ),
-                  const SizedBox(height: 8),
-                  const Text("telefono, email ....")
-                ],
-              ),
+                  icon: Icon(
+                    Icons.location_on,
+                    color: appTheme.primaryColor,
+                  ),
+                ),
+              ],
             ),
           ),
         ));
   }
 }
+
+String descrizione =
+    "REST has quickly become the de-facto standard for building web services on the web because they’re easy to build and easy to consume. There’s a much larger discussion to be had about how REST fits in the world of microservices, but — for this tutorial — let’s just look at building RESTful services.\n\nWhy REST? REST embraces the precepts of the web, including its architecture, benefits, and everything else. This is no surprise given its author, Roy Fielding, was involved in probably a dozen specs which govern how the web operates.What benefits? The web and its core protocol, HTTP, provide a stack of features:";
