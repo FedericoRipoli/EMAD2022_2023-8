@@ -17,6 +17,7 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
     await SharedPreferencesUtils.init();
     //SharedPreferencesUtils.prefs.clear();
     bool seen = (SharedPreferencesUtils.prefs.getBool(SharedPreferencesUtils.splashViewed) ?? false);
+    SharedPreferencesUtils.prefs.remove(SharedPreferencesUtils.chatLog);
 
     if (seen) {
       Timer(
