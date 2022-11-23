@@ -10,17 +10,18 @@ class GestioneAdminEnti extends StatefulWidget {
   State<GestioneAdminEnti> createState() => _GestioneAdminEntiState();
 }
 
-final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
 
 class _GestioneAdminEntiState extends State<GestioneAdminEnti> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKeyAdmin,
       drawer: const DrawerMenu(),
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
-          elevation: 0,
-          hoverElevation: 0,
+          elevation: 3,
+          hoverElevation: 1,
           onPressed: () {
             if (mounted) {
               // open add modal
@@ -29,7 +30,8 @@ class _GestioneAdminEntiState extends State<GestioneAdminEnti> {
           backgroundColor: appTheme.primaryColor,
           child: Icon(
             Icons.add,
-            color: appTheme.primaryColor,
+            size: 32,
+            color: Colors.white,
           )),
       appBar: GFAppBar(
         leading: GFIconButton(
@@ -38,7 +40,7 @@ class _GestioneAdminEntiState extends State<GestioneAdminEnti> {
             color: Colors.white,
           ),
           onPressed: () {
-            _scaffoldKey.currentState?.openDrawer();
+            _scaffoldKeyAdmin.currentState?.openDrawer();
           },
           type: GFButtonType.transparent,
         ),
@@ -63,6 +65,7 @@ class _GestioneAdminEntiState extends State<GestioneAdminEnti> {
                 subTitleText: 'Nome Ente',
                 icon: Icon(
                   Icons.delete,
+                  color: Colors.red,
                 ),
               ),
             ],

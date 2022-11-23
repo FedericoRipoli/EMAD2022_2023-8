@@ -113,6 +113,7 @@ class InfoServizio extends StatelessWidget {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         appBar: GFAppBar(
+          title: Text("Info Servizio"),
           leading: GFIconButton(
             icon: const Icon(
               Icons.arrow_back_rounded,
@@ -124,7 +125,8 @@ class InfoServizio extends StatelessWidget {
             type: GFButtonType.transparent,
           ),
           searchBar: false,
-          elevation: 1,
+          elevation: 0,
+          centerTitle: true,
           backgroundColor: appTheme.primaryColor,
         ),
         extendBodyBehindAppBar: false,

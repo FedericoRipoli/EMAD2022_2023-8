@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/services/UserService.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 // Form Login Ente / Comune
@@ -37,8 +37,8 @@ class _LoginFormState extends State<LoginForm> {
         child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: !_isLoading
-                ? Container(
-                    height: 480,
+                ? SizedBox(
+                    height: 400,
                     child: Column(
                       children: [
                         Container(
@@ -49,7 +49,7 @@ class _LoginFormState extends State<LoginForm> {
                               style: TextStyle(
                                   color: appTheme.primaryColor,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 30),
+                                  fontSize: 24),
                             )),
                         Container(
                             alignment: Alignment.center,
@@ -57,7 +57,7 @@ class _LoginFormState extends State<LoginForm> {
                             child: const Text(
                               'Inserisci le credenziali fornite\ndal Comune di Salerno:',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 18,
                               ),
                             )),
                         Container(
@@ -82,38 +82,47 @@ class _LoginFormState extends State<LoginForm> {
                           ),
                         ),
                         Container(
-                            height: 50,
-                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            margin: const EdgeInsets.only(bottom: 15),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: appTheme.primaryColor,
+                          margin: const EdgeInsets.only(top: 25),
+                          height: 45,
+                          width: 120,
+                          child: GFButton(
+                            color: appTheme.primaryColor,
+                            padding: const EdgeInsets.all(5),
+                            onPressed: () async {
+                              bool res = await login(emailController.text,
+                                  passwordController.text);
+                              if (mounted) {
+                                if (res) Navigator.pop(context);
+                              }
+                              if (_loginError) {
+                                GFToast.showToast(
+                                  'Credenziali non valide :(',
+                                  context,
+                                  toastPosition: GFToastPosition.BOTTOM,
                                   textStyle: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold)),
-                              child: const Text('Accedi'),
-                              onPressed: () async {
-                                bool res = await login(emailController.text,
-                                    passwordController.text);
-                                if(mounted){
-                                  if (res) Navigator.pop(context);
-                                }
-                              },
-                            )),
-                        _loginError
-                            ? Container(
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.all(10),
-                                child: const Text(
-                                  'Credenziali non valide',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.red),
-                                ))
-                            : Container()
+                                      fontSize: 18, color: GFColors.DARK),
+                                  backgroundColor: Colors.white,
+                                  trailing: const Icon(
+                                    Icons.error_outline,
+                                    color: GFColors.DANGER,
+                                  ),
+                                );
+                              }
+                            },
+                            text: "Accedi",
+                            textStyle: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                            icon: const Icon(
+                              Icons.login,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ],
                     ))
                 : Container(
-                    height: 480,
+                    height: 200,
+                    width: 200,
                     alignment: Alignment.center,
                     child: Center(
                         child: LoadingAnimationWidget.twistingDots(
