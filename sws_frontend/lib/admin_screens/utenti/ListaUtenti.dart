@@ -90,16 +90,26 @@ class _ListaUtentiState extends State<ListaUtenti> {
           elevation: 0,
           backgroundColor: appTheme.primaryColor,
         ),
-        body: PagedListView<int, Utente>(
-          pagingController: _pagingController,
-          builderDelegate: PagedChildBuilderDelegate<Utente>(
-            itemBuilder: (context, item, index) => UtenteListItem(
-              name:item.username,
-              id:item.id!,
-              ente:item.ente
-            )
-          ),
+        body:
+        RefreshIndicator(
+          onRefresh: _pullRefresh,
+          child: PagedListView<int, Utente>(
+            pagingController: _pagingController,
+            builderDelegate: PagedChildBuilderDelegate<Utente>(
+                itemBuilder: (context, item, index) => UtenteListItem(
+                    name:item.username,
+                    id:item.id!,
+                    ente:item.ente
+                )
+            ),
+          )
         )
+
+
     );
+  }
+  Future<void> _pullRefresh() async {
+    _pagingController.refresh();
+    // why use freshNumbers var? https://stackoverflow.com/a/52992836/2301224
   }
 }
