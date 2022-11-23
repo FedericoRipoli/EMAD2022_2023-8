@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/screens/InitApp.dart';
 import 'package:getwidget/getwidget.dart';
-import '../admin_screens/GestioneUtenti.dart';
+import '../admin_screens/utenti/ListaUtenti.dart';
 import '../services/UserService.dart';
 
 class DrawerMenu extends StatefulWidget {
@@ -59,9 +59,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
           type: GFTypographyType.typo4,
         ),
         onTap: () {
-          checkChangePage(GestioneUtenti.id);
+          checkChangePage(ListaUtenti.id);
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const GestioneUtenti()));
+              MaterialPageRoute(builder: (context) => const ListaUtenti()));
         },
       ));
     }

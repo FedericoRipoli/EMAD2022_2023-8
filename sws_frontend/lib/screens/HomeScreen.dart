@@ -10,7 +10,7 @@ import '../entity/Evento.dart';
 
 // screens
 import 'package:frontend_sws/screens/Chat.dart';
-import '../admin_screens/GestioneUtenti.dart';
+import '../admin_screens/utenti/ListaUtenti.dart';
 
 //components
 import 'package:frontend_sws/components/Clipper08.dart';

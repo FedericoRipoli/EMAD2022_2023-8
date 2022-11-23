@@ -4,27 +4,27 @@ import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/main.dart';
 
 
-class GestioneUtenti extends StatefulWidget  {
+class ListaUtenti extends StatefulWidget  {
 
-  const GestioneUtenti({Key? key}) : super(key: key);
+  const ListaUtenti({Key? key}) : super(key: key);
   static String id='it.unisa.emad.comunesalerno.sws.ipageutil.GestioneEnti';
 
   @override
-  State<GestioneUtenti> createState() => _GestioneUtentiState();
+  State<ListaUtenti> createState() => _ListaUtentiState();
 
 
 
 }
 
 
-class _GestioneUtentiState extends State<GestioneUtenti> {
+class _ListaUtentiState extends State<ListaUtenti> {
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKeyAdmin,
-      drawer: DrawerMenu(currentPage: GestioneUtenti.id),
+      drawer: DrawerMenu(currentPage: ListaUtenti.id),
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
           elevation: 3,
