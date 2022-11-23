@@ -126,6 +126,5 @@ class _DrawerMenuState extends State<DrawerMenu> {
               ],
       ),
     );
-    ;
   }
 }
