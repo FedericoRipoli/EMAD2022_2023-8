@@ -4,7 +4,7 @@ import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
 
 // entity
-import '../components/DrawerMenu.dart';
+import '../components/menu/DrawerMenu.dart';
 import '../entity/Servizio.dart';
 import '../entity/Evento.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/DrawerMenu.dart';
+import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/main.dart';
 
