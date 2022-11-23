@@ -13,6 +13,7 @@ import 'package:frontend_sws/util/JwtUtil.dart';
 class UserService {
 
   final log = Logger('UserServiceLogger');
+
   Future<String?> getUser() async {
     if (isLogged()) {
       TokenDto? token = tokenDtoFromJson(SharedPreferencesUtils.prefs
@@ -23,7 +24,7 @@ class UserService {
       }
       return token?.accessToken;
     }
-    return null;
+    throw Exception("Utente non loggato!");
   }
 
   Future<TokenDto?> login(String username, String password) async {

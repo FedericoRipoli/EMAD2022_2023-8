@@ -1,5 +1,8 @@
 package it.unisa.emad.comunesalerno.sws.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.unisa.emad.comunesalerno.sws.entity.serializer.TipologiaSerializer;
+import it.unisa.emad.comunesalerno.sws.entity.serializer.UtenteSerializer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import java.util.List;
 @Entity
 @Data()
 @RequiredArgsConstructor
+@JsonSerialize(using = UtenteSerializer.class)
 public class Utente implements UserDetails {
 
     @Id

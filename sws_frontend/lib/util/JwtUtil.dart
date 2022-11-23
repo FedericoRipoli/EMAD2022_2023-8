@@ -21,8 +21,8 @@ class JwtUtil{
 
   static bool isExpired(String jwt){
     Map<String,dynamic> result=decode(jwt);
-    DateTime expDate = result[exp];
+    DateTime expDate = DateTime.fromMillisecondsSinceEpoch(result[exp] * 1000);
     DateTime now=DateTime.now();
-    return expDate.compareTo(now)>0;
+    return now.compareTo(expDate)>0;
   }
 }
