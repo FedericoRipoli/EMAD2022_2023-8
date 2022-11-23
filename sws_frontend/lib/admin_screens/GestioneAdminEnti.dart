@@ -10,10 +10,13 @@ class GestioneAdminEnti extends StatefulWidget {
   State<GestioneAdminEnti> createState() => _GestioneAdminEntiState();
 }
 
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 class _GestioneAdminEntiState extends State<GestioneAdminEnti> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const DrawerMenu(),
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
           elevation: 0,
@@ -29,7 +32,16 @@ class _GestioneAdminEntiState extends State<GestioneAdminEnti> {
             color: appTheme.primaryColor,
           )),
       appBar: GFAppBar(
-        leading: const DrawerMenu(),
+        leading: GFIconButton(
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
+          },
+          type: GFButtonType.transparent,
+        ),
         searchBar: false,
         elevation: 0,
         backgroundColor: appTheme.primaryColor,
@@ -37,6 +49,8 @@ class _GestioneAdminEntiState extends State<GestioneAdminEnti> {
       body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: ListView(
+            shrinkWrap: true,
+            physics: const ScrollPhysics(),
             scrollDirection: Axis.vertical,
             padding: const EdgeInsets.all(8),
             children: const <Widget>[

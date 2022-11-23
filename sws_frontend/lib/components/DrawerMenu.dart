@@ -25,18 +25,15 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 GFDrawerHeader(
                   currentAccountPicture: GFAvatar(
                     shape: GFAvatarShape.standard,
-                    child: Text(userService.getName()!.substring(0, 1)),
+                    child: Text(userService.getName()!.substring(0, 2)),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const GFTypography(
-                        text: 'Username:',
-                        textColor: Colors.white,
-                        type: GFTypographyType.typo6,
-                      ),
+                      SizedBox(height: 10),
                       GFTypography(
+                        showDivider: false,
                         text: userService.getName() ?? "",
                         textColor: Colors.white,
                         type: GFTypographyType.typo5,
@@ -47,7 +44,20 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 ListTile(
                   title: const GFTypography(
                     text: 'Gestione Admin Enti',
-                    textColor: Colors.white,
+                    textColor: Colors.black,
+                    type: GFTypographyType.typo6,
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const GestioneAdminEnti()));
+                  },
+                ),
+                ListTile(
+                  title: const GFTypography(
+                    text: 'Gestione Servizi',
+                    textColor: Colors.black,
                     type: GFTypographyType.typo6,
                   ),
                   onTap: () {
@@ -116,6 +126,5 @@ class _DrawerMenuState extends State<DrawerMenu> {
               ],
       ),
     );
-    ;
   }
 }
