@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/screens/InitApp.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../admin_screens/utenti/ListaUtenti.dart';
 import '../../services/UserService.dart';
+import 'CustomMenuItem.dart';
 
 class DrawerMenu extends StatefulWidget {
   const DrawerMenu({Key? key, required this.currentPage}) : super(key: key);
@@ -50,33 +50,16 @@ class _DrawerMenuState extends State<DrawerMenu> {
 
     bool? admin = userService.isAdmin();
     if (userService.isLogged() && admin != null && admin) {
-      w.add(ListTile(
-        title: GFTypography(
+      w.add(CustomMenuItem(
           text: 'Gestione Utenti',
-          textColor: Colors.black,
-          dividerWidth: 120,
-          dividerColor: appTheme.primaryColor,
-          type: GFTypographyType.typo4,
-        ),
-        onTap: () {
-          checkChangePage(ListaUtenti.id);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const ListaUtenti()));
-        },
-      ));
+          f: () {
+            checkChangePage(ListaUtenti.id);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ListaUtenti()));
+          }));
     }
     if (userService.isLogged() && admin != null && !admin) {
-      w.add(ListTile(
-        title: GFTypography(
-          text: 'Gestione Servizi',
-          textColor: Colors.black,
-          dividerWidth: 120,
-          dividerColor: appTheme.primaryColor,
-          type: GFTypographyType.typo4,
-        ),
-        onTap: () {},
-      ));
-
+      w.add(CustomMenuItem(text: 'Gestione Servizi', f: () {}));
     }
     if (userService.isLogged()) {
       w.add(ListTile(
@@ -87,7 +70,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (_) => const InitApp()),
-                    (route) => false);
+                (route) => false);
           },
           text: "Esci",
           textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
