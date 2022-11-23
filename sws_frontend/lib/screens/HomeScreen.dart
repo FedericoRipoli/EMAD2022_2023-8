@@ -10,7 +10,7 @@ import '../entity/Evento.dart';
 
 // screens
 import 'package:frontend_sws/screens/Chat.dart';
-import '../admin_screens/GestioneAdminEnti.dart';
+import '../admin_screens/GestioneUtenti.dart';
 
 //components
 import 'package:frontend_sws/components/Clipper08.dart';
@@ -20,7 +20,7 @@ import 'package:frontend_sws/services/UserService.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
-
+  static String id='it.unisa.emad.comunesalerno.sws.ipageutil.Home';
   @override
   State<Home> createState() => _HomeState();
 }
@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       key: _scaffoldKey,
       endDrawerEnableOpenDragGesture: false,
-      drawer: userService.isLogged()?const DrawerMenu():null,
+      drawer: userService.isLogged()?DrawerMenu(currentPage: Home.id):null,
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
         elevation: 0,

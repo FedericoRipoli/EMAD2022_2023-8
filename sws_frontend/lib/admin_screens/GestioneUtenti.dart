@@ -3,22 +3,28 @@ import 'package:frontend_sws/components/DrawerMenu.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/main.dart';
 
-class GestioneAdminEnti extends StatefulWidget {
-  const GestioneAdminEnti({Key? key}) : super(key: key);
+
+class GestioneUtenti extends StatefulWidget  {
+
+  const GestioneUtenti({Key? key}) : super(key: key);
+  static String id='it.unisa.emad.comunesalerno.sws.ipageutil.GestioneEnti';
 
   @override
-  State<GestioneAdminEnti> createState() => _GestioneAdminEntiState();
+  State<GestioneUtenti> createState() => _GestioneUtentiState();
+
+
+
 }
 
 
-class _GestioneAdminEntiState extends State<GestioneAdminEnti> {
+class _GestioneUtentiState extends State<GestioneUtenti> {
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKeyAdmin,
-      drawer: const DrawerMenu(),
+      drawer: DrawerMenu(currentPage: GestioneUtenti.id),
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
           elevation: 3,
@@ -29,12 +35,12 @@ class _GestioneAdminEntiState extends State<GestioneAdminEnti> {
             }
           },
           backgroundColor: appTheme.primaryColor,
-          child: Icon(
+          child: const Icon(
             Icons.add,
             size: 32,
             color: Colors.white,
           )),
-      appBar: GFAppBar(
+      appBar: GFAppBar(title: const Text("Utenti"),
         leading: GFIconButton(
           icon: const Icon(
             Icons.menu,

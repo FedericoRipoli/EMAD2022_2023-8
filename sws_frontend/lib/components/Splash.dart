@@ -15,7 +15,6 @@ class Splash extends StatefulWidget {
 class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
   Future checkFirstSeen() async {
     await SharedPreferencesUtils.init();
-    //SharedPreferencesUtils.prefs.clear();
     bool seen = (SharedPreferencesUtils.prefs.getBool(SharedPreferencesUtils.splashViewed) ?? false);
     SharedPreferencesUtils.prefs.remove(SharedPreferencesUtils.chatLog);
 
@@ -25,9 +24,12 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
           () => Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (BuildContext context) => const InitApp())));
     } else {
+
       await SharedPreferencesUtils.prefs.setBool(SharedPreferencesUtils.splashViewed, true);
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const Introduction()));
+      if(mounted){
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const Introduction()));
+      }
     }
   }
 
