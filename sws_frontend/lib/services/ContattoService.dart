@@ -23,6 +23,9 @@ class EnteService {
       } else {
         queryArr.add(RestURL.queryRemovePagination);
       }
+      if (queryArr.isNotEmpty) {
+        query = queryArr.join("&");
+      }
       Uri u = Uri.parse("${RestURL.contattoService}?$query");
       var response = await http.get(u, headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
