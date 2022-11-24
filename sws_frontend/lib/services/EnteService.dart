@@ -15,7 +15,6 @@ class EnteService {
 
   Future<List<Utente>?> enteList(
       String? name,int? page) async {
-    String? token = await userService.getUser();
     try {
       List<String> queryArr=[];
 
@@ -32,7 +31,7 @@ class EnteService {
       Uri u=Uri.parse("${RestURL.enteService}?$query");
       var response = await http.get(
           u,
-          headers: RestURL.authHeader(token!));
+          headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
         if(page!=null){
           ListResponse<Utente> l = ListResponse<Utente>.fromJson(
