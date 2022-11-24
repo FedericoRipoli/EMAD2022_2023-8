@@ -8,6 +8,8 @@ class RestURL {
 
   static String utenteService = "${baseURL}users";
 
+  static String enteService = "${baseURL}enti";
+
 
 
   static String pageabelContent="content";
