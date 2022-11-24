@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/admin_screens/utenti/GestioneUtente.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
+import 'package:frontend_sws/services/EnteService.dart';
+import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -37,7 +40,6 @@ class _ListaUtentiState extends State<ListaUtenti> {
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems= await utenteService.usersList(null,null,null, pageKey);
-
       final isLastPage = newItems==null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -100,7 +102,9 @@ class _ListaUtentiState extends State<ListaUtenti> {
                     name:item.username,
                     id:item.id!,
                     ente:item.ente,
-                    onTap:()=>{}
+                    onTap:()=>{
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => GestioneUtente(item.id)))
+                    }
                 )
             ),
           )
