@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/screens/InitApp.dart';
 import 'package:getwidget/getwidget.dart';
+import '../../admin_screens/enti/ListaEnti.dart';
 import '../../admin_screens/utenti/ListaUtenti.dart';
 import '../../services/UserService.dart';
 import 'CustomMenuItem.dart';
@@ -88,6 +89,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
             checkChangePage(ListaUtenti.id);
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const ListaUtenti()));
+          }));
+      w.add(CustomMenuItem(
+          text: 'Gestione Enti',
+          f: () {
+            checkChangePage(ListaUtenti.id);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ListaEnti()));
           }));
     }
     if (userService.isLogged() && admin != null && !admin) {

@@ -12,43 +12,37 @@ class EnteService {
   final log = Logger('EnteServiceLogger');
   UserService userService = UserService();
 
-  Future<List<Ente>?> enteList(
-      String? name,int? page) async {
+  Future<List<Ente>?> enteList(String? name, int? page) async {
     try {
-      List<String> queryArr=[];
+      List<String> queryArr = [];
 
-      String query="";
-      if(name!=null){
+      String query = "";
+      if (name != null) {
         queryArr.add("name=$name");
       }
-      if(page!=null){
+      if (page != null) {
         queryArr.add("page=$page");
       }
-      if(queryArr.isNotEmpty){
-        query=queryArr.join("&");
+      if (queryArr.isNotEmpty) {
+        query = queryArr.join("&");
       }
-      Uri u=Uri.parse("${RestURL.enteService}?$query");
-      var response = await http.get(
-          u,
-          headers: RestURL.defaultHeader);
+      Uri u = Uri.parse("${RestURL.enteService}?$query");
+      var response = await http.get(u, headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
-        if(page!=null){
+        if (page != null) {
           ListResponse<Ente> l = ListResponse<Ente>.fromJson(
               jsonDecode(response.body), Ente.fromJson);
           return l.content;
-        }
-        else{
+        } else {
           Iterable l = json.decode(response.body);
-          List<Ente> notPage = List<Ente>.from(l.map((model)=> Ente.fromJson(model)));
+          List<Ente> notPage =
+              List<Ente>.from(l.map((model) => Ente.fromJson(model)));
           return notPage;
         }
-
       }
     } catch (e) {
       log.severe(e);
     }
     return null;
   }
-
-
 }

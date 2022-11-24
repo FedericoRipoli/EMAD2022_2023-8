@@ -12,7 +12,7 @@ String enteToJson(Ente data) => json.encode(data.toJson());
 class Ente {
   Ente({
     this.id,
-    this.denominazione,
+    required this.denominazione,
     this.descrizione,
     this.piva,
     this.cf,
@@ -23,7 +23,7 @@ class Ente {
   });
 
   String? id;
-  String? denominazione;
+  String denominazione;
   String? descrizione;
   String? piva;
   String? cf;
@@ -38,10 +38,10 @@ class Ente {
     descrizione: json["descrizione"],
     piva: json["piva"],
     cf: json["cf"],
-    contatto: Contatto.fromJson(json["contatto"]),
-    logo: ImageData.fromJson(json["logo"]),
-    immagini: List<ImageData>.from(json["immagini"].map((x) => ImageData.fromJson(x))),
-    contatti: List<Contatto>.from(json["contatti"].map((x) => Contatto.fromJson(x))),
+    contatto: json["contatto"]!=null?Contatto.fromJson(json["contatto"]):null,
+    logo: json["logo"]!=null?ImageData.fromJson(json["logo"]):null,
+    immagini: json["immagini"]!=null?List<ImageData>.from(json["immagini"].map((x) => ImageData.fromJson(x))):null,
+    contatti: json["contatti"]!=null?List<Contatto>.from(json["contatti"].map((x) => Contatto.fromJson(x))):null,
   );
 
   Map<String, dynamic> toJson() => {
