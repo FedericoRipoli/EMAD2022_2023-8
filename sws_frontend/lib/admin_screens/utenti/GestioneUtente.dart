@@ -55,7 +55,7 @@ class _GestioneUtente extends State<GestioneUtente>{
     String selectedValue = "ENTE";
     List<Ente> listaEnti = (EnteService().enteList(null,null) as List<Ente>);
     */
-    String selectedValue="";
+    String? selectedValue;
 
     return Scaffold(
         appBar: GFAppBar(

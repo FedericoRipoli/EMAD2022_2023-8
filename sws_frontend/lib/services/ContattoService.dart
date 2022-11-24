@@ -1,43 +1,40 @@
 import 'dart:convert';
 
-import 'package:frontend_sws/services/dto/SignupDTO.dart';
-import 'package:frontend_sws/services/entity/Ente.dart';
-import 'package:frontend_sws/services/dto/ListResponse.dart';
+import 'package:frontend_sws/services/entity/Contatto.dart';
 import 'package:logging/logging.dart';
 import 'package:http/http.dart' as http;
 import 'RestURL.dart';
 import 'UserService.dart';
+import 'dto/ListResponse.dart';
 
 class EnteService {
-  final log = Logger('EnteServiceLogger');
+  final log = Logger('ContattoServiceLogger');
   UserService userService = UserService();
 
-  Future<List<Ente>?> enteList(String? name, int? page) async {
+  Future<List<Contatto>?> contattoList(String? idEnte,int? page) async {
     try {
       List<String> queryArr = [];
       String query = "";
-      if (name != null) {
-        queryArr.add("name=$name");
+      if (idEnte != null) {
+        queryArr.add("idEnte=$idEnte");
       }
       if (page != null) {
         queryArr.add("page=$page");
       } else {
         queryArr.add(RestURL.queryRemovePagination);
       }
-      if (queryArr.isNotEmpty) {
-        query = queryArr.join("&");
-      }
-      Uri u = Uri.parse("${RestURL.enteService}?$query");
+      Uri u = Uri.parse("${RestURL.contattoService}?$query");
       var response = await http.get(u, headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
         if (page != null) {
-          ListResponse<Ente> l = ListResponse<Ente>.fromJson(
-              jsonDecode(response.body), Ente.fromJson);
+          ListResponse<Contatto> l = ListResponse<Contatto>.fromJson(
+              jsonDecode(response.body), Contatto.fromJson);
           return l.content;
         } else {
           var l = json.decode(response.body);
-          return List<Ente>.from(l.map((model) => Ente.fromJson(model)));
+          return List<Contatto>.from(l.map((model) => Contatto.fromJson(model)));
         }
+
       }
     } catch (e) {
       log.severe(e);

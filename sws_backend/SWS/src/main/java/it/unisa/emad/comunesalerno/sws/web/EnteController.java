@@ -26,9 +26,14 @@ public class EnteController {
         return ResponseEntity.ok(ente);
     }
     @GetMapping
-    public ResponseEntity listEnti(@RequestParam(value = "name",required = false) String name, Pageable pageable){
+    public ResponseEntity listEnti(@RequestParam(value = "name",required = false) String name,
+                                   @RequestParam(value = "paging",defaultValue = "true") boolean paging,
+                                    Pageable pageable){
+        if(!paging)
+            return ResponseEntity.ok(enteRepository.findAllByDenominazioneContains(name));
         return  ResponseEntity.ok(enteRepository.findAllByDenominazioneContains(name, pageable));
     }
+
     @GetMapping("/{id}")
     public ResponseEntity listEnti(@PathVariable String id){
         return  ResponseEntity.ok(enteRepository.findById(id).orElseThrow());

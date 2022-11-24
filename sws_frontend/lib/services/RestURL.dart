@@ -9,10 +9,12 @@ class RestURL {
   static String utenteService = "${baseURL}users";
 
   static String enteService = "${baseURL}enti";
+  static String contattoService = "${baseURL}contatti";
 
 
 
   static String pageabelContent="content";
+  static String queryRemovePagination="paging=false";
 
   static var defaultHeader = {
     "Accept": "application/json",

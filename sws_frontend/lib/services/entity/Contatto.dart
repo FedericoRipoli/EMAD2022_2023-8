@@ -10,6 +10,7 @@ String contattoToJson(Contatto data) => json.encode(data.toJson());
 
 class Contatto {
   Contatto({
+    this.id,
     required this.denominazione,
     this.email,
     this.cellulare,
@@ -19,6 +20,7 @@ class Contatto {
     this.ente,
   });
 
+  String? id;
   String denominazione;
   String? email;
   String? cellulare;
@@ -28,6 +30,7 @@ class Contatto {
   String? ente;
 
   factory Contatto.fromJson(Map<String, dynamic> json) => Contatto(
+    id: json["id"],
     denominazione: json["denominazione"],
     email: json["email"],
     cellulare: json["cellulare"],
@@ -38,6 +41,7 @@ class Contatto {
   );
 
   Map<String, dynamic> toJson() => {
+    "id":id,
     "denominazione": denominazione,
     "email": email,
     "cellulare": cellulare,

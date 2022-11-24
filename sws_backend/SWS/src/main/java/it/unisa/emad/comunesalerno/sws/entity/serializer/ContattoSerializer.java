@@ -20,6 +20,7 @@ public class ContattoSerializer extends StdSerializer<Contatto> {
     @Override
     public void serialize(Contatto contatto, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
+        jsonGenerator.writeStringField("id", contatto.getId());
         jsonGenerator.writeStringField("denominazione", contatto.getDenominazione());
         jsonGenerator.writeStringField("email", contatto.getEmail());
         jsonGenerator.writeStringField("cellulare", contatto.getCellulare());

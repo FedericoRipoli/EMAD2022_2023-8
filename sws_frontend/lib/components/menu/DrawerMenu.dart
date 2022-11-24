@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/screens/InitApp.dart';
 import 'package:getwidget/getwidget.dart';
+import '../../admin_screens/contatti/ListaContatti.dart';
 import '../../admin_screens/enti/ListaEnti.dart';
 import '../../admin_screens/utenti/ListaUtenti.dart';
 import '../../services/UserService.dart';
@@ -100,6 +100,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
     }
     if (userService.isLogged() && admin != null && !admin) {
       w.add(CustomMenuItem(text: 'Gestione Servizi', f: () {}));
+      w.add(CustomMenuItem(
+          text: 'Gestione Contatti',
+          f: () {
+            checkChangePage(ListaContatti.id);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ListaContatti()));
+          }));
     }
     if (userService.isLogged()) {
       w.add(ListTile(

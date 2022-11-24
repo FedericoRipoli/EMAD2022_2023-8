@@ -6,6 +6,7 @@ import it.unisa.emad.comunesalerno.sws.entity.Utente;
 import it.unisa.emad.comunesalerno.sws.repository.ContattoRepository;
 import it.unisa.emad.comunesalerno.sws.repository.EnteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,8 +27,21 @@ public class ContattoController {
     }
 
     @GetMapping
-    public ResponseEntity getContatti() {
-        return ResponseEntity.ok(contattoRepository.findAll());
+    public ResponseEntity getContatti(@RequestParam(value = "idEnte", required = false) String idEnte,
+                                      @RequestParam(value = "paging",defaultValue = "true") boolean paging,
+                                      Pageable pageable) {
+        if(idEnte==null){
+            if(paging){
+                return ResponseEntity.ok(contattoRepository.findAll(pageable));
+            }
+            return ResponseEntity.ok(contattoRepository.findAll());
+        }
+        else{
+            if(paging){
+                return ResponseEntity.ok(contattoRepository.findAllByEnteProprietario_Id(idEnte,pageable));
+            }
+            return ResponseEntity.ok(contattoRepository.findAllByEnteProprietario_Id(idEnte));
+        }
     }
 
     @DeleteMapping("/{id}")
