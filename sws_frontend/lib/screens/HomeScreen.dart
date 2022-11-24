@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend_sws/components/CardListAmbiti.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
 
@@ -20,11 +21,10 @@ import 'package:frontend_sws/services/UserService.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
-  static String id='it.unisa.emad.comunesalerno.sws.ipageutil.Home';
+  static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.Home';
   @override
   State<Home> createState() => _HomeState();
 }
-
 
 class _HomeState extends State<Home> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       key: _scaffoldKey,
       endDrawerEnableOpenDragGesture: false,
-      drawer: userService.isLogged()?DrawerMenu(currentPage: Home.id):null,
+      drawer: userService.isLogged() ? DrawerMenu(currentPage: Home.id) : null,
       resizeToAvoidBottomInset: false,
       floatingActionButton: FloatingActionButton(
         elevation: 0,
@@ -107,24 +107,24 @@ class _HomeState extends State<Home> {
                 ClipPath(
                   clipper: Clipper08(),
                   child: Container(
-                    height: 360, //400
+                    height: 280, //400
                     color: appTheme.primaryColor,
                     child: Column(
                       children: <Widget>[
                         const SizedBox(
-                          height: 50,
+                          height: 30,
                         ),
                         Center(
                           child: Image.asset(
                             "assets/images/logo.png",
-                            width: 150,
-                            height: 150,
+                            width: 120,
+                            height: 120,
                           ),
                         ),
                         const Text(
-                          'Bentornatə in\nSalerno Amica!👋',
+                          'Bentornatə in Salerno Amica!👋',
                           style: TextStyle(
-                            fontSize: 28.0,
+                            fontSize: 20.0,
                             color: Colors.white,
                           ),
                           textAlign: TextAlign.center,
@@ -136,6 +136,7 @@ class _HomeState extends State<Home> {
                 )
               ],
             ),
+            const CardListAmbiti(),
             CardList(
               itemLabel: "Servizi",
               itemList: listServices,

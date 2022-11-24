@@ -23,7 +23,7 @@ class CardList extends StatelessWidget {
                   "$itemLabel più recenti",
                   style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 22,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
               ),
@@ -35,7 +35,7 @@ class CardList extends StatelessWidget {
           //height: height! * .25 < 170 ? height! * .25 : 170,
           //height: height! * .25 < 300 ? height! * .25 : 300,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 370, minHeight: 120),
+            constraints: const BoxConstraints(maxHeight: 350, minHeight: 120),
             child: ListView.builder(
                 itemBuilder: (context, index) => itemList[index],
                 shrinkWrap: true,
