@@ -6,27 +6,23 @@ import 'package:http/http.dart' as http;
 import 'RestURL.dart';
 import 'UserService.dart';
 import 'dto/ListResponse.dart';
-
+import 'package:frontend_sws/util/QueryStringUtil.dart';
 class EnteService {
   final log = Logger('ContattoServiceLogger');
   UserService userService = UserService();
 
   Future<List<Contatto>?> contattoList(String? idEnte,int? page) async {
     try {
-      List<String> queryArr = [];
-      String query = "";
+      QueryStringUtil queryStringUtil=QueryStringUtil();
       if (idEnte != null) {
-        queryArr.add("idEnte=$idEnte");
+        queryStringUtil.add("idEnte", idEnte);
       }
       if (page != null) {
-        queryArr.add("page=$page");
+        queryStringUtil.add("page", page.toString());
       } else {
-        queryArr.add(RestURL.queryRemovePagination);
+        queryStringUtil.addString(RestURL.queryRemovePagination);
       }
-      if (queryArr.isNotEmpty) {
-        query = queryArr.join("&");
-      }
-      Uri u = Uri.parse("${RestURL.contattoService}?$query");
+      Uri u = Uri.parse("${RestURL.contattoService}?${queryStringUtil.getQueryString()}");
       var response = await http.get(u, headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
         if (page != null) {
@@ -37,7 +33,6 @@ class EnteService {
           var l = json.decode(response.body);
           return List<Contatto>.from(l.map((model) => Contatto.fromJson(model)));
         }
-
       }
     } catch (e) {
       log.severe(e);

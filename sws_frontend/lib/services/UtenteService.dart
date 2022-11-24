@@ -8,6 +8,8 @@ import 'package:logging/logging.dart';
 import 'package:http/http.dart' as http;
 import 'RestURL.dart';
 import 'UserService.dart';
+import 'package:frontend_sws/util/QueryStringUtil.dart';
+
 
 class UtenteService {
   final log = Logger('UtenteServiceLogger');
@@ -17,18 +19,21 @@ class UtenteService {
       String? username, String? ente, bool? admin, int page) async {
     String? token = await userService.getUser();
     try {
+      QueryStringUtil queryStringUtil=QueryStringUtil();
 
-      String query="page=$page";
+      queryStringUtil.addString("page=$page");
       if(username!=null){
-        query+="&username=$username";
+        queryStringUtil.add("username",username);
       }
       if(admin!=null){
-        query+="&admin=$admin";
+        queryStringUtil.add("admin",admin.toString());
+
       }
       if(ente!=null){
-        query+="&ente=$ente";
+        queryStringUtil.add("ente",ente);
+
       }
-      Uri u=Uri.parse("${RestURL.utenteService}?$query");
+      Uri u=Uri.parse("${RestURL.utenteService}?${queryStringUtil.getQueryString()}");
       var response = await http.get(
           u,
           headers: RestURL.authHeader(token!));
