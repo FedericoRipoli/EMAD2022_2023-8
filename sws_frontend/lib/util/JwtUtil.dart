@@ -4,6 +4,8 @@ class JwtUtil{
   static const String exp='exp';
   static const String role='role';
   static const String name='name';
+  static const String ente='ente';
+  static const String idEnte='idEnte';
 
   static Map<String, dynamic> decode(String jwt){
     return JwtDecoder.decode(jwt);
@@ -17,6 +19,14 @@ class JwtUtil{
   static String getName(String jwt){
     Map<String,dynamic> result=decode(jwt);
     return result[name];
+  }
+  static String getIdEnte(String jwt){
+    Map<String,dynamic> result=decode(jwt);
+    return result.containsKey(idEnte)? result[idEnte]:null;
+  }
+  static String getEnte(String jwt){
+    Map<String,dynamic> result=decode(jwt);
+    return result.containsKey(ente)? result[ente]:null;
   }
 
   static bool isExpired(String jwt){

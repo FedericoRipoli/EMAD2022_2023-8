@@ -86,6 +86,18 @@ class UserService {
     }
     return null;
   }
+  String? getIdEnte() {
+    if (isLogged()) {
+      return JwtUtil.getName(getToken()!);
+    }
+    return null;
+  }
+  String? getEnte() {
+    if (isLogged()) {
+      return JwtUtil.getEnte(getToken()!);
+    }
+    return null;
+  }
 
   bool? isAdmin() {
     if (isLogged()) {

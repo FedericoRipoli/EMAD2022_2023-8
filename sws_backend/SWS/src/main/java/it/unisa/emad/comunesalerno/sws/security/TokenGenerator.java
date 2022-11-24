@@ -37,15 +37,19 @@ public class TokenGenerator {
         Utente user = (Utente) authentication.getPrincipal();
         Instant now = Instant.now();
 
-        JwtClaimsSet claimsSet = JwtClaimsSet.builder()
+        JwtClaimsSet.Builder claimsSetBuilder = JwtClaimsSet.builder()
                 .issuer("sws")
                 .issuedAt(now)
-                .expiresAt(now.plus(expiredMinutes, ChronoUnit.MINUTES))
+                .expiresAt(now.plus(expiredRefreshDays, ChronoUnit.MINUTES))
                 .subject(user.getId())
-                .claim("name",user.getUsername())
-                .claim("role",user.isAdmin()?"ADMIN":"")
-                .build();
+                .claim("name", user.getUsername())
+                .claim("role", user.isAdmin() ? "ADMIN" : "");
 
+        if (user.getEnte() != null) {
+            claimsSetBuilder.claim("ente", user.getEnte() != null ? user.getEnte().getDenominazione() : "");
+            claimsSetBuilder.claim("idEnte", user.getEnte() != null ? user.getEnte().getId() : "");
+        }
+        JwtClaimsSet claimsSet=claimsSetBuilder.build();
         return accessTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();
     }
 
@@ -53,15 +57,19 @@ public class TokenGenerator {
         Utente user = (Utente) authentication.getPrincipal();
         Instant now = Instant.now();
 
-        JwtClaimsSet claimsSet = JwtClaimsSet.builder()
+        JwtClaimsSet.Builder claimsSetBuilder = JwtClaimsSet.builder()
                 .issuer("sws")
                 .issuedAt(now)
                 .expiresAt(now.plus(expiredRefreshDays, ChronoUnit.DAYS))
                 .subject(user.getId())
-                .claim("name",user.getUsername())
-                .claim("role",user.isAdmin()?"ADMIN":"")
-                .build();
+                .claim("name", user.getUsername())
+                .claim("role", user.isAdmin() ? "ADMIN" : "");
 
+        if (user.getEnte() != null) {
+            claimsSetBuilder.claim("ente", user.getEnte() != null ? user.getEnte().getDenominazione() : "");
+            claimsSetBuilder.claim("idEnte", user.getEnte() != null ? user.getEnte().getId() : "");
+        }
+        JwtClaimsSet claimsSet=claimsSetBuilder.build();
         return refreshTokenEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();
     }
 

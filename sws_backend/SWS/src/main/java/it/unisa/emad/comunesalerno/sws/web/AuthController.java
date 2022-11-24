@@ -59,7 +59,6 @@ public class AuthController {
         Authentication authentication =
                 daoAuthenticationProvider.authenticate(
                         UsernamePasswordAuthenticationToken.unauthenticated(loginDTO.getUsername(), loginDTO.getPassword()));
-        int i=0;
         return ResponseEntity.ok(tokenGenerator.createToken(authentication));
     }
 

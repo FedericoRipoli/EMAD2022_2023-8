@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
+import 'package:frontend_sws/services/UserService.dart';
 import 'package:frontend_sws/services/ContattoService.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/main.dart';
@@ -27,6 +28,7 @@ class ListaContatti extends StatefulWidget  {
 class _ListaContattiState extends State<ListaContatti> {
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
   EnteService enteService=EnteService();
+  UserService userService=UserService();
   final PagingController<int, Contatto> _pagingController =
   PagingController(firstPageKey: 0);
   @override
@@ -39,7 +41,7 @@ class _ListaContattiState extends State<ListaContatti> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems= await enteService.contattoList(null, pageKey);
+      final newItems= await enteService.contattoList(userService.getIdEnte(), pageKey);
 
       final isLastPage = newItems==null || newItems.isEmpty;
       if (isLastPage) {
