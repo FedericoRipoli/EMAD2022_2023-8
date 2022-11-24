@@ -2,7 +2,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/services/EnteService.dart';
+import 'package:frontend_sws/services/UtenteService.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
+import 'package:frontend_sws/services/entity/Utente.dart';
 import 'package:getwidget/components/appbar/gf_appbar.dart';
 
 class GestioneUtente extends StatefulWidget{
@@ -14,25 +16,20 @@ class GestioneUtente extends StatefulWidget{
   }
 
   @override
-  State<StatefulWidget> createState() => _GestioneUtente();
+  State<StatefulWidget> createState() => _GestioneUtente(idUtente);
 
 }
 
 class _GestioneUtente extends State<GestioneUtente>{
-  /*
-  var _isLoading = false;
-  var _callError = false;
-  Future<List<Ente>> getEnti() async{
-    setState(() => {_isLoading = true, _callError = false});
-    var list = await EnteService().enteList(null,null) as List<Ente>;
-    setState(() => {_isLoading = false, _callError = list == null});
-    if (list != null) {
-      return list;
-    }
-    return [];
+
+  String? idUtente;
+
+  _GestioneUtente(String? idUtente){
+    this.idUtente = idUtente;
   }
-  */
+
   EnteService? enteService;
+  Future<List<Ente>>? future;
 
   Future<List<Ente>> getEnti() async{
     List<Ente> list = await EnteService().enteList(null,null) as List<Ente>;
@@ -41,7 +38,7 @@ class _GestioneUtente extends State<GestioneUtente>{
     }
     return [];
   }
-  Future<List<Ente>>? future;
+
   @override
   void initState() {
     super.initState();
@@ -50,17 +47,32 @@ class _GestioneUtente extends State<GestioneUtente>{
 
   @override
   Widget build(BuildContext context) {
+    //Utente utente = UtenteService().getUtente(idUtente!) as Utente;
+    TextEditingController passwordController = TextEditingController();
+    //passwordController.text = utente.password;
+    TextEditingController usernameController = TextEditingController();
+    //usernameController.text = utente.username;
 
-    /*
-    String selectedValue = "ENTE";
-    List<Ente> listaEnti = (EnteService().enteList(null,null) as List<Ente>);
-    */
-    String? selectedValue;
+    String? selectedValue ;
 
     return Scaffold(
+      floatingActionButton: Container(
+          width: 80,
+          height: 80,
+          child: FloatingActionButton(
+            backgroundColor: Color.fromARGB(255, 0, 89, 179),
+            child: Icon(Icons.save,size: 40),
+            onPressed: () => {
+
+            },
+          )
+      ),
         appBar: GFAppBar(
           title: const Text("Gestione Utente"),
-          leading: Icon(Icons.arrow_back_ios),
+          leading: IconButton(
+              icon : Icon(Icons.arrow_back_ios),
+              onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         body: FutureBuilder<List<Ente>?>(
           future: future,
@@ -73,18 +85,21 @@ class _GestioneUtente extends State<GestioneUtente>{
             } else {
               // data loaded:
               final list = snapshot.data;
+              selectedValue = list?.first.id;
               return Container(
                 padding: EdgeInsets.only(left: 50,top: 100,right: 50,bottom: 0),
                 child: Column(
                   children: [
-                    const TextField(
-                      decoration: const InputDecoration(
+                    TextField(
+                      controller: usernameController,
+                      decoration:  InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Username',
                       ),
                     ),
                     SizedBox(height: 30),
-                    const TextField(
+                    TextField(
+                      controller: passwordController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Password',
@@ -92,8 +107,8 @@ class _GestioneUtente extends State<GestioneUtente>{
                     ),
                     SizedBox(height: 30),
                     DropdownButton(
+                        dropdownColor: Color.fromARGB(255, 204, 206, 208),
                         value: selectedValue,
-                        icon: Icon(Icons.house_siding_outlined),
                         onChanged: (String? newValue){
                           setState(() {
                             selectedValue = newValue!;
@@ -112,44 +127,6 @@ class _GestioneUtente extends State<GestioneUtente>{
             }
           },
         )
-      /*
-      body: Container(
-        padding: EdgeInsets.only(left: 50,top: 100,right: 50,bottom: 0),
-        child: Column(
-          children: [
-            const TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Username',
-              ),
-            ),
-            SizedBox(height: 30),
-            const TextField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Password',
-              ),
-            ),
-            SizedBox(height: 30),
-            DropdownButton(
-              value: selectedValue,
-              icon: Icon(Icons.house_siding_outlined),
-              onChanged: (String? newValue){
-                setState(() {
-                  selectedValue = newValue!;
-                });
-              },
-              items: listaEnti.map<DropdownMenuItem<String>>((Ente value) {
-                return DropdownMenuItem<String>(
-                  value: value.id,
-                  child: Text(value.denominazione.toString()),
-                );
-              }).toList()
-            )
-          ],
-        ),
-      ),
-    */
     );
   }
 
