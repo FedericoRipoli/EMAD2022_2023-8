@@ -15,7 +15,9 @@ class Splash extends StatefulWidget {
 class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
   Future checkFirstSeen() async {
     await SharedPreferencesUtils.init();
-    bool seen = (SharedPreferencesUtils.prefs.getBool(SharedPreferencesUtils.splashViewed) ?? false);
+    bool seen = (SharedPreferencesUtils.prefs
+            .getBool(SharedPreferencesUtils.splashViewed) ??
+        false);
     SharedPreferencesUtils.prefs.remove(SharedPreferencesUtils.chatLog);
 
     if (seen) {
@@ -24,9 +26,9 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
           () => Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (BuildContext context) => const InitApp())));
     } else {
-
-      await SharedPreferencesUtils.prefs.setBool(SharedPreferencesUtils.splashViewed, true);
-      if(mounted){
+      await SharedPreferencesUtils.prefs
+          .setBool(SharedPreferencesUtils.splashViewed, true);
+      if (mounted) {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const Introduction()));
       }
@@ -41,10 +43,9 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-          child: LoadingAnimationWidget.twistingDots(
-        leftDotColor: appTheme.primaryColor,
-        rightDotColor: appTheme.secondaryHeaderColor,
+          child: LoadingAnimationWidget.staggeredDotsWave(
         size: 80,
+        color: appTheme.primaryColor,
       )),
     );
   }

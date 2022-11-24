@@ -45,7 +45,7 @@ class _LoginFormState extends State<LoginForm> {
                             alignment: Alignment.center,
                             padding: const EdgeInsets.all(10),
                             child: Text(
-                              'Accedi a Salerno Amica',
+                              'Accedi',
                               style: TextStyle(
                                   color: appTheme.primaryColor,
                                   fontWeight: FontWeight.w500,
@@ -75,7 +75,8 @@ class _LoginFormState extends State<LoginForm> {
                           child: TextField(
                             obscureText: true,
                             controller: passwordController,
-                            decoration: const InputDecoration(
+                            cursorColor: appTheme.primaryColor,
+                            decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Password',
                             ),
@@ -111,7 +112,9 @@ class _LoginFormState extends State<LoginForm> {
                             },
                             text: "Accedi",
                             textStyle: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Colors.white),
                             icon: const Icon(
                               Icons.login,
                               color: Colors.white,
@@ -125,10 +128,9 @@ class _LoginFormState extends State<LoginForm> {
                     width: 200,
                     alignment: Alignment.center,
                     child: Center(
-                        child: LoadingAnimationWidget.twistingDots(
-                      leftDotColor: appTheme.primaryColor,
-                      rightDotColor: appTheme.secondaryHeaderColor,
+                        child: LoadingAnimationWidget.staggeredDotsWave(
                       size: 80,
+                      color: appTheme.primaryColor,
                     )))));
   }
 }
