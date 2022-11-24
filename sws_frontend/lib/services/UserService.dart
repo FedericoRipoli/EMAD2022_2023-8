@@ -88,7 +88,7 @@ class UserService {
   }
   String? getIdEnte() {
     if (isLogged()) {
-      return JwtUtil.getName(getToken()!);
+      return JwtUtil.getIdEnte(getToken()!);
     }
     return null;
   }
