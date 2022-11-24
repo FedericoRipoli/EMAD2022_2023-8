@@ -187,6 +187,7 @@ class _ChatPageState extends State<ChatPage> {
           child: Chat(
             bubbleBuilder: _bubbleBuilder,
             messages: _messages,
+            l10n: ChatL10nEn(inputPlaceholder: 'Digita...'),
             textMessageOptions: const TextMessageOptions(
               isTextSelectable: false,
             ),

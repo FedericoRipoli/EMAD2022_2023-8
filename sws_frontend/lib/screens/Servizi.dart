@@ -61,6 +61,7 @@ class _ServiziState extends State<Servizi> with TickerProviderStateMixin {
           searchHintStyle: const TextStyle(fontSize: 18, color: Colors.white),
           searchTextStyle: const TextStyle(fontSize: 18, color: Colors.white),
           searchBarColorTheme: GFColors.WHITE,
+          //searchController: ,
           leading: const Icon(Icons.map),
           automaticallyImplyLeading: true,
           title: GFSegmentTabs(
@@ -148,7 +149,7 @@ class _ServiziState extends State<Servizi> with TickerProviderStateMixin {
                 ],
               ),
               ListView.separated(
-                scrollDirection: Axis.vertical,
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(12),
                 itemCount: listServices.length,
