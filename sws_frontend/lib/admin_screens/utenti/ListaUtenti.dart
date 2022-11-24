@@ -99,7 +99,8 @@ class _ListaUtentiState extends State<ListaUtenti> {
                 itemBuilder: (context, item, index) => UtenteListItem(
                     name:item.username,
                     id:item.id!,
-                    ente:item.ente
+                    ente:item.ente,
+                    onTap:()=>{}
                 )
             ),
           )

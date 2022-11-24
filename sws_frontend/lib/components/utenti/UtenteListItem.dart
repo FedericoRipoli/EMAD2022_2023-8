@@ -6,8 +6,8 @@ import '../../main.dart';
 class UtenteListItem extends StatelessWidget{
   final String name, id;
   final String? ente;
-
-  const UtenteListItem({super.key, required this.name, required this.ente, required this.id});
+  final VoidCallback  onTap;
+  const UtenteListItem({super.key, required this.name, required this.ente, required this.id, required this.onTap});
 
 
   @override
@@ -17,6 +17,7 @@ class UtenteListItem extends StatelessWidget{
       avatar: const GFAvatar(
         shape: GFAvatarShape.standard,
       ),
+      onTap: onTap,
       titleText: name,
       subTitleText: ente??"",
       icon: const Icon(
