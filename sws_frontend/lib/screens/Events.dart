@@ -13,23 +13,13 @@ class Events extends StatelessWidget {
     return Scaffold(
       appBar: GFAppBar(
         automaticallyImplyLeading: false,
+        centerTitle: true,
         elevation: 0,
-        searchBar: true,
+        searchBar: false,
         backgroundColor: appTheme.primaryColor,
         title: const Text(
           "Sezione Eventi",
-          style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        actions: <Widget>[
-          GFIconButton(
-            icon: const Icon(
-              Icons.favorite,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-            type: GFButtonType.transparent,
-          ),
-        ],
       ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(

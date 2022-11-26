@@ -41,7 +41,7 @@ class InfoApp extends StatelessWidget {
                     ClipPath(
                       clipper: OvalLeftBorderClipper(),
                       child: Container(
-                        height: 220, //400
+                        height: 250, //400
                         color: AppColors.logoBlue,
                       ),
                     ),

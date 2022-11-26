@@ -9,6 +9,7 @@ class InfoServizio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppColors.white,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         appBar: GFAppBar(
           title: const Text("Info Servizio"),
@@ -72,12 +73,12 @@ class InfoServizio extends StatelessWidget {
                     ),
                   ],
                 ),
-                GFListTile(
-                  avatar: const GFAvatar(
+                const GFListTile(
+                  avatar: GFAvatar(
                     shape: GFAvatarShape.standard,
                     child: Text("EA"),
                   ),
-                  color: Colors.white,
+                  color: AppColors.white,
                   title: GFTypography(
                     text: 'Nome Servizio',
                     type: GFTypographyType.typo2,
@@ -110,78 +111,13 @@ class InfoServizio extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Chip(
-                      elevation: 6,
-                      padding: const EdgeInsets.all(10),
-                      backgroundColor: Colors.white,
-                      shadowColor: Colors.black,
-                      avatar: Icon(
-                        Icons.access_time,
-                        color: AppColors.logoBlue,
-                      ),
-                      label: const Text(
-                        '12:00 - 15:00',
-                        style: TextStyle(fontSize: 20),
-                      ), //Text
-                    ),
-                    Chip(
-                      elevation: 8,
-                      padding: const EdgeInsets.all(10),
-                      backgroundColor: Colors.white,
-                      shadowColor: Colors.black,
-                      avatar: Icon(
-                        Icons.calendar_month,
-                        color: AppColors.logoBlue,
-                      ),
-                      label: const Text(
-                        'dal 22 Dicembre',
-                        style: TextStyle(fontSize: 20),
-                      ), //Text
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Chip(
-                      padding: const EdgeInsets.all(8),
-                      label: Text(
-                        "Ambito",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    Chip(
-                      padding: const EdgeInsets.all(8),
-                      label: Text(
-                        "Tipologia",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    Chip(
-                      padding: const EdgeInsets.all(8),
-                      label: Text(
-                        "#TAGS",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    Chip(
-                      padding: const EdgeInsets.all(8),
-                      backgroundColor: Colors.green.shade700,
-                      label: Text(
-                        "Active",
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                  ],
+                  children: [],
                 ),
                 const SizedBox(height: 24),
                 const GFListTile(
                   title: GFTypography(
                     text: 'Dove puoi usufruire del servizio?',
-                    type: GFTypographyType.typo2,
+                    type: GFTypographyType.typo5,
                     showDivider: false,
                     textColor: AppColors.logoBlue,
                   ),

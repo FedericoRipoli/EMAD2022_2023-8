@@ -5,6 +5,7 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:frontend_sws/theme/theme.dart';
 import 'package:uuid/uuid.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
@@ -37,16 +38,12 @@ class _ChatPageState extends State<ChatPage> {
     _loadMessages();
     _ttsManager = TtsManager();
     if (_messages.isEmpty) {
-      _addMessage(
-          types.TextMessage(
-            author: _bot,
-            createdAt: DateTime
-                .now()
-                .millisecondsSinceEpoch,
-            id: const Uuid().v4(),
-            text: "Ciao sono Olivia!\nCome posso aiutarti.",
-          )
-      );
+      _addMessage(types.TextMessage(
+        author: _bot,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: const Uuid().v4(),
+        text: "Ciao sono Olivia 😀\nCome posso aiutarti?",
+      ));
     }
   }
 
@@ -107,7 +104,7 @@ class _ChatPageState extends State<ChatPage> {
   );
   final _bot = const types.User(
     id: '82091008-a484-4a89-ae75-a22bf8d6f3aa',
-    firstName: 'HelpBot',
+    firstName: 'Olivia',
   );
 
   void _handleSendPressed(types.PartialText message) {
@@ -155,13 +152,13 @@ class _ChatPageState extends State<ChatPage> {
             child: AvatarGlow(
               endRadius: 60,
               child: FloatingActionButton(
-                backgroundColor: Colors.red,
+                backgroundColor: AppColors.logoBlue,
                 onPressed:
-                // If not yet listening for speech start, otherwise stop
-                _speechToText.isNotListening
-                    ? _startListening
-                    : _stopListening,
-                tooltip: 'Listen',
+                    // If not yet listening for speech start, otherwise stop
+                    _speechToText.isNotListening
+                        ? _startListening
+                        : _stopListening,
+                tooltip: 'In ascolto',
                 child: Icon(
                     _speechToText.isNotListening ? Icons.mic_off : Icons.mic),
               ),
@@ -178,16 +175,34 @@ class _ChatPageState extends State<ChatPage> {
             type: GFButtonType.transparent,
           ),
           searchBar: false,
-          elevation: 0,
+          title: Text("Olivia"),
+          centerTitle: true,
+          elevation: 1,
           backgroundColor: appTheme.primaryColor,
         ),
         body: Container(
-          decoration: BoxDecoration(color: Color.fromARGB(255, 29, 28, 33)),
-          padding: EdgeInsets.only(bottom: 80),
+          decoration: BoxDecoration(color: AppColors.ice),
+          padding: EdgeInsets.only(bottom: 100),
           child: Chat(
+            theme: const DefaultChatTheme(
+                inputBackgroundColor: AppColors.ice,
+                sendButtonIcon: Icon(
+                  Icons.send,
+                  color: AppColors.logoBlue,
+                ),
+                inputTextColor: AppColors.logoBlue,
+                inputTextCursorColor: AppColors.logoBlue,
+                userAvatarImageBackgroundColor: AppColors.grayPurple,
+                userAvatarNameColors: [
+                  AppColors.logoBlue,
+                  AppColors.grayPurple
+                ],
+                secondaryColor: AppColors.grayPurple),
             bubbleBuilder: _bubbleBuilder,
             messages: _messages,
-            l10n: ChatL10nEn(inputPlaceholder: 'Digita...'),
+            l10n: const ChatL10nEn(
+              inputPlaceholder: 'Digita...',
+            ),
             textMessageOptions: const TextMessageOptions(
               isTextSelectable: false,
             ),
@@ -214,8 +229,8 @@ class _ChatPageState extends State<ChatPage> {
         nipWidth: 5,
         color: _user.id != message.author.id ||
                 message.type == types.MessageType.image
-            ? const Color.fromARGB(255, 125, 125, 125)
-            : const Color.fromARGB(255, 0, 89, 179),
+            ? AppColors.ice
+            : Colors.grey[400],
         margin: nextMessageInGroup
             ? const BubbleEdges.symmetric(horizontal: 6)
             : null,
