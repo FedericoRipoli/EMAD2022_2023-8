@@ -50,7 +50,7 @@ class UserService {
     try {
       var response = await http.post(RestURL.refreshToken,
           body: tokenDtoToJson(token),
-          headers: RestURL.authHeader(token.accessToken!));
+          headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
         TokenDto toRet = tokenDtoFromJson(response.body);
         SharedPreferencesUtils.prefs.setString(
