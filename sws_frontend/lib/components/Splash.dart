@@ -7,6 +7,8 @@ import 'package:frontend_sws/screens/InitApp.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
 
+import 'AllPageLoad.dart';
+
 class Splash extends StatefulWidget {
   @override
   SplashState createState() => SplashState();
@@ -40,13 +42,9 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-          child: LoadingAnimationWidget.staggeredDotsWave(
-        size: 80,
-        color: appTheme.primaryColor,
-      )),
+      body: AllPageLoad(),
     );
   }
 }

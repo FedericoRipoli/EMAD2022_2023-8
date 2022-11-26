@@ -1,133 +1,96 @@
+import 'dart:async';
 
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/services/EnteService.dart';
+import 'package:frontend_sws/services/UserService.dart';
 import 'package:frontend_sws/services/UtenteService.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/services/entity/Utente.dart';
 import 'package:getwidget/components/appbar/gf_appbar.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:frontend_sws/main.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:getwidget/getwidget.dart';
 
-class GestioneUtente extends StatefulWidget{
+import '../../components/AllPageLoadTransparent.dart';
+import '../../components/menu/DrawerMenu.dart';
 
+class GestioneUtente extends StatefulWidget {
   String? idUtente;
+  static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.GestioneUtente';
 
-  GestioneUtente(String? idUtente){
-    this.idUtente = idUtente;
-  }
+  GestioneUtente(this.idUtente, {super.key});
 
   @override
-  State<StatefulWidget> createState() => _GestioneUtente(idUtente);
-
+  State<StatefulWidget> createState() => _GestioneUtente();
 }
 
-class _GestioneUtente extends State<GestioneUtente>{
+class _GestioneUtente extends State<GestioneUtente> {
+  EnteService enteService = EnteService();
+  UtenteService utenteService = UtenteService();
+  List<Ente>? enti;
+  Utente? utente;
+  final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
 
-  String? idUtente;
-
-  _GestioneUtente(String? idUtente){
-    this.idUtente = idUtente;
-  }
-
-  EnteService? enteService;
-  Future<List<Ente>>? future;
-
-  Future<List<Ente>> getEnti() async{
-    List<Ente> list = await EnteService().enteList(null,null) as List<Ente>;
-    if (list != null) {
-      return list;
-    }
-    return [];
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    future = getEnti();
+  Future<bool> load() async {
+    enti = await enteService.enteList(null, null);
+    utente = widget.idUtente != null
+        ? await utenteService.getUtente(widget.idUtente!)
+        : null;
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    //Utente utente = UtenteService().getUtente(idUtente!) as Utente;
-    TextEditingController passwordController = TextEditingController();
-    //passwordController.text = utente.password;
-    TextEditingController usernameController = TextEditingController();
-    //usernameController.text = utente.username;
-
-    String? selectedValue ;
-
     return Scaffold(
-      floatingActionButton: Container(
-          width: 80,
-          height: 80,
-          child: FloatingActionButton(
-            backgroundColor: Color.fromARGB(255, 0, 89, 179),
-            child: Icon(Icons.save,size: 40),
-            onPressed: () => {
-
-            },
-          )
-      ),
+        key: _scaffoldKeyAdmin,
+        resizeToAvoidBottomInset: false,
+        drawer: DrawerMenu(currentPage: GestioneUtente.id),
         appBar: GFAppBar(
-          title: const Text("Gestione Utente"),
-          leading: IconButton(
-              icon : Icon(Icons.arrow_back_ios),
-              onPressed: () => Navigator.of(context).pop(),
+          title: const Text("Gestione utente"),
+          leading: GFIconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            type: GFButtonType.transparent,
           ),
+          searchBar: false,
+          elevation: 0,
+          backgroundColor: appTheme.primaryColor,
         ),
-        body: FutureBuilder<List<Ente>?>(
-          future: future,
-          builder: (BuildContext context, AsyncSnapshot<List<Ente>?> snapshot) {
-            if (!snapshot.hasData) {
-              // while data is loading:
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              // data loaded:
-              final list = snapshot.data;
-              selectedValue = list?.first.id;
-              return Container(
-                padding: EdgeInsets.only(left: 50,top: 100,right: 50,bottom: 0),
-                child: Column(
-                  children: [
-                    TextField(
-                      controller: usernameController,
-                      decoration:  InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Username',
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    TextField(
-                      controller: passwordController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    DropdownButton(
-                        dropdownColor: Color.fromARGB(255, 204, 206, 208),
-                        value: selectedValue,
-                        onChanged: (String? newValue){
-                          setState(() {
-                            selectedValue = newValue!;
-                          });
-                        },
-                        items: list?.map<DropdownMenuItem<String>>((Ente value) {
-                          return DropdownMenuItem<String>(
-                            value: value.id,
-                            child: Text(value.denominazione.toString()),
-                          );
-                        }).toList()
-                    )
-                  ],
+        body: FutureBuilder<bool>(
+            future: load(),
+            builder: ((context, snapshot) {
+              List<Widget> children = [];
+
+              if (!snapshot.hasData && !snapshot.hasError) {
+                children.add(const AllPageLoadTransparent());
+              }
+              List<Widget> columnChild = [];
+              columnChild.add(
+                const TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter a search term',
+                  ),
                 ),
               );
-            }
-          },
-        )
-    );
-  }
 
+              children.add(Column(
+                children: columnChild,
+              ));
+              return AbsorbPointer(
+                absorbing: !(snapshot.hasData || snapshot.hasError),
+                child: Stack(
+                  children: children,
+                ),
+              );
+            })));
+  }
 }
