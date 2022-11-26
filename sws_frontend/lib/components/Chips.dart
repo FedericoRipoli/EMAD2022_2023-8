@@ -11,7 +11,7 @@ class ChipGenerale extends StatelessWidget {
   Widget build(BuildContext context) {
     return Chip(
       label: Text(label),
-      elevation: 10,
+      elevation: 3,
       avatar: Icon(
         icon,
         color: AppColors.logoBlue,

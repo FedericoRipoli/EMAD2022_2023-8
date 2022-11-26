@@ -12,10 +12,14 @@ class Events extends StatelessWidget {
 
     return Scaffold(
       appBar: GFAppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         searchBar: true,
         backgroundColor: appTheme.primaryColor,
-        title: const Text("Sezione Eventi"),
+        title: const Text(
+          "Sezione Eventi",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         actions: <Widget>[
           GFIconButton(
             icon: const Icon(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/screens/InitApp.dart';
+import 'package:frontend_sws/theme/theme.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'HomeScreen.dart';

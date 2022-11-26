@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/components/Button.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/services/UserService.dart';
 import 'package:getwidget/getwidget.dart';
@@ -48,7 +49,7 @@ class _LoginFormState extends State<LoginForm> {
                               'Accedi',
                               style: TextStyle(
                                   color: appTheme.primaryColor,
-                                  fontWeight: FontWeight.w500,
+                                  fontWeight: FontWeight.bold,
                                   fontSize: 24),
                             )),
                         Container(
@@ -86,9 +87,7 @@ class _LoginFormState extends State<LoginForm> {
                           margin: const EdgeInsets.only(top: 25),
                           height: 45,
                           width: 120,
-                          child: GFButton(
-                            color: appTheme.primaryColor,
-                            padding: const EdgeInsets.all(5),
+                          child: Button(
                             onPressed: () async {
                               bool res = await login(emailController.text,
                                   passwordController.text);
@@ -110,15 +109,9 @@ class _LoginFormState extends State<LoginForm> {
                                 );
                               }
                             },
-                            text: "Accedi",
-                            textStyle: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Colors.white),
-                            icon: const Icon(
-                              Icons.login,
-                              color: Colors.white,
-                            ),
+                            textButton: "Accedi",
+                            status: true,
+                            icon: Icons.login_outlined,
                           ),
                         ),
                       ],

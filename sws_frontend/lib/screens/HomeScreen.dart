@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend_sws/components/CardEvento.dart';
 import 'package:frontend_sws/components/CardListAmbiti.dart';
 import 'package:frontend_sws/main.dart';
+import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/getwidget.dart';
 
 // entity
+import '../components/CardServizio.dart';
 import '../components/menu/DrawerMenu.dart';
 import '../entity/Servizio.dart';
 import '../entity/Evento.dart';
@@ -18,6 +21,8 @@ import 'package:frontend_sws/components/Clipper08.dart';
 import 'package:frontend_sws/components/CardList.dart';
 import 'package:frontend_sws/components/LoginForm.dart';
 import 'package:frontend_sws/services/UserService.dart';
+
+import 'InfoApp.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -35,6 +40,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: AppColors.white,
       endDrawerEnableOpenDragGesture: false,
       drawer: userService.isLogged() ? DrawerMenu(currentPage: Home.id) : null,
       resizeToAvoidBottomInset: false,
@@ -93,7 +99,12 @@ class _HomeState extends State<Home> {
               Icons.info_outlined,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const InfoApp()),
+              );
+            },
             type: GFButtonType.transparent,
           ),
         ],
@@ -107,12 +118,12 @@ class _HomeState extends State<Home> {
                 ClipPath(
                   clipper: Clipper08(),
                   child: Container(
-                    height: 280, //400
+                    height: 240, //400
                     color: appTheme.primaryColor,
                     child: Column(
                       children: <Widget>[
                         const SizedBox(
-                          height: 30,
+                          height: 18,
                         ),
                         Center(
                           child: Image.asset(
@@ -124,7 +135,7 @@ class _HomeState extends State<Home> {
                         const Text(
                           'Bentornatə in Salerno Amica!👋',
                           style: TextStyle(
-                            fontSize: 20.0,
+                            fontSize: 22.0,
                             color: Colors.white,
                           ),
                           textAlign: TextAlign.center,
@@ -149,40 +160,29 @@ class _HomeState extends State<Home> {
   }
 }
 
-List<Servizio> listServices = [
-  const Servizio(
-    id: "00001",
-    nome: "Mensa",
-    contenuto: "Servizio mensa per i senzadimora",
-    visibile: true,
-    tags: "senzadimora",
-  ),
-  const Servizio(
-    id: "00002",
-    nome: "Trasporto Anziani",
-    contenuto: "Servizio di trasporto per gli anziani",
-    visibile: true,
-    tags: "anziani",
-  ),
+List<CardServizio> listServices = [
+  const CardServizio(
+      title: 'Mensa per senzadimora',
+      subtitle: 'Ente No Profit',
+      ambito: 'Mensa',
+      tipologia: 'Senadimora',
+      tags: 'mensa'),
+  const CardServizio(
+      title: 'Trasporto Anziani',
+      subtitle: 'Ente Anziani',
+      ambito: 'Trasporto',
+      tipologia: 'Anziani',
+      tags: 'trasporto'),
+  const CardServizio(
+      title: 'Trasporto Disabili',
+      subtitle: 'Ente Arca',
+      ambito: 'Trasporto',
+      tipologia: 'Disabilità',
+      tags: 'trasporto'),
 ];
 
-List<Evento> listEventi = [
-  const Evento(
-    id: "0001",
-    nome: "Luci di Natale",
-    contenuto: "",
-    tags: "Attrazione",
-  ),
-  const Evento(
-    id: "0002",
-    nome: "Coloriamo Salerno",
-    contenuto: "",
-    tags: "NoProfit",
-  ),
-  const Evento(
-    id: "0003",
-    nome: "Salviamo il parco",
-    contenuto: "",
-    tags: "NoProfit",
-  ),
+List<CardEvento> listEventi = [
+  const CardEvento(),
+  const CardEvento(),
+  const CardEvento(),
 ];

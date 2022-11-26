@@ -7,10 +7,10 @@ class CardListAmbiti extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> itemList = [
-      ChipAmbito(label: "Trasporto", icon: Icons.emoji_transportation),
-      ChipAmbito(label: "Mensa", icon: Icons.food_bank),
-      ChipAmbito(label: "Assistenza", icon: Icons.help_center),
-      ChipAmbito(label: "Giovani", icon: Icons.join_full)
+      const ChipAmbito(label: "Trasporto", icon: Icons.emoji_transportation),
+      const ChipAmbito(label: "Mensa", icon: Icons.food_bank),
+      const ChipAmbito(label: "Assistenza", icon: Icons.help_center),
+      const ChipAmbito(label: "Giovani", icon: Icons.join_full)
     ];
 
     return Column(
@@ -22,9 +22,9 @@ class CardListAmbiti extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 8),
                 child: const Text(
-                  "Visualizza per Ambito",
+                  "Visualizza per ambito",
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
@@ -36,8 +36,6 @@ class CardListAmbiti extends StatelessWidget {
           ),
         ),
         SizedBox(
-          //height: height! * .25 < 170 ? height! * .25 : 170,
-          //height: height! * .25 < 300 ? height! * .25 : 300,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxHeight: 100, minHeight: 50),
             child: ListView.builder(
@@ -64,14 +62,14 @@ class ChipAmbito extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       width: 100,
-      padding: EdgeInsets.all(3),
-      margin: EdgeInsets.all(6),
+      padding: const EdgeInsets.all(3),
+      margin: const EdgeInsets.only(left: 12, right: 6, top: 3, bottom: 3),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(30),
         boxShadow: const [
           BoxShadow(
-              color: Colors.black, offset: Offset(0.0, 1.0), blurRadius: 1.0),
+              color: Colors.black, offset: Offset(0.8, 0.2), blurRadius: 2.0),
         ],
       ),
       child: Column(
@@ -82,7 +80,10 @@ class ChipAmbito extends StatelessWidget {
             color: appTheme.primaryColor,
             size: 36,
           ),
-          Text(label)
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          )
         ],
       ),
     );

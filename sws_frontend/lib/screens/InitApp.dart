@@ -1,6 +1,7 @@
 // utility libraries
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/main.dart';
+import 'package:frontend_sws/theme/theme.dart';
 
 // screens
 import 'Servizi.dart';
@@ -70,7 +71,7 @@ class _InitAppState extends State<InitApp> {
           unselectedItemColor: appTheme.secondaryHeaderColor,
           selectedItemColor: appTheme.primaryColor,
           type: BottomNavigationBarType.shifting,
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.ice,
           showUnselectedLabels: false,
           showSelectedLabels: true,
           currentIndex: sel,

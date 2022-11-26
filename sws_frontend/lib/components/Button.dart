@@ -19,9 +19,9 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GFButton(
-      elevation: 10,
+      elevation: 4,
       color: AppColors.logoBlue,
-      padding: const EdgeInsets.only(left: 16, right: 16),
+      padding: const EdgeInsets.only(left: 18, right: 18),
       onPressed: onPressed,
       text: textButton,
       textStyle: const TextStyle(
@@ -29,7 +29,7 @@ class Button extends StatelessWidget {
       icon: Icon(
         icon,
         color: AppColors.white,
-        size: 16,
+        size: 18,
       ),
       buttonBoxShadow: true,
       shape: GFButtonShape.pills,
