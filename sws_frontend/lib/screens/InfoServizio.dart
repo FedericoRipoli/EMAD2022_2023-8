@@ -3,132 +3,363 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/theme/theme.dart';
 
-class InfoServizio extends StatelessWidget {
+class InfoServizio extends StatefulWidget {
   const InfoServizio({Key? key}) : super(key: key);
 
   @override
+  State<InfoServizio> createState() => _InfoServizioState();
+}
+
+class _InfoServizioState extends State<InfoServizio>
+    with TickerProviderStateMixin {
+  final double infoHeight = 364.0;
+  AnimationController? animationController;
+  Animation<double>? animation;
+  double opacity1 = 0.0;
+  double opacity2 = 0.0;
+  double opacity3 = 0.0;
+
+  @override
+  void initState() {
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        parent: animationController!,
+        curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
+    setData();
+    super.initState();
+  }
+
+  Future<void> setData() async {
+    animationController?.forward();
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    setState(() {
+      opacity1 = 1.0;
+    });
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    setState(() {
+      opacity2 = 1.0;
+    });
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    setState(() {
+      opacity3 = 1.0;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: AppColors.white,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        appBar: GFAppBar(
-          title: const Text("Info Servizio"),
-          leading: GFIconButton(
-            icon: const Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            type: GFButtonType.transparent,
-          ),
-          searchBar: false,
-          elevation: 0,
-          centerTitle: true,
-          backgroundColor: AppColors.logoBlue,
-        ),
-        extendBodyBehindAppBar: false,
-        resizeToAvoidBottomInset: false,
-        floatingActionButton: FloatingActionButton.extended(
-          elevation: 8,
-          hoverElevation: 8,
-          onPressed: () {},
-          backgroundColor: Colors.green.shade700,
-          label: Row(
-            children: const [
-              Padding(
-                padding: EdgeInsets.only(right: 6.0),
-                child: Icon(
-                  Icons.call,
-                  size: 18,
-                ),
-              ),
-              Text(
-                "Contatta",
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Container(
-            padding: const EdgeInsets.all(0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: <Widget>[
-                    ClipPath(
-                      clipper: WaveClipperOne(flip: true),
-                      child: Container(
-                        height: 80, //400
-                        color: AppColors.logoBlue,
-                      ),
-                    ),
-                  ],
-                ),
-                const GFListTile(
-                  avatar: GFAvatar(
-                    shape: GFAvatarShape.standard,
-                    child: Text("EA"),
-                  ),
-                  color: AppColors.white,
-                  title: GFTypography(
-                    text: 'Nome Servizio',
-                    type: GFTypographyType.typo2,
-                    showDivider: false,
-                    textColor: AppColors.logoBlue,
-                  ),
-                  subTitle: GFTypography(
-                    text: 'Nome Ente',
-                    type: GFTypographyType.typo4,
-                    icon: Icon(
-                      Icons.home_work_rounded,
-                      color: AppColors.logoBlue,
-                    ),
-                    dividerColor: AppColors.logoBlue,
-                    textColor: AppColors.logoBlue,
-                    fontWeight: FontWeight.normal,
-                    dividerWidth: 130.0,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                GFListTile(
-                  description: GFTypography(
-                    text: "descrizione",
-                    type: GFTypographyType.typo4,
-                    fontWeight: FontWeight.normal,
-                    showDivider: false,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [],
-                ),
-                const SizedBox(height: 24),
-                const GFListTile(
-                  title: GFTypography(
-                    text: 'Dove puoi usufruire del servizio?',
-                    type: GFTypographyType.typo5,
-                    showDivider: false,
-                    textColor: AppColors.logoBlue,
-                  ),
-                  icon: Icon(
-                    Icons.location_on,
-                    color: AppColors.logoBlue,
-                  ),
+    final double tempHeight = MediaQuery.of(context).size.height -
+        (MediaQuery.of(context).size.width / 1.2) +
+        24.0;
+    return Container(
+      color: AppColors.white,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                AspectRatio(
+                  aspectRatio: 1.2,
+                  child: Image.asset('assets/images/service-bg.png'),
                 ),
               ],
             ),
+            Positioned(
+              top: (MediaQuery.of(context).size.width / 1.2) - 24.0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(32.0),
+                      topRight: Radius.circular(32.0)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        color: AppColors.logoBlue,
+                        offset: Offset(1.1, 1.1),
+                        blurRadius: 8.0),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: SingleChildScrollView(
+                    child: Container(
+                      constraints: BoxConstraints(
+                          minHeight: infoHeight,
+                          maxHeight: tempHeight > infoHeight
+                              ? tempHeight
+                              : infoHeight),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          const Padding(
+                            padding:
+                                EdgeInsets.only(top: 32.0, left: 18, right: 16),
+                            child: Text(
+                              'Servizio Mensa',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 22,
+                                letterSpacing: 0.27,
+                                color: AppColors.black,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 16, right: 16, bottom: 8, top: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                const Text(
+                                  'Nome Ente',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 22,
+                                    letterSpacing: 0.27,
+                                    color: AppColors.logoBlue,
+                                  ),
+                                ),
+                                Container(
+                                  child: Row(
+                                    children: const <Widget>[
+                                      Text(
+                                        'Salerno',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w200,
+                                          fontSize: 22,
+                                          letterSpacing: 0.27,
+                                          color: AppColors.logoBlue,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.location_on,
+                                        color: AppColors.logoBlue,
+                                        size: 24,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          AnimatedOpacity(
+                            duration: const Duration(milliseconds: 500),
+                            opacity: opacity1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Row(
+                                children: <Widget>[
+                                  getTimeBoxUI('Ambito', 'Classe'),
+                                  getTimeBoxUI('Tipologia', 'Type'),
+                                  getTimeBoxUI('Orari', '12:00'),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 500),
+                              opacity: opacity2,
+                              child: const Padding(
+                                padding: EdgeInsets.only(
+                                    left: 16, right: 16, top: 8, bottom: 8),
+                                child: Text(
+                                  'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 16,
+                                    letterSpacing: 0.27,
+                                    color: AppColors.black,
+                                  ),
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                          ),
+                          AnimatedOpacity(
+                            duration: const Duration(milliseconds: 500),
+                            opacity: opacity3,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 16, bottom: 16, right: 16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    width: 48,
+                                    height: 48,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColors.ice,
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(16.0),
+                                        ),
+                                        border: Border.all(
+                                            color: AppColors.logoBlue),
+                                      ),
+                                      child: const Icon(
+                                        Icons.call,
+                                        color: AppColors.logoBlue,
+                                        size: 28,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      height: 48,
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.logoBlue,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(16.0),
+                                        ),
+                                        boxShadow: <BoxShadow>[
+                                          BoxShadow(
+                                              color: AppColors.logoBlue,
+                                              offset: Offset(1.1, 1.1),
+                                              blurRadius: 6.0),
+                                        ],
+                                      ),
+                                      child: const Center(
+                                        child: Text(
+                                          'Contatta',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
+                                            letterSpacing: 0.0,
+                                            color: AppColors.ice,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).padding.bottom,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: (MediaQuery.of(context).size.width / 1.2) - 24.0 - 35,
+              right: 35,
+              child: ScaleTransition(
+                alignment: Alignment.center,
+                scale: CurvedAnimation(
+                    parent: animationController!, curve: Curves.fastOutSlowIn),
+                child: Card(
+                  color: AppColors.logoBlue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50.0)),
+                  elevation: 10.0,
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    child: Center(
+                      child: Icon(
+                        Icons.info,
+                        color: AppColors.white,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+              child: SizedBox(
+                width: AppBar().preferredSize.height,
+                height: AppBar().preferredSize.height,
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius:
+                        BorderRadius.circular(AppBar().preferredSize.height),
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: AppColors.black,
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget getTimeBoxUI(String text1, String txt2) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: AppColors.ice,
+          borderRadius: BorderRadius.all(Radius.circular(16.0)),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: AppColors.logoBlue,
+                offset: Offset(1.1, 1.1),
+                blurRadius: 2.0),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+              left: 18.0, right: 18.0, top: 12.0, bottom: 12.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                text1,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w200,
+                  fontSize: 14,
+                  letterSpacing: 0.27,
+                  color: AppColors.black,
+                ),
+              ),
+              Text(
+                txt2,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                  letterSpacing: 0.27,
+                  color: AppColors.logoBlue,
+                ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

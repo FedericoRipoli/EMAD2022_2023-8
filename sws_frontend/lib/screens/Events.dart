@@ -3,6 +3,8 @@ import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/components/Clipper07.dart';
 
+import '../theme/theme.dart';
+
 class Events extends StatelessWidget {
   const Events({Key? key}) : super(key: key);
 
@@ -17,9 +19,8 @@ class Events extends StatelessWidget {
         elevation: 0,
         searchBar: false,
         backgroundColor: appTheme.primaryColor,
-        title: const Text(
-          "Sezione Eventi",
-        ),
+        title: const Text("Sezione Eventi",
+            style: TextStyle(color: AppColors.ice, fontFamily: 'FredokaOne')),
       ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(

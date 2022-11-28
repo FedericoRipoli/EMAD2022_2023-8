@@ -1,28 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:frontend_sws/components/CardEvento.dart';
 import 'package:frontend_sws/components/CardListAmbiti.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/getwidget.dart';
-
-// entity
-import '../components/CardServizio.dart';
-import '../components/menu/DrawerMenu.dart';
-import '../entity/Servizio.dart';
-import '../entity/Evento.dart';
-
 // screens
 import 'package:frontend_sws/screens/Chat.dart';
-import '../admin_screens/utenti/ListaUtenti.dart';
-
+import 'InfoApp.dart';
 //components
 import 'package:frontend_sws/components/Clipper08.dart';
 import 'package:frontend_sws/components/CardList.dart';
 import 'package:frontend_sws/components/LoginForm.dart';
 import 'package:frontend_sws/services/UserService.dart';
-
-import 'InfoApp.dart';
+import '../components/CardServizio.dart';
+import '../components/menu/DrawerMenu.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -44,24 +35,33 @@ class _HomeState extends State<Home> {
       endDrawerEnableOpenDragGesture: false,
       drawer: userService.isLogged() ? DrawerMenu(currentPage: Home.id) : null,
       resizeToAvoidBottomInset: false,
-      floatingActionButton: FloatingActionButton(
-        elevation: 0,
-        hoverElevation: 0,
-        onPressed: () {
-          if (mounted) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ChatPage()),
-            );
-          }
-        },
-        backgroundColor: appTheme.primaryColor,
-        child: const ImageIcon(
-          AssetImage("assets/images/chatbot.png"),
-          size: 28,
+      floatingActionButton: Container(
+        width: 70,
+        height: 70,
+        child: FloatingActionButton(
+          elevation: 8,
+          hoverElevation: 3,
+          onPressed: () {
+            if (mounted) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ChatPage()),
+              );
+            }
+          },
+          backgroundColor: appTheme.primaryColor,
+          child: const ImageIcon(
+            AssetImage("assets/images/chatbot.png"),
+            size: 38,
+          ),
         ),
       ),
       appBar: GFAppBar(
+        title: const Text(
+          "Salerno Amica",
+          style: TextStyle(color: AppColors.ice, fontFamily: 'FredokaOne'),
+        ),
+        centerTitle: true,
         leading: userService.isLogged()
             ? GFIconButton(
                 icon: const Icon(
@@ -118,12 +118,12 @@ class _HomeState extends State<Home> {
                 ClipPath(
                   clipper: Clipper08(),
                   child: Container(
-                    height: 240, //400
+                    height: 190, //400
                     color: appTheme.primaryColor,
                     child: Column(
                       children: <Widget>[
                         const SizedBox(
-                          height: 18,
+                          height: 15,
                         ),
                         Center(
                           child: Image.asset(
@@ -132,15 +132,7 @@ class _HomeState extends State<Home> {
                             height: 120,
                           ),
                         ),
-                        const Text(
-                          'Bentornatə in Salerno Amica!👋',
-                          style: TextStyle(
-                            fontSize: 22.0,
-                            color: Colors.white,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 2),
+                        //const SizedBox(height: 2),
                       ],
                     ),
                   ),

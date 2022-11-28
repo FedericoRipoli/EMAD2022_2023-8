@@ -85,8 +85,8 @@ class _LoginFormState extends State<LoginForm> {
                         ),
                         Container(
                           margin: const EdgeInsets.only(top: 25),
-                          height: 45,
-                          width: 120,
+                          height: 60,
+                          width: 170,
                           child: Button(
                             onPressed: () async {
                               bool res = await login(emailController.text,

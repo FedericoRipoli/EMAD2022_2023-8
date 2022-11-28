@@ -25,11 +25,11 @@ class Button extends StatelessWidget {
       onPressed: onPressed,
       text: textButton,
       textStyle: const TextStyle(
-          color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 16),
+          color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 20),
       icon: Icon(
         icon,
         color: AppColors.white,
-        size: 18,
+        size: 20,
       ),
       buttonBoxShadow: true,
       shape: GFButtonShape.pills,

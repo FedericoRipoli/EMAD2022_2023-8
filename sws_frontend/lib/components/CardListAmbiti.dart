@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/main.dart';
 
+import '../theme/theme.dart';
+
 class CardListAmbiti extends StatelessWidget {
   const CardListAmbiti({Key? key}) : super(key: key);
 
@@ -24,28 +26,34 @@ class CardListAmbiti extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(left: 8),
                 child: const Text(
-                  "Visualizza per ambito",
+                  "Visualizza i Servizi per ambito",
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              const Spacer(),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.more_horiz,
+                    color: AppColors.black,
+                  )),
             ],
           ),
         ),
         SizedBox(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 100, minHeight: 50),
-            child: ListView.builder(
-                itemBuilder: (context, index) => itemList[index],
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(1.0),
-                itemCount: itemList.length,
-                scrollDirection: Axis.horizontal),
+            constraints: const BoxConstraints(maxHeight: 280, minHeight: 150),
+            child: GridView.count(
+                crossAxisCount: 3,
+                crossAxisSpacing: 3.0,
+                mainAxisSpacing: 2.0,
+                children: List.generate(itemList.length, (index) {
+                  return Center(child: itemList[index]);
+                })),
           ),
-        ),
+        )
       ],
     );
   }
@@ -61,9 +69,10 @@ class ChipAmbito extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      width: 100,
-      padding: const EdgeInsets.all(3),
-      margin: const EdgeInsets.only(left: 12, right: 6, top: 3, bottom: 3),
+      width: 110,
+      height: 110,
+      padding: const EdgeInsets.all(2),
+      //margin: const EdgeInsets.only(left: 12, right: 6, top: 3, bottom: 3),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
@@ -78,11 +87,11 @@ class ChipAmbito extends StatelessWidget {
           Icon(
             icon,
             color: appTheme.primaryColor,
-            size: 36,
+            size: 48,
           ),
           Text(
             label,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           )
         ],
       ),

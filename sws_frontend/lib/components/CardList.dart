@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/theme.dart';
+
 class CardList extends StatelessWidget {
   // lista di elementi da mostrare
   final List<Widget> itemList;
@@ -18,16 +20,21 @@ class CardList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 8),
                 child: Text(
-                  "$itemLabel più recenti",
+                  "Visualizza $itemLabel più recenti",
                   style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold),
                 ),
               ),
-              const Spacer(),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.more_horiz,
+                    color: AppColors.black,
+                  )),
             ],
           ),
         ),
