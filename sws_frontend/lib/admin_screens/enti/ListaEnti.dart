@@ -7,6 +7,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 
 import '../../components/enti/EnteListItem.dart';
+import 'GestioneEnte.dart';
 
 
 
@@ -69,7 +70,9 @@ class _ListaEntiState extends State<ListaEnti> {
             hoverElevation: 1,
             onPressed: () {
               if (mounted) {
-                // open add modal
+                Navigator.push(context, MaterialPageRoute(builder:
+                    (context) => GestioneEnte(null)
+                ));
               }
             },
             backgroundColor: appTheme.primaryColor,
@@ -102,7 +105,13 @@ class _ListaEntiState extends State<ListaEnti> {
                 itemBuilder: (context, item, index) => EnteListItem(
                     denominazione:item.denominazione,
                     id:item.id!,
-                    onTap:()=>{}
+                    onTap:()=>{
+                      /*
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (context) => GestioneEnte(item.id)
+                      ))
+                      */
+                    }
                 )
             ),
           )
