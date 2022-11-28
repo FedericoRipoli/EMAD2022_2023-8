@@ -8,25 +8,20 @@ import 'package:frontend_sws/services/UtenteService.dart';
 import 'package:frontend_sws/services/entity/Utente.dart';
 import 'package:frontend_sws/components/utenti/UtenteListItem.dart';
 
-
-class ListaUtenti extends StatefulWidget  {
-
+class ListaUtenti extends StatefulWidget {
   const ListaUtenti({Key? key}) : super(key: key);
-  static String id='it.unisa.emad.comunesalerno.sws.ipageutil.GestioneEnti';
+  static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.GestioneEnti';
 
   @override
   State<ListaUtenti> createState() => _ListaUtentiState();
-
-
-
 }
-
 
 class _ListaUtentiState extends State<ListaUtenti> {
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
-  UtenteService utenteService=UtenteService();
+  UtenteService utenteService = UtenteService();
   final PagingController<int, Utente> _pagingController =
-  PagingController(firstPageKey: 0);
+      PagingController(firstPageKey: 0);
+
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
@@ -37,18 +32,20 @@ class _ListaUtentiState extends State<ListaUtenti> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems= await utenteService.usersList(null,null,null, pageKey);
-      final isLastPage = newItems==null || newItems.isEmpty;
+      final newItems =
+          await utenteService.usersList(null, null, false, pageKey);
+      final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
       } else {
-        pageKey ++;
+        pageKey++;
         _pagingController.appendPage(newItems, pageKey);
       }
     } catch (error) {
       _pagingController.error = error;
     }
   }
+
   @override
   void dispose() {
     _pagingController.dispose();
@@ -66,7 +63,10 @@ class _ListaUtentiState extends State<ListaUtenti> {
             hoverElevation: 1,
             onPressed: () {
               if (mounted) {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => GestioneUtente(null)));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => GestioneUtente(null)));
               }
             },
             backgroundColor: appTheme.primaryColor,
@@ -75,7 +75,8 @@ class _ListaUtentiState extends State<ListaUtenti> {
               size: 32,
               color: Colors.white,
             )),
-        appBar: GFAppBar(title: const Text("Utenti"),
+        appBar: GFAppBar(
+          title: const Text("Utenti"),
           leading: GFIconButton(
             icon: const Icon(
               Icons.menu,
@@ -90,30 +91,37 @@ class _ListaUtentiState extends State<ListaUtenti> {
           elevation: 0,
           backgroundColor: appTheme.primaryColor,
         ),
-        body:
-        RefreshIndicator(
-          onRefresh: _pullRefresh,
-          child: PagedListView<int, Utente>(
-            pagingController: _pagingController,
-            builderDelegate: PagedChildBuilderDelegate<Utente>(
-                itemBuilder: (context, item, index) => UtenteListItem(
-                    name:item.username,
-                    id:item.id!,
-                    ente:item.ente,
-                    onTap:()=>{
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => GestioneUtente(item.id)))
-                    },
-                    onDelete: ()=>{
-                      utenteService.deleteUtente(item.id!).then((value) => _pullRefresh())
-                    },
-                )
-            ),
-          )
-        )
+        body: RefreshIndicator(
+            onRefresh: _pullRefresh,
+            child: PagedListView<int, Utente>(
+              pagingController: _pagingController,
+              builderDelegate: PagedChildBuilderDelegate<Utente>(
+                  itemBuilder: (context, item, index) => UtenteListItem(
+                        name: item.username,
+                        id: item.id!,
+                        ente: item.nomeEnte,
+                        onTap: () => {
+                          Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          GestioneUtente(item.id)))
+                              .then((v) => _pullRefresh())
+                        },
+                        onDelete: () {
+                          utenteService.deleteUtente(item.id!).then((value) {
+                            if (value) {
 
+                            } else {
 
-    );
+                            }
+                            _pullRefresh();
+                          });
+                        },
+                      )),
+            )));
   }
+
   Future<void> _pullRefresh() async {
     _pagingController.refresh();
   }

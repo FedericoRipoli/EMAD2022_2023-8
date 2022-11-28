@@ -26,7 +26,7 @@ public class UtenteSerializer extends StdSerializer<Utente> {
         jsonGenerator.writeStringField("password", utente.getPassword());
         jsonGenerator.writeBooleanField("admin", utente.isAdmin());
         if(utente.getEnte()!=null){
-            jsonGenerator.writeStringField("ente", utente.getEnte().getDenominazione());
+            jsonGenerator.writeStringField("nomeEnte", utente.getEnte().getDenominazione());
             jsonGenerator.writeStringField("idEnte", utente.getEnte().getId());
         }
 

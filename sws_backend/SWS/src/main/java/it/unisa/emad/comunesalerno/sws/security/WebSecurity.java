@@ -53,6 +53,8 @@ public class WebSecurity {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        CorsConfiguration corsConfiguration=new CorsConfiguration().applyPermitDefaultValues();
+        corsConfiguration.setAllowedMethods(Arrays.asList("PUT","POST","GET","OPTIONS","DELETE"));
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .antMatchers("/api/auth/login").permitAll()
@@ -80,7 +82,7 @@ public class WebSecurity {
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                 )
-                .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
+                .cors().configurationSource(request -> corsConfiguration);
         return http.build();
     }
 

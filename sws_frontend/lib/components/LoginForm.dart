@@ -5,6 +5,8 @@ import 'package:frontend_sws/services/UserService.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../util/ToastUtil.dart';
+
 // Form Login Ente / Comune
 class LoginForm extends StatefulWidget {
   final UserService? userService;
@@ -77,7 +79,7 @@ class _LoginFormState extends State<LoginForm> {
                             obscureText: true,
                             controller: passwordController,
                             cursorColor: appTheme.primaryColor,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Password',
                             ),
@@ -94,19 +96,12 @@ class _LoginFormState extends State<LoginForm> {
                               if (mounted) {
                                 if (res) Navigator.pop(context);
                               }
-                              if (_loginError) {
-                                GFToast.showToast(
+                              if (_loginError && mounted) {
+                                ToastUtil.error(
                                   'Credenziali non valide :(',
-                                  context,
-                                  toastPosition: GFToastPosition.BOTTOM,
-                                  textStyle: const TextStyle(
-                                      fontSize: 18, color: GFColors.DARK),
-                                  backgroundColor: Colors.white,
-                                  trailing: const Icon(
-                                    Icons.error_outline,
-                                    color: GFColors.DANGER,
-                                  ),
+                                  context
                                 );
+
                               }
                             },
                             textButton: "Accedi",
