@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/admin_screens/utenti/GestioneUtente.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
-import 'package:frontend_sws/services/EnteService.dart';
-import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -68,7 +66,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
             hoverElevation: 1,
             onPressed: () {
               if (mounted) {
-                // open add modal
+                Navigator.push(context, MaterialPageRoute(builder: (context) => GestioneUtente(null)));
               }
             },
             backgroundColor: appTheme.primaryColor,
@@ -104,7 +102,10 @@ class _ListaUtentiState extends State<ListaUtenti> {
                     ente:item.ente,
                     onTap:()=>{
                       Navigator.push(context, MaterialPageRoute(builder: (context) => GestioneUtente(item.id)))
-                    }
+                    },
+                    onDelete: ()=>{
+                      utenteService.deleteUtente(item.id!).then((value) => _pullRefresh())
+                    },
                 )
             ),
           )

@@ -230,7 +230,7 @@ class _ChatPageState extends State<ChatPage> {
         color: _user.id != message.author.id ||
                 message.type == types.MessageType.image
             ? AppColors.ice
-            : Colors.grey[400],
+            : AppColors.logoBlue,
         margin: nextMessageInGroup
             ? const BubbleEdges.symmetric(horizontal: 6)
             : null,
