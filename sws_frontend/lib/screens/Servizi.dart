@@ -126,7 +126,9 @@ class _ServiziState extends State<Servizi> with TickerProviderStateMixin {
                             Icons.location_on,
                             color: Colors.red,
                             size: 40,
-                          )))
+                          )
+                      )
+                  )
                 ],
               )
             ],

@@ -44,7 +44,6 @@ class _GestioneUtente extends State<GestioneUtente> {
     return Scaffold(
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Container(
           height: 70,
           width: 70,
