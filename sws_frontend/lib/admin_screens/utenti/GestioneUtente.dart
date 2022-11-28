@@ -119,6 +119,8 @@ class _GestioneUtente extends State<GestioneUtente> {
     return Scaffold(
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
+
+
         drawer: DrawerMenu(currentPage: GestioneUtente.id),
         floatingActionButton: !loaded
             ? null
