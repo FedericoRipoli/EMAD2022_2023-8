@@ -33,96 +33,98 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.all(6),
-        height: 385,
-        width: 400,
-        child: !_isLoading
-            ? Column(
-                children: [
-                  Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(3),
-                      child: Text(
-                        'LOGIN',
-                        style: TextStyle(
-                            color: appTheme.primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24),
-                      )),
-                  Container(
-                      alignment: Alignment.center,
+    return SingleChildScrollView(
+      child: Container(
+          padding: const EdgeInsets.all(6),
+          height: 385,
+          width: 400,
+          child: !_isLoading
+              ? Column(
+                  children: [
+                    Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(3),
+                        child: Text(
+                          'LOGIN',
+                          style: TextStyle(
+                              color: appTheme.primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24),
+                        )),
+                    Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(10),
+                        child: const Text(
+                          'Inserisci le credenziali fornite dal Comune',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.center,
+                        )),
+                    Container(
                       padding: const EdgeInsets.all(10),
-                      child: const Text(
-                        'Inserisci le credenziali fornite dal Comune',
-                        style: TextStyle(
-                          fontSize: 18,
+                      child: TextField(
+                        controller: emailController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Username',
                         ),
-                        textAlign: TextAlign.center,
-                      )),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    child: TextField(
-                      controller: emailController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Username',
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    child: TextField(
-                      obscureText: true,
-                      controller: passwordController,
-                      cursorColor: appTheme.primaryColor,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                      child: TextField(
+                        obscureText: true,
+                        controller: passwordController,
+                        cursorColor: appTheme.primaryColor,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Password',
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 25),
-                    height: 60,
-                    width: 170,
-                    child: Button(
-                      onPressed: () async {
-                        bool res = await login(
-                            emailController.text, passwordController.text);
-                        if (mounted) {
-                          if (res) Navigator.pop(context);
-                        }
-                        if (_loginError) {
-                          GFToast.showToast(
-                            'Credenziali non valide :(',
-                            context,
-                            toastPosition: GFToastPosition.BOTTOM,
-                            textStyle: const TextStyle(
-                                fontSize: 18, color: GFColors.DARK),
-                            backgroundColor: Colors.white,
-                            trailing: const Icon(
-                              Icons.error_outline,
-                              color: GFColors.DANGER,
-                            ),
-                          );
-                        }
-                      },
-                      textButton: "Accedi",
-                      status: true,
-                      icon: Icons.login_outlined,
+                    Container(
+                      margin: const EdgeInsets.only(top: 25),
+                      height: 60,
+                      width: 170,
+                      child: Button(
+                        onPressed: () async {
+                          bool res = await login(
+                              emailController.text, passwordController.text);
+                          if (mounted) {
+                            if (res) Navigator.pop(context);
+                          }
+                          if (_loginError) {
+                            GFToast.showToast(
+                              'Credenziali non valide :(',
+                              context,
+                              toastPosition: GFToastPosition.BOTTOM,
+                              textStyle: const TextStyle(
+                                  fontSize: 18, color: GFColors.DARK),
+                              backgroundColor: Colors.white,
+                              trailing: const Icon(
+                                Icons.error_outline,
+                                color: GFColors.DANGER,
+                              ),
+                            );
+                          }
+                        },
+                        textButton: "Accedi",
+                        status: true,
+                        icon: Icons.login_outlined,
+                      ),
                     ),
-                  ),
-                ],
-              )
-            : Container(
-                height: 200,
-                width: 200,
-                alignment: Alignment.center,
-                child: Center(
-                    child: LoadingAnimationWidget.staggeredDotsWave(
-                  size: 80,
-                  color: appTheme.primaryColor,
-                ))));
+                  ],
+                )
+              : Container(
+                  height: 200,
+                  width: 200,
+                  alignment: Alignment.center,
+                  child: Center(
+                      child: LoadingAnimationWidget.staggeredDotsWave(
+                    size: 80,
+                    color: appTheme.primaryColor,
+                  )))),
+    );
   }
 }
