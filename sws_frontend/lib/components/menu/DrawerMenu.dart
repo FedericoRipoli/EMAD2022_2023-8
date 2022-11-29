@@ -109,6 +109,23 @@ class _DrawerMenuState extends State<DrawerMenu> {
         title: GFButton(
           position: GFPosition.start,
           onPressed: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const DraggableHomeScreen()),
+                (route) => false);
+          },
+          text: "Homepage",
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          icon: const Icon(
+            Icons.home,
+            color: Colors.white,
+          ),
+        ),
+      ));
+      w.add(ListTile(
+        title: GFButton(
+          position: GFPosition.start,
+          onPressed: () {
             userService.logout();
             Navigator.pushAndRemoveUntil(
                 context,
