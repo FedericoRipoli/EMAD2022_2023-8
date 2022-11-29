@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/admin_screens/utenti/GestioneUtente.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
+import 'package:frontend_sws/util/ToastUtil.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -95,7 +96,10 @@ class _ListaUtentiState extends State<ListaUtenti> {
                         onDelete: () {
                           utenteService.deleteUtente(item.id!).then((value) {
                             if (value) {
-                            } else {}
+                              ToastUtil.success("Utente eliminato", context);
+                            } else {
+                              ToastUtil.error("Errore server", context);
+                            }
                             _pullRefresh();
                           });
                         },
