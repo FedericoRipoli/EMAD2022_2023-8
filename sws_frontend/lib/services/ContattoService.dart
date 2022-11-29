@@ -43,7 +43,7 @@ class ContattoService {
     try {
       var response = await http.get(
           Uri.parse("${RestURL.contattoService.toString()}/$id"),
-          headers: RestURL.defaultHeader;
+          headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
         return contattoFromJson(response.body);
       }
