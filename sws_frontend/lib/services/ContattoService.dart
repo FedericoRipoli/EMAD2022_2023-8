@@ -59,6 +59,7 @@ class ContattoService {
           Uri.parse("${RestURL.contattoService}/$id"),
           headers: RestURL.authHeader(token!));
 
+
       if (response.statusCode == 200) {
         return true;
       }
