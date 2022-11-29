@@ -5,8 +5,8 @@ import '../../main.dart';
 
 class ContattoListItem extends StatelessWidget{
   final String denominazione, id;
-  final VoidCallback  onTap;
-  const ContattoListItem({super.key, required this.denominazione, required this.id, required this.onTap});
+  final VoidCallback  onTap, onDelete;
+  const ContattoListItem({super.key, required this.denominazione, required this.id, required this.onTap, required this.onDelete});
 
 
   @override
@@ -18,8 +18,9 @@ class ContattoListItem extends StatelessWidget{
       ),
       onTap: onTap,
       titleText: denominazione,
-      icon: const Icon(
-        Icons.delete,
+      icon: IconButton(
+        onPressed: onDelete,
+        icon: Icon(Icons.delete),
         color: Colors.red,
       ),
     );
