@@ -7,13 +7,13 @@ import '../main.dart';
 
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String title;
-  final IconData iconData;
+  final IconData? iconData;
   const CustomAppBar({Key? key,
-    required this.onPressed,
+    this.onPressed,
     required this.title,
-    required this.iconData}) : preferredSize = const Size.fromHeight(kToolbarHeight), super(key: key);
+    this.iconData}) : preferredSize = const Size.fromHeight(kToolbarHeight), super(key: key);
 
   @override
   final Size preferredSize; // default is 56.0
@@ -28,14 +28,14 @@ class _CustomAppBarState extends State<CustomAppBar>{
   Widget build(BuildContext context) {
     return GFAppBar(
       title: Text(widget.title),
-      leading: GFIconButton(
+      leading:widget.onPressed!=null && widget.iconData!=null ? GFIconButton(
         icon: Icon(
           widget.iconData,
           color: Colors.white,
         ),
         onPressed: widget.onPressed,
         type: GFButtonType.transparent,
-      ),
+      ):null,
       searchBar: false,
       elevation: 0,
       backgroundColor: appTheme.primaryColor,

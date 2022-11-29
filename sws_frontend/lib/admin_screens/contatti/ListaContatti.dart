@@ -20,7 +20,6 @@ class ListaContatti extends StatefulWidget  {
 }
 
 class _ListaContattiState extends State<ListaContatti> {
-  final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
   ContattoService contattoService = ContattoService();
   UserService userService = UserService();
   final PagingController<int, Contatto> _pagingController =
@@ -57,7 +56,6 @@ class _ListaContattiState extends State<ListaContatti> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKeyAdmin,
         drawer: DrawerMenu(currentPage: ListaContatti.id),
         resizeToAvoidBottomInset: false,
         floatingActionButton: CustomFloatingButton(
@@ -70,9 +68,7 @@ class _ListaContattiState extends State<ListaContatti> {
                       builder: (context) => GestioneContatto(null))).then((value) => _pullRefresh());
             }
           }),
-        appBar: CustomAppBar(title:"Contatti",
-            iconData:Icons.menu,
-            onPressed:()=>_scaffoldKeyAdmin.currentState?.openDrawer()),
+        appBar: const CustomAppBar(title:"Contatti"),
         body:
         RefreshIndicator(
             onRefresh: _pullRefresh,

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/screens/DraggableHome.dart';
+import 'package:frontend_sws/screens/DraggableHomeScreen.dart';
 import 'package:frontend_sws/screens/Introduction.dart';
 import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
 

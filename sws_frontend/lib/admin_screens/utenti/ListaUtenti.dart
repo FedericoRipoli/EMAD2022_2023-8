@@ -21,7 +21,6 @@ class ListaUtenti extends StatefulWidget {
 }
 
 class _ListaUtentiState extends State<ListaUtenti> {
-  final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
   UtenteService utenteService = UtenteService();
   final PagingController<int, Utente> _pagingController =
       PagingController(firstPageKey: 0);
@@ -59,7 +58,6 @@ class _ListaUtentiState extends State<ListaUtenti> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKeyAdmin,
         drawer: DrawerMenu(currentPage: ListaUtenti.id),
         resizeToAvoidBottomInset: false,
         floatingActionButton: CustomFloatingButton(
@@ -72,10 +70,8 @@ class _ListaUtentiState extends State<ListaUtenti> {
                         builder: (context) => GestioneUtente(null)));
               }
             }),
-        appBar: CustomAppBar(
-            title: "Utenti",
-            iconData: Icons.menu,
-            onPressed: () => _scaffoldKeyAdmin.currentState?.openDrawer()),
+        appBar: const CustomAppBar(
+            title: "Utenti"),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: PagedListView<int, Utente>(
