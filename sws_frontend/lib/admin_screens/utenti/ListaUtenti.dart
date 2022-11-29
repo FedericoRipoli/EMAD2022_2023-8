@@ -9,6 +9,7 @@ import 'package:frontend_sws/services/entity/Utente.dart';
 import 'package:frontend_sws/components/utenti/UtenteListItem.dart';
 
 import '../../components/CustomAppBar.dart';
+import '../../components/CustomFloatingButton.dart';
 
 class ListaUtenti extends StatefulWidget {
   const ListaUtenti({Key? key}) : super(key: key);
@@ -60,9 +61,8 @@ class _ListaUtentiState extends State<ListaUtenti> {
         key: _scaffoldKeyAdmin,
         drawer: DrawerMenu(currentPage: ListaUtenti.id),
         resizeToAvoidBottomInset: false,
-        floatingActionButton: FloatingActionButton(
-            elevation: 3,
-            hoverElevation: 1,
+        floatingActionButton: CustomFloatingButton(
+            iconData: Icons.add,
             onPressed: () {
               if (mounted) {
                 Navigator.push(
@@ -70,17 +70,11 @@ class _ListaUtentiState extends State<ListaUtenti> {
                     MaterialPageRoute(
                         builder: (context) => GestioneUtente(null)));
               }
-            },
-            backgroundColor: appTheme.primaryColor,
-            child: const Icon(
-              Icons.add,
-              size: 32,
-              color: Colors.white,
-            )),
-        appBar: CustomAppBar(title:"Utenti",
-            iconData:Icons.menu,
-            onPressed:()=>_scaffoldKeyAdmin.currentState?.openDrawer()),
-
+            }),
+        appBar: CustomAppBar(
+            title: "Utenti",
+            iconData: Icons.menu,
+            onPressed: () => _scaffoldKeyAdmin.currentState?.openDrawer()),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: PagedListView<int, Utente>(
@@ -101,10 +95,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
                         onDelete: () {
                           utenteService.deleteUtente(item.id!).then((value) {
                             if (value) {
-
-                            } else {
-
-                            }
+                            } else {}
                             _pullRefresh();
                           });
                         },

@@ -8,6 +8,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/entity/Contatto.dart';
 
 import '../../components/CustomAppBar.dart';
+import '../../components/CustomFloatingButton.dart';
 import '../../components/contatti/ContattoListItem.dart';
 
 
@@ -67,20 +68,16 @@ class _ListaContattiState extends State<ListaContatti> {
         key: _scaffoldKeyAdmin,
         drawer: DrawerMenu(currentPage: ListaContatti.id),
         resizeToAvoidBottomInset: false,
-        floatingActionButton: FloatingActionButton(
-            elevation: 3,
-            hoverElevation: 1,
-            onPressed: () {
-              if (mounted) {
-                // open add modal
-              }
-            },
-            backgroundColor: appTheme.primaryColor,
-            child: const Icon(
-              Icons.add,
-              size: 32,
-              color: Colors.white,
-            )),
+        floatingActionButton: CustomFloatingButton(
+          iconData: Icons.add,
+          onPressed: () {
+            if (mounted) {
+
+            }
+          },
+        ),
+
+
         appBar: CustomAppBar(title:"Contatti",
             iconData:Icons.menu,
             onPressed:()=>_scaffoldKeyAdmin.currentState?.openDrawer()),

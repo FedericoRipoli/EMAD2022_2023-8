@@ -8,6 +8,7 @@ import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:getwidget/getwidget.dart';
 
 import '../../components/CustomAppBar.dart';
+import '../../components/CustomFloatingButton.dart';
 
 class GestioneEnte extends StatefulWidget {
   String? idEnte;
@@ -39,29 +40,24 @@ class _GestioneEnte extends State<GestioneEnte> {
     return Scaffold(
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Container(
-          height: 70,
-          width: 70,
-          child: FloatingActionButton(
-              elevation: 5,
-              onPressed: ()=>{
-                if(widget.idEnte == null){
-                  //Create new ente
-                  //enteService.createEnte(),
-                  Navigator.of(context).pop(true),
-                  GFToast.showToast("Ente aggiunto",
-                      context,
-                      toastPosition: GFToastPosition.BOTTOM,
-                      trailing: const Icon(Icons.check))
-                }else{
-                  //Update user
+        floatingActionButton: CustomFloatingButton(
+          iconData: Icons.save_rounded,
+          onPressed: ()=>{
+            if(widget.idEnte == null){
+              //Create new ente
+              //enteService.createEnte(),
+              Navigator.of(context).pop(true),
+              GFToast.showToast("Ente aggiunto",
+                  context,
+                  toastPosition: GFToastPosition.BOTTOM,
+                  trailing: const Icon(Icons.check))
+            }else{
+              //Update user
 
-                }
-              },
-              child: widget.idEnte==null? const Icon(Icons.add):const Icon(Icons.save_rounded)
-          ),
+            }
+          },
         ),
+
         drawer: DrawerMenu(currentPage: GestioneEnte.id),
         appBar: CustomAppBar(title:"Gestione Ente",
             iconData:Icons.arrow_back,

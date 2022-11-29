@@ -7,6 +7,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 
 import '../../components/CustomAppBar.dart';
+import '../../components/CustomFloatingButton.dart';
 import '../../components/enti/EnteListItem.dart';
 import 'GestioneEnte.dart';
 
@@ -66,7 +67,19 @@ class _ListaEntiState extends State<ListaEnti> {
         key: _scaffoldKeyAdmin,
         drawer: DrawerMenu(currentPage: ListaEnti.id),
         resizeToAvoidBottomInset: false,
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: CustomFloatingButton(
+          iconData: Icons.add,
+          onPressed: () {
+            if (mounted) {
+              Navigator.push(context, MaterialPageRoute(builder:
+                  (context) => GestioneEnte(null)
+              ));
+            }
+          },
+        ),
+
+
+        /*FloatingActionButton(
             elevation: 3,
             hoverElevation: 1,
             onPressed: () {
@@ -81,7 +94,7 @@ class _ListaEntiState extends State<ListaEnti> {
               Icons.add,
               size: 32,
               color: Colors.white,
-            )),
+            )),*/
         appBar: CustomAppBar(title:"Enti",
             iconData:Icons.menu,
             onPressed:()=>_scaffoldKeyAdmin.currentState?.openDrawer()),

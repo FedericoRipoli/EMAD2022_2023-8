@@ -13,6 +13,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 
 import '../../components/AllPageLoadTransparent.dart';
 import '../../components/CustomAppBar.dart';
+import '../../components/CustomFloatingButton.dart';
 import '../../components/menu/DrawerMenu.dart';
 import '../../services/dto/SignupDTO.dart';
 import '../../util/ToastUtil.dart';
@@ -125,13 +126,10 @@ class _GestioneUtente extends State<GestioneUtente> {
         drawer: DrawerMenu(currentPage: GestioneUtente.id),
         floatingActionButton: !loaded
             ? null
-            : Container(
-                height: 70,
-                width: 70,
-                child: FloatingActionButton(
-                    onPressed: () => savePage(),
-                    child: const Icon(Icons.save_rounded)),
-              ),
+            : CustomFloatingButton(
+            iconData: Icons.save_rounded,
+            onPressed:  () => savePage(),
+            ),
         appBar: CustomAppBar(title:"Gestione Utente",
             iconData:Icons.arrow_back,
             onPressed:()=>Navigator.pop(context)),
