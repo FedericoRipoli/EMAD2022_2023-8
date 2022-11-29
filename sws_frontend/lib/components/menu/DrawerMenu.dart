@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/screens/InitApp.dart';
+import 'package:frontend_sws/screens/DraggableHome.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../admin_screens/contatti/ListaContatti.dart';
 import '../../admin_screens/enti/ListaEnti.dart';
@@ -30,20 +30,17 @@ class _DrawerMenuState extends State<DrawerMenu> {
   List<Widget> getMenuItems() {
     List<Widget> w = [];
 
-    w.add(
-        UserAccountsDrawerHeader(
+    w.add(UserAccountsDrawerHeader(
+      accountName:
+          Text(userService.getName()!, style: const TextStyle(fontSize: 20)),
+      accountEmail: const Text(""),
+      currentAccountPicture: GFAvatar(
+        shape: GFAvatarShape.circle,
+        child: Text(userService.getName()!.substring(0, 1).toUpperCase()),
+      ),
 
-          accountName: Text(userService.getName()!,style:const TextStyle(
-            fontSize: 20
-          )),
-          accountEmail: const Text(""),
-          currentAccountPicture: GFAvatar(
-            shape: GFAvatarShape.circle,
-            child: Text(userService.getName()!.substring(0, 1).toUpperCase()),
-          ),
-
-          //.. This line of code provides the usage of multiple accounts
-          /* otherAccountsPictures: <Widget>[
+      //.. This line of code provides the usage of multiple accounts
+      /* otherAccountsPictures: <Widget>[
               GestureDetector(
                 onTap: ()=> switchUser(),
                 child: CircleAvatar(
@@ -52,14 +49,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
               ),
             ], */
 
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fill,
-                image: NetworkImage("https://png.pngtree.com/thumb_back/fh260/background/20190828/pngtree-dark-vector-abstract-background-image_302715.jpg")
-            ),
-          ),
-        )
-    );
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            fit: BoxFit.fill,
+            image: NetworkImage(
+                "https://png.pngtree.com/thumb_back/fh260/background/20190828/pngtree-dark-vector-abstract-background-image_302715.jpg")),
+      ),
+    ));
     /*w.add(
         GFDrawerHeader(
       currentAccountPicture: GFAvatar(
@@ -116,7 +112,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             userService.logout();
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (_) => const InitApp()),
+                MaterialPageRoute(builder: (_) => const DraggableHomeScreen()),
                 (route) => false);
           },
           text: "Esci",

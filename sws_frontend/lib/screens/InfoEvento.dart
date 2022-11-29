@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/theme/theme.dart';
+import 'package:getwidget/components/image/gf_image_overlay.dart';
 
-class InfoServizio extends StatefulWidget {
-  const InfoServizio({Key? key}) : super(key: key);
+class InfoEvento extends StatefulWidget {
+  const InfoEvento({Key? key}) : super(key: key);
 
   @override
-  State<InfoServizio> createState() => _InfoServizioState();
+  State<InfoEvento> createState() => _InfoEventoState();
 }
 
-class _InfoServizioState extends State<InfoServizio>
-    with TickerProviderStateMixin {
+class _InfoEventoState extends State<InfoEvento> with TickerProviderStateMixin {
   final double infoHeight = 364.0;
   AnimationController? animationController;
   Animation<double>? animation;
@@ -59,7 +59,7 @@ class _InfoServizioState extends State<InfoServizio>
               children: <Widget>[
                 AspectRatio(
                   aspectRatio: 1.2,
-                  child: Image.asset('assets/images/service-bg.png'),
+                  child: Image.asset('assets/images/event_default.png'),
                 ),
               ],
             ),
@@ -84,6 +84,7 @@ class _InfoServizioState extends State<InfoServizio>
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),
                   child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
                     child: Container(
                       constraints: BoxConstraints(
                           minHeight: infoHeight,
@@ -158,7 +159,7 @@ class _InfoServizioState extends State<InfoServizio>
                                 children: <Widget>[
                                   getTimeBoxUI('Ambito', 'Classe'),
                                   getTimeBoxUI('Tipologia', 'Type'),
-                                  getTimeBoxUI('Orari', '13:00'),
+                                  getTimeBoxUI('Orari', '12:00'),
                                 ],
                               ),
                             ),
@@ -252,7 +253,7 @@ class _InfoServizioState extends State<InfoServizio>
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).padding.bottom,
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -275,9 +276,9 @@ class _InfoServizioState extends State<InfoServizio>
                   child: Container(
                     width: 60,
                     height: 60,
-                    child: const Center(
+                    child: Center(
                       child: Icon(
-                        Icons.info_outlined,
+                        Icons.info,
                         color: AppColors.white,
                         size: 30,
                       ),

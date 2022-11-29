@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/image/gf_image_overlay.dart';
+import '../screens/InfoEvento.dart';
 import '../theme/theme.dart';
 import 'Chips.dart';
 import 'package:frontend_sws/components/Button.dart';
@@ -12,13 +13,9 @@ class CardEvento extends StatelessWidget {
     return Column(children: [
       GestureDetector(
         onTap: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return const AlertDialog(
-                content: InfoEventoModal(),
-              );
-            },
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const InfoEvento()),
           );
         },
         child: SizedBox(
@@ -29,12 +26,12 @@ class CardEvento extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
-            elevation: 10,
+            elevation: 8,
             margin: const EdgeInsets.all(12),
             child: Column(
               children: [
                 SizedBox(
-                  width: 335,
+                  width: 330,
                   height: 110,
                   child: Image.asset(
                     "assets/images/event_default.png",
@@ -69,13 +66,10 @@ class CardEvento extends StatelessWidget {
                         ),
                         IconButton(
                           onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return const AlertDialog(
-                                  content: InfoEventoModal(),
-                                );
-                              },
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const InfoEvento()),
                             );
                           },
                           icon: Icon(Icons.info_outlined),
@@ -89,37 +83,5 @@ class CardEvento extends StatelessWidget {
         ),
       ),
     ]);
-  }
-}
-
-class InfoEventoModal extends StatelessWidget {
-  const InfoEventoModal({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(2),
-        child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                Button(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  textButton: 'Chiudi',
-                  status: true,
-                  icon: Icons.close,
-                ),
-                Text("Nome Evento"),
-                Text("Organizzatore"),
-                GFImageOverlay(
-                    height: 450,
-                    width: 250,
-                    image: AssetImage('assets/images/Volantino-Salerno-1.jpg')),
-                Text(
-                    "descrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione evento descrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione eventodescrizione evento")
-              ],
-            )));
   }
 }

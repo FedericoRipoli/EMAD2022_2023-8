@@ -10,10 +10,11 @@ class InfoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: GFAppBar(
-          title: const Text("Informazioni"),
+          title: const Text("Informazioni",
+              style: TextStyle(color: AppColors.ice, fontFamily: 'FredokaOne')),
           leading: GFIconButton(
             icon: const Icon(
-              Icons.arrow_back_rounded,
+              Icons.arrow_back_ios,
               color: Colors.white,
             ),
             onPressed: () {
@@ -31,7 +32,7 @@ class InfoApp extends StatelessWidget {
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Container(
-            padding: const EdgeInsets.only(top: 8, left: 8),
+            //padding: const EdgeInsets.only(top: 0, left: 0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,12 +40,15 @@ class InfoApp extends StatelessWidget {
                 Stack(
                   children: <Widget>[
                     ClipPath(
-                      clipper: OvalLeftBorderClipper(),
+                      clipper: WaveClipperTwo(flip: true),
                       child: Container(
-                        height: 250, //400
+                        height: 150,
                         color: AppColors.logoBlue,
                       ),
                     ),
+                    Center(
+                      child: Text("Info App, Privacy Policy e il resto"),
+                    )
                   ],
                 ),
               ],
