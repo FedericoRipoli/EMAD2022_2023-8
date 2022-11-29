@@ -14,7 +14,7 @@ class _GestioneAmbitiState extends State<GestioneAmbiti> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold();
   }
   
 }

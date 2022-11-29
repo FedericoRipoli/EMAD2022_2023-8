@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_sws/screens/DraggableHomeScreen.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/getwidget.dart';
+import '../../admin_screens/ambiti/GestioneAmbiti.dart';
 import '../../admin_screens/contatti/ListaContatti.dart';
 import '../../admin_screens/enti/ListaEnti.dart';
 import '../../admin_screens/utenti/ListaUtenti.dart';
@@ -98,6 +99,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const ListaEnti()));
           }));
+      w.add(CustomMenuItem(
+          text: 'Gestione Ambiti',
+          f: () {
+            checkChangePage(ListaUtenti.id);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const GestioneAmbiti()));
+          }));
     }
     if (userService.isLogged() && admin != null && !admin) {
       w.add(CustomMenuItem(text: 'Gestione Servizi', f: () {}));
@@ -114,6 +122,23 @@ class _DrawerMenuState extends State<DrawerMenu> {
         title: GFButton(
           position: GFPosition.start,
           padding: const EdgeInsets.all(5),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const DraggableHomeScreen()),
+                (route) => false);
+          },
+          text: "Homepage",
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          icon: const Icon(
+            Icons.home,
+            color: Colors.white,
+          ),
+        ),
+      ));
+      w.add(ListTile(
+        title: GFButton(
+          position: GFPosition.start,
           onPressed: () {
             userService.logout();
             Navigator.pushAndRemoveUntil(
