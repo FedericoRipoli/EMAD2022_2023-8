@@ -39,8 +39,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
           )),
           accountEmail: const Text(""),
           currentAccountPicture: GFAvatar(
+            backgroundColor: AppColors.logoBlue,
             shape: GFAvatarShape.circle,
-            child: Text(userService.getName()!.substring(0, 1).toUpperCase()),
+            child: Text(userService.getName()!.substring(0, 2).toUpperCase(),
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ),
 
           //.. This line of code provides the usage of multiple accounts
@@ -98,6 +100,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const ListaEnti()));
           }));
+      w.add(CustomMenuItem(
+          text: 'Gestione Ambiti',
+          f: () {
+            checkChangePage(ListaUtenti.id);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ListaEnti()));
+          }));
     }
     if (userService.isLogged() && admin != null && !admin) {
       w.add(CustomMenuItem(text: 'Gestione Servizi', f: () {}));
@@ -112,6 +121,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
     if (userService.isLogged()) {
       w.add(ListTile(
         title: GFButton(
+          color: AppColors.logoBlue,
           position: GFPosition.start,
           onPressed: () {
             Navigator.pushAndRemoveUntil(
@@ -129,6 +139,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
       ));
       w.add(ListTile(
         title: GFButton(
+          color: AppColors.logoBlue,
           position: GFPosition.start,
           onPressed: () {
             userService.logout();
