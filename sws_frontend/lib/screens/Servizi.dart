@@ -4,7 +4,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
-import '../entity/Servizio.dart';
+import '../old_entity/Servizio.dart';
 
 class Servizi extends StatefulWidget {
   const Servizi({Key? key}) : super(key: key);
