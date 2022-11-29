@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/screens/DraggableHomeScreen.dart';
 import 'package:getwidget/getwidget.dart';
+import '../../admin_screens/ambiti/GestioneAmbiti.dart';
 import '../../admin_screens/contatti/ListaContatti.dart';
 import '../../admin_screens/enti/ListaEnti.dart';
 import '../../admin_screens/utenti/ListaUtenti.dart';
@@ -92,6 +93,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
             checkChangePage(ListaUtenti.id);
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const ListaEnti()));
+          }));
+      w.add(CustomMenuItem(
+          text: 'Gestione Ambiti',
+          f: () {
+            checkChangePage(ListaUtenti.id);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const GestioneAmbiti()));
           }));
     }
     if (userService.isLogged() && admin != null && !admin) {
