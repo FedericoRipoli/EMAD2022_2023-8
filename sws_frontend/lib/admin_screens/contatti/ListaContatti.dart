@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/services/UserService.dart';
 import 'package:frontend_sws/services/ContattoService.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:frontend_sws/main.dart';
+import 'package:frontend_sws/util/ToastUtil.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/entity/Contatto.dart';
-
+import '../../components/CustomAppBar.dart';
+import '../../components/CustomFloatingButton.dart';
 import '../../components/contatti/ContattoListItem.dart';
-
-
-
+import 'GestioneContatto.dart';
 
 class ListaContatti extends StatefulWidget  {
 
@@ -19,16 +17,12 @@ class ListaContatti extends StatefulWidget  {
 
   @override
   State<ListaContatti> createState() => _ListaContattiState();
-
-
-
 }
-
 
 class _ListaContattiState extends State<ListaContatti> {
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
-  EnteService enteService=EnteService();
-  UserService userService=UserService();
+  ContattoService contattoService = ContattoService();
+  UserService userService = UserService();
   final PagingController<int, Contatto> _pagingController =
   PagingController(firstPageKey: 0);
   @override
@@ -41,7 +35,7 @@ class _ListaContattiState extends State<ListaContatti> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems= await enteService.contattoList(userService.getIdEnte(), pageKey);
+      final newItems= await contattoService.contattoList(userService.getIdEnte(), pageKey);
 
       final isLastPage = newItems==null || newItems.isEmpty;
       if (isLastPage) {
@@ -66,35 +60,19 @@ class _ListaContattiState extends State<ListaContatti> {
         key: _scaffoldKeyAdmin,
         drawer: DrawerMenu(currentPage: ListaContatti.id),
         resizeToAvoidBottomInset: false,
-        floatingActionButton: FloatingActionButton(
-            elevation: 3,
-            hoverElevation: 1,
-            onPressed: () {
-              if (mounted) {
-                // open add modal
-              }
-            },
-            backgroundColor: appTheme.primaryColor,
-            child: const Icon(
-              Icons.add,
-              size: 32,
-              color: Colors.white,
-            )),
-        appBar: GFAppBar(title: const Text("Contatti"),
-          leading: GFIconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              _scaffoldKeyAdmin.currentState?.openDrawer();
-            },
-            type: GFButtonType.transparent,
-          ),
-          searchBar: false,
-          elevation: 0,
-          backgroundColor: appTheme.primaryColor,
-        ),
+        floatingActionButton: CustomFloatingButton(
+          iconData: Icons.add,
+          onPressed: () {
+            if (mounted) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => GestioneContatto(null))).then((value) => _pullRefresh());
+            }
+          }),
+        appBar: CustomAppBar(title:"Contatti",
+            iconData:Icons.menu,
+            onPressed:()=>_scaffoldKeyAdmin.currentState?.openDrawer()),
         body:
         RefreshIndicator(
             onRefresh: _pullRefresh,
@@ -102,15 +80,30 @@ class _ListaContattiState extends State<ListaContatti> {
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<Contatto>(
                   itemBuilder: (context, item, index) => ContattoListItem(
-                      denominazione:item.denominazione,
-                      id:item.id!,
-                      onTap:()=>{}
+                    denominazione:item.denominazione,
+                    id:item.id!,
+                    onTap:()=>{
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  GestioneContatto(item.id)))
+                          .then((v) => _pullRefresh())
+                    },
+                    onDelete:()=>{
+                      contattoService.deleteContatto(item.id!).then((value) {
+                        if (value) {
+                          ToastUtil.success("Contatto eliminato", context);
+                        } else {
+                          ToastUtil.error("Errore server", context);
+                        }
+                        _pullRefresh();
+                      })
+                    },
                   )
               ),
             )
         )
-
-
     );
   }
   Future<void> _pullRefresh() async {

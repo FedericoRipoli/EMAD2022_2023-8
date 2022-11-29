@@ -70,16 +70,16 @@ public class ContattoController {
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
     }
 
-    @PostMapping("/{idEnte}")
+    @PostMapping()
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity createContatto(@AuthenticationPrincipal Utente user, @RequestBody Contatto contatto, @PathVariable String idEnte) {
-        Ente ente = enteRepository.findById(idEnte).orElseThrow();
-        contatto.setEnteProprietario(ente);
-        if (!user.isAdmin()) {
-            if (user.getEnte() == null || !user.getEnte().getId().equals(idEnte)) {
-                return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
-            }
+    public ResponseEntity createContatto(@AuthenticationPrincipal Utente user, @RequestBody Contatto contatto) {
+        if(user.getEnte()==null){
+            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
         }
+
+
+        contatto.setEnteProprietario(user.getEnte());
+
         return ResponseEntity.ok(contattoRepository.save(contatto));
 
 

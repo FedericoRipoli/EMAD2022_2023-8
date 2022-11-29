@@ -15,7 +15,6 @@ import java.util.List;
 @Entity
 @Data
 @RequiredArgsConstructor
-@JsonSerialize(using = AmbitoSerializer.class)
 public class Ambito {
     @Id
     @GeneratedValue(generator = "uuid")
@@ -28,6 +27,7 @@ public class Ambito {
     private List<Ambito> figli;
 
     @ManyToOne
+    @JsonIgnore
     private Ambito padre;
 
     @Transient

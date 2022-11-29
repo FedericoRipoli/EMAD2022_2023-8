@@ -10,6 +10,7 @@ class RestURL {
 
   static String enteService = "${baseURL}enti";
   static String contattoService = "${baseURL}contatti";
+  static String ambitoService = "${baseURL}ambiti";
 
 
 

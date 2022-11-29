@@ -14,7 +14,7 @@ class Utente {
     required this.password,
     required this.admin,
     this.idEnte,
-    this.ente,
+    this.nomeEnte,
   });
 
   String? id;
@@ -22,7 +22,7 @@ class Utente {
   String password;
   bool admin;
   String? idEnte;
-  String? ente;
+  String? nomeEnte;
 
 
   factory Utente.fromJson(Map<String, dynamic> json) => Utente(
@@ -31,7 +31,7 @@ class Utente {
     password: json["password"],
     admin: json["admin"],
     idEnte: json["idEnte"],
-    ente: json["ente"],
+    nomeEnte: json["nomeEnte"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -40,6 +40,6 @@ class Utente {
     "password": password,
     "admin": admin,
     "idEnte": idEnte,
-    "ente": ente,
+    "nomeEnte": nomeEnte,
   };
 }

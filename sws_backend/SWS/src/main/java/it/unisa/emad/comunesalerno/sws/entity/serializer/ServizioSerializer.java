@@ -1,20 +1,19 @@
 package it.unisa.emad.comunesalerno.sws.entity.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import it.unisa.emad.comunesalerno.sws.entity.Ambito;
 import it.unisa.emad.comunesalerno.sws.entity.Servizio;
+import it.unisa.emad.comunesalerno.sws.entity.Tipologia;
 
 import java.io.IOException;
 
-public class ServizioSerializer extends StdSerializer<Servizio> {
-    protected ServizioSerializer() {
-        this(null);
-    }
+public class ServizioSerializer extends JsonSerializer<Servizio> {
+    private AmbitoSerializer ambitoSerializer=new AmbitoSerializer();
+    private TipologiaSerializer tipologiaSerializer=new TipologiaSerializer();
 
-    protected ServizioSerializer(Class<Servizio> t) {
-        super(t);
-    }
 
     @Override
     public void serialize(Servizio servizio, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
@@ -28,8 +27,11 @@ public class ServizioSerializer extends StdSerializer<Servizio> {
         jsonGenerator.writeStringField("stato",servizio.getStato().getText());
         jsonGenerator.writeStringField("note",servizio.getNote());
         jsonGenerator.writeObjectField("hashtags",servizio.getHashtags());
-        jsonGenerator.writeObjectField("ambito",servizio.getAmbito());
-        jsonGenerator.writeObjectField("tipologia",servizio.getTipologia());
+        jsonGenerator.writeFieldName("ambito");
+        ambitoSerializer.serialize(servizio.getAmbito(),jsonGenerator,serializerProvider);
+        jsonGenerator.writeFieldName("tipologia");
+        tipologiaSerializer.serialize(servizio.getTipologia(),jsonGenerator,serializerProvider);
+
         jsonGenerator.writeObjectField("ente",servizio.getEnte().getDenominazione());
         jsonGenerator.writeObjectField("idEnte",servizio.getEnte().getId());
 
