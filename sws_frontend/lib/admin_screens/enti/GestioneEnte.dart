@@ -7,6 +7,8 @@ import 'package:frontend_sws/services/EnteService.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:getwidget/getwidget.dart';
 
+import '../../components/CustomAppBar.dart';
+
 class GestioneEnte extends StatefulWidget {
   String? idEnte;
   static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.GestioneEnte';
@@ -61,22 +63,9 @@ class _GestioneEnte extends State<GestioneEnte> {
           ),
         ),
         drawer: DrawerMenu(currentPage: GestioneEnte.id),
-        appBar: GFAppBar(
-          title: const Text("Gestione Ente"),
-          leading: GFIconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            type: GFButtonType.transparent,
-          ),
-          searchBar: false,
-          elevation: 0,
-          backgroundColor: appTheme.primaryColor,
-        ),
+        appBar: CustomAppBar(title:"Gestione Ente",
+            iconData:Icons.arrow_back,
+            onPressed:()=>Navigator.pop(context)),
         body: FutureBuilder<bool>(
             future: load(),
             builder: ((context, snapshot) {

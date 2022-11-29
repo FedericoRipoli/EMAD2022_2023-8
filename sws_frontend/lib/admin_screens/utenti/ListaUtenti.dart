@@ -8,6 +8,8 @@ import 'package:frontend_sws/services/UtenteService.dart';
 import 'package:frontend_sws/services/entity/Utente.dart';
 import 'package:frontend_sws/components/utenti/UtenteListItem.dart';
 
+import '../../components/CustomAppBar.dart';
+
 class ListaUtenti extends StatefulWidget {
   const ListaUtenti({Key? key}) : super(key: key);
   static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.GestioneEnti';
@@ -75,22 +77,10 @@ class _ListaUtentiState extends State<ListaUtenti> {
               size: 32,
               color: Colors.white,
             )),
-        appBar: GFAppBar(
-          title: const Text("Utenti"),
-          leading: GFIconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              _scaffoldKeyAdmin.currentState?.openDrawer();
-            },
-            type: GFButtonType.transparent,
-          ),
-          searchBar: false,
-          elevation: 0,
-          backgroundColor: appTheme.primaryColor,
-        ),
+        appBar: CustomAppBar(title:"Utenti",
+            iconData:Icons.menu,
+            onPressed:()=>_scaffoldKeyAdmin.currentState?.openDrawer()),
+
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: PagedListView<int, Utente>(

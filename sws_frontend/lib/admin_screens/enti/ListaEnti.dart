@@ -6,6 +6,7 @@ import 'package:frontend_sws/main.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 
+import '../../components/CustomAppBar.dart';
 import '../../components/enti/EnteListItem.dart';
 import 'GestioneEnte.dart';
 
@@ -81,21 +82,9 @@ class _ListaEntiState extends State<ListaEnti> {
               size: 32,
               color: Colors.white,
             )),
-        appBar: GFAppBar(title: const Text("Enti"),
-          leading: GFIconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              _scaffoldKeyAdmin.currentState?.openDrawer();
-            },
-            type: GFButtonType.transparent,
-          ),
-          searchBar: false,
-          elevation: 0,
-          backgroundColor: appTheme.primaryColor,
-        ),
+        appBar: CustomAppBar(title:"Enti",
+            iconData:Icons.menu,
+            onPressed:()=>_scaffoldKeyAdmin.currentState?.openDrawer()),
         body:
         RefreshIndicator(
           onRefresh: _pullRefresh,

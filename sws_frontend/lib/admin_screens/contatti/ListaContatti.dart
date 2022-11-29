@@ -7,6 +7,7 @@ import 'package:frontend_sws/main.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/entity/Contatto.dart';
 
+import '../../components/CustomAppBar.dart';
 import '../../components/contatti/ContattoListItem.dart';
 
 
@@ -80,21 +81,9 @@ class _ListaContattiState extends State<ListaContatti> {
               size: 32,
               color: Colors.white,
             )),
-        appBar: GFAppBar(title: const Text("Contatti"),
-          leading: GFIconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              _scaffoldKeyAdmin.currentState?.openDrawer();
-            },
-            type: GFButtonType.transparent,
-          ),
-          searchBar: false,
-          elevation: 0,
-          backgroundColor: appTheme.primaryColor,
-        ),
+        appBar: CustomAppBar(title:"Contatti",
+            iconData:Icons.menu,
+            onPressed:()=>_scaffoldKeyAdmin.currentState?.openDrawer()),
         body:
         RefreshIndicator(
             onRefresh: _pullRefresh,

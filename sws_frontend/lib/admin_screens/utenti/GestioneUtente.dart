@@ -12,6 +12,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 import '../../components/AllPageLoadTransparent.dart';
+import '../../components/CustomAppBar.dart';
 import '../../components/menu/DrawerMenu.dart';
 import '../../services/dto/SignupDTO.dart';
 import '../../util/ToastUtil.dart';
@@ -131,22 +132,14 @@ class _GestioneUtente extends State<GestioneUtente> {
                     onPressed: () => savePage(),
                     child: const Icon(Icons.save_rounded)),
               ),
-        appBar: GFAppBar(
-          title: const Text("Gestione utente"),
-          leading: GFIconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            type: GFButtonType.transparent,
-          ),
-          searchBar: false,
-          elevation: 0,
-          backgroundColor: appTheme.primaryColor,
-        ),
+        appBar: CustomAppBar(title:"Gestione Utente",
+            iconData:Icons.arrow_back,
+            onPressed:()=>Navigator.pop(context)),
+
+
+
+
+
         body: FutureBuilder<bool>(
             future: initCall,
             builder: ((context, snapshot) {
