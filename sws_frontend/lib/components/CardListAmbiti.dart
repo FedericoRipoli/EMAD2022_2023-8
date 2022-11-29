@@ -12,7 +12,9 @@ class CardListAmbiti extends StatelessWidget {
       const ChipAmbito(label: "Trasporto", icon: Icons.emoji_transportation),
       const ChipAmbito(label: "Mensa", icon: Icons.food_bank),
       const ChipAmbito(label: "Assistenza", icon: Icons.help_center),
-      const ChipAmbito(label: "Giovani", icon: Icons.join_full)
+      const ChipAmbito(label: "Giovani", icon: Icons.join_full),
+      const ChipAmbito(label: "Assistenza", icon: Icons.waving_hand_rounded),
+      const ChipAmbito(label: "Disabilità", icon: Icons.accessible),
     ];
 
     return Column(

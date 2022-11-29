@@ -19,7 +19,7 @@ void main() {
       ],
     ),
     debugShowCheckedModeBanner: false,
-    home: Splash(),
+    home: const Splash(),
     theme: appTheme,
     title: "Salerno Amica",
   ));

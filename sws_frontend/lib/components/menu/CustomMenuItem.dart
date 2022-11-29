@@ -1,3 +1,4 @@
+import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
 
@@ -11,17 +12,14 @@ class CustomMenuItem extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      /*title: GFTypography(
-        text: text,
-        textColor: Colors.black,
-        dividerWidth: 120,
-        dividerColor: appTheme.primaryColor,
-        type: GFTypographyType.typo4,
-      ),*/
-      title:Text(text),
-      onTap: f
-    );
+    return
+      Card(
+        child: ListTile(
+          title:Text(text),
+          onTap: f,
+          trailing: Icon(Icons.arrow_forward_ios_sharp)
+        )
+      );
   }
 
 }

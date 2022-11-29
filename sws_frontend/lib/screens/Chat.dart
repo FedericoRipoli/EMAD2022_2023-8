@@ -162,7 +162,7 @@ class _ChatPageState extends State<ChatPage> {
         appBar: GFAppBar(
           leading: GFIconButton(
             icon: const Icon(
-              Icons.arrow_back_rounded,
+              Icons.arrow_back_ios,
               color: Colors.white,
             ),
             onPressed: () {
@@ -171,7 +171,8 @@ class _ChatPageState extends State<ChatPage> {
             type: GFButtonType.transparent,
           ),
           searchBar: false,
-          title: Text("Olivia"),
+          title: const Text("Olivia",
+              style: TextStyle(color: AppColors.ice, fontFamily: 'FredokaOne')),
           centerTitle: true,
           elevation: 1,
           backgroundColor: appTheme.primaryColor,
