@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/screens/DraggableHome.dart';
+import 'package:frontend_sws/screens/DraggableHomeScreen.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../admin_screens/contatti/ListaContatti.dart';
 import '../../admin_screens/enti/ListaEnti.dart';

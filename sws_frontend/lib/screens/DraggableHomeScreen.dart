@@ -69,16 +69,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
           ? DrawerMenu(currentPage: DraggableHomeScreen.id)
           : null,
       leading: userService.isLogged()
-          ? GFIconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                _scaffoldKey.currentState?.openDrawer();
-              },
-              type: GFButtonType.transparent,
-            )
+          ? null
           : GFIconButton(
               icon: const Icon(
                 Icons.account_circle,
