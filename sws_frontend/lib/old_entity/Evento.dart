@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/entity/Tipologia.dart';
+import 'package:frontend_sws/old_entity/Tipologia.dart';
 
 import 'Ambito.dart';
 import 'Contatto.dart';

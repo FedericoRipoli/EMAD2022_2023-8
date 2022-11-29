@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/services/UserService.dart';
 import 'package:frontend_sws/services/ContattoService.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:frontend_sws/main.dart';
+import 'package:frontend_sws/util/ToastUtil.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/entity/Contatto.dart';
-
 import '../../components/CustomAppBar.dart';
 import '../../components/CustomFloatingButton.dart';
 import '../../components/contatti/ContattoListItem.dart';
 import 'GestioneContatto.dart';
-
-
-
 
 class ListaContatti extends StatefulWidget  {
 
@@ -22,11 +17,7 @@ class ListaContatti extends StatefulWidget  {
 
   @override
   State<ListaContatti> createState() => _ListaContattiState();
-
-
-
 }
-
 
 class _ListaContattiState extends State<ListaContatti> {
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
@@ -73,12 +64,12 @@ class _ListaContattiState extends State<ListaContatti> {
           iconData: Icons.add,
           onPressed: () {
             if (mounted) {
-
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => GestioneContatto(null))).then((value) => _pullRefresh());
             }
-          },
-        ),
-
-
+          }),
         appBar: CustomAppBar(title:"Contatti",
             iconData:Icons.menu,
             onPressed:()=>_scaffoldKeyAdmin.currentState?.openDrawer()),
@@ -100,23 +91,19 @@ class _ListaContattiState extends State<ListaContatti> {
                           .then((v) => _pullRefresh())
                     },
                     onDelete:()=>{
-                        //Delete contatto
-                      /*
-                      * utenteService.deleteContatto(item.id!).then((value) {
-                            if (value) {
-                              ToastUtil.success("Contatto eliminato", context);
-                            } else {
-                              ToastUtil.error("Errore server", context);
-                            }
-                            _pullRefresh();
-                          });*/
+                      contattoService.deleteContatto(item.id!).then((value) {
+                        if (value) {
+                          ToastUtil.success("Contatto eliminato", context);
+                        } else {
+                          ToastUtil.error("Errore server", context);
+                        }
+                        _pullRefresh();
+                      })
                     },
                   )
               ),
             )
         )
-
-
     );
   }
   Future<void> _pullRefresh() async {

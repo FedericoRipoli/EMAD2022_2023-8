@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frontend_sws/entity/Ente.dart';
-import 'package:frontend_sws/entity/StatoOperazione.dart';
-import 'package:frontend_sws/entity/Tipologia.dart';
+import 'package:frontend_sws/old_entity/Ente.dart';
+import 'package:frontend_sws/old_entity/StatoOperazione.dart';
+import 'package:frontend_sws/old_entity/Tipologia.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
