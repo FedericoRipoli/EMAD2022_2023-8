@@ -7,7 +7,7 @@ import 'RestURL.dart';
 import 'UserService.dart';
 import 'dto/ListResponse.dart';
 import 'package:frontend_sws/util/QueryStringUtil.dart';
-class EnteService {
+class ContattoService {
   final log = Logger('ContattoServiceLogger');
   UserService userService = UserService();
 

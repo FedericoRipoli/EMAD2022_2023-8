@@ -29,8 +29,8 @@ class ListaContatti extends StatefulWidget  {
 
 class _ListaContattiState extends State<ListaContatti> {
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
-  EnteService enteService=EnteService();
-  UserService userService=UserService();
+  ContattoService contattoService = ContattoService();
+  UserService userService = UserService();
   final PagingController<int, Contatto> _pagingController =
   PagingController(firstPageKey: 0);
   @override
@@ -43,7 +43,7 @@ class _ListaContattiState extends State<ListaContatti> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems= await enteService.contattoList(userService.getIdEnte(), pageKey);
+      final newItems= await contattoService.contattoList(userService.getIdEnte(), pageKey);
 
       final isLastPage = newItems==null || newItems.isEmpty;
       if (isLastPage) {
@@ -88,9 +88,28 @@ class _ListaContattiState extends State<ListaContatti> {
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<Contatto>(
                   itemBuilder: (context, item, index) => ContattoListItem(
-                      denominazione:item.denominazione,
-                      id:item.id!,
-                      onTap:()=>{}
+                    denominazione:item.denominazione,
+                    id:item.id!,
+                    onTap:()=>{
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  GestioneContatto(item.id)))
+                          .then((v) => _pullRefresh())
+                    },
+                    onDelete:()=>{
+                        //Delete contatto
+                      /*
+                      * utenteService.deleteContatto(item.id!).then((value) {
+                            if (value) {
+                              ToastUtil.success("Contatto eliminato", context);
+                            } else {
+                              ToastUtil.error("Errore server", context);
+                            }
+                            _pullRefresh();
+                          });*/
+                    },
                   )
               ),
             )
