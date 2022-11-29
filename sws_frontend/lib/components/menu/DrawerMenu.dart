@@ -5,6 +5,7 @@ import '../../admin_screens/contatti/ListaContatti.dart';
 import '../../admin_screens/enti/ListaEnti.dart';
 import '../../admin_screens/utenti/ListaUtenti.dart';
 import '../../services/UserService.dart';
+import '../../theme/theme.dart';
 import 'CustomMenuItem.dart';
 
 class DrawerMenu extends StatefulWidget {
@@ -113,6 +114,23 @@ class _DrawerMenuState extends State<DrawerMenu> {
         title: GFButton(
           position: GFPosition.start,
           onPressed: () {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (_) => const InitApp()),
+                (route) => false);
+          },
+          text: "Home",
+          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          icon: const Icon(
+            Icons.home,
+            color: Colors.white,
+          ),
+        ),
+      ));
+      w.add(ListTile(
+        title: GFButton(
+          position: GFPosition.start,
+          onPressed: () {
             userService.logout();
             Navigator.pushAndRemoveUntil(
                 context,
@@ -127,6 +145,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
           ),
         ),
       ));
+
     }
 
     return w;
