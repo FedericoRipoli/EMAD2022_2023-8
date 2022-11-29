@@ -13,7 +13,7 @@ class ToastUtil {
       context,
       toastPosition: GFToastPosition.BOTTOM,
       textStyle: const TextStyle(fontSize: 18, color: GFColors.DARK),
-      backgroundColor: Colors.grey.withOpacity(0.5),
+      backgroundColor: Colors.grey.withOpacity(0.7),
       trailing: Icon(iconData, color: iconColor),
     );
   }

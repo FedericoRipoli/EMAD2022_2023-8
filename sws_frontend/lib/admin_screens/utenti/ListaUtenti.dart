@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/admin_screens/utenti/GestioneUtente.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
+import 'package:frontend_sws/util/ToastUtil.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/UtenteService.dart';
 import 'package:frontend_sws/services/entity/Utente.dart';
 import 'package:frontend_sws/components/utenti/UtenteListItem.dart';
+
+import '../../components/CustomAppBar.dart';
+import '../../components/CustomFloatingButton.dart';
 
 class ListaUtenti extends StatefulWidget {
   const ListaUtenti({Key? key}) : super(key: key);
@@ -58,9 +62,8 @@ class _ListaUtentiState extends State<ListaUtenti> {
         key: _scaffoldKeyAdmin,
         drawer: DrawerMenu(currentPage: ListaUtenti.id),
         resizeToAvoidBottomInset: false,
-        floatingActionButton: FloatingActionButton(
-            elevation: 3,
-            hoverElevation: 1,
+        floatingActionButton: CustomFloatingButton(
+            iconData: Icons.add,
             onPressed: () {
               if (mounted) {
                 Navigator.push(
@@ -68,29 +71,11 @@ class _ListaUtentiState extends State<ListaUtenti> {
                     MaterialPageRoute(
                         builder: (context) => GestioneUtente(null)));
               }
-            },
-            backgroundColor: appTheme.primaryColor,
-            child: const Icon(
-              Icons.add,
-              size: 32,
-              color: Colors.white,
-            )),
-        appBar: GFAppBar(
-          title: const Text("Utenti"),
-          leading: GFIconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              _scaffoldKeyAdmin.currentState?.openDrawer();
-            },
-            type: GFButtonType.transparent,
-          ),
-          searchBar: false,
-          elevation: 0,
-          backgroundColor: appTheme.primaryColor,
-        ),
+            }),
+        appBar: CustomAppBar(
+            title: "Utenti",
+            iconData: Icons.menu,
+            onPressed: () => _scaffoldKeyAdmin.currentState?.openDrawer()),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: PagedListView<int, Utente>(
@@ -111,9 +96,9 @@ class _ListaUtentiState extends State<ListaUtenti> {
                         onDelete: () {
                           utenteService.deleteUtente(item.id!).then((value) {
                             if (value) {
-
+                              ToastUtil.success("Utente eliminato", context);
                             } else {
-
+                              ToastUtil.error("Errore server", context);
                             }
                             _pullRefresh();
                           });

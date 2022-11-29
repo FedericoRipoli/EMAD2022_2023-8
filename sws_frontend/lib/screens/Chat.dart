@@ -11,6 +11,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
+import '../components/CustomFloatingButton.dart';
 import '../main.dart';
 import 'package:frontend_sws/util/TtsManager.dart';
 import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
@@ -146,23 +147,18 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Container(
-            height: 70,
-            width: 70,
-            child: AvatarGlow(
-              endRadius: 60,
-              child: FloatingActionButton(
-                backgroundColor: AppColors.logoBlue,
-                onPressed:
-                    // If not yet listening for speech start, otherwise stop
-                    _speechToText.isNotListening
-                        ? _startListening
-                        : _stopListening,
-                tooltip: 'In ascolto',
-                child: Icon(
-                    _speechToText.isNotListening ? Icons.mic_off : Icons.mic),
-              ),
-            )),
+        floatingActionButton:
+        AvatarGlow(
+          glowColor: Colors.red,
+          animate: _speechToText.isListening,
+          endRadius: 70,
+          child:CustomFloatingButton(
+            iconData: _speechToText.isNotListening ? Icons.mic_off : Icons.mic,
+            onPressed: _speechToText.isNotListening
+                ? _startListening
+                : _stopListening,
+          )
+        ),
         appBar: GFAppBar(
           leading: GFIconButton(
             icon: const Icon(
