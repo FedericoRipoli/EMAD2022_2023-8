@@ -22,7 +22,12 @@ class AmbitoService {
 
       if (response.statusCode == 200) {
         var l = json.decode(response.body);
-        return List<Ambito>.from(l.map((model) => Ambito.fromJson(model)));
+        List<Ambito> list=[];
+        for(var a in l){
+          Ambito f=Ambito.fromJson(a);
+          list.add(f);
+        }
+        return list;
       }
     } catch (e) {
       log.severe(e);
