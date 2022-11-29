@@ -28,7 +28,6 @@ class ListaEnti extends StatefulWidget  {
 
 
 class _ListaEntiState extends State<ListaEnti> {
-  final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
   EnteService enteService=EnteService();
   final PagingController<int, Ente> _pagingController =
   PagingController(firstPageKey: 0);
@@ -64,7 +63,6 @@ class _ListaEntiState extends State<ListaEnti> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: _scaffoldKeyAdmin,
         drawer: DrawerMenu(currentPage: ListaEnti.id),
         resizeToAvoidBottomInset: false,
         floatingActionButton: CustomFloatingButton(
@@ -95,9 +93,7 @@ class _ListaEntiState extends State<ListaEnti> {
               size: 32,
               color: Colors.white,
             )),*/
-        appBar: CustomAppBar(title:"Enti",
-            iconData:Icons.menu,
-            onPressed:()=>_scaffoldKeyAdmin.currentState?.openDrawer()),
+        appBar: const CustomAppBar(title:"Enti"),
         body:
         RefreshIndicator(
           onRefresh: _pullRefresh,
