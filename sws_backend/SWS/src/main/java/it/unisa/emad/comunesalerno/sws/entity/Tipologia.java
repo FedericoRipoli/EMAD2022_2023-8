@@ -1,5 +1,6 @@
 package it.unisa.emad.comunesalerno.sws.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -15,7 +16,6 @@ import java.util.List;
 @Entity
 @Data
 @RequiredArgsConstructor
-@JsonSerialize(using = TipologiaSerializer.class)
 public class Tipologia {
     @Id
     @GeneratedValue(generator = "uuid")
@@ -29,6 +29,7 @@ public class Tipologia {
     private List<Tipologia> figli;
 
     @ManyToOne
+    @JsonIgnore
     private Tipologia padre;
 
     @Transient
