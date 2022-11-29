@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/screens/DraggableHomeScreen.dart';
+import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../admin_screens/contatti/ListaContatti.dart';
 import '../../admin_screens/enti/ListaEnti.dart';
@@ -36,7 +37,11 @@ class _DrawerMenuState extends State<DrawerMenu> {
       accountEmail: const Text(""),
       currentAccountPicture: GFAvatar(
         shape: GFAvatarShape.circle,
-        child: Text(userService.getName()!.substring(0, 1).toUpperCase()),
+        backgroundColor: AppColors.logoBlue,
+        child: Text(
+          userService.getName()!.substring(0, 2).toUpperCase(),
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
       ),
 
       //.. This line of code provides the usage of multiple accounts
@@ -108,6 +113,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
       w.add(ListTile(
         title: GFButton(
           position: GFPosition.start,
+          padding: const EdgeInsets.all(5),
           onPressed: () {
             userService.logout();
             Navigator.pushAndRemoveUntil(
@@ -115,7 +121,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 MaterialPageRoute(builder: (_) => const DraggableHomeScreen()),
                 (route) => false);
           },
+          shape: GFButtonShape.pills,
           text: "Esci",
+          color: AppColors.logoBlue,
           textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           icon: const Icon(
             Icons.logout,

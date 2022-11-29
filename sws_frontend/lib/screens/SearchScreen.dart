@@ -34,6 +34,7 @@ class _SearchScreenState extends State<SearchScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60.0),

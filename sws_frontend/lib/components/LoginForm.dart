@@ -45,11 +45,11 @@ class _LoginFormState extends State<LoginForm> {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(3),
                         child: Text(
-                          'LOGIN',
+                          'Login',
                           style: TextStyle(
                               color: appTheme.primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24),
+                              fontFamily: "FredokaOne",
+                              fontSize: 28),
                         )),
                     Container(
                         alignment: Alignment.center,

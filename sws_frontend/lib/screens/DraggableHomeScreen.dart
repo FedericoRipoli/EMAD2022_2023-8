@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:draggable_home/draggable_home.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:frontend_sws/components/HomeActionCard.dart';
 import 'package:getwidget/components/button/gf_icon_button.dart';
@@ -92,9 +93,9 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
             ),
       title: appName,
       centerTitle: true,
-      actions: [
+      /*actions: [
         IconButton(onPressed: () {}, icon: const Icon(Icons.info_outlined)),
-      ],
+      ],*/
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (mounted) {
@@ -114,7 +115,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       alwaysShowLeadingAndAction: true,
       headerWidget: headerWidget(context),
-      curvedBodyRadius: 55,
+      curvedBodyRadius: 20,
       headerExpandedHeight: 0.36,
       body: [
         AnimatedOpacity(
@@ -146,7 +147,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
         ),
       ],
       fullyStretchable: true,
-      expandedBody: const Center(child: Text("Info")),
+      expandedBody: infoSection(context),
       backgroundColor: AppColors.white,
       appBarColor: AppColors.logoBlue,
     );
@@ -170,6 +171,37 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
           ),
         ],
       )),
+    );
+  }
+
+  Widget infoSection(BuildContext context) {
+    return Container(
+      //padding: const EdgeInsets.all(8),
+      child: Stack(
+        children: <Widget>[
+          ClipPath(
+              clipper: OvalBottomBorderClipper(),
+              child: Container(
+                  height: 620,
+                  color: AppColors.logoBlue,
+                  child: Center(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Ci stiamo ancora lavorando",
+                        style: TextStyle(color: AppColors.white, fontSize: 20),
+                      ),
+                      Image.asset(
+                        'assets/images/monkey-developer.gif',
+                        width: 320,
+                        height: 320,
+                      ),
+                    ],
+                  )))),
+        ],
+      ),
     );
   }
 }

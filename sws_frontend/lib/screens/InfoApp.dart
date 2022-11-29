@@ -46,7 +46,7 @@ class InfoApp extends StatelessWidget {
                         color: AppColors.logoBlue,
                       ),
                     ),
-                    Center(
+                    const Center(
                       child: Text("Info App, Privacy Policy e il resto"),
                     )
                   ],
