@@ -39,4 +39,63 @@ class ContattoService {
     }
     return null;
   }
+  Future<Contatto?> getContatto(String id) async {
+    try {
+      var response = await http.get(
+          Uri.parse("${RestURL.contattoService.toString()}/$id"),
+          headers: RestURL.defaultHeader;
+      if (response.statusCode == 200) {
+        return contattoFromJson(response.body);
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return null;
+  }
+  Future<bool> deleteContatto(String id) async {
+    String? token = await userService.getUser();
+    try {
+      var response = await http.delete(
+          Uri.parse("${RestURL.contattoService}/$id"),
+          headers: RestURL.authHeader(token!));
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return false;
+  }
+  Future<Contatto?> createContatto(Contatto contatto) async {
+    String? token = await userService.getUser();
+    try {
+      var response = await http.post(Uri.parse(RestURL.contattoService),
+          body: contattoToJson(contatto),
+          headers: RestURL.authHeader(token!));
+
+      if (response.statusCode == 200) {
+        return contattoFromJson(response.body);
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return null;
+  }
+  Future<Contatto?> editContato(Contatto contatto) async {
+    String? token = await userService.getUser();
+    try {
+      var response = await http.put(
+          Uri.parse("${RestURL.contattoService}/${contatto.id}"),
+          body: contattoToJson(contatto),
+          headers: RestURL.authHeader(token!));
+
+      if (response.statusCode == 200) {
+        return contattoFromJson(response.body);
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return null;
+  }
 }
