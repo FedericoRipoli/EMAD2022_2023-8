@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
 
+import '../../components/CustomAppBar.dart';
+
 class ModificaServizio extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => _ModificaServizio();
@@ -24,7 +26,7 @@ class _ModificaServizio extends State<ModificaServizio>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GFAppBar(),
+      appBar: const CustomAppBar(title:"Modifica servizio"),
       floatingActionButton: GFFloatingWidget(),
       body: SingleChildScrollView(
         physics: const ScrollPhysics(),

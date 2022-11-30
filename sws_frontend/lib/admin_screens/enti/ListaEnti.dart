@@ -85,10 +85,8 @@ class _ListaEntiState extends State<ListaEnti> {
               size: 32,
               color: Colors.white,
             )),*/
-        appBar: GFAppBar(
-          centerTitle: true,
-          title: const AppTitle(label: "Gestione Enti"),
-        ),
+        appBar: const CustomAppBar(title: "Gestione Enti"),
+
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: PagedListView<int, Ente>(

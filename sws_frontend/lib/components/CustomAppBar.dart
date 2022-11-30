@@ -4,6 +4,7 @@ import 'package:getwidget/components/button/gf_icon_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
 
 import '../main.dart';
+import '../theme/theme.dart';
 
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -27,7 +28,8 @@ class _CustomAppBarState extends State<CustomAppBar>{
   @override
   Widget build(BuildContext context) {
     return GFAppBar(
-      title: Text(widget.title),
+      centerTitle: true,
+      title: AppTitle(label: widget.title),
       leading:widget.onPressed!=null && widget.iconData!=null ? GFIconButton(
         icon: Icon(
           widget.iconData,

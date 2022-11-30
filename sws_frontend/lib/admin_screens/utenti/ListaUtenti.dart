@@ -71,10 +71,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
                         builder: (context) => GestioneUtente(null)));
               }
             }),
-        appBar: GFAppBar(
-          centerTitle: true,
-          title: const AppTitle(label: "Gestione Admin"),
-        ),
+        appBar: const CustomAppBar(title: "Gestione Utenti"),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: PagedListView<int, Utente>(

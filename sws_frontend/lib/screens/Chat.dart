@@ -11,6 +11,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
+import '../components/CustomAppBar.dart';
 import '../components/CustomFloatingButton.dart';
 import '../main.dart';
 import 'package:frontend_sws/util/TtsManager.dart';
@@ -159,24 +160,7 @@ class _ChatPageState extends State<ChatPage> {
                 : _stopListening,
           )
         ),
-        appBar: GFAppBar(
-          leading: GFIconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            type: GFButtonType.transparent,
-          ),
-          searchBar: false,
-          title: const Text("Olivia",
-              style: TextStyle(color: AppColors.ice, fontFamily: 'FredokaOne')),
-          centerTitle: true,
-          elevation: 1,
-          backgroundColor: appTheme.primaryColor,
-        ),
+        appBar: const CustomAppBar(title:"Olivia"),
         body: Container(
           decoration: BoxDecoration(color: AppColors.ice),
           padding: EdgeInsets.only(bottom: 100),

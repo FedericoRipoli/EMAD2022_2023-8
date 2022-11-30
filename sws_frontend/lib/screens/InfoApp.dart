@@ -3,30 +3,15 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/theme/theme.dart';
 
+import '../components/CustomAppBar.dart';
+
 class InfoApp extends StatelessWidget {
   const InfoApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: GFAppBar(
-          title: const Text("Informazioni",
-              style: TextStyle(color: AppColors.ice, fontFamily: 'FredokaOne')),
-          leading: GFIconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            type: GFButtonType.transparent,
-          ),
-          searchBar: false,
-          elevation: 0,
-          centerTitle: true,
-          backgroundColor: AppColors.logoBlue,
-        ),
+        appBar:const CustomAppBar(title:"Informazioni"),
         extendBodyBehindAppBar: false,
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
