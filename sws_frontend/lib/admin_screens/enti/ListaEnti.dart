@@ -5,6 +5,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
+import 'package:frontend_sws/components/FilterBar.dart';
 
 import '../../components/CustomAppBar.dart';
 import '../../components/CustomFloatingButton.dart';
@@ -21,9 +22,15 @@ class ListaEnti extends StatefulWidget {
 }
 
 class _ListaEntiState extends State<ListaEnti> {
+  final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
   EnteService enteService = EnteService();
   final PagingController<int, Ente> _pagingController =
       PagingController(firstPageKey: 0);
+  final List<TextEditingController> _inputFilter = <TextEditingController>[
+    TextEditingController(),
+  ];
+  final List<String> _placeholders = <String>['Ricerca ente'];
+
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
@@ -57,6 +64,7 @@ class _ListaEntiState extends State<ListaEnti> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKeyAdmin,
         drawer: DrawerMenu(currentPage: ListaEnti.id),
         resizeToAvoidBottomInset: false,
         floatingActionButton: CustomFloatingButton(
@@ -68,41 +76,38 @@ class _ListaEntiState extends State<ListaEnti> {
             }
           },
         ),
-
-        /*FloatingActionButton(
-            elevation: 3,
-            hoverElevation: 1,
-            onPressed: () {
-              if (mounted) {
-                Navigator.push(context, MaterialPageRoute(builder:
-                    (context) => GestioneEnte(null)
-                ));
-              }
-            },
-            backgroundColor: appTheme.primaryColor,
-            child: const Icon(
-              Icons.add,
-              size: 32,
-              color: Colors.white,
-            )),*/
         appBar: const CustomAppBar(title: "Gestione Enti"),
-
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
-            child: PagedListView<int, Ente>(
-              pagingController: _pagingController,
-              builderDelegate: PagedChildBuilderDelegate<Ente>(
-                  itemBuilder: (context, item, index) => EnteListItem(
-                      denominazione: item.denominazione,
-                      id: item.id!,
-                      onTap: () => {
-                            /*
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => GestioneEnte(item.id)
-                      ))
-                      */
-                          })),
-            )));
+            child: Column(
+                children: <Widget>[
+                    FilterBar(
+                        placeholders: _placeholders,
+                        controllers: _inputFilter),
+                    PagedListView<int, Ente>(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        pagingController: _pagingController,
+                        builderDelegate: PagedChildBuilderDelegate<Ente>(
+                            itemBuilder: (context, item, index) =>
+                                EnteListItem(
+                                    denominazione: item.denominazione,
+                                    id: item.id!,
+                                    onTap: () =>
+                                    {
+                                      /*
+                                  Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) => GestioneEnte(item.id)
+                                  ))
+                                  */
+                                    }
+                                )
+                        ),
+                    )
+                ]
+            )
+        )
+    );
   }
 
   Future<void> _pullRefresh() async {
