@@ -11,6 +11,7 @@ import 'package:frontend_sws/components/utenti/UtenteListItem.dart';
 
 import '../../components/CustomAppBar.dart';
 import '../../components/CustomFloatingButton.dart';
+import '../../theme/theme.dart';
 
 class ListaUtenti extends StatefulWidget {
   const ListaUtenti({Key? key}) : super(key: key);
@@ -70,8 +71,10 @@ class _ListaUtentiState extends State<ListaUtenti> {
                         builder: (context) => GestioneUtente(null)));
               }
             }),
-        appBar: const CustomAppBar(
-            title: "Utenti"),
+        appBar: GFAppBar(
+          centerTitle: true,
+          title: const AppTitle(label: "Gestione Admin"),
+        ),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: PagedListView<int, Utente>(

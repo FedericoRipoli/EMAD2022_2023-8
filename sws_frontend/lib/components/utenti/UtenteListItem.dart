@@ -2,30 +2,41 @@ import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
+import '../../theme/theme.dart';
 
-class UtenteListItem extends StatelessWidget{
+class UtenteListItem extends StatelessWidget {
   final String name, id;
   final String? ente;
-  final VoidCallback  onTap, onDelete;
-  const UtenteListItem({super.key, required this.name, required this.ente, required this.id, required this.onTap, required this.onDelete});
-
+  final VoidCallback onTap, onDelete;
+  const UtenteListItem(
+      {super.key,
+      required this.name,
+      required this.ente,
+      required this.id,
+      required this.onTap,
+      required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
     return GFListTile(
-      padding: const EdgeInsets.all(4),
-      avatar: const GFAvatar(
-        shape: GFAvatarShape.standard,
+      padding: const EdgeInsets.all(8),
+      avatar: GFAvatar(
+        shape: GFAvatarShape.circle,
+        backgroundColor: AppColors.logoBlue,
+        child: Text(
+          name.substring(0, 2).toUpperCase(),
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        ),
       ),
+      color: AppColors.ice,
       onTap: onTap,
       titleText: name,
-      subTitleText: ente??"",
+      subTitleText: ente ?? "",
       icon: IconButton(
         onPressed: onDelete,
-        icon: Icon(Icons.delete),
-        color: Colors.red,
+        icon: const Icon(Icons.delete),
+        color: AppColors.logoRed,
       ),
     );
   }
-
 }

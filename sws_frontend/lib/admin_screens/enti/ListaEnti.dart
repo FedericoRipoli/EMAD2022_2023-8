@@ -9,28 +9,21 @@ import 'package:frontend_sws/services/entity/Ente.dart';
 import '../../components/CustomAppBar.dart';
 import '../../components/CustomFloatingButton.dart';
 import '../../components/enti/EnteListItem.dart';
+import '../../theme/theme.dart';
 import 'GestioneEnte.dart';
 
-
-
-
-class ListaEnti extends StatefulWidget  {
-
+class ListaEnti extends StatefulWidget {
   const ListaEnti({Key? key}) : super(key: key);
-  static String id='it.unisa.emad.comunesalerno.sws.ipageutil.ListaEnti';
+  static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.ListaEnti';
 
   @override
   State<ListaEnti> createState() => _ListaEntiState();
-
-
-
 }
 
-
 class _ListaEntiState extends State<ListaEnti> {
-  EnteService enteService=EnteService();
+  EnteService enteService = EnteService();
   final PagingController<int, Ente> _pagingController =
-  PagingController(firstPageKey: 0);
+      PagingController(firstPageKey: 0);
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
@@ -41,19 +34,20 @@ class _ListaEntiState extends State<ListaEnti> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems= await enteService.enteList(null, pageKey);
+      final newItems = await enteService.enteList(null, pageKey);
 
-      final isLastPage = newItems==null || newItems.isEmpty;
+      final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
       } else {
-        pageKey ++;
+        pageKey++;
         _pagingController.appendPage(newItems, pageKey);
       }
     } catch (error) {
       _pagingController.error = error;
     }
   }
+
   @override
   void dispose() {
     _pagingController.dispose();
@@ -69,13 +63,11 @@ class _ListaEntiState extends State<ListaEnti> {
           iconData: Icons.add,
           onPressed: () {
             if (mounted) {
-              Navigator.push(context, MaterialPageRoute(builder:
-                  (context) => GestioneEnte(null)
-              ));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => GestioneEnte(null)));
             }
           },
         ),
-
 
         /*FloatingActionButton(
             elevation: 3,
@@ -93,31 +85,28 @@ class _ListaEntiState extends State<ListaEnti> {
               size: 32,
               color: Colors.white,
             )),*/
-        appBar: const CustomAppBar(title:"Enti"),
-        body:
-        RefreshIndicator(
-          onRefresh: _pullRefresh,
-          child: PagedListView<int, Ente>(
-            pagingController: _pagingController,
-            builderDelegate: PagedChildBuilderDelegate<Ente>(
-                itemBuilder: (context, item, index) => EnteListItem(
-                    denominazione:item.denominazione,
-                    id:item.id!,
-                    onTap:()=>{
-                      /*
+        appBar: GFAppBar(
+          centerTitle: true,
+          title: const AppTitle(label: "Gestione Enti"),
+        ),
+        body: RefreshIndicator(
+            onRefresh: _pullRefresh,
+            child: PagedListView<int, Ente>(
+              pagingController: _pagingController,
+              builderDelegate: PagedChildBuilderDelegate<Ente>(
+                  itemBuilder: (context, item, index) => EnteListItem(
+                      denominazione: item.denominazione,
+                      id: item.id!,
+                      onTap: () => {
+                            /*
                       Navigator.push(context, MaterialPageRoute(
                           builder: (context) => GestioneEnte(item.id)
                       ))
                       */
-                    }
-                )
-            ),
-          )
-        )
-
-
-    );
+                          })),
+            )));
   }
+
   Future<void> _pullRefresh() async {
     _pagingController.refresh();
   }

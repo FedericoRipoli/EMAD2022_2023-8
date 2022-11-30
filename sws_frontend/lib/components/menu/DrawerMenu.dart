@@ -103,8 +103,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
           text: 'Gestione Ambiti',
           f: () {
             checkChangePage(ListaUtenti.id);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const GestioneAmbiti()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const GestioneAmbiti()));
           }));
     }
     if (userService.isLogged() && admin != null && !admin) {
@@ -120,6 +122,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
     if (userService.isLogged()) {
       w.add(ListTile(
         title: GFButton(
+          color: AppColors.logoBlue,
+          shape: GFButtonShape.pills,
           position: GFPosition.start,
           padding: const EdgeInsets.all(5),
           onPressed: () {
@@ -128,8 +132,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 MaterialPageRoute(builder: (_) => const DraggableHomeScreen()),
                 (route) => false);
           },
+          buttonBoxShadow: false,
+          borderSide: BorderSide.none,
           text: "Homepage",
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          textStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: AppColors.white),
           icon: const Icon(
             Icons.home,
             color: Colors.white,
@@ -149,7 +158,12 @@ class _DrawerMenuState extends State<DrawerMenu> {
           shape: GFButtonShape.pills,
           text: "Esci",
           color: AppColors.logoBlue,
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          buttonBoxShadow: false,
+          borderSide: BorderSide.none,
+          textStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: AppColors.white),
           icon: const Icon(
             Icons.logout,
             color: Colors.white,

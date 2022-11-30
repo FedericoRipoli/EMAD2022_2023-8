@@ -15,3 +15,19 @@ class AppColors {
   static const Color logoRed = Color(0XFFF1615F);
   static const Color logoCadmiumOrange = Color(0XFFF7954A);
 }
+
+class AppTitle extends StatelessWidget {
+  final String label;
+  const AppTitle({Key? key, required this.label}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(label,
+        style: TextStyle(
+          fontFamily: "FredokaOne",
+          fontSize: 24,
+          letterSpacing: 2,
+          color: Colors.grey[100],
+        ));
+  }
+}

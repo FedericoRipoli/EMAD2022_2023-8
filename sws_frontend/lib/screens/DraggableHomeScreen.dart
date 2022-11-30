@@ -91,7 +91,9 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
               },
               type: GFButtonType.transparent,
             ),
-      title: appName,
+      title: const AppTitle(
+        label: "Salerno Amica",
+      ),
       centerTitle: true,
       /*actions: [
         IconButton(onPressed: () {}, icon: const Icon(Icons.info_outlined)),
@@ -160,7 +162,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          appName,
+          const AppTitle(label: "Salerno Amica"),
           Container(
             margin: const EdgeInsets.all(4),
             child: Image.asset(
@@ -205,11 +207,3 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
     );
   }
 }
-
-Text appName = Text("Salerno Amica",
-    style: TextStyle(
-      fontFamily: "FredokaOne",
-      fontSize: 26,
-      letterSpacing: 2,
-      color: Colors.grey[100],
-    ));
