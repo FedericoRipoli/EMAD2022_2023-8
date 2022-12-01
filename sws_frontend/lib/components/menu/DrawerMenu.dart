@@ -102,7 +102,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
       w.add(CustomMenuItem(
           text: 'Gestione Aree',
           f: () {
-            checkChangePage(ListaUtenti.id);
+            checkChangePage(ListaAree.id);
             Navigator.push(
                 context,
                 MaterialPageRoute(
