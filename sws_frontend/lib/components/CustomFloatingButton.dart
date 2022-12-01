@@ -15,6 +15,7 @@ class CustomFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: null,
         elevation: 3,
         hoverElevation: 1,
         onPressed: onPressed,

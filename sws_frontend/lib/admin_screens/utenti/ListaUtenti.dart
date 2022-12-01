@@ -79,7 +79,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => GestioneUtente(null)));
+                        builder: (context) => GestioneUtente(null))).then((value) => _pullRefresh());
               }
             }),
         appBar: const CustomAppBar(title: "Gestione Utenti"),

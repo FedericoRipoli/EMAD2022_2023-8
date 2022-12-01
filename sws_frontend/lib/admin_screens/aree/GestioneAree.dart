@@ -6,20 +6,20 @@ import '../../components/menu/DrawerMenu.dart';
 
 
 
-class GestioneAmbiti extends StatefulWidget {
-  const GestioneAmbiti({Key? key}) : super(key: key);
-  static String id='it.unisa.emad.comunesalerno.sws.ipageutil.GestioneAmbiti';
+class GestioneAree extends StatefulWidget {
+  const GestioneAree({Key? key}) : super(key: key);
+  static String id='it.unisa.emad.comunesalerno.sws.ipageutil.GestioneAree';
 
   @override
-  State<GestioneAmbiti> createState() => _GestioneAmbitiState();
+  State<GestioneAree> createState() => _GestioneAreeState();
 }
 
-class _GestioneAmbitiState extends State<GestioneAmbiti> {
+class _GestioneAreeState extends State<GestioneAree> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      drawer: DrawerMenu(currentPage: GestioneAmbiti.id),
+      drawer: DrawerMenu(currentPage: GestioneAree.id),
         resizeToAvoidBottomInset: false,
         floatingActionButton: CustomFloatingButton(
             iconData: Icons.add,
