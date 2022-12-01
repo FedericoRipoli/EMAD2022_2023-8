@@ -10,7 +10,7 @@ import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
 void main() {
   test("Area", () async {
     AreeService u = AreeService();
-    List<Area>? a=await u.areeList();
+    List<Area>? a=await u.areeList(null);
     if(a!=null){}
   });
 }
