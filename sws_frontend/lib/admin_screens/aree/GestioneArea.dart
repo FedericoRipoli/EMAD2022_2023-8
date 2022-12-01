@@ -142,7 +142,7 @@ class _GestioneArea extends State<GestioneArea> {
                               controller: nomeController,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
-                                labelText: 'Username',
+                                labelText: 'Nome',
                               ),
                             ),
                           )

@@ -1,14 +1,15 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:frontend_sws/components/menu/DrawerMenu.dart';
-import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/services/EnteService.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
-import 'package:getwidget/getwidget.dart';
 
+
+import '../../components/AllPageLoadTransparent.dart';
 import '../../components/CustomAppBar.dart';
 import '../../components/CustomFloatingButton.dart';
+import '../../components/menu/DrawerMenu.dart';
+import '../../util/ToastUtil.dart';
 
 class GestioneEnte extends StatefulWidget {
   String? idEnte;
@@ -21,18 +22,73 @@ class GestioneEnte extends StatefulWidget {
 }
 
 class _GestioneEnte extends State<GestioneEnte> {
+  late Future<bool> initCall;
   EnteService enteService = EnteService();
-  TextEditingController nomeEnte = TextEditingController();
-  final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
 
-  List<Ente>? enti;
   Ente? ente;
+  final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
+  TextEditingController nomeController = TextEditingController();
+
+  bool loaded = false;
+  final _formGlobalKey = GlobalKey<FormState>();
+  @override
+  void initState() {
+    super.initState();
+    initCall = load();
+  }
 
   Future<bool> load() async {
-    //aggiungere la get tramite id e sostituire qui
-    enti = await enteService.enteList(null, null);
-    ente = enti?.firstWhere((element) => (element.id == widget.idEnte));
+
+    ente = widget.idEnte != null
+        ? await enteService.getEnte(widget.idEnte!)
+        : null;
+    if (ente != null) {
+      nomeController.text = (ente!.denominazione);
+    }
+    setState(() {
+      loaded = true;
+    });
     return true;
+  }
+
+  void savePage() async {
+    if(_formGlobalKey.currentState!.validate()){
+      _formGlobalKey.currentState?.save();
+      setState(() {
+        loaded = false;
+      });
+      Ente? nEnte;
+      if (widget.idEnte == null) {
+        nEnte = await enteService.createEnte(Ente(
+            denominazione: nomeController.value.text
+        ));
+
+      } else {
+        ente!.denominazione=nomeController.value.text;
+        nEnte = await enteService.editEnte(ente!);
+      }
+      if (mounted) {}
+      if (nEnte != null) {
+
+        ToastUtil.success(
+            "Ente ${widget.idEnte==null?'aggiunto':'modificato'}",
+            context
+        );
+        ente=nEnte;
+        widget.idEnte=nEnte.id;
+
+      } else {
+        ToastUtil.error(
+            "Errore server",
+            context
+        );
+
+      }
+      setState(() {
+        loaded = true;
+      });
+    }
+
   }
 
   @override
@@ -40,86 +96,72 @@ class _GestioneEnte extends State<GestioneEnte> {
     return Scaffold(
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
-        floatingActionButton: CustomFloatingButton(
-          iconData: Icons.save_rounded,
-          onPressed: ()=>{
-            if(widget.idEnte == null){
-              //Create new ente
-              //enteService.createEnte(),
-              Navigator.of(context).pop(true),
-              GFToast.showToast("Ente aggiunto",
-                  context,
-                  toastPosition: GFToastPosition.BOTTOM,
-                  trailing: const Icon(Icons.check))
-            }else{
-              //Update user
 
-            }
-          },
-        ),
 
         drawer: DrawerMenu(currentPage: GestioneEnte.id),
+        floatingActionButton: !loaded
+            ? null
+            : CustomFloatingButton(
+          iconData: Icons.save_rounded,
+          onPressed:  () => savePage(),
+        ),
         appBar: CustomAppBar(title:"Gestione Ente",
             iconData:Icons.arrow_back,
             onPressed:()=>Navigator.pop(context)),
+
+
+
+
+
         body: FutureBuilder<bool>(
-            future: load(),
+            future: initCall,
             builder: ((context, snapshot) {
-              if (snapshot.connectionState != ConnectionState.done) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+              List<Widget> children = [];
+
+              if (!snapshot.hasData && !snapshot.hasError || !loaded) {
+                children.add(const AllPageLoadTransparent());
               }
-              /*else if (snapshot.hasError){
-                return const Center(
-                  child: Text("Errore"),
-                );
-              }*/
-              else {
-                if(ente!=null){
-                  nomeEnte.text = ente!.denominazione.toString();
-                }
-                return Column(
-                  children: [
-                    const SizedBox(
-                      height: 80,
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 50,right: 50),
-                      child: TextField(
-                        controller: nomeEnte,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Denominazione',
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                  /*
-                    Container(
-                        padding: EdgeInsets.only(left: 50,right: 50),
-                        child: TextField(
-                          controller: passwordController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Password',
+              List<Widget> columnChild = [];
+              columnChild.add(
+                  Form(
+                      key: _formGlobalKey,
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 80,
                           ),
-                        )
-                    ),
-                  */
-                    const SizedBox(
-                      height: 40,
-                    ),
-                  ],
-                );
-              }
+                          Container(
+                            padding: const EdgeInsets.only(left: 50, right: 50),
+                            child: TextFormField(
+                              validator: (v) {
+                                if(v==null || v.isEmpty) {
+                                  return "Inserisci il campo nome";
+                                }
+                              },
+                              controller: nomeController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Denominazione',
+                              ),
+                            ),
+                          )
+                        ],
+                      )
+                  )
 
 
-            })
-        )
-    );
+
+              );
+
+              children.add(Column(
+                children: columnChild,
+              ));
+              return AbsorbPointer(
+                absorbing: !(snapshot.hasData || snapshot.hasError),
+                child: Stack(
+                  children: children,
+                ),
+              );
+            })));
   }
-
 }

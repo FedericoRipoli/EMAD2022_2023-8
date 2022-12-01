@@ -93,11 +93,11 @@ class _ListaEntiState extends State<ListaEnti> {
                         denominazione: item.denominazione,
                         id: item.id!,
                         onTap: () => {
-                              /*
+
                                   Navigator.push(context, MaterialPageRoute(
                                       builder: (context) => GestioneEnte(item.id)
                                   ))
-                                  */
+
                             })),
               ))
             ])));

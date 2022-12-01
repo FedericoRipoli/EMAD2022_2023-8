@@ -44,4 +44,63 @@ class EnteService {
     }
     return null;
   }
+
+  Future<Ente?> getEnte(String id) async {
+    try {
+      var response = await http.get(
+          Uri.parse("${RestURL.enteService}/$id"),
+          headers: RestURL.defaultHeader);
+      if (response.statusCode == 200) {
+        return enteFromJson(response.body);
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return null;
+  }
+  Future<bool> deleteEnte(String id) async {
+    String? token = await userService.getUser();
+    try {
+      var response = await http.delete(
+          Uri.parse("${RestURL.enteService}/$id"),
+          headers: RestURL.authHeader(token!));
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return false;
+  }
+  Future<Ente?> createEnte(Ente ente) async {
+    String? token = await userService.getUser();
+    try {
+      var response = await http.post(Uri.parse(RestURL.enteService),
+          body: enteToJson(ente), headers: RestURL.authHeader(token!));
+
+      if (response.statusCode == 200) {
+        return enteFromJson(response.body);
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return null;
+  }
+  Future<Ente?> editEnte(Ente ente) async {
+    String? token = await userService.getUser();
+    try {
+      var response = await http.put(
+          Uri.parse("${RestURL.enteService}/${ente.id}"),
+          body: enteToJson(ente),
+          headers: RestURL.authHeader(token!));
+
+      if (response.statusCode == 200) {
+        return enteFromJson(response.body);
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return null;
+  }
 }
