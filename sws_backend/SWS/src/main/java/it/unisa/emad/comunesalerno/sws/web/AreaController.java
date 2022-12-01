@@ -12,39 +12,39 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/aree")
 public class AreaController {
     @Autowired
-    AreaRepository ambitoRepository;
+    AreaRepository areaRepository;
 
     @GetMapping
-    public ResponseEntity list() {
-        return ResponseEntity.ok(ambitoRepository.findAll());
+    public ResponseEntity list(@RequestParam(name = "name",required = false)String name) {
+        return ResponseEntity.ok(areaRepository.findAllByNomeContainingIgnoreCase(name));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable String id) {
-        return ResponseEntity.ok(ambitoRepository.findById(id).orElseThrow());
+        return ResponseEntity.ok(areaRepository.findById(id).orElseThrow());
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity delete(@PathVariable String id) {
-        ambitoRepository.delete(ambitoRepository.findById(id).orElseThrow());
+        areaRepository.delete(areaRepository.findById(id).orElseThrow());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity create(@RequestBody Area area) {
-        ambitoRepository.save(area);
+        areaRepository.save(area);
         return ResponseEntity.ok(area);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity edit(@PathVariable String id, @RequestBody Area area) {
-        if (ambitoRepository.existsById(id)) {
-            Area areaDb =ambitoRepository.findById(id).orElseThrow();
+        if (areaRepository.existsById(id)) {
+            Area areaDb =areaRepository.findById(id).orElseThrow();
             areaDb.setNome(area.getNome());
-            ambitoRepository.save(areaDb);
+            areaRepository.save(areaDb);
             return ResponseEntity.ok(areaDb);
         }
 

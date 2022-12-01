@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/admin_screens/utenti/GestioneUtente.dart';
+import 'package:frontend_sws/admin_screens/aree/GestioneArea.dart';
 import 'package:frontend_sws/components/filtri/FilterController.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
-import 'package:frontend_sws/components/utenti/UtenteListItem.dart';
+import 'package:frontend_sws/components/aree/AreaListItem.dart';
 import 'package:frontend_sws/util/ToastUtil.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:frontend_sws/services/UtenteService.dart';
-import 'package:frontend_sws/services/entity/Utente.dart';
+import 'package:frontend_sws/services/AreeService.dart';
+import 'package:frontend_sws/services/entity/Area.dart';
 import 'package:frontend_sws/components/filtri/FilterBar.dart';
 
 import '../../components/CustomAppBar.dart';
 import '../../components/CustomFloatingButton.dart';
 
-class ListaUtenti extends StatefulWidget {
-  const ListaUtenti({Key? key}) : super(key: key);
-  static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.ListaUtenti';
+class ListaAree extends StatefulWidget {
+  const ListaAree({Key? key}) : super(key: key);
+  static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.ListaAree';
 
   @override
-  State<ListaUtenti> createState() => _ListaUtentiState();
+  State<ListaAree> createState() => _ListaAreeState();
 }
 
-class _ListaUtentiState extends State<ListaUtenti> {
-  UtenteService utenteService = UtenteService();
-  final PagingController<int, Utente> _pagingController =
+class _ListaAreeState extends State<ListaAree> {
+  AreeService areeService = AreeService();
+  final PagingController<int, Area> _pagingController =
   PagingController(firstPageKey: 0);
   late List<FilterTextController> _inputFilter;
 
@@ -32,10 +32,8 @@ class _ListaUtentiState extends State<ListaUtenti> {
       _fetchPage(pageKey);
     });
     _inputFilter = <FilterTextController>[
-      FilterTextController(textPlaceholder: 'Cerca ente',
+      FilterTextController(textPlaceholder: 'Nome',
           f: _executeSearch),
-      FilterTextController(textPlaceholder: 'Cerca utente',
-          f: _executeSearch)
     ];
     super.initState();
   }
@@ -47,14 +45,10 @@ class _ListaUtentiState extends State<ListaUtenti> {
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems =
-      await utenteService.usersList(null, null, false, pageKey);
-      final isLastPage = newItems == null || newItems.isEmpty;
-      if (isLastPage) {
+      await areeService.areeList(null);
+
         _pagingController.appendLastPage(newItems!);
-      } else {
-        pageKey++;
-        _pagingController.appendPage(newItems, pageKey);
-      }
+
     } catch (error) {
       _pagingController.error = error;
     }
@@ -70,7 +64,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: DrawerMenu(currentPage: ListaUtenti.id),
+        drawer: DrawerMenu(currentPage: ListaAree.id),
         resizeToAvoidBottomInset: false,
         floatingActionButton: CustomFloatingButton(
             iconData: Icons.add,
@@ -79,10 +73,10 @@ class _ListaUtentiState extends State<ListaUtenti> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => GestioneUtente(null))).then((value) => _pullRefresh());
+                        builder: (context) => GestioneArea(null))).then((value) => _pullRefresh());
               }
             }),
-        appBar: const CustomAppBar(title: "Gestione Utenti"),
+        appBar: const CustomAppBar(title: "Gestione Aree"),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(
@@ -90,26 +84,25 @@ class _ListaUtentiState extends State<ListaUtenti> {
                   FilterBar(
                       controllers: _inputFilter
                   ),
-                  PagedListView<int, Utente>(
+                  PagedListView<int, Area>(
                     shrinkWrap: true,
                     pagingController: _pagingController,
-                    builderDelegate: PagedChildBuilderDelegate<Utente>(
-                        itemBuilder: (context, item, index) => UtenteListItem(
-                          name: item.username,
+                    builderDelegate: PagedChildBuilderDelegate<Area>(
+                        itemBuilder: (context, item, index) => AreaListItem(
+                          name: item.nome,
                           id: item.id!,
-                          ente: item.nomeEnte,
                           onTap: () => {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        GestioneUtente(item.id))
-                                ).then((v) => _pullRefresh())
+                                        GestioneArea(item.id))
+                            ).then((v) => _pullRefresh())
                           },
                           onDelete: () {
-                            utenteService.deleteUtente(item.id!).then((value) {
+                            areeService.deleteArea(item.id!).then((value) {
                               if (value) {
-                                ToastUtil.success("Utente eliminato", context);
+                                ToastUtil.success("Area eliminata", context);
                               } else {
                                 ToastUtil.error("Errore server", context);
                               }

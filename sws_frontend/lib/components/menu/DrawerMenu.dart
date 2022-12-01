@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/admin_screens/aree/ListaAree.dart';
 import 'package:frontend_sws/screens/DraggableHomeScreen.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/getwidget.dart';
-import '../../admin_screens/aree/GestioneAree.dart';
+import '../../admin_screens/aree/GestioneArea.dart';
 import '../../admin_screens/enti/ListaEnti.dart';
 import '../../admin_screens/utenti/ListaUtenti.dart';
 import '../../services/UserService.dart';
@@ -105,7 +106,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const GestioneAree()));
+                    builder: (context) => const ListaAree()));
           }));
     }
     if (userService.isLogged() && admin != null && !admin) {
