@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import '../../main.dart';
 import '../../theme/theme.dart';
 
-class UtenteListItem extends StatelessWidget {
+class AreaListItem extends StatelessWidget {
   final String name, id;
-  final String? ente;
   final VoidCallback onTap, onDelete;
-  const UtenteListItem(
+  const AreaListItem(
       {super.key,
       required this.name,
-      required this.ente,
       required this.id,
       required this.onTap,
       required this.onDelete});
@@ -24,14 +22,13 @@ class UtenteListItem extends StatelessWidget {
         shape: GFAvatarShape.circle,
         backgroundColor: AppColors.logoBlue,
         child: Text(
-            name.length>2? name.substring(0, 2).toUpperCase():name,
+          name.substring(0, 2).toUpperCase(),
           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
       ),
       color: AppColors.ice,
       onTap: onTap,
       titleText: name,
-      subTitleText: ente ?? "",
       icon: IconButton(
         onPressed: onDelete,
         icon: const Icon(Icons.delete),

@@ -17,37 +17,43 @@ public class Evento {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "id", nullable = false)
     private String id;
+
     private String nome;
+
     @Lob
     private String contenuto;
-    @OneToMany
-    private List<ImageData> immagini;
-    @OneToMany
-    private List<Posizione> posizioni;
-    @OneToMany
-    private List<Contatto> contatti;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataInizio;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataFine;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Contatto contatto;
+
     @Enumerated(EnumType.STRING)
     private StatoOperazione stato;
+
     @Lob
     private String note;
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> hashtags;
-    @OneToOne
-    private Ambito ambito;
-    @OneToOne
-    private Tipologia tipologia;
-    @OneToOne
-    private Ente ente;
 
+    @ElementCollection
+    private List<String> hashtags;
+
+    @OneToMany
+    private List<Area> aree;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataInizio;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataFine;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCreazione;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltimaModifica;
+
+    @ManyToOne
+    private Ente ente;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Posizione posizione;
+
 
     @PrePersist
     public void prePersist(){

@@ -14,8 +14,9 @@ class CustomFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-        elevation: 8,
-        hoverElevation: 4,
+      heroTag: null,
+        elevation: 3,
+        hoverElevation: 1,
         onPressed: onPressed,
         backgroundColor: AppColors.logoCadmiumOrange,
         child: Icon(

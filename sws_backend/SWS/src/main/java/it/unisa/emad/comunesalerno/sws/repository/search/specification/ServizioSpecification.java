@@ -14,7 +14,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class ServizioSpecification implements Specification<Servizio> {
-    private String name, idAmbito, idTipologia, idEnte;
+    private String name, idArea, idEnte, idStruttura;
     private List<String> tags;
     private StatoOperazione stato;
 
@@ -26,16 +26,16 @@ public class ServizioSpecification implements Specification<Servizio> {
                     criteriaBuilder.lower(root.get(Servizio_.nome)),
                     "%" + name.toLowerCase() + "%"));
         }
-        if(idAmbito!=null){
-            predicates.add(criteriaBuilder.equal(root.get(Servizio_.ambito).get(Ambito_.id),
-                    idAmbito));
+        if(idArea!=null){
+            predicates.add(criteriaBuilder.equal(root.join(Servizio_.aree).get(Area_.id),
+                    idArea));
         }
-        if(idTipologia!=null){
-            predicates.add(criteriaBuilder.equal(root.get(Servizio_.tipologia).get(Tipologia_.id),
-                    idTipologia));
+        if(idStruttura!=null){
+            predicates.add(criteriaBuilder.equal(root.get(Servizio_.struttura).get(Struttura_.id),
+                    idStruttura));
         }
         if(idEnte!=null){
-            predicates.add(criteriaBuilder.equal(root.get(Servizio_.ente).get(Ente_.id),
+            predicates.add(criteriaBuilder.equal(root.get(Servizio_.struttura).get(Struttura_.ente).get(Ente_.id),
                     idEnte));
         }
         if(tags!=null){

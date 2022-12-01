@@ -9,8 +9,7 @@ class RestURL {
   static String utenteService = "${baseURL}users";
 
   static String enteService = "${baseURL}enti";
-  static String contattoService = "${baseURL}contatti";
-  static String ambitoService = "${baseURL}ambiti";
+  static String areeService = "${baseURL}aree";
 
 
 
