@@ -1,10 +1,8 @@
 package it.unisa.emad.comunesalerno.sws.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -13,10 +11,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data()
 @RequiredArgsConstructor
-public class Ente {
+public class Struttura {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -27,16 +24,14 @@ public class Ente {
     @NotEmpty
     private String denominazione;
 
-    @Lob
-    @NotNull
-    @NotEmpty
-    private String descrizione;
+    @JsonIgnore
+    @ManyToOne(optional = false)
+    private Ente ente;
 
-    @OneToMany(mappedBy = "ente")
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private List<Struttura> strutture;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Posizione posizione;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "ente")
-    private List<Evento> eventi;
+    @OneToMany(mappedBy = "struttura")
+    private List<Servizio> servizi;
 }
