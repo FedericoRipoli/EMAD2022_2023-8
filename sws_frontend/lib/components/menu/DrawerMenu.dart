@@ -95,7 +95,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
       w.add(CustomMenuItem(
           text: 'Gestione Enti',
           f: () {
-            checkChangePage(ListaUtenti.id);
+            checkChangePage(ListaEnti.id);
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const ListaEnti()));
           }));
