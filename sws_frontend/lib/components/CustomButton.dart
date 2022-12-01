@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/theme/theme.dart';
 
-class Button extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String textButton;
   final bool status;
   final IconData? icon;
 
-  const Button(
+  const CustomButton(
       {Key? key,
       required this.onPressed,
       required this.textButton,
@@ -29,7 +29,7 @@ class Button extends StatelessWidget {
       icon: Icon(
         icon,
         color: AppColors.white,
-        size: 22,
+        size: 18,
       ),
       buttonBoxShadow: false,
       borderSide: BorderSide.none,

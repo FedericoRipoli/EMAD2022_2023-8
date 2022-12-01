@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/Button.dart';
+import 'package:frontend_sws/components/CustomButton.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/services/UserService.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+import '../theme/theme.dart';
 
 // Form Login Ente / Comune
 class LoginForm extends StatefulWidget {
@@ -44,10 +46,10 @@ class _LoginFormState extends State<LoginForm> {
                     Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(3),
-                        child: Text(
+                        child: const Text(
                           'Login',
                           style: TextStyle(
-                              color: appTheme.primaryColor,
+                              color: AppColors.logoCadmiumOrange,
                               fontFamily: "FredokaOne",
                               fontSize: 28),
                         )),
@@ -65,8 +67,10 @@ class _LoginFormState extends State<LoginForm> {
                       padding: const EdgeInsets.all(10),
                       child: TextField(
                         controller: emailController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
                           labelText: 'Username',
                         ),
                       ),
@@ -77,8 +81,10 @@ class _LoginFormState extends State<LoginForm> {
                         obscureText: true,
                         controller: passwordController,
                         cursorColor: appTheme.primaryColor,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
                           labelText: 'Password',
                         ),
                       ),
@@ -87,7 +93,7 @@ class _LoginFormState extends State<LoginForm> {
                       margin: const EdgeInsets.only(top: 25),
                       height: 60,
                       width: 170,
-                      child: Button(
+                      child: CustomButton(
                         onPressed: () async {
                           bool res = await login(
                               emailController.text, passwordController.text);
@@ -96,11 +102,11 @@ class _LoginFormState extends State<LoginForm> {
                           }
                           if (_loginError) {
                             GFToast.showToast(
-                              'Credenziali non valide :(',
+                              'Credenziali non valide',
                               context,
                               toastPosition: GFToastPosition.BOTTOM,
                               textStyle: const TextStyle(
-                                  fontSize: 18, color: GFColors.DARK),
+                                  fontSize: 20, color: GFColors.DARK),
                               backgroundColor: Colors.white,
                               trailing: const Icon(
                                 Icons.error_outline,

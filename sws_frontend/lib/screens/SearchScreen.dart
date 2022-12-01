@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/components/CardListAmbiti.dart';
 import 'package:frontend_sws/components/CardServizio.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
@@ -50,7 +51,7 @@ class _SearchScreenState extends State<SearchScreen>
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios_new,
                 color: Colors.white,
               )),
@@ -66,9 +67,9 @@ class _SearchScreenState extends State<SearchScreen>
                 const TextStyle(fontSize: 16, fontFamily: "FredokaOne"),
             unselectedLabelColor: GFColors.WHITE,
             indicator: const BoxDecoration(
-              color: GFColors.WHITE,
+              color: AppColors.white,
               borderRadius: BorderRadius.all(
-                Radius.circular(40),
+                Radius.circular(20),
               ),
             ),
             indicatorPadding: const EdgeInsets.all(0.6),
@@ -78,20 +79,27 @@ class _SearchScreenState extends State<SearchScreen>
             length: 2,
             tabs: const <Widget>[
               Text(
-                "MAPPA",
+                "Lista",
               ),
               Text(
-                "LISTA",
+                "Mappa",
               ),
             ],
           ),
           actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.filter_list_outlined))
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.filter_list_outlined,
+                  color: AppColors.white,
+                ))
           ],
         ),
       ),
-      body: GFTabBarView(
-          controller: tabController, children: <Widget>[searchMap, searchList]),
+      body: GFTabBarView(controller: tabController, children: <Widget>[
+        searchList,
+        searchMap,
+      ]),
     );
   }
 
@@ -113,20 +121,21 @@ class _SearchScreenState extends State<SearchScreen>
                 width: 30.0,
                 height: 30.0,
                 point: LatLng(40.6824408, 14.7680961),
-                builder: (ctx) => Container(
-                        child: const Icon(
+                builder: (ctx) => const Icon(
                       Icons.location_on,
-                      color: Colors.red,
-                      size: 40,
-                    )))
+                      color: AppColors.logoBlue,
+                      size: 50,
+                    ))
           ],
         )
       ],
     ),
   );
+
   Widget searchList = SingleChildScrollView(
     child: Column(
       children: <Widget>[
+        const CardListAmbiti(),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -134,23 +143,36 @@ class _SearchScreenState extends State<SearchScreen>
             Padding(
               padding: EdgeInsetsDirectional.only(top: 18, bottom: 18),
               child: Text(
-                "Filtra per:",
-                style: TextStyle(fontSize: 18.0),
+                "Risultati Ricerca:",
+                style: TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.logoCadmiumOrange),
               ),
             ),
           ],
         ),
-        ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(12),
-          itemCount: listServices.length,
-          itemBuilder: (BuildContext context, int index) {
-            return listServices[index];
-          },
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-        ),
+        !isEmptyList
+            ? ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(12),
+                itemCount: listServices.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return listServices[index];
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(
+                  color: AppColors.logoBlue,
+                  thickness: 0.0,
+                ),
+              )
+            : const Center(
+                child: Text(
+                  "Nessun Risultato :(",
+                  style: TextStyle(fontSize: 18, fontFamily: "FredokaOne"),
+                ),
+              ),
       ],
     ),
   );
@@ -158,27 +180,14 @@ class _SearchScreenState extends State<SearchScreen>
 
 List<CardServizio> listServices = [
   const CardServizio(
-      title: "title",
-      subtitle: "subtitle",
-      ambito: "ambito",
-      tipologia: "type",
-      tags: "tags"),
+    title: "title",
+    ente: "subtitle",
+    area: "ambito",
+  ),
   const CardServizio(
-      title: "title",
-      subtitle: "subtitle",
-      ambito: "ambito",
-      tipologia: "type",
-      tags: "tags"),
-  const CardServizio(
-      title: "title",
-      subtitle: "subtitle",
-      ambito: "ambito",
-      tipologia: "type",
-      tags: "tags"),
-  const CardServizio(
-      title: "title",
-      subtitle: "subtitle",
-      ambito: "ambito",
-      tipologia: "type",
-      tags: "tags"),
+    title: "title",
+    ente: "subtitle",
+    area: "ambito",
+  ),
 ];
+bool isEmptyList = false;

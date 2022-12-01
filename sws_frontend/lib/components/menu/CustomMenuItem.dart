@@ -13,10 +13,17 @@ class CustomMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        color: AppColors.ice,
+        elevation: 3,
+        color: AppColors.white,
         child: ListTile(
-            title: Text(text),
+            title: Text(
+              text,
+              style: TextStyle(color: AppColors.black, fontSize: 16),
+            ),
             onTap: f,
-            trailing: const Icon(Icons.arrow_forward_ios_sharp)));
+            trailing: const Icon(
+              Icons.arrow_forward_ios_sharp,
+              color: AppColors.logoCadmiumOrange,
+            )));
   }
 }

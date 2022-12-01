@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/image/gf_image_overlay.dart';
-import '../screens/InfoEvento.dart';
 import '../theme/theme.dart';
 import 'Chips.dart';
-import 'package:frontend_sws/components/Button.dart';
+import 'package:frontend_sws/components/CustomButton.dart';
 
 class CardEvento extends StatelessWidget {
   const CardEvento({Key? key}) : super(key: key);
@@ -12,12 +11,7 @@ class CardEvento extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const InfoEvento()),
-          );
-        },
+        onTap: () {},
         child: SizedBox(
           width: 330,
           height: 240,
@@ -65,13 +59,7 @@ class CardEvento extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const InfoEvento()),
-                            );
-                          },
+                          onPressed: () {},
                           icon: Icon(Icons.info_outlined),
                           color: AppColors.logoBlue,
                         )

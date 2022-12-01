@@ -15,7 +15,7 @@ class Introduction extends StatelessWidget {
           globalBackgroundColor: AppColors.white,
           pages: [
             PageViewModel(
-              title: 'Benvenutə👋 in Salerno Amica',
+              title: 'Benvenuto in Salerno Amica',
               body:
                   "Salerno Amica è l'applicazione che ti aiuta a cercare e informarti su tutti gli "
                   'eventi e i servizi dei comuni di Salerno e Pellezzano per le politiche Giovanili e Sociali',
@@ -107,19 +107,21 @@ class Introduction extends StatelessWidget {
     return Center(
       child: Image.asset(
         imagePath,
-        width: 650,
-        height: 390,
+        width: 400,
+        height: 400,
       ),
     );
   }
 
   PageDecoration getPageDecoration() {
     return const PageDecoration(
-      imagePadding: EdgeInsets.only(top: 120),
+      imagePadding: EdgeInsets.only(top: 100),
       pageColor: Colors.white,
-      bodyPadding: EdgeInsets.only(top: 8, left: 20, right: 20),
-      titlePadding: EdgeInsets.only(top: 50),
-      bodyTextStyle: TextStyle(color: Colors.black54, fontSize: 15),
+      bodyPadding: EdgeInsets.only(top: 8, left: 15, right: 15),
+      titlePadding: EdgeInsets.only(top: 30),
+      titleTextStyle: TextStyle(
+          color: AppColors.logoBlue, fontSize: 22, fontFamily: "FredokaOne"),
+      bodyTextStyle: TextStyle(color: Colors.black87, fontSize: 16),
     );
   }
 
@@ -129,7 +131,7 @@ class Introduction extends StatelessWidget {
       spacing: EdgeInsets.symmetric(horizontal: 2),
       activeColor: AppColors.logoBlue,
       color: AppColors.ice,
-      activeSize: Size(14, 5),
+      activeSize: Size(16, 8),
       activeShape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(25.0)),
       ),

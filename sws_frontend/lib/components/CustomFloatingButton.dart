@@ -1,8 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../main.dart';
+import '../theme/theme.dart';
 
 class CustomFloatingButton extends StatelessWidget {
   final IconData iconData;
@@ -15,10 +14,10 @@ class CustomFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-        elevation: 3,
-        hoverElevation: 1,
+        elevation: 8,
+        hoverElevation: 4,
         onPressed: onPressed,
-        backgroundColor: appTheme.primaryColor,
+        backgroundColor: AppColors.logoCadmiumOrange,
         child: Icon(
           iconData,
           size: 28,

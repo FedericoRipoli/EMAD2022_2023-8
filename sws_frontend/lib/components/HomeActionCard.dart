@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:frontend_sws/components/Button.dart';
+import 'package:frontend_sws/components/CustomButton.dart';
 import '../screens/SearchScreen.dart';
 
 class HomeActionCard extends StatefulWidget {
@@ -27,22 +27,22 @@ class _HomeActionCardState extends State<HomeActionCard> {
       elevation: 20,
       borderRadius: const BorderRadius.all(Radius.circular(40)),
       child: Container(
-        height: 290,
-        width: 340,
+        height: 315,
+        width: 350,
         decoration: const BoxDecoration(
           color: AppColors.ice,
           borderRadius: BorderRadius.all(Radius.circular(40)),
         ),
         child: Center(
           child: GFCard(
-            boxFit: BoxFit.cover,
+            boxFit: BoxFit.fitHeight,
             color: AppColors.ice,
             elevation: 0,
             title: GFListTile(
               avatar: Icon(
                 widget.icon,
                 size: 42,
-                color: AppColors.logoBlue,
+                color: AppColors.logoCadmiumOrange,
               ),
               title: Text(
                 widget.titolo,
@@ -73,7 +73,7 @@ class _HomeActionCardState extends State<HomeActionCard> {
             ),
             buttonBar: GFButtonBar(
               children: <Widget>[
-                Button(
+                CustomButton(
                   onPressed: () {
                     Navigator.push(
                       context,

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/theme/theme.dart';
 
-class InfoServizio extends StatefulWidget {
-  const InfoServizio({Key? key}) : super(key: key);
+class InfoScreen extends StatefulWidget {
+  const InfoScreen({Key? key}) : super(key: key);
 
   @override
-  State<InfoServizio> createState() => _InfoServizioState();
+  State<InfoScreen> createState() => _InfoScreenState();
 }
 
-class _InfoServizioState extends State<InfoServizio>
-    with TickerProviderStateMixin {
+class _InfoScreenState extends State<InfoScreen> with TickerProviderStateMixin {
   final double infoHeight = 364.0;
   AnimationController? animationController;
   Animation<double>? animation;

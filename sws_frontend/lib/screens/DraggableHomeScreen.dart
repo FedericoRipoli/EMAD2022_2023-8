@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:frontend_sws/components/CustomFloatingButton.dart';
 import 'package:frontend_sws/theme/theme.dart';
-import 'package:frontend_sws/components/HomeActionCard.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:getwidget/components/button/gf_icon_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
 
 import '../components/LoginForm.dart';
+import '../components/TopicCard.dart';
 import '../components/menu/DrawerMenu.dart';
 import '../services/UserService.dart';
 import 'Chat.dart';
+import 'SearchScreen.dart';
 
 class DraggableHomeScreen extends StatefulWidget {
   const DraggableHomeScreen({Key? key}) : super(key: key);
@@ -95,10 +98,11 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
         label: "Salerno Amica",
       ),
       centerTitle: true,
-      /*actions: [
+      actions: [
         IconButton(onPressed: () {}, icon: const Icon(Icons.info_outlined)),
-      ],*/
-      floatingActionButton: FloatingActionButton(
+      ],
+      floatingActionButton: CustomFloatingButton(
+        iconData: Icons.live_help_rounded,
         onPressed: () {
           if (mounted) {
             Navigator.push(
@@ -107,45 +111,98 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
             );
           }
         },
-        elevation: 10,
-        backgroundColor: AppColors.logoBlue,
-        child: const ImageIcon(
-          AssetImage("assets/images/chatbot.png"),
-          size: 28,
-        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       alwaysShowLeadingAndAction: true,
       headerWidget: headerWidget(context),
       curvedBodyRadius: 20,
-      headerExpandedHeight: 0.36,
+      headerExpandedHeight: 0.28,
       body: [
         AnimatedOpacity(
           opacity: opacity1,
           duration: const Duration(milliseconds: 500),
-          child: const HomeActionCard(
-            titolo: 'Servizi ambito 5',
-            descrizione:
-                'Guarda tutti i servizi offerti dal Comune. Visualizza la mappa interattiva o filtrali tramite ricerca',
-            buttonLabel: 'Servizi',
+          child: TopicCard(
+            title: "Servizi Politiche Sociali & Giovanili",
+            subtitle: "Visualizza come mappa o come lista",
             icon: Icons.handshake,
-            subtitolo: "Comune di Salerno",
+            image: "images/card_service_bg.png",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SearchScreen(typeSearch: true)),
+              );
+            },
           ),
         ),
         const SizedBox(
-          height: 35,
+          height: 18,
         ),
         AnimatedOpacity(
           opacity: opacity1,
           duration: const Duration(milliseconds: 500),
-          child: const HomeActionCard(
-            titolo: 'Gli ultimi Eventi',
-            descrizione:
-                'Guarda tutti gli eventi organizzati. Visualizza la mappa interattiva o filtrali tramite ricerca',
-            buttonLabel: 'Eventi',
+          child: TopicCard(
+            title: "Eventi nella zona di Salerno",
+            subtitle: "Visualizza come mappa o come lista",
             icon: Icons.event_available,
-            subtitolo: "Comune di Salerno",
+            image: "images/event_card_bg.png",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SearchScreen(typeSearch: false)),
+              );
+            },
           ),
+        ),
+        const SizedBox(
+          height: 18,
+        ),
+        AnimatedOpacity(
+          opacity: opacity1,
+          duration: const Duration(milliseconds: 500),
+          child: TopicCard(
+            title: "Vuoi unirti a Salerno Amica?",
+            subtitle: "Sei un ente e vuoi offrire i tuoi servizi? Contattaci",
+            icon: Icons.question_answer,
+            image: "images/help_card_bg.png",
+            buttonLabel: "Contatta",
+            onTap: () async {
+              String email = Uri.encodeComponent("mail@fluttercampus.com");
+              String subject = Uri.encodeComponent("Hello Flutter");
+              String body = Uri.encodeComponent("Hi! I'm Flutter Developer");
+              print(subject); //output: Hello%20Flutter
+              Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
+              if (await launchUrl(mail)) {
+                print("mail opened");
+              } else {
+                print("mail not opened");
+              }
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 18,
+        ),
+        AnimatedOpacity(
+          opacity: opacity1,
+          duration: const Duration(milliseconds: 500),
+          child: TopicCard(
+            title: "Hai bisogno di aiuto?",
+            subtitle:
+                "Interagisci con Olivia sia via testo sia messaggi vocali",
+            icon: Icons.live_help_rounded,
+            image: "images/intro_chatbot.png",
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ChatPage()),
+              );
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 50,
         ),
       ],
       fullyStretchable: true,
@@ -163,12 +220,14 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const AppTitle(label: "Salerno Amica"),
+          SizedBox(
+            height: 10,
+          ),
           Container(
-            margin: const EdgeInsets.all(4),
             child: Image.asset(
               "assets/images/logo.png",
-              width: 130,
-              height: 130,
+              width: 118,
+              height: 118,
             ),
           ),
         ],
