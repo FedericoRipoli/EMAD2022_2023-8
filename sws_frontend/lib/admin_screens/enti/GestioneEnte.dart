@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/services/EnteService.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
 
 
 import '../../components/AllPageLoadTransparent.dart';
@@ -28,7 +29,7 @@ class _GestioneEnte extends State<GestioneEnte> {
   Ente? ente;
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
   TextEditingController nomeController = TextEditingController();
-
+  final HtmlEditorController htmlController = HtmlEditorController();
   bool loaded = false;
   final _formGlobalKey = GlobalKey<FormState>();
   @override
@@ -44,6 +45,9 @@ class _GestioneEnte extends State<GestioneEnte> {
         : null;
     if (ente != null) {
       nomeController.text = (ente!.denominazione);
+      if(ente!.descrizione!=null){
+        htmlController.insertHtml(ente!.descrizione!);
+      }
     }
     setState(() {
       loaded = true;
@@ -60,11 +64,13 @@ class _GestioneEnte extends State<GestioneEnte> {
       Ente? nEnte;
       if (widget.idEnte == null) {
         nEnte = await enteService.createEnte(Ente(
-            denominazione: nomeController.value.text
+            denominazione: nomeController.value.text,
+            descrizione: await htmlController.getText()
         ));
 
       } else {
         ente!.denominazione=nomeController.value.text;
+        ente!.descrizione=await htmlController.getText();
         nEnte = await enteService.editEnte(ente!);
       }
       if (mounted) {}
@@ -144,7 +150,18 @@ class _GestioneEnte extends State<GestioneEnte> {
                                 labelText: 'Denominazione',
                               ),
                             ),
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 5, right: 5),
+                          child: HtmlEditor(
+                            hint: "Testo...",
+                            controller: htmlController,
+
                           )
+                      )
                         ],
                       )
                   )
