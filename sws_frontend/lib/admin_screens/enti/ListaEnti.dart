@@ -32,8 +32,7 @@ class _ListaEntiState extends State<ListaEnti> {
       _fetchPage(pageKey);
     });
     _inputFilter = <FilterTextController>[
-      FilterTextController(textPlaceholder: 'Cerca ente',
-          f: _executeSearch),
+      FilterTextController(textPlaceholder: 'Cerca ente', f: _executeSearch),
     ];
     super.initState();
   }
@@ -82,34 +81,26 @@ class _ListaEntiState extends State<ListaEnti> {
         appBar: const CustomAppBar(title: "Gestione Enti"),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
-            child: Column(
-                children: <Widget>[
-                    FilterBar(
-                        controllers: _inputFilter),
-                    PagedListView<int, Ente>(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        pagingController: _pagingController,
-                        builderDelegate: PagedChildBuilderDelegate<Ente>(
-                            itemBuilder: (context, item, index) =>
-                                EnteListItem(
-                                    denominazione: item.denominazione,
-                                    id: item.id!,
-                                    onTap: () =>
-                                    {
-                                      /*
+            child: Column(children: <Widget>[
+              FilterBar(controllers: _inputFilter),
+              Flexible(
+                  child: PagedListView<int, Ente>(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: false,
+                pagingController: _pagingController,
+                builderDelegate: PagedChildBuilderDelegate<Ente>(
+                    itemBuilder: (context, item, index) => EnteListItem(
+                        denominazione: item.denominazione,
+                        id: item.id!,
+                        onTap: () => {
+                              /*
                                   Navigator.push(context, MaterialPageRoute(
                                       builder: (context) => GestioneEnte(item.id)
                                   ))
                                   */
-                                    }
-                                )
-                        ),
-                    )
-                ]
-            )
-        )
-    );
+                            })),
+              ))
+            ])));
   }
 
   Future<void> _pullRefresh() async {

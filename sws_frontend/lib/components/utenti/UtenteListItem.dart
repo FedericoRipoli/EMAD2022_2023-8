@@ -24,7 +24,7 @@ class UtenteListItem extends StatelessWidget {
         shape: GFAvatarShape.circle,
         backgroundColor: AppColors.logoBlue,
         child: Text(
-          name.substring(0, 2).toUpperCase(),
+            name.length>2? name.substring(0, 2).toUpperCase():name,
           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
       ),

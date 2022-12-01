@@ -90,34 +90,37 @@ class _ListaUtentiState extends State<ListaUtenti> {
                   FilterBar(
                       controllers: _inputFilter
                   ),
-                  PagedListView<int, Utente>(
-                    shrinkWrap: true,
-                    pagingController: _pagingController,
-                    builderDelegate: PagedChildBuilderDelegate<Utente>(
-                        itemBuilder: (context, item, index) => UtenteListItem(
-                          name: item.username,
-                          id: item.id!,
-                          ente: item.nomeEnte,
-                          onTap: () => {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        GestioneUtente(item.id))
-                                ).then((v) => _pullRefresh())
-                          },
-                          onDelete: () {
-                            utenteService.deleteUtente(item.id!).then((value) {
-                              if (value) {
-                                ToastUtil.success("Utente eliminato", context);
-                              } else {
-                                ToastUtil.error("Errore server", context);
-                              }
-                              _pullRefresh();
-                            });
-                          },
-                        )),
+                  Flexible(
+                    child:PagedListView<int, Utente>(
+                      shrinkWrap: false,
+                      pagingController: _pagingController,
+                      builderDelegate: PagedChildBuilderDelegate<Utente>(
+                          itemBuilder: (context, item, index) => UtenteListItem(
+                            name: item.username,
+                            id: item.id!,
+                            ente: item.nomeEnte,
+                            onTap: () => {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          GestioneUtente(item.id))
+                              ).then((v) => _pullRefresh())
+                            },
+                            onDelete: () {
+                              utenteService.deleteUtente(item.id!).then((value) {
+                                if (value) {
+                                  ToastUtil.success("Utente eliminato", context);
+                                } else {
+                                  ToastUtil.error("Errore server", context);
+                                }
+                                _pullRefresh();
+                              });
+                            },
+                          )),
+                    ) ,
                   )
+
                 ]
             )
         )

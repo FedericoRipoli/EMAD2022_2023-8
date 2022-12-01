@@ -23,7 +23,7 @@ class ListaAree extends StatefulWidget {
 class _ListaAreeState extends State<ListaAree> {
   AreeService areeService = AreeService();
   final PagingController<int, Area> _pagingController =
-  PagingController(firstPageKey: 0);
+      PagingController(firstPageKey: 0);
   late List<FilterTextController> _inputFilter;
 
   @override
@@ -32,8 +32,7 @@ class _ListaAreeState extends State<ListaAree> {
       _fetchPage(pageKey);
     });
     _inputFilter = <FilterTextController>[
-      FilterTextController(textPlaceholder: 'Nome',
-          f: _executeSearch),
+      FilterTextController(textPlaceholder: 'Nome', f: _executeSearch),
     ];
     super.initState();
   }
@@ -44,11 +43,9 @@ class _ListaAreeState extends State<ListaAree> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems =
-      await areeService.areeList(null);
+      final newItems = await areeService.areeList(null);
 
-        _pagingController.appendLastPage(newItems!);
-
+      _pagingController.appendLastPage(newItems!);
     } catch (error) {
       _pagingController.error = error;
     }
@@ -58,7 +55,9 @@ class _ListaAreeState extends State<ListaAree> {
   void dispose() {
     _pagingController.dispose();
     super.dispose();
-    for (var el in _inputFilter) {el.dispose();}
+    for (var el in _inputFilter) {
+      el.dispose();
+    }
   }
 
   @override
@@ -71,33 +70,32 @@ class _ListaAreeState extends State<ListaAree> {
             onPressed: () {
               if (mounted) {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => GestioneArea(null))).then((value) => _pullRefresh());
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => GestioneArea(null)))
+                    .then((value) => _pullRefresh());
               }
             }),
         appBar: const CustomAppBar(title: "Gestione Aree"),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
-            child: Column(
-                children: <Widget>[
-                  FilterBar(
-                      controllers: _inputFilter
-                  ),
-                  PagedListView<int, Area>(
-                    shrinkWrap: true,
-                    pagingController: _pagingController,
-                    builderDelegate: PagedChildBuilderDelegate<Area>(
-                        itemBuilder: (context, item, index) => AreaListItem(
+            child: Column(children: <Widget>[
+              FilterBar(controllers: _inputFilter),
+              Flexible(
+                  child: PagedListView<int, Area>(
+                shrinkWrap: false,
+                pagingController: _pagingController,
+                builderDelegate: PagedChildBuilderDelegate<Area>(
+                    itemBuilder: (context, item, index) => AreaListItem(
                           name: item.nome,
                           id: item.id!,
                           onTap: () => {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        GestioneArea(item.id))
-                            ).then((v) => _pullRefresh())
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            GestioneArea(item.id)))
+                                .then((v) => _pullRefresh())
                           },
                           onDelete: () {
                             areeService.deleteArea(item.id!).then((value) {
@@ -110,11 +108,8 @@ class _ListaAreeState extends State<ListaAree> {
                             });
                           },
                         )),
-                  )
-                ]
-            )
-        )
-    );
+              ))
+            ])));
   }
 
   Future<void> _pullRefresh() async {
