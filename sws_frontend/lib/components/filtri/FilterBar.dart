@@ -1,21 +1,14 @@
 
-
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/components/filtri/FilterController.dart';
 import 'package:frontend_sws/main.dart';
 
-/// Class [FilterBar]
-/// Per aggiungere questa barra di ricerca bisogna
-/// inserire i [placeholders] e i [controllers]
-/// per inputbox inserite. Entrambe le [List] devono essere
-/// di cardinalità uguale a [filterCount].
 class FilterBar extends StatefulWidget {
-  final List<String?> placeholders;
-  final List<TextEditingController> controllers;
+  final List<FilterTextController> controllers;
 
   const FilterBar({super.key,
-    required this.placeholders,
     required this.controllers}) :
-      assert(placeholders.length == controllers.length);
+      assert(controllers.length != 0);
 
   @override
   State<FilterBar> createState() => _FilterBar();
@@ -45,12 +38,13 @@ class _FilterBar extends State<FilterBar> {
             child: TextField(
                 cursorColor: Colors.black,
                 controller: widget.controllers[index],
+                onChanged: widget.controllers[index].runFiltering,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   fillColor: Colors.white,
                   filled: true,
-                  hintText: widget.placeholders[index],
+                  hintText: widget.controllers[index].placeholder,
                 )
             )
         )

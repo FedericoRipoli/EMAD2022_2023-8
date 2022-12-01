@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/admin_screens/utenti/GestioneUtente.dart';
+import 'package:frontend_sws/components/filtri/FilterController.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/components/utenti/UtenteListItem.dart';
 import 'package:frontend_sws/util/ToastUtil.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:frontend_sws/main.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/UtenteService.dart';
 import 'package:frontend_sws/services/entity/Utente.dart';
-import 'package:frontend_sws/components/FilterBar.dart';
+import 'package:frontend_sws/components/filtri/FilterBar.dart';
 
 import '../../components/CustomAppBar.dart';
 import '../../components/CustomFloatingButton.dart';
-import '../../theme/theme.dart';
 
 class ListaUtenti extends StatefulWidget {
   const ListaUtenti({Key? key}) : super(key: key);
@@ -26,18 +24,24 @@ class _ListaUtentiState extends State<ListaUtenti> {
   UtenteService utenteService = UtenteService();
   final PagingController<int, Utente> _pagingController =
   PagingController(firstPageKey: 0);
-  final List<TextEditingController> _inputFilter = <TextEditingController>[
-    TextEditingController(),
-    TextEditingController()
-  ];
-  final List<String> _placeholders = <String>['Cerca ente', 'Cerca utente'];
+  late List<FilterTextController> _inputFilter;
 
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
+    _inputFilter = <FilterTextController>[
+      FilterTextController(textPlaceholder: 'Cerca ente',
+          f: _executeSearch),
+      FilterTextController(textPlaceholder: 'Cerca utente',
+          f: _executeSearch)
+    ];
     super.initState();
+  }
+
+  void _executeSearch(String text) {
+    print(text);
   }
 
   Future<void> _fetchPage(int pageKey) async {
@@ -60,6 +64,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
   void dispose() {
     _pagingController.dispose();
     super.dispose();
+    for (var el in _inputFilter) {el.dispose();}
   }
 
   @override
@@ -83,7 +88,6 @@ class _ListaUtentiState extends State<ListaUtenti> {
             child: Column(
                 children: <Widget>[
                   FilterBar(
-                      placeholders: _placeholders,
                       controllers: _inputFilter
                   ),
                   PagedListView<int, Utente>(

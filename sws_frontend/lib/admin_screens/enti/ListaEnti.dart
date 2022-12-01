@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/components/filtri/FilterController.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/services/EnteService.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:frontend_sws/main.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
-import 'package:frontend_sws/components/FilterBar.dart';
+import 'package:frontend_sws/components/filtri/FilterBar.dart';
 
 import '../../components/CustomAppBar.dart';
 import '../../components/CustomFloatingButton.dart';
 import '../../components/enti/EnteListItem.dart';
-import '../../theme/theme.dart';
 import 'GestioneEnte.dart';
 
 class ListaEnti extends StatefulWidget {
@@ -26,17 +24,22 @@ class _ListaEntiState extends State<ListaEnti> {
   EnteService enteService = EnteService();
   final PagingController<int, Ente> _pagingController =
       PagingController(firstPageKey: 0);
-  final List<TextEditingController> _inputFilter = <TextEditingController>[
-    TextEditingController(),
-  ];
-  final List<String> _placeholders = <String>['Ricerca ente'];
+  late List<FilterTextController> _inputFilter;
 
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
+    _inputFilter = <FilterTextController>[
+      FilterTextController(textPlaceholder: 'Cerca ente',
+          f: _executeSearch),
+    ];
     super.initState();
+  }
+
+  void _executeSearch(String text) {
+    print(text);
   }
 
   Future<void> _fetchPage(int pageKey) async {
@@ -82,7 +85,6 @@ class _ListaEntiState extends State<ListaEnti> {
             child: Column(
                 children: <Widget>[
                     FilterBar(
-                        placeholders: _placeholders,
                         controllers: _inputFilter),
                     PagedListView<int, Ente>(
                         scrollDirection: Axis.vertical,
