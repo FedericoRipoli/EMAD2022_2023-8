@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/admin_screens/enti/struttura/ListaStrutture.dart';
 import 'package:frontend_sws/components/CustomButton.dart';
 import 'package:frontend_sws/services/EnteService.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
@@ -46,7 +47,6 @@ class _GestioneEnte extends State<GestioneEnte> {
         : null;
     if (ente != null) {
       nomeController.text = (ente!.denominazione);
-
     }
     setState(() {
       loaded = true;
@@ -88,7 +88,6 @@ class _GestioneEnte extends State<GestioneEnte> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
@@ -142,25 +141,39 @@ class _GestioneEnte extends State<GestioneEnte> {
                           child: HtmlEditor(
                             hint: "Testo...",
                             controller: htmlController,
-                            callbacks: Callbacks(onInit: (){
-                              if (ente != null && ente!.descrizione!=null) {
+                            callbacks: Callbacks(onInit: () {
+                              if (ente != null && ente!.descrizione != null) {
                                 htmlController.insertHtml(ente!.descrizione!);
                               }
                             }),
-
                           )),
                       const SizedBox(
                         height: 40,
                       ),
                       Column(
                         children: [
-                          CustomButton(
-                              onPressed: () {},
-                              textButton: "Gestione strutture",
-                              status: false),
+                          Container(
+                              child: ente?.id != null
+                                  ? Column(
+                                      children: [
+                                        CustomButton(
+
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                  builder: (context) => ListaStrutture(
+                                                  idEnte: ente!.id!)));
+                                            },
+                                            icon: Icons.account_balance_rounded,
+                                            textButton: "Gestione strutture",
+                                            status: false)
+                                      ],
+                                    )
+                                  : null),
                           const SizedBox(
                             height: 40,
-                          ),
+                          )
                         ],
                       )
                     ],

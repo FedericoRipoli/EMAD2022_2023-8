@@ -40,7 +40,7 @@ class AreeService {
   Future<Area?> getArea(String id) async {
     try {
       var response = await http.get(
-          Uri.parse("${RestURL.areeService.toString()}/$id"),
+          Uri.parse("${RestURL.areeService}/$id"),
           headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
         return areaFromJson(response.body);

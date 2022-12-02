@@ -1,6 +1,7 @@
 package it.unisa.emad.comunesalerno.sws.web;
 
 import it.unisa.emad.comunesalerno.sws.entity.Ente;
+import it.unisa.emad.comunesalerno.sws.entity.Posizione;
 import it.unisa.emad.comunesalerno.sws.entity.Struttura;
 import it.unisa.emad.comunesalerno.sws.repository.EnteRepository;
 import it.unisa.emad.comunesalerno.sws.repository.StrutturaRepository;
@@ -47,9 +48,12 @@ public class StrutturaController {
     }
     @PutMapping("/strutture/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity updateEnte(@PathVariable String id,@RequestBody Struttura struttura){
+    public ResponseEntity updateStruttura(@PathVariable String id,@RequestBody Struttura struttura){
         if(strutturaRepository.existsById(id)){
+            Struttura strutturaDb=strutturaRepository.findById(id).orElseThrow();
+
             struttura.setId(id);
+            struttura.setEnte(strutturaDb.getEnte());
             strutturaRepository.save(struttura);
             return ResponseEntity.ok(struttura);
         }

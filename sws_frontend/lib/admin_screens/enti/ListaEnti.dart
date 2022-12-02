@@ -9,6 +9,7 @@ import 'package:frontend_sws/components/filtri/FilterBar.dart';
 import '../../components/CustomAppBar.dart';
 import '../../components/CustomFloatingButton.dart';
 import '../../components/enti/EnteListItem.dart';
+import '../../util/ToastUtil.dart';
 import 'GestioneEnte.dart';
 
 class ListaEnti extends StatefulWidget {
@@ -74,7 +75,7 @@ class _ListaEntiState extends State<ListaEnti> {
           onPressed: () {
             if (mounted) {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => GestioneEnte(null)));
+                  MaterialPageRoute(builder: (context) => GestioneEnte(null))).then((v) => _pullRefresh());
             }
           },
         ),
@@ -92,11 +93,21 @@ class _ListaEntiState extends State<ListaEnti> {
                     itemBuilder: (context, item, index) => EnteListItem(
                         denominazione: item.denominazione,
                         id: item.id!,
+                        onDelete: () {
+                          enteService.deleteEnte(item.id!).then((value) {
+                            if (value) {
+                              ToastUtil.success("Ente eliminato", context);
+                            } else {
+                              ToastUtil.error("Errore server", context);
+                            }
+                            _pullRefresh();
+                          });
+                        },
                         onTap: () => {
 
                                   Navigator.push(context, MaterialPageRoute(
                                       builder: (context) => GestioneEnte(item.id)
-                                  ))
+                                  )).then((v) => _pullRefresh())
 
                             })),
               ))

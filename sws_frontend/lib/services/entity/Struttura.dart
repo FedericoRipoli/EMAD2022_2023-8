@@ -18,14 +18,16 @@ class Struttura {
   Posizione? posizione;
 
   factory Struttura.fromJson(Map<String, dynamic> json) => Struttura(
-    id: json["id"],
-    denominazione: json["denominazione"],
-    posizione: Posizione.fromJson(json["posizione"]),
-  );
+        id: json["id"],
+        denominazione: json["denominazione"],
+        posizione: json["posizione"] == null
+            ? null
+            : Posizione.fromJson(json["posizione"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "denominazione": denominazione,
-    "posizione": posizione?.toJson()
-  };
+        "id": id,
+        "denominazione": denominazione,
+        "posizione": posizione?.toJson()
+      };
 }

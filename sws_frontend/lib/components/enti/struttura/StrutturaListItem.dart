@@ -1,14 +1,13 @@
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
 
-import '../../main.dart';
-import '../../theme/theme.dart';
+import '../../../theme/theme.dart';
 
-class EnteListItem extends StatelessWidget{
+
+class StrutturaListItem extends StatelessWidget{
   final String denominazione, id;
-  final VoidCallback  onTap, onDelete;
-  const EnteListItem({super.key, required this.denominazione,
-    required this.id, required this.onTap, required this.onDelete});
+  final VoidCallback onTap, onDelete;
+  const StrutturaListItem({super.key, required this.denominazione, required this.id, required this.onTap, required this.onDelete});
 
 
   @override
