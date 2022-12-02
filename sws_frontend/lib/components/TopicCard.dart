@@ -22,9 +22,10 @@ class TopicCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        constraints: BoxConstraints(minWidth: 200, maxWidth: 800, minHeight:250, maxHeight: 400),
         margin: const EdgeInsets.all(5),
-        height: 266.0,
-        width: 366.0,
+        height: MediaQuery.of(context).size.height * 0.3,
+        width: MediaQuery.of(context).size.width * 0.85,
         decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(30.0),
@@ -39,8 +40,9 @@ class TopicCard extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
+              flex: 4,
               child: Container(
-                height: 260,
+                height: MediaQuery.of(context).size.height,
                 child: Image.asset(
                   image,
                   fit: BoxFit.contain,
@@ -48,14 +50,15 @@ class TopicCard extends StatelessWidget {
               ),
             ),
             Expanded(
+              flex: 6,
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: 45.0,
-                      height: 45.0,
+                      width: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.06,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: AppColors.logoCadmiumOrange,
@@ -64,12 +67,9 @@ class TopicCard extends StatelessWidget {
                         child: Icon(
                           icon,
                           color: AppColors.white,
-                          size: 32,
+                          size: MediaQuery.of(context).size.height * 0.045,
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 15.0,
                     ),
                     Text(
                       title,
@@ -80,9 +80,6 @@ class TopicCard extends StatelessWidget {
                         fontSize: 18.0,
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
                     Text(
                       subtitle,
                       style: const TextStyle(
@@ -90,9 +87,6 @@ class TopicCard extends StatelessWidget {
                         fontSize: 16.0,
                       ),
                       textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 10,
                     ),
                     CustomButton(
                       onPressed: onTap,
