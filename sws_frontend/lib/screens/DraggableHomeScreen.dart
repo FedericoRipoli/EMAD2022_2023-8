@@ -125,7 +125,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
             title: "Servizi Politiche Sociali & Giovanili",
             subtitle: "Visualizza come mappa o come lista",
             icon: Icons.handshake,
-            image: "images/card_service_bg.png",
+            image: "assets/images/card_service_bg.png",
             onTap: () {
               Navigator.push(
                 context,
@@ -145,7 +145,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
             title: "Eventi nella zona di Salerno",
             subtitle: "Visualizza come mappa o come lista",
             icon: Icons.event_available,
-            image: "images/event_card_bg.png",
+            image: "assets/images/event_card_bg.png",
             onTap: () {
               Navigator.push(
                 context,
@@ -165,7 +165,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
             title: "Vuoi unirti a Salerno Amica?",
             subtitle: "Sei un ente e vuoi offrire i tuoi servizi? Contattaci",
             icon: Icons.question_answer,
-            image: "images/help_card_bg.png",
+            image: "assets/images/help_card_bg.png",
             buttonLabel: "Contatta",
             onTap: () async {
               String email = Uri.encodeComponent("mail@fluttercampus.com");
@@ -192,7 +192,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
             subtitle:
                 "Interagisci con Olivia sia via testo sia messaggi vocali",
             icon: Icons.live_help_rounded,
-            image: "images/intro_chatbot.png",
+            image: "assets/images/intro_chatbot.png",
             onTap: () {
               Navigator.push(
                 context,

@@ -163,7 +163,7 @@ class _SearchScreenState extends State<SearchScreen>
                 },
                 separatorBuilder: (BuildContext context, int index) =>
                     const Divider(
-                  color: AppColors.logoBlue,
+                  color: AppColors.white,
                   thickness: 0.0,
                 ),
               )

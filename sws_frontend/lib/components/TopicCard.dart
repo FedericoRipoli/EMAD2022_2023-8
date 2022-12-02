@@ -40,13 +40,10 @@ class TopicCard extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage(
-                      image,
-                    ),
-                  ),
+                height: 260,
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),

@@ -125,7 +125,7 @@ class CardServizio extends StatelessWidget {
                   image: DecorationImage(
                     fit: BoxFit.scaleDown,
                     image: AssetImage(
-                      "images/event_item.png",
+                      "assets/images/event_item.png",
                     ),
                   ),
                 ),
