@@ -1,27 +1,23 @@
 import 'dart:convert';
 
-import 'package:frontend_sws/services/entity/Area.dart';
+import 'package:frontend_sws/services/entity/Struttura.dart';
 import 'package:logging/logging.dart';
 import 'package:http/http.dart' as http;
 
 
-import '../util/QueryStringUtil.dart';
 import 'RestURL.dart';
 import 'UserService.dart';
 
-class AreeService {
-  final log = Logger('AreeServiceLoger');
+class StrutturaService {
+  final log = Logger('StrutturaServiceLoger');
   UserService userService = UserService();
 
 
-  Future<List<Area>?> areeList(String? name) async {
+  Future<List<Struttura>?> struttureList(String idEnte) async {
     try {
-      QueryStringUtil queryStringUtil = QueryStringUtil();
-      if (name != null) {
-        queryStringUtil.add("name", name);
-      }
+
       Uri u = Uri.parse(
-          "${RestURL.areeService}?${queryStringUtil.getQueryString()}");
+          "${RestURL.struttureEnteService}/$idEnte");
 
       var response = await http.get(
           u,
@@ -29,7 +25,7 @@ class AreeService {
 
       if (response.statusCode == 200) {
         var l = json.decode(response.body);
-        return List<Area>.from(l.map((model) => Area.fromJson(model)));
+        return List<Struttura>.from(l.map((model) => Struttura.fromJson(model)));
 
       }
     } catch (e) {
@@ -37,38 +33,38 @@ class AreeService {
     }
     return null;
   }
-  Future<Area?> getArea(String id) async {
+  Future<Struttura?> getStruttura(String id) async {
     try {
       var response = await http.get(
-          Uri.parse("${RestURL.areeService}/$id"),
+          Uri.parse("${RestURL.struttureService}/$id"),
           headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
-        return areaFromJson(response.body);
+        return strutturaFromJson(response.body);
       }
     } catch (e) {
       log.severe(e);
     }
     return null;
   }
-  Future<Area?> createArea(Area area) async {
+  Future<Struttura?> createStruttura(Struttura struttura, String idEnte) async {
     String? token = await userService.getUser();
     try {
-      var response = await http.post(Uri.parse(RestURL.areeService),
-          body: areaToJson(area), headers: RestURL.authHeader(token!));
+      var response = await http.post(Uri.parse("${RestURL.struttureService}/$idEnte"),
+          body: strutturaToJson(struttura), headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
-        return areaFromJson(response.body);
+        return strutturaFromJson(response.body);
       }
     } catch (e) {
       log.severe(e);
     }
     return null;
   }
-  Future<bool> deleteArea(String id) async {
+  Future<bool> deleteStruttura(String id) async {
     String? token = await userService.getUser();
     try {
       var response = await http.delete(
-          Uri.parse("${RestURL.areeService}/$id"),
+          Uri.parse("${RestURL.struttureService}/$id"),
           headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
@@ -79,20 +75,21 @@ class AreeService {
     }
     return false;
   }
-  Future<Area?> editArea(Area area) async {
+  Future<Struttura?> editStruttura(Struttura struttura) async {
     String? token = await userService.getUser();
     try {
       var response = await http.put(
-          Uri.parse("${RestURL.areeService}/${area.id}"),
-          body: areaToJson(area),
+          Uri.parse("${RestURL.struttureService}/${struttura.id}"),
+          body: strutturaToJson(struttura),
           headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
-        return areaFromJson(response.body);
+        return strutturaFromJson(response.body);
       }
     } catch (e) {
       log.severe(e);
     }
     return null;
   }
+
 }

@@ -191,8 +191,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
           child: TopicCard(
             bgColor: AppColors.ice,
             title: "Hai bisogno di aiuto?",
-            subtitle:
-                "Interagisci con Olivia sia via testo sia messaggi vocali",
+            subtitle:"Interagisci con Olivia sia via testo sia messaggi vocali",
             icon: Icons.live_help_rounded,
             image: "assets/images/intro_chatbot.png",
             onTap: () {

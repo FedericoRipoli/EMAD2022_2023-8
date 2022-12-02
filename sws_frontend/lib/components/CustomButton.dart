@@ -20,6 +20,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GFButton(
       elevation: 12,
+
       color: AppColors.logoBlue,
       padding: const EdgeInsets.only(left: 18, right: 18),
       onPressed: onPressed,
@@ -29,12 +30,12 @@ class CustomButton extends StatelessWidget {
       icon: Icon(
         icon,
         color: AppColors.white,
-        size: 18,
+        size: MediaQuery.of(context).size.height * 0.02,
       ),
       buttonBoxShadow: false,
       borderSide: BorderSide.none,
       shape: GFButtonShape.pills,
-      size: 55.0,
+      size: MediaQuery.of(context).size.height * 0.05,
     );
   }
 }

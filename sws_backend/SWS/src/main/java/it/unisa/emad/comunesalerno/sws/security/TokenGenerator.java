@@ -40,7 +40,7 @@ public class TokenGenerator {
         JwtClaimsSet.Builder claimsSetBuilder = JwtClaimsSet.builder()
                 .issuer("sws")
                 .issuedAt(now)
-                .expiresAt(now.plus(expiredRefreshDays, ChronoUnit.MINUTES))
+                .expiresAt(now.plus(expiredMinutes, ChronoUnit.MINUTES))
                 .subject(user.getId())
                 .claim("name", user.getUsername())
                 .claim("role", user.isAdmin() ? "ADMIN" : "");
