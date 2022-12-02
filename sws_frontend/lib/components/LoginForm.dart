@@ -6,6 +6,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../theme/theme.dart';
+import 'AllPageLoad.dart';
 
 // Form Login Ente / Comune
 class LoginForm extends StatefulWidget {
@@ -126,11 +127,7 @@ class _LoginFormState extends State<LoginForm> {
                   height: 200,
                   width: 200,
                   alignment: Alignment.center,
-                  child: Center(
-                      child: LoadingAnimationWidget.staggeredDotsWave(
-                    size: 80,
-                    color: appTheme.primaryColor,
-                  )))),
+                  child: AllPageLoad())),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:frontend_sws/components/CustomAvatar.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
 
@@ -18,24 +19,25 @@ class UtenteListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GFListTile(
-      padding: const EdgeInsets.all(8),
-      avatar: GFAvatar(
-        shape: GFAvatarShape.circle,
-        backgroundColor: AppColors.logoBlue,
-        child: Text(
-            name.length>2? name.substring(0, 2).toUpperCase():name,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
+    return GFCard(
+      elevation: 8,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(28.0),
       ),
-      color: AppColors.ice,
-      onTap: onTap,
-      titleText: name,
-      subTitleText: ente ?? "",
-      icon: IconButton(
-        onPressed: onDelete,
-        icon: const Icon(Icons.delete),
-        color: AppColors.logoRed,
+      title: GFListTile(
+        padding: const EdgeInsets.all(8),
+        avatar: const CustomAvatar(
+          size: 35,
+        ),
+        color: AppColors.white,
+        onTap: onTap,
+        titleText: name,
+        subTitleText: ente ?? "",
+        icon: IconButton(
+          onPressed: onDelete,
+          icon: const Icon(Icons.delete_rounded),
+          color: AppColors.logoCadmiumOrange,
+        ),
       ),
     );
   }

@@ -3,7 +3,8 @@ import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/theme/theme.dart';
 
 class CustomAvatar extends StatelessWidget {
-  const CustomAvatar({Key? key}) : super(key: key);
+  final double size;
+  const CustomAvatar({Key? key, required this.size}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class CustomAvatar extends StatelessWidget {
         backgroundColor: AppColors.white,
         child: Image.asset(
           "assets/images/user_default.png",
-          width: 55,
+          width: size,
         ));
   }
 }

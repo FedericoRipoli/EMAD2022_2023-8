@@ -135,7 +135,7 @@ class _SearchScreenState extends State<SearchScreen>
   Widget searchList = SingleChildScrollView(
     child: Column(
       children: <Widget>[
-        const CardListAmbiti(),
+        CardListAmbiti(),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

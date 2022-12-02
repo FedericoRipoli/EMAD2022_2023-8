@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/main.dart';
-
+import 'package:frontend_sws/components/AllPageLoad.dart';
+import 'package:frontend_sws/services/AreeService.dart';
+import '../services/entity/Area.dart';
 import '../theme/theme.dart';
 
-class CardListAmbiti extends StatelessWidget {
-  const CardListAmbiti({Key? key}) : super(key: key);
+class CardListAmbiti extends StatefulWidget {
+  static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.CardListAmbiti';
+  CardListAmbiti({Key? key}) : super(key: key);
+
+  @override
+  State<CardListAmbiti> createState() => _CardListAmbitiState();
+}
+
+class _CardListAmbitiState extends State<CardListAmbiti> {
+  AreeService areeService = AreeService();
+
+  Future<List<Area>?> _fetchData() async {
+    try {
+      var aree = await areeService.areeList(null);
+      return aree;
+    } catch (error) {
+      print(error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> itemList = [
-      const ChipAmbito(label: "Disabilità", icon: Icons.accessible),
-      const ChipAmbito(label: "Immigrazione", icon: Icons.luggage),
-      const ChipAmbito(label: "Minori", icon: Icons.child_care),
-      const ChipAmbito(label: "Persone Anziane", icon: Icons.elderly),
-      const ChipAmbito(label: "Asili Nido", icon: Icons.child_friendly),
-      const ChipAmbito(
-          label: "Contrasto alla povertà", icon: Icons.people_rounded),
-      const ChipAmbito(
-          label: "Integrazione Socio-Sanitaria", icon: Icons.social_distance),
-    ];
-
     return Column(
       children: <Widget>[
         Padding(
@@ -41,18 +47,38 @@ class CardListAmbiti extends StatelessWidget {
           ),
         ),
         SizedBox(
-            height: 100,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: itemList.length,
-              itemBuilder: (context, index) {
-                return itemList[index];
-              },
-            )),
+          height: 100,
+          child: FutureBuilder<List<Area>?>(
+            future: _fetchData(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return ChipAmbito(
+                        label: snapshot.data![index].nome.toString(),
+                        icon: Icons.accessibility);
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+              return const AllPageLoad();
+            },
+          ),
+        ),
       ],
     );
   }
 }
+
+/*
+*
+*
+*
+* */
 
 class ChipAmbito extends StatelessWidget {
   final String label;

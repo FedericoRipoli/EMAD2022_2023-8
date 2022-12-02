@@ -8,6 +8,7 @@ class TopicCard extends StatelessWidget {
   final String image;
   final VoidCallback onTap;
   final String? buttonLabel;
+  final Color? bgColor;
   const TopicCard(
       {super.key,
       required this.title,
@@ -15,7 +16,8 @@ class TopicCard extends StatelessWidget {
       required this.icon,
       required this.image,
       required this.onTap,
-      this.buttonLabel});
+      this.buttonLabel,
+      this.bgColor});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class TopicCard extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.3,
         width: MediaQuery.of(context).size.width * 0.85,
         decoration: BoxDecoration(
-            color: AppColors.white,
+            color: bgColor ?? AppColors.white,
             borderRadius: BorderRadius.circular(30.0),
             boxShadow: const [
               BoxShadow(
@@ -84,7 +86,7 @@ class TopicCard extends StatelessWidget {
                       subtitle,
                       style: const TextStyle(
                         color: Colors.black,
-                        fontSize: 16.0,
+                        fontSize: 14.0,
                       ),
                       textAlign: TextAlign.center,
                     ),

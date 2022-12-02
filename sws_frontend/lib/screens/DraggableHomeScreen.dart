@@ -142,6 +142,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
           opacity: opacity1,
           duration: const Duration(milliseconds: 500),
           child: TopicCard(
+            bgColor: AppColors.ice,
             title: "Eventi nella zona di Salerno",
             subtitle: "Visualizza come mappa o come lista",
             icon: Icons.event_available,
@@ -188,6 +189,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
           opacity: opacity1,
           duration: const Duration(milliseconds: 500),
           child: TopicCard(
+            bgColor: AppColors.ice,
             title: "Hai bisogno di aiuto?",
             subtitle:"Interagisci con Olivia sia via testo sia messaggi vocali",
             icon: Icons.live_help_rounded,
@@ -219,15 +221,13 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const AppTitle(label: "Salerno Amica"),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Container(
-            child: Image.asset(
-              "assets/images/logo.png",
-              width: 118,
-              height: 118,
-            ),
+          Image.asset(
+            "assets/images/logo.png",
+            width: 118,
+            height: 118,
           ),
         ],
       )),
