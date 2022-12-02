@@ -7,6 +7,7 @@ import '../../../components/AllPageLoadTransparent.dart';
 import '../../../components/CustomAppBar.dart';
 import '../../../components/CustomFloatingButton.dart';
 import '../../../components/menu/DrawerMenu.dart';
+import '../../../services/entity/Posizione.dart';
 import '../../../services/entity/Struttura.dart';
 import '../../../util/ToastUtil.dart';
 
@@ -28,6 +29,9 @@ class _GestioneStruttura extends State<GestioneStruttura> {
   Struttura? struttura;
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
   TextEditingController denominazioneController = TextEditingController();
+  TextEditingController indirizzoController = TextEditingController();
+  TextEditingController latitudineController = TextEditingController();
+  TextEditingController longitudineController = TextEditingController();
 
   bool loaded = false;
   final _formGlobalKey = GlobalKey<FormState>();
@@ -44,6 +48,9 @@ class _GestioneStruttura extends State<GestioneStruttura> {
         : null;
     if (struttura != null) {
       denominazioneController.text = (struttura!.denominazione!);
+      indirizzoController.text = (struttura!.posizione!.indirizzo!);
+      latitudineController.text = (struttura!.posizione!.latitudine!);
+      longitudineController.text = (struttura!.posizione!.longitudine!);
     }
     setState(() {
       loaded = true;
@@ -60,11 +67,18 @@ class _GestioneStruttura extends State<GestioneStruttura> {
       Struttura? nStruttura;
       if (widget.idStruttura == null) {
         nStruttura = await strutturaService.createStruttura(Struttura(
-            denominazione: denominazioneController.value.text,
+            denominazione: denominazioneController.value.text, posizione: Posizione(
+          indirizzo: indirizzoController.value.text,
+          latitudine: latitudineController.value.text,
+          longitudine: longitudineController.value.text,
+        )
           ),widget.idEnte);
 
       } else {
         struttura!.denominazione=denominazioneController.value.text;
+        struttura!.posizione!.indirizzo=indirizzoController.value.text;
+        struttura!.posizione!.latitudine=latitudineController.value.text;
+        struttura!.posizione!.longitudine=longitudineController.value.text;
         nStruttura = await strutturaService.editStruttura(struttura!);
       }
       if (mounted) {}
@@ -140,6 +154,60 @@ class _GestioneStruttura extends State<GestioneStruttura> {
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: 'Denominazione',
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 50, right: 50),
+                            child: TextFormField(
+                              validator: (v) {
+                                if(v==null || v.isEmpty) {
+                                  return "Inserisci il campo indirizzo";
+                                }
+                              },
+                              controller: indirizzoController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Indirizzo',
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 50, right: 50),
+                            child: TextFormField(
+                              validator: (v) {
+                                if(v==null || v.isEmpty) {
+                                  return "Inserisci il campo latitudine";
+                                }
+                              },
+                              controller: latitudineController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Latitudine',
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 50, right: 50),
+                            child: TextFormField(
+                              validator: (v) {
+                                if(v==null || v.isEmpty) {
+                                  return "Inserisci il campo longitudine";
+                                }
+                              },
+                              controller: longitudineController,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Longitudine',
                               ),
                             ),
                           ),
