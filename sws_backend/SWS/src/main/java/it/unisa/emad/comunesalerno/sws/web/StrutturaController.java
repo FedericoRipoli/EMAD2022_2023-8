@@ -12,14 +12,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/strutture")
+@RequestMapping("/api")
 public class StrutturaController {
     @Autowired
     EnteRepository enteRepository;
     @Autowired
     StrutturaRepository strutturaRepository;
 
-    @PostMapping("/{idEnte}")
+    @PostMapping("/strutture/{idEnte}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity createStruttura(@PathVariable String idEnte,@RequestBody Struttura struttura) {
         if(enteRepository.existsById(idEnte)){
@@ -31,17 +31,21 @@ public class StrutturaController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/strutture/{id}")
     public ResponseEntity getStruttura(@PathVariable String id){
         return  ResponseEntity.ok(strutturaRepository.findById(id).orElseThrow());
     }
-    @DeleteMapping("/{id}")
+    @GetMapping("/struttureente/{idEnte}")
+    public ResponseEntity getStruttureEnte(@PathVariable String idEnte){
+        return  ResponseEntity.ok(strutturaRepository.findAllByEnte_Id(idEnte));
+    }
+    @DeleteMapping("/strutture/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity deleteStruttura(@PathVariable String id){
         strutturaRepository.delete(strutturaRepository.findById(id).orElseThrow());
         return  ResponseEntity.status(HttpStatus.OK).build();
     }
-    @PutMapping("/{id}")
+    @PutMapping("/strutture/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity updateEnte(@PathVariable String id,@RequestBody Struttura struttura){
         if(strutturaRepository.existsById(id)){

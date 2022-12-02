@@ -242,9 +242,10 @@ class _GestioneUtente extends State<GestioneUtente> {
 
               );
 
-              children.add(Column(
-                children: columnChild,
-              ));
+              children.add(SingleChildScrollView(
+                  child: Column(
+                    children: columnChild,
+                  )));
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
                 child: Stack(
