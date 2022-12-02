@@ -37,7 +37,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
       accountName: Text(userService.getName()!,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       accountEmail: const Text(""),
-      currentAccountPicture: CustomAvatar(),
+      currentAccountPicture: CustomAvatar(
+        size: 55,
+      ),
 
       //.. This line of code provides the usage of multiple accounts
       /* otherAccountsPictures: <Widget>[
@@ -98,15 +100,12 @@ class _DrawerMenuState extends State<DrawerMenu> {
           text: 'Gestione Aree',
           f: () {
             checkChangePage(ListaAree.id);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ListaAree()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ListaAree()));
           }));
     }
     if (userService.isLogged() && admin != null && !admin) {
       w.add(CustomMenuItem(text: 'Gestione Servizi', f: () {}));
-
     }
     if (userService.isLogged()) {
       w.add(SizedBox(height: 20));
