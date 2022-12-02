@@ -20,6 +20,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GFButton(
       elevation: 12,
+
       color: AppColors.logoBlue,
       padding: const EdgeInsets.only(left: 18, right: 18),
       onPressed: onPressed,
