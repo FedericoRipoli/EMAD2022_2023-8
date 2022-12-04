@@ -148,19 +148,18 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton:
-        AvatarGlow(
-          glowColor: Colors.red,
-          animate: _speechToText.isListening,
-          endRadius: 70,
-          child:CustomFloatingButton(
-            iconData: _speechToText.isNotListening ? Icons.mic_off : Icons.mic,
-            onPressed: _speechToText.isNotListening
-                ? _startListening
-                : _stopListening,
-          )
-        ),
-        appBar: const CustomAppBar(title:"Olivia"),
+        floatingActionButton: AvatarGlow(
+            glowColor: AppColors.logoCadmiumOrange,
+            animate: _speechToText.isListening,
+            endRadius: 70,
+            child: CustomFloatingButton(
+              iconData:
+                  _speechToText.isNotListening ? Icons.mic_off : Icons.mic,
+              onPressed: _speechToText.isNotListening
+                  ? _startListening
+                  : _stopListening,
+            )),
+        appBar: const CustomAppBar(title: "Olivia"),
         body: Container(
           decoration: BoxDecoration(color: AppColors.ice),
           padding: EdgeInsets.only(bottom: 100),

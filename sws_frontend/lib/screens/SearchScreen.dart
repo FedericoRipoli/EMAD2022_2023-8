@@ -52,7 +52,7 @@ class _SearchScreenState extends State<SearchScreen>
                 Navigator.pop(context);
               },
               icon: const Icon(
-                Icons.arrow_back_ios_new,
+                Icons.arrow_back,
                 color: Colors.white,
               )),
           automaticallyImplyLeading: true,
@@ -62,7 +62,7 @@ class _SearchScreenState extends State<SearchScreen>
             tabBarColor: appTheme.primaryColor,
             labelColor: appTheme.primaryColor,
             labelPadding: const EdgeInsets.all(8),
-            labelStyle: const TextStyle(fontSize: 18, fontFamily: "FredokaOne"),
+            labelStyle: const TextStyle(fontSize: 16, fontFamily: "FredokaOne"),
             unselectedLabelStyle:
                 const TextStyle(fontSize: 16, fontFamily: "FredokaOne"),
             unselectedLabelColor: GFColors.WHITE,
