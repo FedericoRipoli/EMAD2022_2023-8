@@ -1,7 +1,13 @@
 package it.unisa.emad.comunesalerno.sws.web;
 
-import it.unisa.emad.comunesalerno.sws.entity.*;
-import it.unisa.emad.comunesalerno.sws.repository.*;
+import it.unisa.emad.comunesalerno.sws.entity.Servizio;
+import it.unisa.emad.comunesalerno.sws.entity.StatoOperazione;
+import it.unisa.emad.comunesalerno.sws.entity.Struttura;
+import it.unisa.emad.comunesalerno.sws.entity.Utente;
+import it.unisa.emad.comunesalerno.sws.repository.AreaRepository;
+import it.unisa.emad.comunesalerno.sws.repository.EnteRepository;
+import it.unisa.emad.comunesalerno.sws.repository.ServizioRepository;
+import it.unisa.emad.comunesalerno.sws.repository.StrutturaRepository;
 import it.unisa.emad.comunesalerno.sws.repository.search.specification.ServizioSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,7 +18,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -67,15 +72,26 @@ public class ServizioController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity deleteEnte(@PathVariable String id) {
-        servizioRepository.delete(servizioRepository.findById(id).orElseThrow());
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity deleteServizio(@AuthenticationPrincipal Utente user, @PathVariable String id) {
+        Servizio servizio=servizioRepository.findById(id).orElseThrow();
+        if(user.isAdmin()) {
+            servizioRepository.delete(servizio);
+        }
+        else{
+            if(user.getEnte().getId().equals(servizio.getStruttura().getEnte().getId())){
+                servizio.setStato(StatoOperazione.DA_CANCELLARE);
+            }
+            else{
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        }
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity updateEnte(@PathVariable String id, @AuthenticationPrincipal Utente user, @RequestBody Servizio servizio) {
+    public ResponseEntity updateServizio(@PathVariable String id, @AuthenticationPrincipal Utente user, @RequestBody Servizio servizio) {
         if (servizioRepository.existsById(id)) {
             servizio.setId(id);
             servizio = setValues(servizio, user);
@@ -107,7 +123,8 @@ public class ServizioController {
 
             servizio.setStruttura(strutturaRepository.findById(servizio.getIdStruttura()).orElseThrow());
         } else {
-            if (user.getEnte().getStrutture().stream().map((struttura -> struttura.getId())).anyMatch(s -> s.equals(servizio.getIdStruttura()))) {
+            List<Struttura> struttureEnte=strutturaRepository.findAllByEnte_Id(user.getEnte().getId());
+            if (struttureEnte.stream().map((struttura -> struttura.getId())).anyMatch(s -> s.equals(servizio.getIdStruttura()))) {
                 servizio.setStruttura(strutturaRepository.findById(servizio.getIdStruttura()).orElseThrow());
             } else {
                 return null;

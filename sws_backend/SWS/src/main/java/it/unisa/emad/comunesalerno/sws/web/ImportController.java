@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/import")
@@ -42,7 +39,15 @@ public class ImportController {
     public ResponseEntity importData() {
         List<ImportServizi> table=importServiziRepository.findAll();
 
-        List<String> aree=table.stream().map(l-> l.getArea()).distinct().toList();
+
+        List<String> areeDistinct=table.stream().map(l-> l.getArea()).distinct().toList();
+        List<String> aree=new LinkedList<>();
+        for(String s:areeDistinct){
+            String [] splitted=s.split(", ");
+            for(String rs:splitted){
+                aree.add(rs);
+            }
+        }
         for(String s : aree){
             if(areaRepository.findByNome(s)==null){
                 Area n=new Area();

@@ -110,14 +110,14 @@ class _ListaServiziState extends State<ListaServizi> {
                               ).then((v) => _pullRefresh())
                             },
                             onDelete: () {
-                              /*utenteService.deleteUtente(item.id!).then((value) {
+                              servizioService.deleteServizio(item.id!).then((value) {
                                 if (value) {
-                                  ToastUtil.success("Utente eliminato", context);
+                                  ToastUtil.success("Servizio eliminato", context);
                                 } else {
                                   ToastUtil.error("Errore server", context);
                                 }
                                 _pullRefresh();
-                              });*/
+                              });
                             },
                           )),
                     ) ,

@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'Area.dart';
+import 'Contatto.dart';
 import 'Struttura.dart';
 
 Servizio servizioFromJson(String str) => Servizio.fromJson(json.decode(str));
@@ -23,7 +24,11 @@ class Servizio {
     this.hashtag,
     this.aree,
     this.struttura,
+    this.contatto,
+    this.idStruttura,
+    this.idAree,
   });
+
 
   String? id;
   String nome;
@@ -35,6 +40,9 @@ class Servizio {
   List<String>? hashtag;
   List<Area>? aree;
   Struttura? struttura;
+  Contatto? contatto;
+  String? idStruttura;
+  List<String>? idAree;
 
   factory Servizio.fromJson(Map<String, dynamic> json) => Servizio(
     id: json["id"],
@@ -47,6 +55,9 @@ class Servizio {
     hashtag: json["hashtag"] !=null ? List<String>.from(json["hashtag"].map((x) => x)):null,
     aree: json["aree"] !=null ? List<Area>.from(json["aree"].map((x) => Area.fromJson(x))):null,
     struttura: json["struttura"] !=null ? Struttura.fromJson(json["struttura"]):null,
+    contatto: json["contatto"] !=null ? Contatto.fromJson(json["contatto"]):null,
+    idStruttura: json["idStruttura"],
+    idAree: json["idAree"] !=null ? jsonDecode(json["idAree"]):null,
   );
 
   Map<String, dynamic> toJson() => {
@@ -60,5 +71,8 @@ class Servizio {
     "hashtag": hashtag !=null ? List<dynamic>.from(hashtag!.map((x) => x)):null,
     "aree": aree !=null ? List<dynamic>.from(aree!.map((x) => x.toJson())):null,
     "struttura": struttura !=null ? struttura!.toJson():null,
+    "contatto": contatto !=null ? contatto!.toJson():null,
+    "idStruttura": idStruttura,
+    "idAree": idAree,
   };
 }
