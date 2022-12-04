@@ -140,7 +140,7 @@ packages:
       name: dropdown_button2
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.1"
+    version: "1.9.2"
   equatable:
     dependency: transitive
     description:
@@ -222,7 +222,7 @@ packages:
       name: flutter_inappwebview
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.7.2+1"
+    version: "5.7.2+2"
   flutter_keyboard_visibility:
     dependency: transitive
     description:
@@ -721,13 +721,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
-  sidebarx:
-    dependency: "direct main"
-    description:
-      name: sidebarx
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.14.0"
   sky_engine:
     dependency: transitive
     description: flutter
