@@ -5,8 +5,10 @@ import 'package:frontend_sws/admin_screens/enti/struttura/ListaStrutture.dart';
 import 'package:frontend_sws/components/CustomButton.dart';
 import 'package:frontend_sws/services/EnteService.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
+import 'package:frontend_sws/theme/theme.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 
+import '../../components/AllPageLoad.dart';
 import '../../components/AllPageLoadTransparent.dart';
 import '../../components/CustomAppBar.dart';
 import '../../components/CustomFloatingButton.dart';
@@ -106,9 +108,8 @@ class _GestioneEnte extends State<GestioneEnte> {
             future: initCall,
             builder: ((context, snapshot) {
               List<Widget> children = [];
-
               if (!snapshot.hasData && !snapshot.hasError || !loaded) {
-                children.add(const AllPageLoadTransparent());
+                children.add(const AllPageLoad());
               }
               List<Widget> columnChild = [];
               columnChild.add(Form(
@@ -157,13 +158,14 @@ class _GestioneEnte extends State<GestioneEnte> {
                                   ? Column(
                                       children: [
                                         CustomButton(
-
                                             onPressed: () {
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
-                                                  builder: (context) => ListaStrutture(
-                                                  idEnte: ente!.id!)));
+                                                      builder: (context) =>
+                                                          ListaStrutture(
+                                                              idEnte:
+                                                                  ente!.id!)));
                                             },
                                             icon: Icons.account_balance_rounded,
                                             textButton: "Gestione strutture",
