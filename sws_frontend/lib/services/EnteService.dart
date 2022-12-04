@@ -32,10 +32,10 @@ class EnteService {
       if (response.statusCode == 200) {
         if (page != null) {
           ListResponse<Ente> l = ListResponse<Ente>.fromJson(
-              jsonDecode(response.body), Ente.fromJson);
+              jsonDecode(utf8.decode(response.bodyBytes)), Ente.fromJson);
           return l.content;
         } else {
-          var l = json.decode(response.body);
+          var l = json.decode(utf8.decode(response.bodyBytes));
           return List<Ente>.from(l.map((model) => Ente.fromJson(model)));
         }
       }
@@ -51,7 +51,7 @@ class EnteService {
           Uri.parse("${RestURL.enteService}/$id"),
           headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
-        return enteFromJson(response.body);
+        return enteFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);
@@ -80,7 +80,7 @@ class EnteService {
           body: enteToJson(ente), headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
-        return enteFromJson(response.body);
+        return enteFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);
@@ -96,7 +96,7 @@ class EnteService {
           headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
-        return enteFromJson(response.body);
+        return enteFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);

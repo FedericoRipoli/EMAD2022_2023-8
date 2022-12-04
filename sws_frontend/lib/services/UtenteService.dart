@@ -35,7 +35,7 @@ class UtenteService {
       var response = await http.get(u, headers: RestURL.authHeader(token!));
       if (response.statusCode == 200) {
         ListResponse<Utente> l = ListResponse<Utente>.fromJson(
-            jsonDecode(response.body), Utente.fromJson);
+            jsonDecode(utf8.decode(response.bodyBytes)), Utente.fromJson);
         return l.content;
       }
     } catch (e) {
@@ -51,7 +51,7 @@ class UtenteService {
           Uri.parse("${RestURL.utenteService.toString()}/$id"),
           headers: RestURL.authHeader(token!));
       if (response.statusCode == 200) {
-        return utenteFromJson(response.body);
+        return utenteFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);
@@ -66,7 +66,7 @@ class UtenteService {
           body: signupDtoToJson(sign), headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
-        return utenteFromJson(response.body);
+        return utenteFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);
@@ -99,7 +99,7 @@ class UtenteService {
           headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
-        return utenteFromJson(response.body);
+        return utenteFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/admin_screens/utenti/GestioneUtente.dart';
 import 'package:frontend_sws/components/filtri/FilterController.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/util/ToastUtil.dart';
@@ -10,7 +9,9 @@ import '../../components/CustomAppBar.dart';
 import '../../components/CustomFloatingButton.dart';
 import '../../components/servizi/ServizioListItem.dart';
 import '../../services/ServizioService.dart';
+import '../../services/UserService.dart';
 import '../../services/entity/Servizio.dart';
+import 'GestioneServizio.dart';
 
 class ListaServizi extends StatefulWidget {
   const ListaServizi({Key? key}) : super(key: key);
@@ -22,12 +23,16 @@ class ListaServizi extends StatefulWidget {
 
 class _ListaServiziState extends State<ListaServizi> {
   ServizioService servizioService = ServizioService();
+  UserService userService = UserService();
+
+  late String idEnte;
   final PagingController<int, Servizio> _pagingController =
   PagingController(firstPageKey: 0);
   late List<FilterTextController> _inputFilter;
 
   @override
   void initState() {
+    idEnte=userService.getIdEnte()!;
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
@@ -77,7 +82,7 @@ class _ListaServiziState extends State<ListaServizi> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => GestioneUtente(null))).then((value) => _pullRefresh());
+                        builder: (context) => GestioneServizio(idServizio: null, idEnte: idEnte))).then((value) => _pullRefresh());
               }
             }),
         appBar: const CustomAppBar(title: "Gestione Servizi"),
@@ -97,12 +102,12 @@ class _ListaServiziState extends State<ListaServizi> {
                             name: item.nome,
                             id: item.id!,
                             onTap: () => {
-                              /*Navigator.push(
+                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          GestioneUtente(item.id))
-                              ).then((v) => _pullRefresh())*/
+                                          GestioneServizio(idServizio: item.id, idEnte: idEnte))
+                              ).then((v) => _pullRefresh())
                             },
                             onDelete: () {
                               /*utenteService.deleteUtente(item.id!).then((value) {

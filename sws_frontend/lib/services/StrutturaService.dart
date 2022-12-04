@@ -24,7 +24,7 @@ class StrutturaService {
           headers: RestURL.defaultHeader);
 
       if (response.statusCode == 200) {
-        var l = json.decode(response.body);
+        var l = json.decode(utf8.decode(response.bodyBytes));
         return List<Struttura>.from(l.map((model) => Struttura.fromJson(model)));
 
       }
@@ -39,7 +39,7 @@ class StrutturaService {
           Uri.parse("${RestURL.struttureService}/$id"),
           headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
-        return strutturaFromJson(response.body);
+        return strutturaFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);
@@ -53,7 +53,7 @@ class StrutturaService {
           body: strutturaToJson(struttura), headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
-        return strutturaFromJson(response.body);
+        return strutturaFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);
@@ -84,7 +84,7 @@ class StrutturaService {
           headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
-        return strutturaFromJson(response.body);
+        return strutturaFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);

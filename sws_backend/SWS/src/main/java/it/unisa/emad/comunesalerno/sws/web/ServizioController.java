@@ -31,7 +31,7 @@ public class ServizioController {
 
     @PostMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity createServizio(@PathVariable String idStruttura, @AuthenticationPrincipal Utente user, @RequestBody Servizio servizio) {
+    public ResponseEntity createServizio(@AuthenticationPrincipal Utente user, @RequestBody Servizio servizio) {
         servizio.setId(null);
         servizio.setNote(null);
         if (!user.isAdmin())

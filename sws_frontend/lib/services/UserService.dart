@@ -35,7 +35,7 @@ class UserService {
 
       if (response.statusCode == 200) {
         //body contiene caratteri speciali /n/r
-        TokenDto toRet = tokenDtoFromJson(response.body);
+        TokenDto toRet = tokenDtoFromJson(utf8.decode(response.bodyBytes));
         SharedPreferencesUtils.prefs.setString(
             SharedPreferencesUtils.userLogged, tokenDtoToJson(toRet));
         return toRet;
@@ -52,7 +52,7 @@ class UserService {
           body: tokenDtoToJson(token),
           headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
-        TokenDto toRet = tokenDtoFromJson(response.body);
+        TokenDto toRet = tokenDtoFromJson(utf8.decode(response.bodyBytes));
         SharedPreferencesUtils.prefs.setString(
             SharedPreferencesUtils.userLogged, tokenDtoToJson(toRet));
         return toRet;

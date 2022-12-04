@@ -28,7 +28,7 @@ class AreeService {
           headers: RestURL.defaultHeader);
 
       if (response.statusCode == 200) {
-        var l = json.decode(response.body);
+        var l = json.decode(utf8.decode(response.bodyBytes));
         return List<Area>.from(l.map((model) => Area.fromJson(model)));
 
       }
@@ -43,7 +43,7 @@ class AreeService {
           Uri.parse("${RestURL.areeService}/$id"),
           headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
-        return areaFromJson(response.body);
+        return areaFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);
@@ -57,7 +57,7 @@ class AreeService {
           body: areaToJson(area), headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
-        return areaFromJson(response.body);
+        return areaFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);
@@ -88,7 +88,7 @@ class AreeService {
           headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
-        return areaFromJson(response.body);
+        return areaFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);

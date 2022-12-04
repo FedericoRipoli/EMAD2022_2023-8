@@ -37,7 +37,7 @@ class ServizioService {
       var response = await http.get(u, headers: RestURL.authHeader(token!));
       if (response.statusCode == 200) {
         ListResponse<Servizio> l = ListResponse<Servizio>.fromJson(
-            jsonDecode(response.body), Servizio.fromJson);
+            jsonDecode(utf8.decode(response.bodyBytes)), Servizio.fromJson);
         return l.content;
       }
     } catch (e) {
@@ -52,7 +52,55 @@ class ServizioService {
           Uri.parse("${RestURL.servizioService}/$id"),
           headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
-        return servizioFromJson(response.body);
+        return servizioFromJson(utf8.decode(response.bodyBytes));
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return null;
+  }
+
+  Future<bool> deleteServizio(String id) async {
+    String? token = await userService.getUser();
+    try {
+      var response = await http.delete(
+          Uri.parse("${RestURL.servizioService}/$id"),
+          headers: RestURL.authHeader(token!));
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return false;
+  }
+  Future<Servizio?> editServizio(Servizio servizio) async {
+    String? token = await userService.getUser();
+    try {
+      var response = await http.put(
+          Uri.parse("${RestURL.servizioService}/${servizio.id}"),
+          body: servizioToJson(servizio),
+          headers: RestURL.authHeader(token!));
+
+      if (response.statusCode == 200) {
+        return servizioFromJson(utf8.decode(response.bodyBytes));
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return null;
+  }
+
+
+  Future<Servizio?> createServizio(Servizio servizio) async {
+    String? token = await userService.getUser();
+    try {
+      var response = await http.post(Uri.parse(RestURL.servizioService),
+          body: servizioToJson(servizio), headers: RestURL.authHeader(token!));
+
+      if (response.statusCode == 200) {
+        return servizioFromJson(utf8.decode(response.bodyBytes));
       }
     } catch (e) {
       log.severe(e);
