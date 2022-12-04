@@ -36,7 +36,7 @@ public class Servizio {
     @ElementCollection
     private List<String> hashtags;
 
-    @OneToMany
+    @ManyToMany
     private List<Area> aree;
 
     @ManyToOne

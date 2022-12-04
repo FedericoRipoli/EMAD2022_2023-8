@@ -10,4 +10,5 @@ import java.util.List;
 public interface EnteRepository extends JpaRepository<Ente, String> {
     Page<Ente> findAllByDenominazioneContains(String name, Pageable pageable);
     List<Ente> findAllByDenominazioneContains(String name);
+    Ente findByDenominazione(String denominazione);
 }

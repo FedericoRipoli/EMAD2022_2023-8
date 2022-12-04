@@ -12,6 +12,7 @@ class RestURL {
   static String areeService = "${baseURL}aree";
   static String struttureService = "${baseURL}strutture";
   static String struttureEnteService = "${baseURL}struttureente";
+  static String servizioService = "${baseURL}servizi";
 
 
 

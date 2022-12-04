@@ -28,8 +28,6 @@ public class Ente {
     private String denominazione;
 
     @Lob
-    @NotNull
-    @NotEmpty
     private String descrizione;
 
     @OneToMany(mappedBy = "ente")
