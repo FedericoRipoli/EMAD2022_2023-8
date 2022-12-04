@@ -161,7 +161,7 @@ packages:
       name: ffi
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "1.2.1"
   file:
     dependency: transitive
     description:
@@ -170,12 +170,26 @@ packages:
     source: hosted
     version: "6.1.4"
   file_picker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: file_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.3"
+    version: "4.6.1"
+  flex_color_picker:
+    dependency: transitive
+    description:
+      name: flex_color_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.6.1"
+  flex_seed_scheme:
+    dependency: transitive
+    description:
+      name: flex_seed_scheme
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -209,6 +223,48 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.7.2+1"
+  flutter_keyboard_visibility:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.4.0"
+  flutter_keyboard_visibility_linux:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  flutter_keyboard_visibility_macos:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility_macos
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  flutter_keyboard_visibility_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  flutter_keyboard_visibility_web:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  flutter_keyboard_visibility_windows:
+    dependency: transitive
+    description:
+      name: flutter_keyboard_visibility_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -300,7 +356,7 @@ packages:
       name: html_editor_enhanced
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.0"
+    version: "2.5.0"
   http:
     dependency: "direct main"
     description:
@@ -322,6 +378,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.2"
+  infinite_listview:
+    dependency: transitive
+    description:
+      name: infinite_listview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   infinite_scroll_pagination:
     dependency: "direct main"
     description:
@@ -441,13 +504,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  open_filex:
-    dependency: "direct main"
+  numberpicker:
+    dependency: transitive
     description:
-      name: open_filex
+      name: numberpicker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.1"
+    version: "2.1.1"
   path:
     dependency: transitive
     description:
@@ -503,7 +566,7 @@ packages:
       name: path_provider_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.3"
+    version: "2.0.7"
   pedantic:
     dependency: transitive
     description:
@@ -539,6 +602,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.3"
+  pointer_interceptor:
+    dependency: transitive
+    description:
+      name: pointer_interceptor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.3+3"
   pointycastle:
     dependency: transitive
     description:
@@ -837,7 +907,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.2"
+    version: "2.6.1"
   wkt_parser:
     dependency: transitive
     description:

@@ -81,6 +81,8 @@ public class ServizioController {
         else{
             if(user.getEnte().getId().equals(servizio.getStruttura().getEnte().getId())){
                 servizio.setStato(StatoOperazione.DA_CANCELLARE);
+                servizioRepository.save(servizio);
+
             }
             else{
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

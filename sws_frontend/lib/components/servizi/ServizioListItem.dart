@@ -3,17 +3,21 @@ import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
+import '../../services/entity/Servizio.dart';
 import '../../theme/theme.dart';
 
 class ServizioListItem extends StatelessWidget {
   final String name, id;
   final VoidCallback onTap, onDelete;
+  final String statoOperazione;
   const ServizioListItem(
       {super.key,
       required this.name,
       required this.id,
       required this.onTap,
-      required this.onDelete});
+      required this.onDelete,
+      required this.statoOperazione
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +34,11 @@ class ServizioListItem extends StatelessWidget {
         color: AppColors.white,
         onTap: onTap,
         titleText: name,
-        icon: IconButton(
+        icon: Servizio.canEnteEdit(statoOperazione)? IconButton(
           onPressed: onDelete,
           icon: const Icon(Icons.delete_rounded),
           color: AppColors.logoCadmiumOrange,
-        ),
+        ):null,
       ),
     );
   }

@@ -28,10 +28,8 @@ dependencies:
   http: ^0.13.5
   intl: ^0.17.0
   mime: ^1.0.2
-  open_filex: ^4.2.2
   path_provider: ^2.0.11
   uuid: ^3.0.6
-  file_picker: ^5.2.2
   speech_to_text: ^6.1.0
   flutter_tts: ^3.6.1
   bubble: ^1.2.1
@@ -42,7 +40,7 @@ dependencies:
   avatar_glow: ^2.0.2
   draggable_home: ^1.0.4
   dropdown_button2: ^1.9.1
-  html_editor_enhanced: ^1.6.0
+  html_editor_enhanced: 2.5.0
 
 
 dev_dependencies:
