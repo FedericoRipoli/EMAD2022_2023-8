@@ -24,7 +24,8 @@ class TopicCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        constraints: BoxConstraints(minWidth: 200, maxWidth: 800, minHeight:250, maxHeight: 400),
+        constraints: const BoxConstraints(
+            minWidth: 200, maxWidth: 800, minHeight: 250, maxHeight: 400),
         margin: const EdgeInsets.all(5),
         height: MediaQuery.of(context).size.height * 0.3,
         width: MediaQuery.of(context).size.width * 0.85,
@@ -43,7 +44,7 @@ class TopicCard extends StatelessWidget {
           children: [
             Expanded(
               flex: 4,
-              child: Container(
+              child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: Image.asset(
                   image,

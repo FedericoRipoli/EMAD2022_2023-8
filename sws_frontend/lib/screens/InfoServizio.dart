@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/components/CustomButton.dart';
 import 'package:frontend_sws/theme/theme.dart';
+import 'package:getwidget/components/button/gf_button.dart';
+import 'package:getwidget/getwidget.dart';
+
+import '../components/CustomAppBar.dart';
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({Key? key}) : super(key: key);
@@ -9,7 +14,6 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> with TickerProviderStateMixin {
-  final double infoHeight = 364.0;
   AnimationController? animationController;
   Animation<double>? animation;
   double opacity1 = 0.0;
@@ -45,316 +49,27 @@ class _InfoScreenState extends State<InfoScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final double tempHeight = MediaQuery.of(context).size.height -
-        (MediaQuery.of(context).size.width / 1.2) +
-        24.0;
-    return Container(
-      color: AppColors.white,
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                AspectRatio(
-                  aspectRatio: 1.2,
-                  child: Image.asset('assets/images/service-bg.png'),
-                ),
-              ],
-            ),
-            Positioned(
-              top: (MediaQuery.of(context).size.width / 1.2) - 24.0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(32.0),
-                      topRight: Radius.circular(32.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: AppColors.logoBlue,
-                        offset: Offset(1.1, 1.1),
-                        blurRadius: 8.0),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8),
-                  child: SingleChildScrollView(
-                    child: Container(
-                      constraints: BoxConstraints(
-                          minHeight: infoHeight,
-                          maxHeight: tempHeight > infoHeight
-                              ? tempHeight
-                              : infoHeight),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const Padding(
-                            padding:
-                                EdgeInsets.only(top: 32.0, left: 18, right: 16),
-                            child: Text(
-                              'Servizio Mensa',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 22,
-                                letterSpacing: 0.27,
-                                color: AppColors.black,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 16, right: 16, bottom: 8, top: 16),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                const Text(
-                                  'Nome Ente',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 22,
-                                    letterSpacing: 0.27,
-                                    color: AppColors.logoBlue,
-                                  ),
-                                ),
-                                Container(
-                                  child: Row(
-                                    children: const <Widget>[
-                                      Text(
-                                        'Salerno',
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.w200,
-                                          fontSize: 22,
-                                          letterSpacing: 0.27,
-                                          color: AppColors.logoBlue,
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.location_on,
-                                        color: AppColors.logoBlue,
-                                        size: 24,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          AnimatedOpacity(
-                            duration: const Duration(milliseconds: 500),
-                            opacity: opacity1,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: Row(
-                                children: <Widget>[
-                                  getTimeBoxUI('Ambito', 'Classe'),
-                                  getTimeBoxUI('Tipologia', 'Type'),
-                                  getTimeBoxUI('Orari', '13:00'),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
-                              opacity: opacity2,
-                              child: const Padding(
-                                padding: EdgeInsets.only(
-                                    left: 16, right: 16, top: 8, bottom: 8),
-                                child: Text(
-                                  'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w200,
-                                    fontSize: 16,
-                                    letterSpacing: 0.27,
-                                    color: AppColors.black,
-                                  ),
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                          ),
-                          AnimatedOpacity(
-                            duration: const Duration(milliseconds: 500),
-                            opacity: opacity3,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 16, bottom: 16, right: 16),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Container(
-                                    width: 48,
-                                    height: 48,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: AppColors.ice,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(16.0),
-                                        ),
-                                        border: Border.all(
-                                            color: AppColors.logoBlue),
-                                      ),
-                                      child: const Icon(
-                                        Icons.call,
-                                        color: AppColors.logoBlue,
-                                        size: 28,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 16,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      height: 48,
-                                      decoration: const BoxDecoration(
-                                        color: AppColors.logoBlue,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(16.0),
-                                        ),
-                                        boxShadow: <BoxShadow>[
-                                          BoxShadow(
-                                              color: AppColors.logoBlue,
-                                              offset: Offset(1.1, 1.1),
-                                              blurRadius: 6.0),
-                                        ],
-                                      ),
-                                      child: const Center(
-                                        child: Text(
-                                          'Contatta',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18,
-                                            letterSpacing: 0.0,
-                                            color: AppColors.ice,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).padding.bottom,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: (MediaQuery.of(context).size.width / 1.2) - 24.0 - 35,
-              right: 35,
-              child: ScaleTransition(
-                alignment: Alignment.center,
-                scale: CurvedAnimation(
-                    parent: animationController!, curve: Curves.fastOutSlowIn),
-                child: Card(
-                  color: AppColors.logoBlue,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50.0)),
-                  elevation: 10.0,
-                  child: Container(
-                    width: 60,
-                    height: 60,
-                    child: const Center(
-                      child: Icon(
-                        Icons.info_outlined,
-                        color: AppColors.white,
-                        size: 30,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-              child: SizedBox(
-                width: AppBar().preferredSize.height,
-                height: AppBar().preferredSize.height,
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius:
-                        BorderRadius.circular(AppBar().preferredSize.height),
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: AppColors.black,
-                    ),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ),
-              ),
+    return Scaffold(
+      appBar: const CustomAppBar(
+        title: "Info Servizio",
+        iconData: Icons.arrow_back_ios_new,
+      ),
+      backgroundColor: AppColors.white,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(6),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("data"),
+            GFButton(
+              text: "Contatta",
+              icon: Icon(Icons.call),
+              onPressed: () {},
+              size: GFSize.LARGE,
+              fullWidthButton: true,
             )
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget getTimeBoxUI(String text1, String txt2) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: AppColors.ice,
-          borderRadius: BorderRadius.all(Radius.circular(16.0)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: AppColors.logoBlue,
-                offset: Offset(1.1, 1.1),
-                blurRadius: 2.0),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(
-              left: 18.0, right: 18.0, top: 12.0, bottom: 12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                text1,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w200,
-                  fontSize: 14,
-                  letterSpacing: 0.27,
-                  color: AppColors.black,
-                ),
-              ),
-              Text(
-                txt2,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                  letterSpacing: 0.27,
-                  color: AppColors.logoBlue,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
