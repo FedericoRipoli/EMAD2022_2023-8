@@ -11,8 +11,8 @@ import 'package:getwidget/getwidget.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-import '../components/CustomAppBar.dart';
-import '../components/CustomFloatingButton.dart';
+import '../components/generali/CustomAppBar.dart';
+import '../components/generali/CustomFloatingButton.dart';
 import '../main.dart';
 import 'package:frontend_sws/util/TtsManager.dart';
 import 'package:frontend_sws/util/SharedPreferencesUtils.dart';

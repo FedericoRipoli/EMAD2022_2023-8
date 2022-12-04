@@ -17,7 +17,6 @@ dependencies:
   introduction_screen: ^3.0.2
   shared_preferences: ^2.0.15
   responsive_framework: ^0.2.0
-  sidebarx: ^0.14.0
   getwidget: ^3.0.1
   flutter_map: ^3.0.0
   latlong2: ^0.8.1
@@ -28,10 +27,8 @@ dependencies:
   http: ^0.13.5
   intl: ^0.17.0
   mime: ^1.0.2
-  open_filex: ^4.2.2
   path_provider: ^2.0.11
   uuid: ^3.0.6
-  file_picker: ^5.2.2
   speech_to_text: ^6.1.0
   flutter_tts: ^3.6.1
   bubble: ^1.2.1
@@ -43,7 +40,6 @@ dependencies:
   draggable_home: ^1.0.4
   dropdown_button2: ^1.9.1
   html_editor_enhanced: ^1.6.0
-
 
 dev_dependencies:
   flutter_launcher_icons: ^0.11.0

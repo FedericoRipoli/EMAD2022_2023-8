@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:frontend_sws/components/CustomFloatingButton.dart';
+import 'package:frontend_sws/components/generali/CustomFloatingButton.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:getwidget/components/button/gf_icon_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
 
-import '../components/LoginForm.dart';
-import '../components/TopicCard.dart';
+import '../components/generali/LoginForm.dart';
+import '../components/generali/TopicCard.dart';
 import '../components/menu/DrawerMenu.dart';
 import '../services/UserService.dart';
 import 'Chat.dart';
 import 'SearchScreen.dart';
 
-class DraggableHomeScreen extends StatefulWidget {
-  const DraggableHomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
   static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.Home';
 
   @override
-  State<DraggableHomeScreen> createState() => _DraggableHomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _DraggableHomeScreenState extends State<DraggableHomeScreen>
-    with TickerProviderStateMixin {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   UserService userService = UserService();
   AnimationController? animationController;
@@ -70,7 +69,7 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
     return DraggableHome(
       key: _scaffoldKey,
       drawer: userService.isLogged()
-          ? DrawerMenu(currentPage: DraggableHomeScreen.id)
+          ? DrawerMenu(currentPage: HomeScreen.id)
           : null,
       leading: userService.isLogged()
           ? null
@@ -191,7 +190,8 @@ class _DraggableHomeScreenState extends State<DraggableHomeScreen>
           child: TopicCard(
             bgColor: AppColors.ice,
             title: "Hai bisogno di aiuto?",
-            subtitle:"Interagisci con Olivia sia via testo sia messaggi vocali",
+            subtitle:
+                "Interagisci con Olivia sia via testo sia messaggi vocali",
             icon: Icons.live_help_rounded,
             image: "assets/images/intro_chatbot.png",
             onTap: () {

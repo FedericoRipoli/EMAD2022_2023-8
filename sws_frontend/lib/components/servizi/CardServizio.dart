@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/CustomButton.dart';
-import 'package:getwidget/getwidget.dart';
-import '../theme/theme.dart';
-import 'Chips.dart';
-import '../screens/InfoServizio.dart';
+import '../../theme/theme.dart';
+import '../../screens/InfoServizio.dart';
 
 class CardServizio extends StatelessWidget {
   final String title, ente, area;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frontend_sws/components/Splash.dart';
+import 'package:frontend_sws/components/generali/Splash.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

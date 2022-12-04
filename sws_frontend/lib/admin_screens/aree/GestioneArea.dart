@@ -1,18 +1,11 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/services/AreeService.dart';
 import 'package:frontend_sws/services/entity/Area.dart';
-import 'package:getwidget/components/appbar/gf_appbar.dart';
-import 'package:frontend_sws/main.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-
-import '../../components/AllPageLoadTransparent.dart';
-import '../../components/CustomAppBar.dart';
-import '../../components/CustomFloatingButton.dart';
+import '../../components/loading/AllPageLoadTransparent.dart';
+import '../../components/generali/CustomAppBar.dart';
+import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/menu/DrawerMenu.dart';
-import '../../services/dto/SignupDTO.dart';
 import '../../util/ToastUtil.dart';
 
 class GestioneArea extends StatefulWidget {
@@ -41,12 +34,10 @@ class _GestioneArea extends State<GestioneArea> {
   }
 
   Future<bool> load() async {
-
     area = widget.idArea != null
         ? await areeService.getArea(widget.idArea!)
         : null;
     if (area != null) {
-
       nomeController.text = (area!.nome);
     }
     setState(() {
@@ -56,40 +47,32 @@ class _GestioneArea extends State<GestioneArea> {
   }
 
   void savePage() async {
-    if(_formGlobalKey.currentState!.validate()){
+    if (_formGlobalKey.currentState!.validate()) {
       _formGlobalKey.currentState?.save();
       setState(() {
         loaded = false;
       });
       Area? nArea;
       if (widget.idArea == null) {
-        nArea = await areeService.createArea(Area(
-            nome: nomeController.value.text));
-
+        nArea =
+            await areeService.createArea(Area(nome: nomeController.value.text));
       } else {
-        area!.nome=nomeController.value.text;
+        area!.nome = nomeController.value.text;
         nArea = await areeService.editArea(area!);
       }
       if (mounted) {}
       if (nArea != null) {
         Navigator.of(context).pop();
         ToastUtil.success(
-            "Area ${widget.idArea==null?'aggiunta':'modificata'}",
-            context
-        );
-
+            "Area ${widget.idArea == null ? 'aggiunta' : 'modificata'}",
+            context);
       } else {
-        ToastUtil.error(
-            "Errore server",
-            context
-        );
-
+        ToastUtil.error("Errore server", context);
       }
       setState(() {
         loaded = true;
       });
     }
-
   }
 
   @override
@@ -97,23 +80,17 @@ class _GestioneArea extends State<GestioneArea> {
     return Scaffold(
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
-
-
         drawer: DrawerMenu(currentPage: GestioneArea.id),
         floatingActionButton: !loaded
             ? null
             : CustomFloatingButton(
-          iconData: Icons.save_rounded,
-          onPressed:  () => savePage(),
-        ),
-        appBar: CustomAppBar(title:"Gestione Area",
-            iconData:Icons.arrow_back,
-            onPressed:()=>Navigator.pop(context)),
-
-
-
-
-
+                iconData: Icons.save_rounded,
+                onPressed: () => savePage(),
+              ),
+        appBar: CustomAppBar(
+            title: "Gestione Area",
+            iconData: Icons.arrow_back,
+            onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(
             future: initCall,
             builder: ((context, snapshot) {
@@ -123,41 +100,35 @@ class _GestioneArea extends State<GestioneArea> {
                 children.add(const AllPageLoadTransparent());
               }
               List<Widget> columnChild = [];
-              columnChild.add(
-                  Form(
-                      key: _formGlobalKey,
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 80,
+              columnChild.add(Form(
+                  key: _formGlobalKey,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 80,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(left: 50, right: 50),
+                        child: TextFormField(
+                          validator: (v) {
+                            if (v == null || v.isEmpty) {
+                              return "Inserisci il campo nome";
+                            }
+                          },
+                          controller: nomeController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Nome',
                           ),
-                          Container(
-                            padding: const EdgeInsets.only(left: 50, right: 50),
-                            child: TextFormField(
-                              validator: (v) {
-                                if(v==null || v.isEmpty) {
-                                  return "Inserisci il campo nome";
-                                }
-                              },
-                              controller: nomeController,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Nome',
-                              ),
-                            ),
-                          )
-                        ],
+                        ),
                       )
-                  )
-
-
-
-              );
+                    ],
+                  )));
 
               children.add(SingleChildScrollView(
                   child: Column(
-                    children: columnChild,
-                  )));
+                children: columnChild,
+              )));
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
                 child: Stack(

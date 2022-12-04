@@ -1,17 +1,15 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/admin_screens/enti/struttura/ListaStrutture.dart';
-import 'package:frontend_sws/components/CustomButton.dart';
+import 'package:frontend_sws/components/generali/CustomButton.dart';
 import 'package:frontend_sws/services/EnteService.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-
-import '../../components/AllPageLoad.dart';
-import '../../components/AllPageLoadTransparent.dart';
-import '../../components/CustomAppBar.dart';
-import '../../components/CustomFloatingButton.dart';
+import '../../components/loading/AllPageLoad.dart';
+import '../../components/loading/AllPageLoadTransparent.dart';
+import '../../components/generali/CustomAppBar.dart';
+import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/menu/DrawerMenu.dart';
 import '../../util/ToastUtil.dart';
 

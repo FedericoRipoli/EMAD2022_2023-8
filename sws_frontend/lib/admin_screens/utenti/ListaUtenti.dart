@@ -9,8 +9,8 @@ import 'package:frontend_sws/services/UtenteService.dart';
 import 'package:frontend_sws/services/entity/Utente.dart';
 import 'package:frontend_sws/components/filtri/FilterBar.dart';
 
-import '../../components/CustomAppBar.dart';
-import '../../components/CustomFloatingButton.dart';
+import '../../components/generali/CustomAppBar.dart';
+import '../../components/generali/CustomFloatingButton.dart';
 
 class ListaUtenti extends StatefulWidget {
   const ListaUtenti({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class ListaUtenti extends StatefulWidget {
 class _ListaUtentiState extends State<ListaUtenti> {
   UtenteService utenteService = UtenteService();
   final PagingController<int, Utente> _pagingController =
-  PagingController(firstPageKey: 0);
+      PagingController(firstPageKey: 0);
   late List<FilterTextController> _inputFilter;
 
   @override
@@ -32,10 +32,8 @@ class _ListaUtentiState extends State<ListaUtenti> {
       _fetchPage(pageKey);
     });
     _inputFilter = <FilterTextController>[
-      FilterTextController(textPlaceholder: 'Cerca ente',
-          f: _executeSearch),
-      FilterTextController(textPlaceholder: 'Cerca utente',
-          f: _executeSearch)
+      FilterTextController(textPlaceholder: 'Cerca ente', f: _executeSearch),
+      FilterTextController(textPlaceholder: 'Cerca utente', f: _executeSearch)
     ];
     super.initState();
   }
@@ -47,7 +45,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems =
-      await utenteService.usersList(null, null, false, pageKey);
+          await utenteService.usersList(null, null, false, pageKey);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -64,7 +62,9 @@ class _ListaUtentiState extends State<ListaUtenti> {
   void dispose() {
     _pagingController.dispose();
     super.dispose();
-    for (var el in _inputFilter) {el.dispose();}
+    for (var el in _inputFilter) {
+      el.dispose();
+    }
   }
 
   @override
@@ -77,40 +77,41 @@ class _ListaUtentiState extends State<ListaUtenti> {
             onPressed: () {
               if (mounted) {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => GestioneUtente(null))).then((value) => _pullRefresh());
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => GestioneUtente(null)))
+                    .then((value) => _pullRefresh());
               }
             }),
         appBar: const CustomAppBar(title: "Gestione Utenti"),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
-            child: Column(
-                children: <Widget>[
-                  FilterBar(
-                      controllers: _inputFilter
-                  ),
-                  Flexible(
-                    child:PagedListView<int, Utente>(
-                      shrinkWrap: false,
-                      pagingController: _pagingController,
-                      builderDelegate: PagedChildBuilderDelegate<Utente>(
-                          itemBuilder: (context, item, index) => UtenteListItem(
+            child: Column(children: <Widget>[
+              FilterBar(controllers: _inputFilter),
+              Flexible(
+                child: PagedListView<int, Utente>(
+                  shrinkWrap: false,
+                  pagingController: _pagingController,
+                  builderDelegate: PagedChildBuilderDelegate<Utente>(
+                      itemBuilder: (context, item, index) => UtenteListItem(
                             name: item.username,
                             id: item.id!,
                             ente: item.nomeEnte,
                             onTap: () => {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          GestioneUtente(item.id))
-                              ).then((v) => _pullRefresh())
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              GestioneUtente(item.id)))
+                                  .then((v) => _pullRefresh())
                             },
                             onDelete: () {
-                              utenteService.deleteUtente(item.id!).then((value) {
+                              utenteService
+                                  .deleteUtente(item.id!)
+                                  .then((value) {
                                 if (value) {
-                                  ToastUtil.success("Utente eliminato", context);
+                                  ToastUtil.success(
+                                      "Utente eliminato", context);
                                 } else {
                                   ToastUtil.error("Errore server", context);
                                 }
@@ -118,13 +119,9 @@ class _ListaUtentiState extends State<ListaUtenti> {
                               });
                             },
                           )),
-                    ) ,
-                  )
-
-                ]
-            )
-        )
-    );
+                ),
+              )
+            ])));
   }
 
   Future<void> _pullRefresh() async {

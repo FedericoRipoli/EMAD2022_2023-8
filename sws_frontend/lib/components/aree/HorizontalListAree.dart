@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/AllPageLoad.dart';
+import 'package:frontend_sws/components/loading/AllPageLoad.dart';
 import 'package:frontend_sws/services/AreeService.dart';
-import '../services/entity/Area.dart';
-import '../theme/theme.dart';
+import '../../services/entity/Area.dart';
+import '../../theme/theme.dart';
 
-class CardListAmbiti extends StatefulWidget {
+class HorizontalListAree extends StatefulWidget {
   static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.CardListAmbiti';
-  CardListAmbiti({Key? key}) : super(key: key);
+  HorizontalListAree({Key? key}) : super(key: key);
 
   @override
-  State<CardListAmbiti> createState() => _CardListAmbitiState();
+  State<HorizontalListAree> createState() => _HorizontalListAreeState();
 }
 
-class _CardListAmbitiState extends State<CardListAmbiti> {
+class _HorizontalListAreeState extends State<HorizontalListAree> {
   AreeService areeService = AreeService();
 
   Future<List<Area>?> _fetchData() async {

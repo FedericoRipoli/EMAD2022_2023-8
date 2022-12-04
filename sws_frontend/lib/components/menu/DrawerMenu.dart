@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/admin_screens/servizi/ListaServizi.dart';
-import 'package:frontend_sws/components/CustomAvatar.dart';
+import 'package:frontend_sws/components/generali/CustomAvatar.dart';
 import 'package:frontend_sws/admin_screens/aree/ListaAree.dart';
-import 'package:frontend_sws/screens/DraggableHomeScreen.dart';
+import 'package:frontend_sws/screens/HomeScreen.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/getwidget.dart';
-import '../../admin_screens/aree/GestioneArea.dart';
 import '../../admin_screens/enti/ListaEnti.dart';
 import '../../admin_screens/utenti/ListaUtenti.dart';
 import '../../services/UserService.dart';
@@ -106,11 +105,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
           }));
     }
     if (userService.isLogged() && admin != null && !admin) {
-      w.add(CustomMenuItem(text: 'Gestione Servizi', f: () {
-        checkChangePage(ListaServizi.id);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const ListaServizi()));
-      }));
+      w.add(CustomMenuItem(
+          text: 'Gestione Servizi',
+          f: () {
+            checkChangePage(ListaServizi.id);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ListaServizi()));
+          }));
     }
     if (userService.isLogged()) {
       w.add(const SizedBox(height: 20));
@@ -125,8 +126,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(
-                      builder: (_) => const DraggableHomeScreen()),
+                  MaterialPageRoute(builder: (_) => const HomeScreen()),
                   (route) => false);
             },
             buttonBoxShadow: false,
@@ -144,8 +144,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
               userService.logout();
               Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(
-                      builder: (_) => const DraggableHomeScreen()),
+                  MaterialPageRoute(builder: (_) => const HomeScreen()),
                   (route) => false);
             },
             padding: const EdgeInsets.only(left: 20, right: 20),

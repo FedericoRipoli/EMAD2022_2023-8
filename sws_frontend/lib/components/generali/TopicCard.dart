@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/CustomButton.dart';
+import 'package:frontend_sws/components/generali/CustomButton.dart';
 import 'package:frontend_sws/theme/theme.dart';
 
 class TopicCard extends StatelessWidget {

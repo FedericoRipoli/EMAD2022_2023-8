@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/CustomButton.dart';
+import 'package:frontend_sws/components/generali/CustomButton.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/services/UserService.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-
-import '../theme/theme.dart';
-import 'AllPageLoad.dart';
+import '../../theme/theme.dart';
+import '../loading/AllPageLoad.dart';
 
 // Form Login Ente / Comune
 class LoginForm extends StatefulWidget {

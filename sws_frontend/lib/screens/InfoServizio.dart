@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/CustomButton.dart';
+import 'package:frontend_sws/components/generali/CustomButton.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 
-import '../components/CustomAppBar.dart';
+import '../components/generali/CustomAppBar.dart';
 
 class InfoScreen extends StatefulWidget {
   const InfoScreen({Key? key}) : super(key: key);
