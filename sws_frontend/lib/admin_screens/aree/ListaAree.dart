@@ -9,8 +9,8 @@ import 'package:frontend_sws/services/AreeService.dart';
 import 'package:frontend_sws/services/entity/Area.dart';
 import 'package:frontend_sws/components/filtri/FilterBar.dart';
 
-import '../../components/CustomAppBar.dart';
-import '../../components/CustomFloatingButton.dart';
+import '../../components/generali/CustomAppBar.dart';
+import '../../components/generali/CustomFloatingButton.dart';
 
 class ListaAree extends StatefulWidget {
   const ListaAree({Key? key}) : super(key: key);

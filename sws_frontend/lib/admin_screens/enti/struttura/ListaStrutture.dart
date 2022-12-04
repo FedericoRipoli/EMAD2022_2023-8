@@ -4,8 +4,8 @@ import 'package:frontend_sws/services/StrutturaService.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../../../services/entity/Struttura.dart';
-import '../../../components/CustomAppBar.dart';
-import '../../../components/CustomFloatingButton.dart';
+import '../../../components/generali/CustomAppBar.dart';
+import '../../../components/generali/CustomFloatingButton.dart';
 import '../../../components/enti/struttura/StrutturaListItem.dart';
 import '../../../util/ToastUtil.dart';
 import 'GestioneStruttura.dart';
@@ -65,16 +65,18 @@ class _ListaStruttureState extends State<ListaStrutture> {
           onPressed: () {
             if (mounted) {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          GestioneStruttura(idEnte: widget.idEnte))).then((v) => _pullRefresh());
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              GestioneStruttura(idEnte: widget.idEnte)))
+                  .then((v) => _pullRefresh());
             }
           },
         ),
-        appBar: CustomAppBar(title:"Lista Strutture",
-            iconData:Icons.arrow_back,
-            onPressed:()=>Navigator.pop(context)),
+        appBar: CustomAppBar(
+            title: "Lista Strutture",
+            iconData: Icons.arrow_back,
+            onPressed: () => Navigator.pop(context)),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
@@ -88,7 +90,9 @@ class _ListaStruttureState extends State<ListaStrutture> {
                         denominazione: item.denominazione!,
                         id: item.id!,
                         onDelete: () {
-                          strutturaService.deleteStruttura(item.id!).then((value) {
+                          strutturaService
+                              .deleteStruttura(item.id!)
+                              .then((value) {
                             if (value) {
                               ToastUtil.success("Struttura eliminata", context);
                             } else {
@@ -99,11 +103,13 @@ class _ListaStruttureState extends State<ListaStrutture> {
                         },
                         onTap: () => {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => GestioneStruttura(
-                                          idStruttura: item.id,
-                                          idEnte: widget.idEnte))).then((v) => _pullRefresh())
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              GestioneStruttura(
+                                                  idStruttura: item.id,
+                                                  idEnte: widget.idEnte)))
+                                  .then((v) => _pullRefresh())
                             })),
               ))
             ])));

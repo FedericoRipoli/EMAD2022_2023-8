@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/screens/DraggableHomeScreen.dart';
+import 'package:frontend_sws/screens/HomeScreen.dart';
 import 'package:frontend_sws/screens/Introduction.dart';
 import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
 
-import 'AllPageLoad.dart';
+import '../loading/AllPageLoad.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -26,7 +26,7 @@ class SplashState extends State<Splash> with AfterLayoutMixin<Splash> {
       Timer(
           const Duration(seconds: 2),
           () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (BuildContext context) => const DraggableHomeScreen())));
+              builder: (BuildContext context) => const HomeScreen())));
     } else {
       await SharedPreferencesUtils.prefs
           .setBool(SharedPreferencesUtils.splashViewed, true);

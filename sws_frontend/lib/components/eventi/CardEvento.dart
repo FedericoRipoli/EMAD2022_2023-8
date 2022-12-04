@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/image/gf_image_overlay.dart';
-import '../theme/theme.dart';
-import 'Chips.dart';
-import 'package:frontend_sws/components/CustomButton.dart';
+import '../../theme/theme.dart';
+import '../generali/Chips.dart';
+import 'package:frontend_sws/components/generali/CustomButton.dart';
 
 class CardEvento extends StatelessWidget {
   const CardEvento({Key? key}) : super(key: key);

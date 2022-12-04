@@ -11,9 +11,9 @@ import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-import '../../components/AllPageLoadTransparent.dart';
-import '../../components/CustomAppBar.dart';
-import '../../components/CustomFloatingButton.dart';
+import '../../components/loading/AllPageLoadTransparent.dart';
+import '../../components/generali/CustomAppBar.dart';
+import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/menu/DrawerMenu.dart';
 import '../../services/dto/SignupDTO.dart';
 import '../../util/ToastUtil.dart';
@@ -76,7 +76,7 @@ class _GestioneUtente extends State<GestioneUtente> {
   }
 
   void savePage() async {
-    if(_formGlobalKey.currentState!.validate()){
+    if (_formGlobalKey.currentState!.validate()) {
       _formGlobalKey.currentState?.save();
       setState(() {
         loaded = false;
@@ -87,33 +87,25 @@ class _GestioneUtente extends State<GestioneUtente> {
             username: usernameController.value.text,
             password: passwordController.value.text,
             idEnte: dropdownValue));
-
       } else {
-        utente!.username=usernameController.value.text;
-        utente!.password=passwordController.value.text;
-        utente!.idEnte=dropdownValue;
+        utente!.username = usernameController.value.text;
+        utente!.password = passwordController.value.text;
+        utente!.idEnte = dropdownValue;
         nUser = await utenteService.editUtente(utente!);
       }
       if (mounted) {}
       if (nUser != null) {
         Navigator.of(context).pop();
         ToastUtil.success(
-            "Utente ${widget.idUtente==null?'aggiunto':'modificato'}",
-            context
-        );
-
+            "Utente ${widget.idUtente == null ? 'aggiunto' : 'modificato'}",
+            context);
       } else {
-        ToastUtil.error(
-            "Errore server",
-            context
-        );
-
+        ToastUtil.error("Errore server", context);
       }
       setState(() {
         loaded = true;
       });
     }
-
   }
 
   @override
@@ -121,23 +113,17 @@ class _GestioneUtente extends State<GestioneUtente> {
     return Scaffold(
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
-
-
         drawer: DrawerMenu(currentPage: GestioneUtente.id),
         floatingActionButton: !loaded
             ? null
             : CustomFloatingButton(
-            iconData: Icons.save_rounded,
-            onPressed:  () => savePage(),
-            ),
-        appBar: CustomAppBar(title:"Gestione Utente",
-            iconData:Icons.arrow_back,
-            onPressed:()=>Navigator.pop(context)),
-
-
-
-
-
+                iconData: Icons.save_rounded,
+                onPressed: () => savePage(),
+              ),
+        appBar: CustomAppBar(
+            title: "Gestione Utente",
+            iconData: Icons.arrow_back,
+            onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(
             future: initCall,
             builder: ((context, snapshot) {
@@ -147,8 +133,7 @@ class _GestioneUtente extends State<GestioneUtente> {
                 children.add(const AllPageLoadTransparent());
               }
               List<Widget> columnChild = [];
-              columnChild.add(
-                Form(
+              columnChild.add(Form(
                   key: _formGlobalKey,
                   child: Column(
                     children: [
@@ -159,7 +144,7 @@ class _GestioneUtente extends State<GestioneUtente> {
                         padding: const EdgeInsets.only(left: 50, right: 50),
                         child: TextFormField(
                           validator: (v) {
-                            if(v==null || v.isEmpty) {
+                            if (v == null || v.isEmpty) {
                               return "Inserisci il campo username";
                             }
                           },
@@ -177,7 +162,7 @@ class _GestioneUtente extends State<GestioneUtente> {
                           padding: const EdgeInsets.only(left: 50, right: 50),
                           child: TextFormField(
                             validator: (v) {
-                              if(v==null || v.isEmpty) {
+                              if (v == null || v.isEmpty) {
                                 return "Inserisci il campo passoword";
                               }
                             },
@@ -217,7 +202,7 @@ class _GestioneUtente extends State<GestioneUtente> {
                             iconSize: 30,
                             buttonHeight: 60,
                             buttonPadding:
-                            const EdgeInsets.only(left: 20, right: 10),
+                                const EdgeInsets.only(left: 20, right: 10),
                             dropdownDecoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -235,17 +220,12 @@ class _GestioneUtente extends State<GestioneUtente> {
                             },
                           ))
                     ],
-                  )
-                )
-
-
-
-              );
+                  )));
 
               children.add(SingleChildScrollView(
                   child: Column(
-                    children: columnChild,
-                  )));
+                children: columnChild,
+              )));
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
                 child: Stack(

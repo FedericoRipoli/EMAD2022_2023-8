@@ -6,8 +6,8 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/components/filtri/FilterBar.dart';
 
-import '../../components/CustomAppBar.dart';
-import '../../components/CustomFloatingButton.dart';
+import '../../components/generali/CustomAppBar.dart';
+import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/enti/EnteListItem.dart';
 import '../../util/ToastUtil.dart';
 import 'GestioneEnte.dart';
@@ -74,8 +74,11 @@ class _ListaEntiState extends State<ListaEnti> {
           iconData: Icons.add,
           onPressed: () {
             if (mounted) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => GestioneEnte(null))).then((v) => _pullRefresh());
+              Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => GestioneEnte(null)))
+                  .then((v) => _pullRefresh());
             }
           },
         ),
@@ -104,11 +107,12 @@ class _ListaEntiState extends State<ListaEnti> {
                           });
                         },
                         onTap: () => {
-
-                                  Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) => GestioneEnte(item.id)
-                                  )).then((v) => _pullRefresh())
-
+                              Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              GestioneEnte(item.id)))
+                                  .then((v) => _pullRefresh())
                             })),
               ))
             ])));

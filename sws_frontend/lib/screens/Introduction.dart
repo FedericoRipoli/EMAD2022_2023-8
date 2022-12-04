@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/screens/DraggableHomeScreen.dart';
+import 'package:frontend_sws/screens/HomeScreen.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:frontend_sws/theme/theme.dart';
 
@@ -88,7 +88,7 @@ class Introduction extends StatelessWidget {
     return PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (context, animation, secondaryAnimation) =>
-          const DraggableHomeScreen(),
+          const HomeScreen(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(0.0, 1.0);
         const end = Offset.zero;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/CardListAmbiti.dart';
-import 'package:frontend_sws/components/CardServizio.dart';
+import 'package:frontend_sws/components/aree/HorizontalListAree.dart';
+import 'package:frontend_sws/components/servizi/CardServizio.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -135,7 +135,7 @@ class _SearchScreenState extends State<SearchScreen>
   Widget searchList = SingleChildScrollView(
     child: Column(
       children: <Widget>[
-        CardListAmbiti(),
+        HorizontalListAree(),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

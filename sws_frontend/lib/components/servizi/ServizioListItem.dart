@@ -1,8 +1,7 @@
-import 'package:frontend_sws/components/CustomAvatar.dart';
+import 'package:frontend_sws/components/generali/CustomAvatar.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
 
-import '../../main.dart';
 import '../../services/entity/Servizio.dart';
 import '../../theme/theme.dart';
 
