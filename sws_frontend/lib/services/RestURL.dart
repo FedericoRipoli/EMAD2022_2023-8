@@ -1,7 +1,7 @@
 class RestURL {
-  static String baseURL = "http://localhost:8080/api/";
+  //static String baseURL = "http://localhost:8080/api/";
   //Login
-  //static String baseURL = "https://emadsalerno-emadsalerno.azuremicroservices.io/api/";
+  static String baseURL = "https://emadsalerno-emadsalerno.azuremicroservices.io/api/";
   static Uri login = Uri.parse("${baseURL}auth/login");
   static Uri register = Uri.parse("${baseURL}auth/register");
   static Uri refreshToken = Uri.parse("${baseURL}auth/token");
@@ -12,6 +12,7 @@ class RestURL {
   static String areeService = "${baseURL}aree";
   static String struttureService = "${baseURL}strutture";
   static String struttureEnteService = "${baseURL}struttureente";
+  static String servizioService = "${baseURL}servizi";
 
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/admin_screens/servizi/ListaServizi.dart';
 import 'package:frontend_sws/components/CustomAvatar.dart';
 import 'package:frontend_sws/admin_screens/aree/ListaAree.dart';
 import 'package:frontend_sws/screens/DraggableHomeScreen.dart';
@@ -37,7 +38,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
       accountName: Text(userService.getName()!,
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       accountEmail: const Text(""),
-      currentAccountPicture: CustomAvatar(
+      currentAccountPicture: const CustomAvatar(
         size: 55,
       ),
 
@@ -105,10 +106,14 @@ class _DrawerMenuState extends State<DrawerMenu> {
           }));
     }
     if (userService.isLogged() && admin != null && !admin) {
-      w.add(CustomMenuItem(text: 'Gestione Servizi', f: () {}));
+      w.add(CustomMenuItem(text: 'Gestione Servizi', f: () {
+        checkChangePage(ListaServizi.id);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ListaServizi()));
+      }));
     }
     if (userService.isLogged()) {
-      w.add(SizedBox(height: 20));
+      w.add(const SizedBox(height: 20));
       w.add(Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.end,
