@@ -47,6 +47,9 @@ class _GestioneEnte extends State<GestioneEnte> {
         : null;
     if (ente != null) {
       nomeController.text = (ente!.denominazione);
+      if(ente!.descrizione!=null){
+        htmlController.insertHtml(ente!.descrizione!);
+      }
     }
     setState(() {
       loaded = true;
@@ -138,13 +141,11 @@ class _GestioneEnte extends State<GestioneEnte> {
                       Container(
                           padding: const EdgeInsets.only(left: 5, right: 5),
                           child: HtmlEditor(
-                            hint: "Testo...",
+                            htmlEditorOptions: const HtmlEditorOptions(
+                              hint: "Testo...",
+                            ),
                             controller: htmlController,
-                            callbacks: Callbacks(onInit: () {
-                              if (ente != null && ente!.descrizione != null) {
-                                htmlController.insertHtml(ente!.descrizione!);
-                              }
-                            }),
+
                           )),
                       const SizedBox(
                         height: 40,

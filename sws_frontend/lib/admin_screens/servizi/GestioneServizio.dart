@@ -5,14 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:frontend_sws/services/entity/Struttura.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import '../../components/loading/AllPageLoadTransparent.dart';
+
+
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
+import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/menu/DrawerMenu.dart';
 import '../../services/AreeService.dart';
 import '../../services/ServizioService.dart';
 import '../../services/StrutturaService.dart';
-import '../../services/dto/SignupDTO.dart';
 import '../../services/entity/Area.dart';
 import '../../services/entity/Contatto.dart';
 import '../../services/entity/Servizio.dart';
@@ -41,6 +42,7 @@ class _GestioneServizio extends State<GestioneServizio> {
   List<String> areeValues = [];
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
 
+  TextEditingController noteController = TextEditingController();
   TextEditingController nomeController = TextEditingController();
   TextEditingController telefonoController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -49,8 +51,8 @@ class _GestioneServizio extends State<GestioneServizio> {
 
   bool loaded = false;
   final _formGlobalKey = GlobalKey<FormState>();
-  late List<DropdownMenuItem> itemsAree = [];
-  late List<DropdownMenuItem> itemsStrutture = [];
+  late List<DropdownMenuItem<String>> itemsAree = [];
+  late List<DropdownMenuItem<String>> itemsStrutture = [];
   List<Area>? aree = [];
 
   @override
@@ -83,13 +85,13 @@ class _GestioneServizio extends State<GestioneServizio> {
                         child: Container(
                             height: double.infinity,
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Row(
                               children: [
                                 _isSelected
                                     ? const Icon(Icons.check_box_outlined)
                                     : const Icon(
-                                        Icons.check_box_outline_blank_outlined),
+                                    Icons.check_box_outline_blank_outlined),
                                 const SizedBox(
                                   width: 16,
                                 ),
@@ -103,7 +105,7 @@ class _GestioneServizio extends State<GestioneServizio> {
 
     //load strutture
     List<Struttura>? strutture =
-        await strutturaService.struttureList(widget.idEnte);
+    await strutturaService.struttureList(widget.idEnte);
     if (strutture != null) {
       itemsStrutture.add(const DropdownMenuItem<String>(
         value: null,
@@ -125,6 +127,14 @@ class _GestioneServizio extends State<GestioneServizio> {
       strutturaValue = servizio!.struttura!.id;
       areeValues = servizio!.aree!.map((e) => e.id!).toList();
       nomeController.text = (servizio!.nome);
+      if(servizio!.contenuto!=null){
+        htmlController.insertHtml(servizio!.contenuto!);
+
+      }
+      if(servizio!.note!=null){
+        noteController.text=(servizio!.note!);
+
+      }
       if (servizio!.contatto != null) {
         sitoWebController.text = servizio!.contatto!.sitoWeb != null
             ? servizio!.contatto!.sitoWeb!
@@ -133,7 +143,7 @@ class _GestioneServizio extends State<GestioneServizio> {
             ? servizio!.contatto!.telefono!
             : "";
         emailController.text =
-            servizio!.contatto!.email != null ? servizio!.contatto!.email! : "";
+        servizio!.contatto!.email != null ? servizio!.contatto!.email! : "";
       }
     }
     setState(() {
@@ -191,12 +201,13 @@ class _GestioneServizio extends State<GestioneServizio> {
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
         drawer: DrawerMenu(currentPage: GestioneServizio.id),
-        floatingActionButton: !loaded
+        floatingActionButton: !loaded ||
+            (servizio != null && !Servizio.canEnteEdit(servizio!.stato))
             ? null
             : CustomFloatingButton(
-                iconData: Icons.save_rounded,
-                onPressed: () => savePage(),
-              ),
+          iconData: Icons.save_rounded,
+          onPressed: () => savePage(),
+        ),
         appBar: CustomAppBar(
             title: "Gestione Servizio",
             iconData: Icons.arrow_back,
@@ -220,6 +231,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                       Container(
                         padding: const EdgeInsets.only(left: 50, right: 50),
                         child: TextFormField(
+                          enabled: (servizio == null || Servizio.canEnteEdit(servizio!.stato)),
                           validator: (v) {
                             if (v == null || v.isEmpty) {
                               return "Inserisci il campo nome";
@@ -238,6 +250,8 @@ class _GestioneServizio extends State<GestioneServizio> {
                       Container(
                         padding: const EdgeInsets.only(left: 50, right: 50),
                         child: TextFormField(
+                          enabled: (servizio == null ||
+                              Servizio.canEnteEdit(servizio!.stato)),
                           validator: (v) {},
                           controller: emailController,
                           decoration: const InputDecoration(
@@ -252,6 +266,8 @@ class _GestioneServizio extends State<GestioneServizio> {
                       Container(
                         padding: const EdgeInsets.only(left: 50, right: 50),
                         child: TextFormField(
+                          enabled: (servizio == null ||
+                              Servizio.canEnteEdit(servizio!.stato)),
                           validator: (v) {},
                           controller: telefonoController,
                           decoration: const InputDecoration(
@@ -266,6 +282,8 @@ class _GestioneServizio extends State<GestioneServizio> {
                       Container(
                         padding: const EdgeInsets.only(left: 50, right: 50),
                         child: TextFormField(
+                          enabled: (servizio == null ||
+                              Servizio.canEnteEdit(servizio!.stato)),
                           validator: (v) {},
                           controller: sitoWebController,
                           decoration: const InputDecoration(
@@ -280,21 +298,19 @@ class _GestioneServizio extends State<GestioneServizio> {
                       Container(
                           padding: const EdgeInsets.only(left: 5, right: 5),
                           child: HtmlEditor(
-                            hint: "Testo...",
+                            htmlEditorOptions: const HtmlEditorOptions(
+                                hint: "Testo...",
+                                disabled: true
+                            ),
                             controller: htmlController,
-                            callbacks: Callbacks(onInit: () {
-                              if (servizio != null &&
-                                  servizio!.contenuto != null) {
-                                htmlController.insertHtml(servizio!.contenuto!);
-                              }
-                            }),
+
                           )),
                       const SizedBox(
                         height: 40,
                       ),
                       Padding(
                           padding: const EdgeInsets.only(left: 50, right: 50),
-                          child: DropdownButtonFormField2(
+                          child: DropdownButtonFormField2<String>(
                             value: strutturaValue,
                             decoration: InputDecoration(
                               //Add isDense true and zero Padding.
@@ -319,7 +335,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                             iconSize: 30,
                             buttonHeight: 60,
                             buttonPadding:
-                                const EdgeInsets.only(left: 20, right: 10),
+                            const EdgeInsets.only(left: 20, right: 10),
                             dropdownDecoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -329,9 +345,12 @@ class _GestioneServizio extends State<GestioneServizio> {
                                 return 'Seleziona un ente';
                               }
                             },
-                            onChanged: (value) {
+                            onChanged: (servizio == null ||
+                                Servizio.canEnteEdit(servizio!.stato))
+                                ? (value) {
                               //Do something when changing the item if you want.
-                            },
+                            }
+                                : null,
                             onSaved: (value) {
                               strutturaValue = value.toString();
                             },
@@ -341,7 +360,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                       ),
                       Padding(
                           padding: const EdgeInsets.only(left: 50, right: 50),
-                          child: DropdownButtonFormField2(
+                          child: DropdownButtonFormField2<String>(
                             value: areeValues.isEmpty ? null : areeValues.last,
                             decoration: InputDecoration(
                               //Add isDense true and zero Padding.
@@ -366,7 +385,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                             iconSize: 30,
                             buttonHeight: 60,
                             buttonPadding:
-                                const EdgeInsets.only(left: 20, right: 10),
+                            const EdgeInsets.only(left: 20, right: 10),
                             dropdownDecoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -376,9 +395,12 @@ class _GestioneServizio extends State<GestioneServizio> {
                                 return 'Seleziona almeno un\'area';
                               }
                             },
-                            onChanged: (value) {
+                            onChanged: (servizio == null ||
+                                Servizio.canEnteEdit(servizio!.stato))
+                                ? (value) {
                               //Do something when changing the item if you want.
-                            },
+                            }
+                                : null,
                             onSaved: (value) {
                               //areeValues = value;
                             },
@@ -387,7 +409,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                             itemPadding: EdgeInsets.zero,
                             selectedItemBuilder: (context) {
                               return aree!.map(
-                                (item) {
+                                    (item) {
                                   return Container(
                                     alignment: AlignmentDirectional.center,
                                     padding: const EdgeInsets.symmetric(
@@ -395,7 +417,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                                     child: Text(
                                       aree!
                                           .where((element) =>
-                                              areeValues.contains(element.id!))
+                                          areeValues.contains(element.id!))
                                           .map((e) => e.nome)
                                           .join(', '),
                                       style: const TextStyle(
@@ -412,13 +434,24 @@ class _GestioneServizio extends State<GestioneServizio> {
                       const SizedBox(
                         height: 40,
                       ),
+                      (servizio!=null && servizio!.note!=null)?
+                      TextField(
+                          enabled: false,
+                          controller:noteController,
+                          maxLines: null,
+                          keyboardType: TextInputType.multiline,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Note admin',
+                          )
+                      ):const SizedBox(height: 0,),
                     ],
                   )));
 
               children.add(SingleChildScrollView(
                   child: Column(
-                children: columnChild,
-              )));
+                    children: columnChild,
+                  )));
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
                 child: Stack(

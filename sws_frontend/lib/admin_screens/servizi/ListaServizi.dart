@@ -100,6 +100,7 @@ class _ListaServiziState extends State<ListaServizi> {
                       itemBuilder: (context, item, index) => ServizioListItem(
                             name: item.nome,
                             id: item.id!,
+                            statoOperazione: item.stato!,
                             onTap: () => {
                               Navigator.push(
                                       context,
