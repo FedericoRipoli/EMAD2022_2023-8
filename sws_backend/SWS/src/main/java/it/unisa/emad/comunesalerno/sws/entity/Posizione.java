@@ -21,4 +21,11 @@ public class Posizione {
     private String indirizzo;
     private String latitudine;
     private String longitudine;
+
+    public String getLatLong(){
+        if(latitudine!=null && longitudine!=null){
+            return String.format("%s, %s",latitudine,longitudine);
+        }
+        return "";
+    }
 }

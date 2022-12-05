@@ -3,6 +3,8 @@ package it.unisa.emad.comunesalerno.sws.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -24,7 +26,7 @@ public class Servizio {
     @Lob
     private String contenuto;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Contatto contatto;
 
     @Enumerated(EnumType.STRING)
@@ -36,7 +38,7 @@ public class Servizio {
     @ElementCollection
     private List<String> hashtags;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Area> aree;
 
     @ManyToOne

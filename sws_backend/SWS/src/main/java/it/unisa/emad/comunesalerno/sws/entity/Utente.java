@@ -1,6 +1,8 @@
 package it.unisa.emad.comunesalerno.sws.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import it.unisa.emad.comunesalerno.sws.entity.serializer.UtenteSerializer;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,6 +20,7 @@ import java.util.List;
 @Entity
 @Data()
 @RequiredArgsConstructor
+@JsonSerialize(using = UtenteSerializer.class)
 public class Utente implements UserDetails {
     @Id
     @GeneratedValue(generator = "uuid")
