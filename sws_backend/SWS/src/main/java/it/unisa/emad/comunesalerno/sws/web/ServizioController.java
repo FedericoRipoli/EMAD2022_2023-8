@@ -1,5 +1,6 @@
 package it.unisa.emad.comunesalerno.sws.web;
 
+import it.unisa.emad.comunesalerno.sws.dto.PuntoMappaDTO;
 import it.unisa.emad.comunesalerno.sws.dto.ServizioMappaDTO;
 import it.unisa.emad.comunesalerno.sws.entity.Servizio;
 import it.unisa.emad.comunesalerno.sws.entity.StatoOperazione;
@@ -79,7 +80,7 @@ public class ServizioController {
                 }
                 toRet.get(k).add(s);
             }
-            return ResponseEntity.ok(toRet);
+            return ResponseEntity.ok(toRet.keySet().stream().map(k-> new PuntoMappaDTO(k,toRet.get(k))).toList());
 
         }
 

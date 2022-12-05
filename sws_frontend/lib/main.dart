@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:frontend_sws/components/generali/Splash.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -24,15 +23,7 @@ void main() {
     debugShowCheckedModeBanner: false,
     home: const Splash(),
     theme: appTheme,
-    title: "Salerno Amica",
-    localizationsDelegates: const [
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-      GlobalCupertinoLocalizations.delegate,
-    ],
-    supportedLocales: const [
-      Locale('it', 'IT'), // Spanish, no country code
-    ],
+    title: "Salerno Amica"
   ));
 }
 

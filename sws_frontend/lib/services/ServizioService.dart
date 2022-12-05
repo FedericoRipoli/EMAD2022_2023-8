@@ -8,6 +8,7 @@ import 'RestURL.dart';
 import 'UserService.dart';
 import 'dto/ListResponse.dart';
 import 'dto/LoginDTO.dart';
+import 'dto/PuntoMappaDTO.dart';
 import 'dto/TokenDTO.dart';
 import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
 import 'package:frontend_sws/util/JwtUtil.dart';
@@ -101,6 +102,29 @@ class ServizioService {
 
       if (response.statusCode == 200) {
         return servizioFromJson(utf8.decode(response.bodyBytes));
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return null;
+  }
+
+  Future<List<PuntoMappaDto>?> findPuntiMappa(String? nome) async {
+
+    try {
+      QueryStringUtil queryStringUtil = QueryStringUtil();
+      queryStringUtil.add("punti", "true");
+
+      if (nome != null) {
+        queryStringUtil.add("nome", nome);
+      }
+
+      Uri u = Uri.parse(
+          "${RestURL.servizioService}?${queryStringUtil.getQueryString()}");
+      var response = await http.get(u, headers: RestURL.defaultHeader);
+      if (response.statusCode == 200) {
+        var l = json.decode(utf8.decode(response.bodyBytes));
+        return List<PuntoMappaDto>.from(l.map((model) => PuntoMappaDto.fromJson(model)));
       }
     } catch (e) {
       log.severe(e);
