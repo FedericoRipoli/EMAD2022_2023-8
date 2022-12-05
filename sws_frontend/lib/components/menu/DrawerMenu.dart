@@ -38,6 +38,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       accountEmail: const Text(""),
       currentAccountPicture: const CustomAvatar(
+        imgAsset: "assets/images/user_default.png",
         size: 55,
       ),
 

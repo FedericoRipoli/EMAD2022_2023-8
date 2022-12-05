@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../main.dart';
 import '../../theme/theme.dart';
+import '../generali/ConfirmBox.dart';
+import '../generali/CustomAvatar.dart';
 
 class AreaListItem extends StatelessWidget {
   final String name, id;
@@ -16,23 +18,35 @@ class AreaListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GFListTile(
-      padding: const EdgeInsets.all(8),
-      avatar: GFAvatar(
-        shape: GFAvatarShape.circle,
-        backgroundColor: AppColors.logoBlue,
-        child: Text(
-          name.substring(0, 2).toUpperCase(),
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-        ),
+    return GFCard(
+      elevation: 8,
+      padding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(28.0),
       ),
-      color: AppColors.ice,
-      onTap: onTap,
-      titleText: name,
-      icon: IconButton(
-        onPressed: onDelete,
-        icon: const Icon(Icons.delete),
-        color: AppColors.logoRed,
+      title: GFListTile(
+        padding: const EdgeInsets.all(8),
+        avatar: const CustomAvatar(
+          imgAsset: "assets/images/user_default.png",
+          size: 35,
+        ),
+        onTap: onTap,
+        titleText: name,
+        icon: IconButton(
+          onPressed: () => {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return ConfirmBox(
+                  label: name,
+                  onDelete: onDelete,
+                );
+              },
+            ),
+          },
+          icon: const Icon(Icons.delete_rounded),
+          color: AppColors.logoCadmiumOrange,
+        ),
       ),
     );
   }

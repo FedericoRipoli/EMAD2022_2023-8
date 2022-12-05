@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/aree/HorizontalListAree.dart';
+import 'package:frontend_sws/components/eventi/CardEvento.dart';
 import 'package:frontend_sws/components/servizi/CardServizio.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
@@ -8,8 +9,8 @@ import 'package:latlong2/latlong.dart';
 import '../theme/theme.dart';
 
 class SearchScreen extends StatefulWidget {
-  final bool typeSearch; // true=servizi, false=eventi
-  const SearchScreen({Key? key, required this.typeSearch}) : super(key: key);
+  final bool isServizi;
+  const SearchScreen({Key? key, required this.isServizi}) : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -132,49 +133,93 @@ class _SearchScreenState extends State<SearchScreen>
     ),
   );
 
-  Widget searchList = SingleChildScrollView(
-    child: Column(
-      children: <Widget>[
-        HorizontalListAree(),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Padding(
-              padding: EdgeInsetsDirectional.only(top: 18, bottom: 18),
-              child: Text(
-                "Risultati Ricerca:",
-                style: TextStyle(
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.logoCadmiumOrange),
+  late Widget searchList = SingleChildScrollView(
+    child: widget.isServizi
+        ? Column(
+            children: <Widget>[
+              HorizontalListAree(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Padding(
+                    padding: EdgeInsetsDirectional.only(top: 18, bottom: 18),
+                    child: Text(
+                      "Risultati Ricerca:",
+                      style: TextStyle(
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.logoCadmiumOrange),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-        !isEmptyList
-            ? ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(12),
-                itemCount: listServices.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return listServices[index];
-                },
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(
-                  color: AppColors.white,
-                  thickness: 0.0,
-                ),
-              )
-            : const Center(
-                child: Text(
-                  "Nessun Risultato :(",
-                  style: TextStyle(fontSize: 18, fontFamily: "FredokaOne"),
-                ),
+              !isEmptyList
+                  ? ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(12),
+                      itemCount: listServices.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return listServices[index];
+                      },
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(
+                        color: AppColors.white,
+                        thickness: 0.0,
+                      ),
+                    )
+                  : const Center(
+                      child: Text(
+                        "Nessun Risultato :(",
+                        style:
+                            TextStyle(fontSize: 18, fontFamily: "FredokaOne"),
+                      ),
+                    ),
+            ],
+          )
+        : Column(
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Padding(
+                    padding: EdgeInsetsDirectional.only(top: 18, bottom: 18),
+                    child: Text(
+                      "Eventi più recenti in programma:",
+                      style: TextStyle(
+                          fontSize: 22.0,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.logoCadmiumOrange),
+                    ),
+                  ),
+                ],
               ),
-      ],
-    ),
+              !isEmptyList
+                  ? ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(12),
+                      itemCount: listEventi.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return listEventi[index];
+                      },
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(
+                        color: AppColors.white,
+                        thickness: 0.0,
+                      ),
+                    )
+                  : const Center(
+                      child: Text(
+                        "Nessun Risultato :(",
+                        style:
+                            TextStyle(fontSize: 18, fontFamily: "FredokaOne"),
+                      ),
+                    ),
+            ],
+          ),
   );
 }
 
@@ -190,4 +235,14 @@ List<CardServizio> listServices = [
     area: "ambito",
   ),
 ];
+
+List<CardEvento> listEventi = [
+  CardEvento(
+    luogo: '20:00',
+    data: '22 Dicembre',
+    imgPath: 'images/volantino.jpg',
+    nome: 'Luci di Salerno',
+  ),
+];
+
 bool isEmptyList = false;

@@ -23,6 +23,7 @@ class ServizioListItem extends StatelessWidget {
       title: GFListTile(
         padding: const EdgeInsets.all(8),
         avatar: const CustomAvatar(
+          imgAsset: "assets/images/user_default.png",
           size: 35,
         ),
         color: AppColors.white,

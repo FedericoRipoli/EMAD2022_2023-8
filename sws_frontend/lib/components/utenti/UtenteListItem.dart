@@ -2,6 +2,7 @@ import 'package:frontend_sws/components/generali/CustomAvatar.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
+import '../generali/ConfirmBox.dart';
 
 class UtenteListItem extends StatelessWidget {
   final String name, id;
@@ -19,12 +20,14 @@ class UtenteListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GFCard(
       elevation: 8,
+      padding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(28.0),
       ),
       title: GFListTile(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(4),
         avatar: const CustomAvatar(
+          imgAsset: "assets/images/user_default.png",
           size: 35,
         ),
         color: AppColors.white,
@@ -32,7 +35,17 @@ class UtenteListItem extends StatelessWidget {
         titleText: name,
         subTitleText: ente ?? "",
         icon: IconButton(
-          onPressed: onDelete,
+          onPressed: () => {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return ConfirmBox(
+                  label: name,
+                  onDelete: onDelete,
+                );
+              },
+            ),
+          },
           icon: const Icon(Icons.delete_rounded),
           color: AppColors.logoCadmiumOrange,
         ),

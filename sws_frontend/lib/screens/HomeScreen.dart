@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SearchScreen(typeSearch: true)),
+                    builder: (context) => SearchScreen(isServizi: true)),
               );
             },
           ),
@@ -150,34 +150,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SearchScreen(typeSearch: false)),
+                    builder: (context) => SearchScreen(isServizi: false)),
               );
-            },
-          ),
-        ),
-        const SizedBox(
-          height: 18,
-        ),
-        AnimatedOpacity(
-          opacity: opacity1,
-          duration: const Duration(milliseconds: 500),
-          child: TopicCard(
-            title: "Vuoi unirti a Salerno Amica?",
-            subtitle: "Sei un ente e vuoi offrire i tuoi servizi? Contattaci",
-            icon: Icons.question_answer,
-            image: "assets/images/help_card_bg.png",
-            buttonLabel: "Contatta",
-            onTap: () async {
-              String email = Uri.encodeComponent("mail@fluttercampus.com");
-              String subject = Uri.encodeComponent("Hello Flutter");
-              String body = Uri.encodeComponent("Hi! I'm Flutter Developer");
-              print(subject); //output: Hello%20Flutter
-              Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
-              if (await launchUrl(mail)) {
-                print("mail opened");
-              } else {
-                print("mail not opened");
-              }
             },
           ),
         ),
@@ -204,6 +178,32 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
         const SizedBox(
           height: 50,
+        ),
+        AnimatedOpacity(
+          opacity: opacity1,
+          duration: const Duration(milliseconds: 500),
+          child: TopicCard(
+            title: "Vuoi unirti a Salerno Amica?",
+            subtitle: "Sei un ente e vuoi offrire i tuoi servizi? Contattaci",
+            icon: Icons.question_answer,
+            image: "assets/images/help_card_bg.png",
+            buttonLabel: "Contatta",
+            onTap: () async {
+              String email = Uri.encodeComponent("mail@fluttercampus.com");
+              String subject = Uri.encodeComponent("Hello Flutter");
+              String body = Uri.encodeComponent("Hi! I'm Flutter Developer");
+              print(subject); //output: Hello%20Flutter
+              Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
+              if (await launchUrl(mail)) {
+                print("mail opened");
+              } else {
+                print("mail not opened");
+              }
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 18,
         ),
       ],
       fullyStretchable: true,
