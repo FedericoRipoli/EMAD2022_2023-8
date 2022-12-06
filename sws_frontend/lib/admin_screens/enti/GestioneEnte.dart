@@ -30,7 +30,7 @@ class _GestioneEnte extends State<GestioneEnte> {
   Ente? ente;
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
   TextEditingController nomeController = TextEditingController();
-  HtmlEditorController htmlController = HtmlEditorController();
+  TextEditingController contenutoController = TextEditingController();
 
   bool loaded = false;
   final _formGlobalKey = GlobalKey<FormState>();
@@ -47,8 +47,8 @@ class _GestioneEnte extends State<GestioneEnte> {
         : null;
     if (ente != null) {
       nomeController.text = (ente!.denominazione);
-      if(ente!.descrizione!=null){
-        htmlController.insertHtml(ente!.descrizione!);
+      if(ente!.descrizione!=null) {
+        contenutoController.text = (ente!.descrizione!);
       }
     }
     setState(() {
@@ -67,10 +67,10 @@ class _GestioneEnte extends State<GestioneEnte> {
       if (widget.idEnte == null) {
         nEnte = await enteService.createEnte(Ente(
             denominazione: nomeController.value.text,
-            descrizione: await htmlController.getText()));
+            descrizione: contenutoController.value.text));
       } else {
         ente!.denominazione = nomeController.value.text;
-        ente!.descrizione = await htmlController.getText();
+        ente!.descrizione = contenutoController.value.text;
         nEnte = await enteService.editEnte(ente!);
       }
       if (mounted) {}
@@ -139,14 +139,19 @@ class _GestioneEnte extends State<GestioneEnte> {
                         height: 40,
                       ),
                       Container(
-                          padding: const EdgeInsets.only(left: 5, right: 5),
-                          child: HtmlEditor(
-                            htmlEditorOptions: const HtmlEditorOptions(
-                              hint: "Testo...",
-                            ),
-                            controller: htmlController,
+                        padding: const EdgeInsets.only(left: 50, right: 50),
+                        child:TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
 
-                          )),
+                          validator: (v) {},
+                          controller: contenutoController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Descrizione',
+                          ),
+                        ),
+                      ),
                       const SizedBox(
                         height: 40,
                       ),

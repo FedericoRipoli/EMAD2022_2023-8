@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:frontend_sws/services/entity/Struttura.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:frontend_sws/theme/theme.dart';
-import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../components/generali/CustomAppBar.dart';
@@ -48,7 +47,7 @@ class _GestioneServizio extends State<GestioneServizio> {
   TextEditingController telefonoController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController sitoWebController = TextEditingController();
-  late HtmlEditorController htmlController;
+  TextEditingController contenutoController = TextEditingController();
   TextfieldTagsController tagController = TextfieldTagsController();
   late double _distanceToField;
 
@@ -62,7 +61,6 @@ class _GestioneServizio extends State<GestioneServizio> {
   void initState() {
     super.initState();
     initCall = load();
-    htmlController = HtmlEditorController();
   }
 
   Future<bool> load() async {
@@ -130,7 +128,7 @@ class _GestioneServizio extends State<GestioneServizio> {
       nomeController.text = (servizio!.nome);
       servizio!.hashtags?.forEach((e) {tagController.addTag=(e);});
       if (servizio!.contenuto != null) {
-        htmlController.insertHtml(servizio!.contenuto!);
+        contenutoController.text=(servizio!.contenuto!);
       }
       if (servizio!.note != null) {
         noteController.text = (servizio!.note!);
@@ -146,9 +144,7 @@ class _GestioneServizio extends State<GestioneServizio> {
             servizio!.contatto!.email != null ? servizio!.contatto!.email! : "";
       }
     }
-    if (servizio == null || Servizio.canEnteEdit(servizio!.stato)) {
-      htmlController.enable();
-    }
+
     setState(() {
       loaded = true;
     });
@@ -165,7 +161,7 @@ class _GestioneServizio extends State<GestioneServizio> {
       if (widget.idServizio == null) {
         nServizio = await servizioService.createServizio(Servizio(
             nome: nomeController.value.text,
-            contenuto: await htmlController.getText(),
+            contenuto:contenutoController.value.text,
             contatto: Contatto(
               telefono: telefonoController.value.text,
               email: emailController.value.text,
@@ -180,7 +176,7 @@ class _GestioneServizio extends State<GestioneServizio> {
         servizio!.contatto!.telefono = telefonoController.value.text;
         servizio!.contatto!.email = emailController.value.text;
         servizio!.contatto!.sitoWeb = sitoWebController.value.text;
-        servizio!.contenuto = await htmlController.getText();
+        servizio!.contenuto = contenutoController.value.text;
         servizio!.idAree = areeValues;
         servizio!.idStruttura = strutturaValue;
         servizio!.hashtags = tagController.getTags;
@@ -309,12 +305,21 @@ class _GestioneServizio extends State<GestioneServizio> {
                         height: 40,
                       ),
                       Container(
-                          padding: const EdgeInsets.only(left: 5, right: 5),
-                          child: HtmlEditor(
-                            htmlEditorOptions: const HtmlEditorOptions(
-                                hint: "Testo...", disabled: true),
-                            controller: htmlController,
-                          )),
+                          padding: const EdgeInsets.only(left: 50, right: 50),
+                          child:TextFormField(
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+
+                            enabled: (servizio == null ||
+                                Servizio.canEnteEdit(servizio!.stato)),
+                            validator: (v) {},
+                            controller: contenutoController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Descrizione',
+                            ),
+                          ),
+                      ),
                       const SizedBox(
                         height: 40,
                       ),
