@@ -59,6 +59,8 @@ class _SearchScreenState extends State<SearchScreen>
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60.0),
         child: GFAppBar(
+
+
           backgroundColor: AppColors.logoBlue,
           searchBar: true,
           searchHintText: "Cerca...",

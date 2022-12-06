@@ -21,9 +21,7 @@ class EnteListItem extends StatelessWidget {
     return GFCard(
       elevation: 8,
       padding: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28.0),
-      ),
+      borderRadius: BorderRadius.circular(28.0),
       title: GFListTile(
         padding: const EdgeInsets.all(4),
         avatar: const CustomAvatar(
