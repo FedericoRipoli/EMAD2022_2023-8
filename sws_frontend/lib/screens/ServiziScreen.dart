@@ -63,7 +63,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems =
-      await servizioService.serviziList(null, pageKey);
+      await servizioService.serviziList(null, pageKey,false);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -267,9 +267,11 @@ class _ServiziScreenState extends State<ServiziScreen>
               pagingController: _pagingController,
               builderDelegate: PagedChildBuilderDelegate<Servizio>(
                   itemBuilder: (context, item, index) => CardServizio(
-                    title: item.nome,
+                    idServizio: item.id!,
+                    nomeServizio: item.nome,
                     ente: "TODO nome ente",
                     area: item.aree!.map((e) => e.nome).join(", "),
+                    posizione: item.struttura?.posizione?.indirizzo,
                   )),
             ),
           )
@@ -279,27 +281,3 @@ class _ServiziScreenState extends State<ServiziScreen>
         ),
   );
 }
-
-List<CardServizio> listServices = [
-  const CardServizio(
-    title: "title",
-    ente: "subtitle",
-    area: "ambito",
-  ),
-  const CardServizio(
-    title: "title",
-    ente: "subtitle",
-    area: "ambito",
-  ),
-];
-
-List<CardEvento> listEventi = [
-  CardEvento(
-    luogo: '20:00',
-    data: '22 Dicembre',
-    imgPath: 'images/volantino.jpg',
-    nome: 'Luci di Salerno',
-  ),
-];
-
-bool isEmptyList = false;

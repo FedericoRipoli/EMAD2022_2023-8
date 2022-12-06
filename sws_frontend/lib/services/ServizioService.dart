@@ -22,9 +22,12 @@ class ServizioService {
   UserService userService = UserService();
 
   Future<List<Servizio>?> serviziList(
-      String? nome, int page) async {
-    String? token = await userService.getUser();
+      String? nome, int page, bool logged) async {
 
+    String? token;
+    if(logged){
+      token = await userService.getUser();
+    }
     try {
       QueryStringUtil queryStringUtil = QueryStringUtil();
 
@@ -35,7 +38,7 @@ class ServizioService {
 
       Uri u = Uri.parse(
           "${RestURL.servizioService}?${queryStringUtil.getQueryString()}");
-      var response = await http.get(u, headers: RestURL.authHeader(token!));
+      var response = await http.get(u, headers: token!=null?RestURL.authHeader(token!):RestURL.defaultHeader);
       if (response.statusCode == 200) {
         ListResponse<Servizio> l = ListResponse<Servizio>.fromJson(
             jsonDecode(utf8.decode(response.bodyBytes)), Servizio.fromJson);

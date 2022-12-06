@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/admin_screens/servizi/GestioneServizio.dart';
 import '../../theme/theme.dart';
 import '../../screens/InfoServizio.dart';
 
 class CardServizio extends StatelessWidget {
-  final String title, ente, area;
+  final String nomeServizio, ente, area, idServizio;
   final String? descrizione, posizione, data;
   //final Widget toShow;
   const CardServizio(
       {Key? key,
-      required this.title,
+      required this.idServizio,
+      required this.nomeServizio,
       required this.ente,
       required this.area,
       this.descrizione,
@@ -22,13 +24,13 @@ class CardServizio extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InfoServizio("")),
+          MaterialPageRoute(builder: (context) => InfoServizio(idServizio)),
         );
       },
       child: Container(
-        margin: const EdgeInsets.all(5),
-        height: 180.0,
-        width: 290.0,
+        margin: const EdgeInsets.only(left:20, right: 20, top: 20),
+        height: MediaQuery.of(context).size.height * 0.2,
+        width: MediaQuery.of(context).size.height * 0.2,
         decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(30.0),
@@ -40,25 +42,23 @@ class CardServizio extends StatelessWidget {
                 offset: Offset(1, 1), // changes position of shadow
               ),
             ]),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 22.0, top: 12),
-                child: Column(
+        child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "$title",
-                      textAlign: TextAlign.start,
+                      "$nomeServizio",
+                      textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
                         fontSize: 18.0,
                       ),
                     ),
+                    SizedBox(
+                      height: 6,
+                    ),
+                    Divider(),
                     Text(
                       "$ente",
                       style: const TextStyle(
@@ -67,7 +67,6 @@ class CardServizio extends StatelessWidget {
                       ),
                       textAlign: TextAlign.start,
                     ),
-                    Divider(),
                     SizedBox(
                       height: 6,
                     ),
@@ -92,20 +91,7 @@ class CardServizio extends StatelessWidget {
                           color: AppColors.logoCadmiumOrange,
                         ),
                         Text(
-                          'Via Massimo Giletti',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.calendar_month_outlined,
-                          color: AppColors.logoCadmiumOrange,
-                        ),
-                        Text(
-                          'Tutti i giovedi',
+                          '$posizione',
                           style: TextStyle(fontSize: 16),
                         ),
                       ],
@@ -113,24 +99,7 @@ class CardServizio extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                margin: const EdgeInsets.all(12),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.scaleDown,
-                    image: AssetImage(
-                      "assets/images/event_item.png",
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+        );
+
   }
 }

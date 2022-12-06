@@ -5,7 +5,7 @@ import 'package:frontend_sws/services/entity/Servizio.dart';
 import 'package:frontend_sws/theme/theme.dart';
 
 import '../components/generali/CustomAppBar.dart';
-import '../components/servizi/DetailPageService.dart';
+import '../components/servizi/DetailPageService2.dart';
 
 class InfoServizio extends StatefulWidget {
 
@@ -57,17 +57,15 @@ class _InfoServizioState extends State<InfoServizio>{
               if (!snapshot.hasData && !snapshot.hasError || !loaded) {
                 children.add(const AllPageLoadTransparent());
               }
-              List<Widget> columnChild = [];
-              columnChild.add(
+
+              children.add(
+                  DetailPageService2(servizio: servizio!)
+                /*
                 DetailPageService(
                     title: servizio!.nome,
                     ente: "servizio",
-                    area: servizio!.aree.toString())
+                    area: servizio!.aree!.map((e) => e.nome).join(", "))*/
               );
-              children.add(SingleChildScrollView(
-                  child: Column(
-                    children: columnChild,
-                  )));
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
                 child: Stack(
