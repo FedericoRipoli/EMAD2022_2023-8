@@ -28,6 +28,7 @@ class CardServizio extends StatelessWidget {
         );
       },
       child: Container(
+        padding: const EdgeInsets.only(left:20, right: 20, top: 20),
         margin: const EdgeInsets.only(left:20, right: 20, top: 20),
         height: MediaQuery.of(context).size.height * 0.2,
         width: MediaQuery.of(context).size.height * 0.2,
@@ -47,7 +48,8 @@ class CardServizio extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "$nomeServizio",
+                      overflow: TextOverflow.ellipsis,
+                      nomeServizio,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.black,
@@ -55,44 +57,50 @@ class CardServizio extends StatelessWidget {
                         fontSize: 18.0,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
-                    Divider(),
+                    const Divider(),
                     Text(
-                      "$ente",
+                      overflow: TextOverflow.ellipsis,
+                      ente,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16.0,
                       ),
                       textAlign: TextAlign.start,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
                     Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.tag_sharp,
                           color: AppColors.logoCadmiumOrange,
                         ),
                         Text(
-                          '$area',
-                          style: TextStyle(fontSize: 16),
+                          overflow: TextOverflow.ellipsis,
+                          area,
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ],
+                    ),
+                    const SizedBox(
+                      height: 6,
                     ),
                     Wrap(
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.location_on,
                           color: AppColors.logoCadmiumOrange,
                         ),
                         Text(
+                          overflow: TextOverflow.ellipsis,
                           '$posizione',
-                          style: TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ],
                     ),

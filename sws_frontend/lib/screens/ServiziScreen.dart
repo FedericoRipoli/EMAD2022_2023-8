@@ -269,7 +269,7 @@ class _ServiziScreenState extends State<ServiziScreen>
                   itemBuilder: (context, item, index) => CardServizio(
                     idServizio: item.id!,
                     nomeServizio: item.nome,
-                    ente: "TODO nome ente",
+                    ente: item.struttura!.ente!.denominazione,
                     area: item.aree!.map((e) => e.nome).join(", "),
                     posizione: item.struttura?.posizione?.indirizzo,
                   )),
