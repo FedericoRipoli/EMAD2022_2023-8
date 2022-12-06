@@ -1,5 +1,6 @@
 package it.unisa.emad.comunesalerno.sws.web;
 
+import it.unisa.emad.comunesalerno.sws.dto.PuntoMappaDTO;
 import it.unisa.emad.comunesalerno.sws.dto.ServizioMappaDTO;
 import it.unisa.emad.comunesalerno.sws.entity.Servizio;
 import it.unisa.emad.comunesalerno.sws.entity.StatoOperazione;
@@ -79,7 +80,7 @@ public class ServizioController {
                 }
                 toRet.get(k).add(s);
             }
-            return ResponseEntity.ok(toRet);
+            return ResponseEntity.ok(toRet.keySet().stream().map(k-> new PuntoMappaDTO(k,toRet.get(k))).toList());
 
         }
 
@@ -142,7 +143,7 @@ public class ServizioController {
 
             servizio.setStruttura(strutturaRepository.findById(servizio.getIdStruttura()).orElseThrow());
         } else {
-            List<Struttura> struttureEnte = strutturaRepository.findAllByEnte_Id(user.getEnte().getId());
+            List<Struttura> struttureEnte = strutturaRepository.findAllByDenominazioneContainingIgnoreCaseAndEnte_IdEquals(null,user.getEnte().getId());
             if (struttureEnte.stream().map((struttura -> struttura.getId())).anyMatch(s -> s.equals(servizio.getIdStruttura()))) {
                 servizio.setStruttura(strutturaRepository.findById(servizio.getIdStruttura()).orElseThrow());
             } else {

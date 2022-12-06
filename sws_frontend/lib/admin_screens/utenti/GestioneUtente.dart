@@ -178,6 +178,7 @@ class _GestioneUtente extends State<GestioneUtente> {
                       Padding(
                           padding: const EdgeInsets.only(left: 50, right: 50),
                           child: DropdownButtonFormField2(
+
                             value: dropdownValue,
                             decoration: InputDecoration(
                               //Add isDense true and zero Padding.

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/admin_screens/aree/GestioneArea.dart';
-import 'package:frontend_sws/components/filtri/FilterController.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/components/aree/AreaListItem.dart';
 import 'package:frontend_sws/util/ToastUtil.dart';
@@ -9,6 +8,8 @@ import 'package:frontend_sws/services/AreeService.dart';
 import 'package:frontend_sws/services/entity/Area.dart';
 import 'package:frontend_sws/components/filtri/FilterBar.dart';
 
+import '../../components/filtri/GenericFilter.dart';
+import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
 
@@ -24,40 +25,40 @@ class _ListaAreeState extends State<ListaAree> {
   AreeService areeService = AreeService();
   final PagingController<int, Area> _pagingController =
       PagingController(firstPageKey: 0);
-  late List<FilterTextController> _inputFilter;
 
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
-    _inputFilter = <FilterTextController>[
-      FilterTextController(textPlaceholder: 'Nome', f: _executeSearch),
-    ];
+
     super.initState();
   }
 
-  void _executeSearch(String text) {
-    print(text);
-  }
+
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await areeService.areeList(null);
+      final newItems = await areeService.areeList(filterNome);
 
       _pagingController.appendLastPage(newItems!);
     } catch (error) {
       _pagingController.error = error;
     }
   }
+  String? filterNome;
+
+  void _filterNomeChanged(String? text) {
+    filterNome=text;
+    _pullRefresh();
+  }
+
 
   @override
   void dispose() {
     _pagingController.dispose();
     super.dispose();
-    for (var el in _inputFilter) {
-      el.dispose();
-    }
+
   }
 
   @override
@@ -80,7 +81,10 @@ class _ListaAreeState extends State<ListaAree> {
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
-              FilterBar(controllers: _inputFilter),
+              FilterBar(filters:[
+                TextFilter(name: 'Nome', positionType: GenericFilterPositionType.row, valueChange: _filterNomeChanged),
+
+              ]),
               Flexible(
                   child: PagedListView<int, Area>(
                 shrinkWrap: false,

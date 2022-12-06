@@ -21,16 +21,15 @@ class UtenteListItem extends StatelessWidget {
     return GFCard(
       elevation: 8,
       padding: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28.0),
-      ),
+
+      borderRadius: BorderRadius.circular(28.0),
       title: GFListTile(
-        padding: const EdgeInsets.all(4),
+
         avatar: const CustomAvatar(
           imgAsset: "assets/images/user_default.png",
           size: 35,
         ),
-        color: AppColors.white,
+        //color: AppColors.white,
         onTap: onTap,
         titleText: name,
         subTitleText: ente ?? "",
@@ -48,6 +47,7 @@ class UtenteListItem extends StatelessWidget {
           },
           icon: const Icon(Icons.delete_rounded),
           color: AppColors.logoCadmiumOrange,
+
         ),
       ),
     );

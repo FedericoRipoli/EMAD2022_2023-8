@@ -31,7 +31,7 @@ public class Ente {
     private String descrizione;
 
     @OneToMany(mappedBy = "ente")
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     private List<Struttura> strutture;
 
     @JsonIgnore

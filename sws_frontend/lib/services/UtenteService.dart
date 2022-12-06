@@ -22,7 +22,7 @@ class UtenteService {
 
       queryStringUtil.addString("page=$page");
       if (username != null) {
-        queryStringUtil.add("username", username);
+        queryStringUtil.add("name", username);
       }
       if (admin != null) {
         queryStringUtil.add("admin", admin.toString());

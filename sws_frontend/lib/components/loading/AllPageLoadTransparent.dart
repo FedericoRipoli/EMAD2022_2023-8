@@ -6,6 +6,6 @@ class AllPageLoadTransparent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.transparent, child: const AllPageLoad());
+    return Container(color: Colors.grey.withOpacity(0.9), child: const AllPageLoad());
   }
 }

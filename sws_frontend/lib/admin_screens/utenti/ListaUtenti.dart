@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/admin_screens/utenti/GestioneUtente.dart';
-import 'package:frontend_sws/components/filtri/FilterController.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/components/utenti/UtenteListItem.dart';
 import 'package:frontend_sws/util/ToastUtil.dart';
@@ -9,6 +8,9 @@ import 'package:frontend_sws/services/UtenteService.dart';
 import 'package:frontend_sws/services/entity/Utente.dart';
 import 'package:frontend_sws/components/filtri/FilterBar.dart';
 
+import '../../components/filtri/DropDownFilter.dart';
+import '../../components/filtri/GenericFilter.dart';
+import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
 
@@ -24,28 +26,31 @@ class _ListaUtentiState extends State<ListaUtenti> {
   UtenteService utenteService = UtenteService();
   final PagingController<int, Utente> _pagingController =
       PagingController(firstPageKey: 0);
-  late List<FilterTextController> _inputFilter;
 
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
-    _inputFilter = <FilterTextController>[
-      FilterTextController(textPlaceholder: 'Cerca ente', f: _executeSearch),
-      FilterTextController(textPlaceholder: 'Cerca utente', f: _executeSearch)
-    ];
+
     super.initState();
   }
 
-  void _executeSearch(String text) {
-    print(text);
+  void _filterEnteChange(String? text) {
+    filterEnte=text;
+    _pullRefresh();
+  }
+  void _filterUtenteChange(String? text) {
+    filterUtente=text;
+    _pullRefresh();
   }
 
+  String? filterEnte;
+  String? filterUtente;
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems =
-          await utenteService.usersList(null, null, false, pageKey);
+          await utenteService.usersList(filterUtente, filterEnte, false, pageKey);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -62,9 +67,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
   void dispose() {
     _pagingController.dispose();
     super.dispose();
-    for (var el in _inputFilter) {
-      el.dispose();
-    }
+
   }
 
   @override
@@ -87,7 +90,12 @@ class _ListaUtentiState extends State<ListaUtenti> {
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
-              FilterBar(controllers: _inputFilter),
+              FilterBar(filters: [
+                TextFilter(name: 'Ente', positionType: GenericFilterPositionType.row, valueChange: _filterEnteChange),
+                TextFilter(name: 'Utente', positionType: GenericFilterPositionType.row, valueChange: _filterUtenteChange),
+
+              ]),
+
               Flexible(
                 child: PagedListView<int, Utente>(
                   shrinkWrap: false,

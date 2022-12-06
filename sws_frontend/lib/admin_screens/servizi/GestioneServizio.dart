@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/services/entity/Struttura.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:html_editor_enhanced/html_editor.dart';
-
+import 'package:frontend_sws/theme/theme.dart';
+import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
@@ -47,7 +47,9 @@ class _GestioneServizio extends State<GestioneServizio> {
   TextEditingController telefonoController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController sitoWebController = TextEditingController();
-  HtmlEditorController htmlController = HtmlEditorController();
+  TextEditingController contenutoController = TextEditingController();
+  TextfieldTagsController tagController = TextfieldTagsController();
+  late double _distanceToField;
 
   bool loaded = false;
   final _formGlobalKey = GlobalKey<FormState>();
@@ -62,7 +64,6 @@ class _GestioneServizio extends State<GestioneServizio> {
   }
 
   Future<bool> load() async {
-    //load aree
     aree = await areeService.areeList(null);
     if (aree != null) {
       itemsAree.addAll(aree!.map<DropdownMenuItem<String>>((Area item) {
@@ -85,13 +86,13 @@ class _GestioneServizio extends State<GestioneServizio> {
                         child: Container(
                             height: double.infinity,
                             padding:
-                            const EdgeInsets.symmetric(horizontal: 16.0),
+                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: Row(
                               children: [
                                 _isSelected
                                     ? const Icon(Icons.check_box_outlined)
                                     : const Icon(
-                                    Icons.check_box_outline_blank_outlined),
+                                        Icons.check_box_outline_blank_outlined),
                                 const SizedBox(
                                   width: 16,
                                 ),
@@ -102,10 +103,8 @@ class _GestioneServizio extends State<GestioneServizio> {
             ));
       }).toList());
     }
-
-    //load strutture
     List<Struttura>? strutture =
-    await strutturaService.struttureList(widget.idEnte);
+        await strutturaService.struttureList(null,widget.idEnte);
     if (strutture != null) {
       itemsStrutture.add(const DropdownMenuItem<String>(
         value: null,
@@ -127,13 +126,12 @@ class _GestioneServizio extends State<GestioneServizio> {
       strutturaValue = servizio!.struttura!.id;
       areeValues = servizio!.aree!.map((e) => e.id!).toList();
       nomeController.text = (servizio!.nome);
-      if(servizio!.contenuto!=null){
-        htmlController.insertHtml(servizio!.contenuto!);
-
+      servizio!.hashtags?.forEach((e) {tagController.addTag=(e);});
+      if (servizio!.contenuto != null) {
+        contenutoController.text=(servizio!.contenuto!);
       }
-      if(servizio!.note!=null){
-        noteController.text=(servizio!.note!);
-
+      if (servizio!.note != null) {
+        noteController.text = (servizio!.note!);
       }
       if (servizio!.contatto != null) {
         sitoWebController.text = servizio!.contatto!.sitoWeb != null
@@ -143,9 +141,10 @@ class _GestioneServizio extends State<GestioneServizio> {
             ? servizio!.contatto!.telefono!
             : "";
         emailController.text =
-        servizio!.contatto!.email != null ? servizio!.contatto!.email! : "";
+            servizio!.contatto!.email != null ? servizio!.contatto!.email! : "";
       }
     }
+
     setState(() {
       loaded = true;
     });
@@ -162,12 +161,14 @@ class _GestioneServizio extends State<GestioneServizio> {
       if (widget.idServizio == null) {
         nServizio = await servizioService.createServizio(Servizio(
             nome: nomeController.value.text,
-            contenuto: await htmlController.getText(),
+            contenuto:contenutoController.value.text,
             contatto: Contatto(
               telefono: telefonoController.value.text,
               email: emailController.value.text,
               sitoWeb: sitoWebController.value.text,
+
             ),
+            hashtags: tagController.getTags,
             idAree: areeValues,
             idStruttura: strutturaValue));
       } else {
@@ -175,9 +176,10 @@ class _GestioneServizio extends State<GestioneServizio> {
         servizio!.contatto!.telefono = telefonoController.value.text;
         servizio!.contatto!.email = emailController.value.text;
         servizio!.contatto!.sitoWeb = sitoWebController.value.text;
-        servizio!.contenuto = await htmlController.getText();
+        servizio!.contenuto = contenutoController.value.text;
         servizio!.idAree = areeValues;
         servizio!.idStruttura = strutturaValue;
+        servizio!.hashtags = tagController.getTags;
         nServizio = await servizioService.editServizio(servizio!);
       }
       if (mounted) {}
@@ -196,18 +198,24 @@ class _GestioneServizio extends State<GestioneServizio> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _distanceToField = MediaQuery.of(context).size.width;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
         drawer: DrawerMenu(currentPage: GestioneServizio.id),
         floatingActionButton: !loaded ||
-            (servizio != null && !Servizio.canEnteEdit(servizio!.stato))
+                (servizio != null && !Servizio.canEnteEdit(servizio!.stato))
             ? null
             : CustomFloatingButton(
-          iconData: Icons.save_rounded,
-          onPressed: () => savePage(),
-        ),
+                iconData: Icons.save_rounded,
+                onPressed: () => savePage(),
+              ),
         appBar: CustomAppBar(
             title: "Gestione Servizio",
             iconData: Icons.arrow_back,
@@ -231,7 +239,8 @@ class _GestioneServizio extends State<GestioneServizio> {
                       Container(
                         padding: const EdgeInsets.only(left: 50, right: 50),
                         child: TextFormField(
-                          enabled: (servizio == null || Servizio.canEnteEdit(servizio!.stato)),
+                          enabled: (servizio == null ||
+                              Servizio.canEnteEdit(servizio!.stato)),
                           validator: (v) {
                             if (v == null || v.isEmpty) {
                               return "Inserisci il campo nome";
@@ -296,15 +305,21 @@ class _GestioneServizio extends State<GestioneServizio> {
                         height: 40,
                       ),
                       Container(
-                          padding: const EdgeInsets.only(left: 5, right: 5),
-                          child: HtmlEditor(
-                            htmlEditorOptions: const HtmlEditorOptions(
-                                hint: "Testo...",
-                                disabled: true
-                            ),
-                            controller: htmlController,
+                          padding: const EdgeInsets.only(left: 50, right: 50),
+                          child:TextFormField(
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
 
-                          )),
+                            enabled: (servizio == null ||
+                                Servizio.canEnteEdit(servizio!.stato)),
+                            validator: (v) {},
+                            controller: contenutoController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Descrizione',
+                            ),
+                          ),
+                      ),
                       const SizedBox(
                         height: 40,
                       ),
@@ -335,7 +350,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                             iconSize: 30,
                             buttonHeight: 60,
                             buttonPadding:
-                            const EdgeInsets.only(left: 20, right: 10),
+                                const EdgeInsets.only(left: 20, right: 10),
                             dropdownDecoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -346,10 +361,10 @@ class _GestioneServizio extends State<GestioneServizio> {
                               }
                             },
                             onChanged: (servizio == null ||
-                                Servizio.canEnteEdit(servizio!.stato))
+                                    Servizio.canEnteEdit(servizio!.stato))
                                 ? (value) {
-                              //Do something when changing the item if you want.
-                            }
+                                    //Do something when changing the item if you want.
+                                  }
                                 : null,
                             onSaved: (value) {
                               strutturaValue = value.toString();
@@ -385,7 +400,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                             iconSize: 30,
                             buttonHeight: 60,
                             buttonPadding:
-                            const EdgeInsets.only(left: 20, right: 10),
+                                const EdgeInsets.only(left: 20, right: 10),
                             dropdownDecoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -396,10 +411,10 @@ class _GestioneServizio extends State<GestioneServizio> {
                               }
                             },
                             onChanged: (servizio == null ||
-                                Servizio.canEnteEdit(servizio!.stato))
+                                    Servizio.canEnteEdit(servizio!.stato))
                                 ? (value) {
-                              //Do something when changing the item if you want.
-                            }
+                                    //Do something when changing the item if you want.
+                                  }
                                 : null,
                             onSaved: (value) {
                               //areeValues = value;
@@ -409,7 +424,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                             itemPadding: EdgeInsets.zero,
                             selectedItemBuilder: (context) {
                               return aree!.map(
-                                    (item) {
+                                (item) {
                                   return Container(
                                     alignment: AlignmentDirectional.center,
                                     padding: const EdgeInsets.symmetric(
@@ -417,7 +432,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                                     child: Text(
                                       aree!
                                           .where((element) =>
-                                          areeValues.contains(element.id!))
+                                              areeValues.contains(element.id!))
                                           .map((e) => e.nome)
                                           .join(', '),
                                       style: const TextStyle(
@@ -434,24 +449,128 @@ class _GestioneServizio extends State<GestioneServizio> {
                       const SizedBox(
                         height: 40,
                       ),
-                      (servizio!=null && servizio!.note!=null)?
-                      TextField(
-                          enabled: false,
-                          controller:noteController,
-                          maxLines: null,
-                          keyboardType: TextInputType.multiline,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Note admin',
-                          )
-                      ):const SizedBox(height: 0,),
+                      TextFieldTags(
+                        
+                          textfieldTagsController: tagController,
+                          initialTags: [],
+                          textSeparators: const [' ', ','],
+                          inputfieldBuilder: (context, tec, fn, error,
+                              onChanged, onSubmitted) {
+                            return ((context, sc, tags, onTagDelete) {
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 50, right: 50),
+                                child: TextField(
+                                  enabled: servizio==null || Servizio.canEnteEdit(servizio!.stato),
+                                  controller: tec,
+                                  focusNode: fn,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    border: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppColors.logoBlue,
+                                        width: 3.0,
+                                      ),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: AppColors.logoBlue,
+                                        width: 3.0,
+                                      ),
+                                    ),
+                                    helperStyle: const TextStyle(
+                                        color: AppColors.logoBlue),
+                                    hintText: tagController.hasTags
+                                        ? ''
+                                        : "Tag di ricerca...",
+                                    errorText: error,
+                                    prefixIconConstraints: BoxConstraints(
+                                        maxWidth: _distanceToField * 0.74),
+                                    prefixIcon: tags.isNotEmpty
+                                        ? SingleChildScrollView(
+                                            controller: sc,
+                                            scrollDirection: Axis.horizontal,
+                                            child: Row(
+                                                children:
+                                                    tags.map((String tag) {
+                                              return Container(
+                                                decoration: const BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(15.0),
+                                                  ),
+                                                  color: AppColors.logoBlue,
+                                                ),
+                                                margin:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 5.0),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10.0,
+                                                        vertical: 5.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    InkWell(
+                                                      child: Text(
+                                                        '$tag',
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                      onTap: () {
+                                                        //print("$tag selected");
+                                                      },
+                                                    ),
+                                                    const SizedBox(width: 4.0),
+                                                    InkWell(
+                                                      child: const Icon(
+                                                        Icons.cancel,
+                                                        size: 14.0,
+                                                        color: Color.fromARGB(
+                                                            255, 233, 233, 233),
+                                                      ),
+                                                      onTap: () {
+                                                        onTagDelete(tag);
+                                                      },
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                            }).toList()),
+                                          )
+                                        : null,
+                                  ),
+                                  //onChanged: onChanged,
+                                 // onSubmitted: onSubmitted,
+                                ),
+                              );
+                            });
+                          }),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      (servizio != null && servizio!.note != null)
+                          ? TextField(
+                              enabled: false,
+                              controller: noteController,
+                              maxLines: null,
+                              keyboardType: TextInputType.multiline,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Note admin',
+                              ))
+                          : const SizedBox(
+                              height: 0,
+                            ),
                     ],
                   )));
 
               children.add(SingleChildScrollView(
                   child: Column(
-                    children: columnChild,
-                  )));
+                children: columnChild,
+              )));
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
                 child: Stack(

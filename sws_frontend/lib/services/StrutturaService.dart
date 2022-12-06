@@ -5,6 +5,7 @@ import 'package:logging/logging.dart';
 import 'package:http/http.dart' as http;
 
 
+import '../util/QueryStringUtil.dart';
 import 'RestURL.dart';
 import 'UserService.dart';
 
@@ -13,11 +14,15 @@ class StrutturaService {
   UserService userService = UserService();
 
 
-  Future<List<Struttura>?> struttureList(String idEnte) async {
+  Future<List<Struttura>?> struttureList(String? nome, String idEnte) async {
     try {
+      QueryStringUtil queryStringUtil = QueryStringUtil();
 
+      if (nome != null) {
+        queryStringUtil.add("name", nome);
+      }
       Uri u = Uri.parse(
-          "${RestURL.struttureEnteService}/$idEnte");
+          "${RestURL.struttureEnteService}/$idEnte?${queryStringUtil.getQueryString()}");
 
       var response = await http.get(
           u,

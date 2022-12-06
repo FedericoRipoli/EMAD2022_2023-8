@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  animated_stack_widget:
+    dependency: transitive
+    description:
+      name: animated_stack_widget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   archive:
     dependency: transitive
     description:
@@ -305,6 +312,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  flutter_map_marker_cluster:
+    dependency: "direct main"
+    description:
+      name: flutter_map_marker_cluster
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
+  flutter_map_marker_popup:
+    dependency: transitive
+    description:
+      name: flutter_map_marker_popup
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0"
   flutter_parsed_text:
     dependency: transitive
     description:
@@ -504,6 +525,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   numberpicker:
     dependency: transitive
     description:
@@ -644,6 +672,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.0.4"
   responsive_framework:
     dependency: "direct main"
     description:
@@ -796,6 +831,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.12"
+  textfield_tags:
+    dependency: "direct main"
+    description:
+      name: textfield_tags
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   tuple:
     dependency: transitive
     description:

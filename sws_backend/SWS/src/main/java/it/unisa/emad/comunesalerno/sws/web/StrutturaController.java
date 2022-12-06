@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class StrutturaController {
@@ -37,8 +39,8 @@ public class StrutturaController {
         return  ResponseEntity.ok(strutturaRepository.findById(id).orElseThrow());
     }
     @GetMapping("/struttureente/{idEnte}")
-    public ResponseEntity getStruttureEnte(@PathVariable String idEnte){
-        return  ResponseEntity.ok(strutturaRepository.findAllByEnte_Id(idEnte));
+    public ResponseEntity getStruttureEnte(@PathVariable String idEnte,@RequestParam(value = "name", required = false) String name){
+        return  ResponseEntity.ok(strutturaRepository.findAllByDenominazioneContainingIgnoreCaseAndEnte_IdEquals(name,idEnte));
     }
     @DeleteMapping("/strutture/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")

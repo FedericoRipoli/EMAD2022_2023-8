@@ -12,7 +12,7 @@ import '../components/generali/TopicCard.dart';
 import '../components/menu/DrawerMenu.dart';
 import '../services/UserService.dart';
 import 'Chat.dart';
-import 'SearchScreen.dart';
+import 'ServiziScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SearchScreen(isServizi: true)),
+                    builder: (context) => ServiziScreen(isServizi: true)),
               );
             },
           ),
@@ -150,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SearchScreen(isServizi: false)),
+                    builder: (context) => ServiziScreen(isServizi: false)),
               );
             },
           ),
