@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../services/entity/Servizio.dart';
 import '../../theme/theme.dart';
+import '../generali/ConfirmBox.dart';
 
 class ServizioListItem extends StatelessWidget {
   final String name, id;
@@ -22,20 +23,29 @@ class ServizioListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GFCard(
       elevation: 8,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28.0),
-      ),
+      padding: EdgeInsets.zero,
+      borderRadius: BorderRadius.circular(28.0),
       title: GFListTile(
         padding: const EdgeInsets.all(8),
         avatar: const CustomAvatar(
           imgAsset: "assets/images/user_default.png",
           size: 35,
         ),
-        color: AppColors.white,
+
         onTap: onTap,
         titleText: name,
         icon: Servizio.canEnteEdit(statoOperazione)? IconButton(
-          onPressed: onDelete,
+          onPressed: () => {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return ConfirmBox(
+                  label: name,
+                  onDelete: onDelete,
+                );
+              },
+            ),
+          },
           icon: const Icon(Icons.delete_rounded),
           color: AppColors.logoCadmiumOrange,
         ):null,

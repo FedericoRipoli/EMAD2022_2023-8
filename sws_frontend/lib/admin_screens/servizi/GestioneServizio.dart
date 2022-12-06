@@ -146,6 +146,9 @@ class _GestioneServizio extends State<GestioneServizio> {
         servizio!.contatto!.email != null ? servizio!.contatto!.email! : "";
       }
     }
+    if(servizio == null || Servizio.canEnteEdit(servizio!.stato)){
+      htmlController.enable();
+    }
     setState(() {
       loaded = true;
     });
