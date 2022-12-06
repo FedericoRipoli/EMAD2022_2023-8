@@ -23,7 +23,6 @@ class EnteListItem extends StatelessWidget {
       padding: EdgeInsets.zero,
       borderRadius: BorderRadius.circular(28.0),
       title: GFListTile(
-        padding: const EdgeInsets.all(4),
         avatar: const CustomAvatar(
           imgAsset: "images/listtile_ente.png",
           size: 35,

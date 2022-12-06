@@ -25,7 +25,6 @@ class UtenteListItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(28.0),
       title: GFListTile(
 
-        padding: const EdgeInsets.all(4),
         avatar: const CustomAvatar(
           imgAsset: "assets/images/user_default.png",
           size: 35,
