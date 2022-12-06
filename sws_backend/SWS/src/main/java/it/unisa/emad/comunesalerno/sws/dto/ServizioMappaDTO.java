@@ -5,7 +5,7 @@ import lombok.*;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class ServizioMappaDTO {
     private String id;
     private String nome;
@@ -13,14 +13,14 @@ public class ServizioMappaDTO {
     private String ente;
 
     private String posizione;
+    private String indirizzo;
 
-
-    public static ServizioMappaDTO cast(Servizio servizio){
-        ServizioMappaDTO n=new ServizioMappaDTO();
-        n.id=servizio.getId();
-        n.ente=servizio.getStruttura().getEnte().getDenominazione();
-        n.struttura=servizio.getStruttura().getDenominazione();
-        n.nome=servizio.getNome();
-        return n;
+    public ServizioMappaDTO(String id, String nome, String struttura, String ente,  String indirizzo,String posizione) {
+        this.id = id;
+        this.nome = nome;
+        this.struttura = struttura;
+        this.ente = ente;
+        this.posizione = posizione;
+        this.indirizzo = indirizzo;
     }
 }

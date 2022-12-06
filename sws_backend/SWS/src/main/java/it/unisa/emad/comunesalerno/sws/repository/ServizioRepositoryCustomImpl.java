@@ -31,6 +31,7 @@ public class ServizioRepositoryCustomImpl implements ServizioRepositoryCustom {
                         root.get(Servizio_.nome),
                         root.join(Servizio_.struttura).get(Struttura_.denominazione),
                         root.join(Servizio_.struttura).join(Struttura_.ente).get(Ente_.denominazione),
+                        root.join(Servizio_.struttura).join(Struttura_.posizione).get(Posizione_.indirizzo),
                         cb.concat(cb.concat(
                                 root.join(Servizio_.struttura).join(Struttura_.posizione).get(Posizione_.latitudine),
                                 cb.literal(", ")

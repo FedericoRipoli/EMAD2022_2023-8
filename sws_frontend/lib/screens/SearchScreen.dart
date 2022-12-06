@@ -6,12 +6,14 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:frontend_sws/components/aree/HorizontalListAree.dart';
 import 'package:frontend_sws/components/eventi/CardEvento.dart';
 import 'package:frontend_sws/components/loading/AllPageLoadTransparent.dart';
+import 'package:frontend_sws/components/mappa/PopupItemMappa.dart';
 import 'package:frontend_sws/components/servizi/CardServizio.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/services/ServizioService.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:latlong2/latlong.dart';
-import '../components/generali/MarkerMappa.dart';
+import '../components/mappa/MarkerMappa.dart';
+import '../components/mappa/PopupItemMappa.dart';
 import '../components/loading/AllPageLoad.dart';
 import '../services/dto/PuntoMappaDTO.dart';
 import '../theme/theme.dart';
@@ -160,18 +162,24 @@ class _SearchScreenState extends State<SearchScreen>
                             popupSnap: PopupSnap.markerTop,
                             popupController: _popupController,
                             popupBuilder: (_, marker) => Container(
-                              width: 200,
-                              height: 100,
-                              color: Colors.white,
+                            
+                              color: Colors.transparent,
                               child:
                                     Column(
-                                      children:(marker as MarkerMappa).punto.punti.map((e) =>  Text(
-                                        e.nome,
-                                      )).toList()
+                                        mainAxisSize: MainAxisSize.min,
+
+                                      children:(marker as MarkerMappa).punto.punti.map((e) =>
+                                        PopupItemMappa(
+                                          onTap: ()=>{},
+                                          nome: e.nome,
+                                          ente: e.ente,
+                                          indirizzo: e.indirizzo,
+                                        )
+                                      ).toList()
                                     )
 
 
-                              
+
                             )),
                         builder: (context, markers) {
                           return Container(
@@ -189,13 +197,6 @@ class _SearchScreenState extends State<SearchScreen>
 
 
                     ),
-
-                    /*MarkerLayer(
-                      markers:snapshot.hasData? snapshot.data!.where((element) => element.posizione.isNotEmpty).map((e) =>
-                        MarkerMappa(e.posizione).getMarker()
-                      ).toList():[],
-                    )*/
-
                 ),
                 ]
               )

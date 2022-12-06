@@ -13,6 +13,7 @@ class ServizioMappaDto {
     required this.id,
     required this.nome,
     required this.struttura,
+    required this.indirizzo,
     required this.ente,
     this.posizione,
   });
@@ -21,6 +22,7 @@ class ServizioMappaDto {
   String nome;
   String struttura;
   String ente;
+  String indirizzo;
   String? posizione;
 
   factory ServizioMappaDto.fromJson(Map<String, dynamic> json) => ServizioMappaDto(
@@ -29,6 +31,7 @@ class ServizioMappaDto {
     struttura: json["struttura"],
     ente: json["ente"],
     posizione: json["posizione"],
+    indirizzo: json["indirizzo"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -37,5 +40,6 @@ class ServizioMappaDto {
     "struttura": struttura,
     "ente": ente,
     "posizione": posizione,
+    "indirizzo": indirizzo,
   };
 }
