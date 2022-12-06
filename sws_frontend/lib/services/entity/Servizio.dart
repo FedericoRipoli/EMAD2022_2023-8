@@ -31,7 +31,7 @@ class Servizio {
     this.note,
     this.dataCreazione,
     this.dataUltimaModifica,
-    this.hashtag,
+    this.hashtags,
     this.aree,
     this.struttura,
     this.contatto,
@@ -47,7 +47,7 @@ class Servizio {
   String? note;
   String? dataCreazione;
   String? dataUltimaModifica;
-  List<String>? hashtag;
+  List<String>? hashtags;
   List<Area>? aree;
   Struttura? struttura;
   Contatto? contatto;
@@ -63,8 +63,8 @@ class Servizio {
         note: json["note"],
         dataCreazione: json["dataCreazione"],
         dataUltimaModifica: json["dataUltimaModifica"],
-        hashtag: json["hashtag"] != null ? List<String>.from(
-            json["hashtag"].map((x) => x)) : null,
+        hashtags: json["hashtags"] != null ? List<String>.from(
+            json["hashtags"].map((x) => x)) : null,
         aree: json["aree"] != null ? List<Area>.from(
             json["aree"].map((x) => Area.fromJson(x))) : null,
         struttura: json["struttura"] != null ? Struttura.fromJson(
@@ -85,8 +85,8 @@ class Servizio {
         "note": note,
         "dataCreazione": dataCreazione,
         "dataUltimaModifica": dataUltimaModifica,
-        "hashtag": hashtag != null
-            ? List<dynamic>.from(hashtag!.map((x) => x))
+        "hashtags": hashtags != null
+            ? List<dynamic>.from(hashtags!.map((x) => x))
             : null,
         "aree": aree != null
             ? List<dynamic>.from(aree!.map((x) => x.toJson()))
