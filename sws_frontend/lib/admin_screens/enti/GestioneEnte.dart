@@ -47,7 +47,7 @@ class _GestioneEnte extends State<GestioneEnte> {
         : null;
     if (ente != null) {
       nomeController.text = (ente!.denominazione);
-      if(ente!.descrizione!=null) {
+      if (ente!.descrizione != null) {
         contenutoController.text = (ente!.descrizione!);
       }
     }
@@ -110,7 +110,7 @@ class _GestioneEnte extends State<GestioneEnte> {
             builder: ((context, snapshot) {
               List<Widget> children = [];
               if (!snapshot.hasData && !snapshot.hasError || !loaded) {
-                children.add(const AllPageLoad());
+                children.add(const AllPageLoadTransparent());
               }
               List<Widget> columnChild = [];
               columnChild.add(Form(
@@ -140,10 +140,9 @@ class _GestioneEnte extends State<GestioneEnte> {
                       ),
                       Container(
                         padding: const EdgeInsets.only(left: 50, right: 50),
-                        child:TextFormField(
+                        child: TextFormField(
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
-
                           validator: (v) {},
                           controller: contenutoController,
                           decoration: const InputDecoration(
