@@ -59,7 +59,7 @@ class _DetailPageService2State extends State<DetailPageService2>
             Column(
               children: <Widget>[
                 Container(
-                  height: MediaQuery.of(context).size.height*0.28,
+                  height: MediaQuery.of(context).size.height*0.25,
                   child: AspectRatio(
                   aspectRatio: 3/1.3,
                   child: Image.asset(
@@ -70,7 +70,7 @@ class _DetailPageService2State extends State<DetailPageService2>
               ],
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height*0.27,
+              top: MediaQuery.of(context).size.height*0.24,
               bottom: 0,
               left: 0,
               right: 0,
@@ -90,6 +90,7 @@ class _DetailPageService2State extends State<DetailPageService2>
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),
                   child: Container(
+                    margin: EdgeInsets.only(top:15),
                     color: AppColors.white,
                       constraints: BoxConstraints(
                           minHeight: infoHeight,
@@ -102,21 +103,21 @@ class _DetailPageService2State extends State<DetailPageService2>
                           children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(
-                            top: 20.0, left: 18, right: 16),
+                            top: 0.0, left: 18, right: 16),
                         child: Text(
                           widget.servizio.nome,
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 25,
-                            letterSpacing: 0.27,
+                            letterSpacing: 0.10,
                             color: Colors.black,
                           ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(
-                        left: 16, right: 16, bottom: 8, top: 16),
+                        left: 16, right: 16, bottom: 0, top: 2),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,13 +129,10 @@ class _DetailPageService2State extends State<DetailPageService2>
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontWeight: FontWeight.w200,
-                                fontSize: 22,
-                                letterSpacing: 0.27,
+                                fontSize: 20,
+                                letterSpacing: 0,
                                 color: Colors.black,
                               ),
-                            ),
-                            SizedBox(
-                              height: 5,
                             ),
                             Text(
                               widget.servizio.struttura?.denominazione != null?
@@ -143,13 +141,10 @@ class _DetailPageService2State extends State<DetailPageService2>
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontWeight: FontWeight.w200,
-                                fontSize: 22,
+                                fontSize: 18,
                                 letterSpacing: 0.27,
                                 color: Colors.black,
                               ),
-                            ),
-                            SizedBox(
-                              height: 5,
                             ),
                             Text(
                               widget.servizio.struttura?.posizione?.indirizzo != null?
@@ -158,7 +153,7 @@ class _DetailPageService2State extends State<DetailPageService2>
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontWeight: FontWeight.w200,
-                                fontSize: 18,
+                                fontSize: 16,
                                 letterSpacing: 0.57,
                                 color: Colors.blue,
                               ),
@@ -186,26 +181,34 @@ class _DetailPageService2State extends State<DetailPageService2>
                       opacity: opacity2,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                            left: 16, right: 16, top: 8, bottom: 8),
+                            left: 5, right: 5, top: 1, bottom: 8),
                         child: SingleChildScrollView(
-                          child: Text(
-                            'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.'
-                            +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
-                            +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
-                            +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
-                            +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
-                            +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.",
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15,
-                              letterSpacing: 0.27,
-                              color: Colors.black,
-                              ),
-                            //maxLines: 4,
-                            //overflow: TextOverflow.ellipsis,
+
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 211, 211, 211),
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                          ),
+                            padding: EdgeInsets.all(7),
+                            child: Text(
+                              'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.'
+                              +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
+                              +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
+                              +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
+                              +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
+                              +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.",
+                              textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                letterSpacing: 0,
+                                color: Colors.black,
+                                ),
+                                //maxLines: 4,
+                                //overflow: TextOverflow.ellipsis,
+                              ),
+                          )
+                        ),
                       ),
                     ),
                   ),
@@ -221,9 +224,9 @@ class _DetailPageService2State extends State<DetailPageService2>
                       children: <Widget>[
                         Expanded(
                           child: Container(
-                            height: 48,
+                            height: 40,
                             decoration: BoxDecoration(
-                              color: AppColors.logoCadmiumOrange,
+                              color: Colors.green,
                               borderRadius: const BorderRadius.all(
                                 Radius.circular(16.0),
                               ),
@@ -244,7 +247,7 @@ class _DetailPageService2State extends State<DetailPageService2>
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 22,
+                                        fontSize: 18,
                                         letterSpacing: 0.0,
                                         color: Colors.white,
                                       )
@@ -292,7 +295,7 @@ class _DetailPageService2State extends State<DetailPageService2>
         ),
         child: Padding(
           padding: const EdgeInsets.only(
-              left: 18.0, right: 18.0, top: 12.0, bottom: 12.0),
+              left: 9.0, right: 9.0, top: 4.0, bottom: 4.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
