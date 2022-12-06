@@ -23,18 +23,15 @@ class DetailPageService extends StatelessWidget{
       boxFit: BoxFit.cover,
       titlePosition: GFPosition.start,
       image: Image.asset(
-        'lib/assets/cup.jpg',
+        "assets/images/event_card_bg.png",
         height: MediaQuery.of(context).size.height * 0.2,
         width: MediaQuery.of(context).size.width,
         fit: BoxFit.cover,
       ),
       showImage: true,
       title: GFListTile(
-        avatar: GFAvatar(
-          backgroundImage: AssetImage('your asset image'),
-        ),
         titleText: '$title',
-        subTitleText: 'PlayStation 4',
+        subTitleText: 'subtitle',
       ),
       content: Text("Some quick example text to build on the card"),
       buttonBar: GFButtonBar(
