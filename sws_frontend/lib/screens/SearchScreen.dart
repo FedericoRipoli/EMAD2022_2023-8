@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:frontend_sws/components/aree/HorizontalListAree.dart';
 import 'package:frontend_sws/components/eventi/CardEvento.dart';
 import 'package:frontend_sws/components/loading/AllPageLoadTransparent.dart';
@@ -8,7 +10,6 @@ import 'package:frontend_sws/components/servizi/CardServizio.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/services/ServizioService.dart';
 import 'package:getwidget/getwidget.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import '../components/generali/MarkerMappa.dart';
 import '../components/loading/AllPageLoad.dart';
@@ -28,6 +29,7 @@ class _SearchScreenState extends State<SearchScreen>
   late TabController tabController;
   bool isChecked = false;
   late Future<List<PuntoMappaDto>?> initCallMap;
+  final PopupController _popupController = PopupController();
 
   @override
   void initState() {
@@ -118,23 +120,85 @@ class _SearchScreenState extends State<SearchScreen>
               List<Widget> children = [];
 
               children.add( FlutterMap(
+
                   options: MapOptions(
                     center: LatLng(40.6824408, 14.7680961),
                     zoom: 15.0,
                     maxZoom: 30.0,
                     enableScrollWheel: true,
                     scrollWheelVelocity: 0.005,
+                    onTap: (_, __) => _popupController
+                        .hideAllPopups(),
                   ),
+
                   children: [
                     TileLayer(
                         urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
-                    MarkerLayer(
+                    MarkerClusterLayerWidget(
+
+                      options: MarkerClusterLayerOptions(
+                        spiderfyCircleRadius: 80,
+                        spiderfySpiralDistanceMultiplier: 2,
+                        circleSpiralSwitchover: 12,
+                        maxClusterRadius: 120,
+                        rotate: true,
+                        size: const Size(40, 40),
+                        anchor: AnchorPos.align(AnchorAlign.center),
+                        fitBoundsOptions: const FitBoundsOptions(
+                          padding: EdgeInsets.all(50),
+                          maxZoom: 15,
+                        ),
+                        markers: snapshot.hasData? snapshot.data!.where((element) => element.posizione.isNotEmpty).map((e) =>
+                            MarkerMappa(e)
+                        ).toList():[],
+                        polygonOptions: const PolygonOptions(
+                            borderColor: Colors.blueAccent,
+                            color: Colors.black12,
+                            borderStrokeWidth: 3),
+                        popupOptions: PopupOptions(
+                            popupState: PopupState(),
+                            popupSnap: PopupSnap.markerTop,
+                            popupController: _popupController,
+                            popupBuilder: (_, marker) => Container(
+                              width: 200,
+                              height: 100,
+                              color: Colors.white,
+                              child:
+                                    Column(
+                                      children:(marker as MarkerMappa).punto.punti.map((e) =>  Text(
+                                        e.nome,
+                                      )).toList()
+                                    )
+
+
+                              
+                            )),
+                        builder: (context, markers) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.blue),
+                            child: Center(
+                              child: Text(
+                                markers.length.toString(),
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          );
+                        },
+
+
+                    ),
+
+                    /*MarkerLayer(
                       markers:snapshot.hasData? snapshot.data!.where((element) => element.posizione.isNotEmpty).map((e) =>
                         MarkerMappa(e.posizione).getMarker()
                       ).toList():[],
-                    )
-                  ],
+                    )*/
+
                 ),
+                ]
+              )
               );
               if (!snapshot.hasData && !snapshot.hasError) {
                 children.add(const AllPageLoadTransparent());

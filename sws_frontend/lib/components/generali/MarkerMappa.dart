@@ -2,27 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../services/dto/PuntoMappaDTO.dart';
 import '../../theme/theme.dart';
 
-class MarkerMappa{
-  String latLong;
+class MarkerMappa extends Marker {
+  PuntoMappaDto punto;
 
-  MarkerMappa(this.latLong);
-
-  Marker getMarker(){
-    List<String> ll=latLong.split(", ");
-    return Marker(
-        width: 30.0,
-        height: 30.0,
-        point: LatLng(double.parse(ll[0]),double.parse(ll[1])),
-        builder: (ctx) => const IconButton(
-          onPressed: null,
-          icon:  Icon(Icons.location_on, size: 50,color: AppColors.logoBlue,),
-
-          
-
-
-        ),
-    );
-  }
+  MarkerMappa(this.punto)
+      : super(
+          point: LatLng(double.parse(punto.posizione.split(", ")[0]),
+              double.parse(punto.posizione.split(", ")[1])),
+          builder: (ctx) => const Icon(
+            Icons.location_on,
+            size: 50,
+            color: AppColors.logoBlue,
+          ),
+          width: 30.0,
+          height: 30.0,
+        );
 }
