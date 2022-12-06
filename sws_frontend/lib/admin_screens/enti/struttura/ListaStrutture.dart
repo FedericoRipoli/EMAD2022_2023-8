@@ -3,6 +3,9 @@ import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/services/StrutturaService.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../../components/filtri/FilterBar.dart';
+import '../../../components/filtri/GenericFilter.dart';
+import '../../../components/filtri/TextFilter.dart';
 import '../../../services/entity/Struttura.dart';
 import '../../../components/generali/CustomAppBar.dart';
 import '../../../components/generali/CustomFloatingButton.dart';
@@ -34,13 +37,16 @@ class _ListaStruttureState extends State<ListaStrutture> {
     super.initState();
   }
 
-  void _executeSearch(String text) {
-    print(text);
+  String? filterNome;
+
+  void _filterNomeChanged(String? text) {
+    filterNome=text;
+    _pullRefresh();
   }
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await strutturaService.struttureList(widget.idEnte);
+      final newItems = await strutturaService.struttureList(filterNome, widget.idEnte);
 
       _pagingController.appendLastPage(newItems!);
     } catch (error) {
@@ -80,6 +86,10 @@ class _ListaStruttureState extends State<ListaStrutture> {
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
+              FilterBar(filters:[
+                TextFilter(name: 'Nome', positionType: GenericFilterPositionType.row, valueChange: _filterNomeChanged),
+
+              ]),
               Flexible(
                   child: PagedListView<int, Struttura>(
                 scrollDirection: Axis.vertical,

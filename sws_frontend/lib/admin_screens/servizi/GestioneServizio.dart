@@ -104,7 +104,7 @@ class _GestioneServizio extends State<GestioneServizio> {
       }).toList());
     }
     List<Struttura>? strutture =
-        await strutturaService.struttureList(widget.idEnte);
+        await strutturaService.struttureList(null,widget.idEnte);
     if (strutture != null) {
       itemsStrutture.add(const DropdownMenuItem<String>(
         value: null,

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface StrutturaRepository extends JpaRepository<Struttura, String> {
 
-    List<Struttura> findAllByEnte_Id(String id);
+    List<Struttura> findAllByDenominazioneContainingIgnoreCaseAndEnte_IdEquals(String name,String id);
 }

@@ -93,7 +93,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
               FilterBar(filters: [
                 TextFilter(name: 'Ente', positionType: GenericFilterPositionType.row, valueChange: _filterEnteChange),
                 TextFilter(name: 'Utente', positionType: GenericFilterPositionType.row, valueChange: _filterUtenteChange),
-                
+
               ]),
 
               Flexible(

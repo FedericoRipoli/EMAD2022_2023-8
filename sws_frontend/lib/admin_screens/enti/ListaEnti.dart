@@ -5,6 +5,8 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/components/filtri/FilterBar.dart';
 
+import '../../components/filtri/GenericFilter.dart';
+import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/enti/EnteListItem.dart';
@@ -34,13 +36,16 @@ class _ListaEntiState extends State<ListaEnti> {
     super.initState();
   }
 
-  void _executeSearch(String text) {
-    print(text);
+  String? filterNome;
+
+  void _filterNomeChanged(String? text) {
+    filterNome=text;
+    _pullRefresh();
   }
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await enteService.enteList(null, pageKey);
+      final newItems = await enteService.enteList(filterNome, pageKey);
 
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
@@ -82,7 +87,10 @@ class _ListaEntiState extends State<ListaEnti> {
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
-              //FilterBar(controllers: _inputFilter),
+              FilterBar(filters:[
+                TextFilter(name: 'Nome', positionType: GenericFilterPositionType.row, valueChange: _filterNomeChanged),
+
+              ]),
               Flexible(
                   child: PagedListView<int, Ente>(
                 scrollDirection: Axis.vertical,

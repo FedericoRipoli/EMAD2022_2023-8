@@ -33,7 +33,7 @@ class ServizioService {
 
       queryStringUtil.addString("page=$page");
       if (nome != null) {
-        queryStringUtil.add("nome", nome);
+        queryStringUtil.add("name", nome);
       }
 
       Uri u = Uri.parse(
