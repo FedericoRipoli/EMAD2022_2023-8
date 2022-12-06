@@ -30,8 +30,8 @@ class CardServizio extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
         margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
-        height: MediaQuery.of(context).size.height * 0.3,
-        width: MediaQuery.of(context).size.height * 0.2,
+        //height: MediaQuery.of(context).size.height * 0.3,
+        //width: MediaQuery.of(context).size.height * 0.2,
         decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(30.0),
@@ -103,6 +103,9 @@ class CardServizio extends StatelessWidget {
                   style: const TextStyle(fontSize: 16),
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 10,
             ),
           ],
         ),
