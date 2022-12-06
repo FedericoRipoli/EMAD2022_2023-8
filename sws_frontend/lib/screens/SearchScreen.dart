@@ -32,6 +32,7 @@ class _SearchScreenState extends State<SearchScreen>
   bool isChecked = false;
   late Future<List<PuntoMappaDto>?> initCallMap;
   final PopupController _popupController = PopupController();
+  String? markerSelectedId;
 
   @override
   void initState() {
@@ -129,8 +130,9 @@ class _SearchScreenState extends State<SearchScreen>
                     maxZoom: 30.0,
                     enableScrollWheel: true,
                     scrollWheelVelocity: 0.005,
-                    onTap: (_, __) => _popupController
-                        .hideAllPopups(),
+                    onTap: (_, __) { _popupController
+                        .hideAllPopups();
+                    markerSelectedId=null;},
                   ),
 
                   children: [
@@ -139,6 +141,13 @@ class _SearchScreenState extends State<SearchScreen>
                     MarkerClusterLayerWidget(
 
                       options: MarkerClusterLayerOptions(
+                        onMarkerTap: (marker) {
+                          setState(() {
+                            markerSelectedId=(marker as MarkerMappa).punto.posizione;
+
+                          });
+
+                        },
                         spiderfyCircleRadius: 80,
                         spiderfySpiralDistanceMultiplier: 2,
                         circleSpiralSwitchover: 12,
@@ -151,18 +160,18 @@ class _SearchScreenState extends State<SearchScreen>
                           maxZoom: 15,
                         ),
                         markers: snapshot.hasData? snapshot.data!.where((element) => element.posizione.isNotEmpty).map((e) =>
-                            MarkerMappa(e)
+                            MarkerMappa(punto:e,isSelected: markerSelectedId!=null && markerSelectedId==e.posizione)
                         ).toList():[],
                         polygonOptions: const PolygonOptions(
                             borderColor: Colors.blueAccent,
                             color: Colors.black12,
                             borderStrokeWidth: 3),
                         popupOptions: PopupOptions(
+
                             popupState: PopupState(),
                             popupSnap: PopupSnap.markerTop,
                             popupController: _popupController,
                             popupBuilder: (_, marker) => Container(
-                            
                               color: Colors.transparent,
                               child:
                                     Column(
@@ -173,7 +182,9 @@ class _SearchScreenState extends State<SearchScreen>
                                           onTap: ()=>{},
                                           nome: e.nome,
                                           ente: e.ente,
+                                          struttura: e.struttura,
                                           indirizzo: e.indirizzo,
+
                                         )
                                       ).toList()
                                     )

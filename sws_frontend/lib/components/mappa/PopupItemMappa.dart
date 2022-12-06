@@ -6,6 +6,7 @@ class PopupItemMappa extends StatelessWidget {
   final VoidCallback onTap;
   final String nome;
   final String ente;
+  final String struttura;
   final String indirizzo;
 
   const PopupItemMappa(
@@ -13,6 +14,7 @@ class PopupItemMappa extends StatelessWidget {
       required this.onTap,
       required this.nome,
       required this.ente,
+      required this.struttura,
       required this.indirizzo})
       : super(key: key);
 
@@ -20,16 +22,19 @@ class PopupItemMappa extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
+
         child: InkWell(
           splashColor: Colors.blue.withAlpha(30),
           onTap: onTap,
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+
+
+            //mainAxisSize: MainAxisSize.min,
             children: <Widget>[
                ListTile(
                 leading: const Icon(Icons.account_balance_outlined),
                 title: Text(nome),
-                subtitle: Text(ente),
+                subtitle: Text(struttura),
               )
             ],
           ),
