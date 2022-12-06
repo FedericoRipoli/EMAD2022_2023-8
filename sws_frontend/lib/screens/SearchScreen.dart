@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/aree/HorizontalListAree.dart';
 import 'package:frontend_sws/components/eventi/CardEvento.dart';
@@ -6,11 +7,14 @@ import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import '../components/aree/DropdownAree.dart';
 import '../theme/theme.dart';
 
 class SearchScreen extends StatefulWidget {
   final bool isServizi;
-  const SearchScreen({Key? key, required this.isServizi}) : super(key: key);
+  bool isFilterOpen = false;
+
+  SearchScreen({Key? key, required this.isServizi}) : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -38,63 +42,96 @@ class _SearchScreenState extends State<SearchScreen>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
-        child: GFAppBar(
-          backgroundColor: AppColors.logoBlue,
-          searchBar: true,
-          searchHintText: "Cerca...",
-          searchHintStyle: const TextStyle(fontSize: 18, color: Colors.white),
-          searchTextStyle: const TextStyle(fontSize: 18, color: Colors.white),
-          searchBarColorTheme: AppColors.white,
-          //searchController: ,
-          leading: IconButton(
+      appBar: GFAppBar(
+        backgroundColor: AppColors.logoBlue,
+        //searchController: ,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            )),
+        automaticallyImplyLeading: true,
+        title: GFSegmentTabs(
+          height: 38,
+          tabController: tabController,
+          tabBarColor: appTheme.primaryColor,
+          labelColor: appTheme.primaryColor,
+          labelPadding: const EdgeInsets.all(8),
+          labelStyle: const TextStyle(fontSize: 16, fontFamily: "FredokaOne"),
+          unselectedLabelStyle:
+              const TextStyle(fontSize: 16, fontFamily: "FredokaOne"),
+          unselectedLabelColor: GFColors.WHITE,
+          indicator: const BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+          indicatorPadding: const EdgeInsets.all(0.6),
+          indicatorWeight: 4,
+          indicatorSize: TabBarIndicatorSize.tab,
+          border: Border.all(color: appTheme.primaryColor, width: 0.5),
+          length: 2,
+          tabs: const <Widget>[
+            Text(
+              "Lista",
+            ),
+            Text(
+              "Mappa",
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                setState(() {
+                  widget.isFilterOpen = !widget.isFilterOpen;
+                });
               },
               icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              )),
-          automaticallyImplyLeading: true,
-          title: GFSegmentTabs(
-            height: 38,
-            tabController: tabController,
-            tabBarColor: appTheme.primaryColor,
-            labelColor: appTheme.primaryColor,
-            labelPadding: const EdgeInsets.all(8),
-            labelStyle: const TextStyle(fontSize: 16, fontFamily: "FredokaOne"),
-            unselectedLabelStyle:
-                const TextStyle(fontSize: 16, fontFamily: "FredokaOne"),
-            unselectedLabelColor: GFColors.WHITE,
-            indicator: const BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-              ),
-            ),
-            indicatorPadding: const EdgeInsets.all(0.6),
-            indicatorWeight: 4,
-            indicatorSize: TabBarIndicatorSize.tab,
-            border: Border.all(color: appTheme.primaryColor, width: 0.5),
-            length: 2,
-            tabs: const <Widget>[
-              Text(
-                "Lista",
-              ),
-              Text(
-                "Mappa",
-              ),
-            ],
-          ),
-          actions: [
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.filter_list_outlined,
-                  color: AppColors.white,
-                ))
-          ],
+                Icons.search,
+                color: AppColors.white,
+              ))
+        ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(widget.isFilterOpen ? 100 : 0),
+          child: widget.isFilterOpen
+              ? Container(
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 3, bottom: 3),
+                  color: AppColors.logoBlue,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 320,
+                        height: 40,
+                        child: TextField(
+                            style: TextStyle(color: Colors.white),
+                            cursorColor: Colors.white,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                                labelStyle: TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                                labelText: 'Cerca un servizio',
+                                fillColor: Colors.white,
+                                floatingLabelStyle:
+                                    TextStyle(color: Colors.white))),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const DropdownAree()
+                    ],
+                  ),
+                )
+              : Container(),
         ),
       ),
       body: GFTabBarView(controller: tabController, children: <Widget>[
@@ -137,7 +174,6 @@ class _SearchScreenState extends State<SearchScreen>
     child: widget.isServizi
         ? Column(
             children: <Widget>[
-              HorizontalListAree(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -198,12 +234,20 @@ class _SearchScreenState extends State<SearchScreen>
               ),
               !isEmptyList
                   ? ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
+                      //physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(8),
+                      scrollDirection: Axis.vertical,
                       itemCount: listEventi.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return listEventi[index];
+                        return GridView.count(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          crossAxisCount: 2,
+                          children: List.generate(2, (index) {
+                            return listEventi[index];
+                          }),
+                        );
                       },
                       separatorBuilder: (BuildContext context, int index) =>
                           const Divider(
@@ -215,7 +259,7 @@ class _SearchScreenState extends State<SearchScreen>
                       child: Text(
                         "Nessun Risultato :(",
                         style:
-                            TextStyle(fontSize: 18, fontFamily: "FredokaOne"),
+                            TextStyle(fontSize: 22, fontFamily: "FredokaOne"),
                       ),
                     ),
             ],
@@ -237,6 +281,24 @@ List<CardServizio> listServices = [
 ];
 
 List<CardEvento> listEventi = [
+  CardEvento(
+    luogo: '20:00',
+    data: '22 Dicembre',
+    imgPath: 'images/volantino.jpg',
+    nome: 'Luci di Salerno',
+  ),
+  CardEvento(
+    luogo: '20:00',
+    data: '22 Dicembre',
+    imgPath: 'images/volantino.jpg',
+    nome: 'Luci di Salerno',
+  ),
+  CardEvento(
+    luogo: '20:00',
+    data: '22 Dicembre',
+    imgPath: 'images/volantino.jpg',
+    nome: 'Luci di Salerno',
+  ),
   CardEvento(
     luogo: '20:00',
     data: '22 Dicembre',
