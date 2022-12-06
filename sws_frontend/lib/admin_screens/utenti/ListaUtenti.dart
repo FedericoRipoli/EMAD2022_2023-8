@@ -8,6 +8,7 @@ import 'package:frontend_sws/services/UtenteService.dart';
 import 'package:frontend_sws/services/entity/Utente.dart';
 import 'package:frontend_sws/components/filtri/FilterBar.dart';
 
+import '../../components/filtri/DropDownFilter.dart';
 import '../../components/filtri/GenericFilter.dart';
 import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
@@ -35,11 +36,11 @@ class _ListaUtentiState extends State<ListaUtenti> {
     super.initState();
   }
 
-  void _filterEnteChange(String text) {
+  void _filterEnteChange(String? text) {
     filterEnte=text;
     _pullRefresh();
   }
-  void _filterUtenteChange(String text) {
+  void _filterUtenteChange(String? text) {
     filterUtente=text;
     _pullRefresh();
   }
@@ -92,7 +93,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
               FilterBar(filters: [
                 TextFilter(name: 'Ente', positionType: GenericFilterPositionType.row, valueChange: _filterEnteChange),
                 TextFilter(name: 'Utente', positionType: GenericFilterPositionType.row, valueChange: _filterUtenteChange),
-
+                
               ]),
 
               Flexible(

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/filtri/GenericFilter.dart';
 import 'package:frontend_sws/main.dart';
 
+import 'DropDownFilter.dart';
 import 'TextFilter.dart';
 
 class FilterBar extends StatefulWidget {
@@ -17,62 +18,51 @@ class FilterBar extends StatefulWidget {
 }
 
 class _FilterBar extends State<FilterBar> {
+  EdgeInsets defaultPadding=const EdgeInsets.all(8.0);
   @override
   Widget build(BuildContext context) {
     List<Widget> columnChild = [];
     for (GenericFilter filter in widget.filters) {
-      Widget w;
-      switch (filter.runtimeType) {
-        case TextFilter:
-        default:
-          w = TextField(
-              cursorColor: Colors.black,
-              controller: TextEditingController(),
-              onChanged:(value) {
-                if ((filter as TextFilter).debounce?.isActive ?? false) filter.debounce?.cancel();
-                filter.debounce = Timer( Duration(milliseconds: filter.delayMilliSec), () {
-                  filter.valueChange(value);
-                });
-              },
-              decoration: InputDecoration(
-                border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                fillColor: Colors.white,
-                filled: true,
-                hintText: filter.name,
-              ));
-          break;
-      }
-      Widget toadd=Expanded(
-          child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child:w));
-              Widget? lastChild = columnChild.isNotEmpty ? columnChild.last : null;
+      Widget w=filter.getWidget();
+      Widget toadd = w;
+      Widget? lastChild = columnChild.isNotEmpty ? columnChild.last : null;
       if (lastChild == null) {
         columnChild.add(filter.positionType == GenericFilterPositionType.col
             ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [toadd],
+                children: [
+                  Padding(padding: defaultPadding, child: toadd)
+                ],
               )
             : Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [toadd],
+                children: [
+                  Expanded(
+                      child: Padding(
+                          padding: defaultPadding, child: toadd))
+                ],
               ));
       } else {
-        if ((filter.positionType == GenericFilterPositionType.col &&
-                lastChild is Column) ||
-            (filter.positionType == GenericFilterPositionType.row &&
-                lastChild is Row)) {
-          (lastChild as Flex).children.add(toadd);
+        if (filter.positionType == GenericFilterPositionType.col &&
+                lastChild is Column){
+          (lastChild).children.add(Padding(
+                  padding: defaultPadding, child: toadd));
+        }else if(filter.positionType == GenericFilterPositionType.row &&
+                lastChild is Row) {
+          (lastChild).children.add(Expanded(
+              child: Padding(
+                  padding: defaultPadding, child: toadd)));
         } else {
           columnChild.add(filter.positionType == GenericFilterPositionType.col
               ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [toadd],
+                  children: [
+                    Padding(padding: defaultPadding, child: toadd)
+                  ],
                 )
               : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [toadd],
+                  children: [
+                    Expanded(
+                        child: Padding(
+                            padding: defaultPadding, child: toadd))
+                  ],
                 ));
         }
       }
@@ -81,7 +71,7 @@ class _FilterBar extends State<FilterBar> {
         color: appTheme.primaryColor,
         alignment: Alignment.center,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: columnChild,
         ));
   }

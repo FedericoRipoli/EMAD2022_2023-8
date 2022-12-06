@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+
 import 'GenericFilter.dart';
 
 class TextFilter extends GenericFilter{
@@ -12,4 +15,27 @@ class TextFilter extends GenericFilter{
   });
   Timer? debounce;
   int delayMilliSec;
+
+  @override
+  Widget getWidget() {
+    return TextField(
+        cursorColor: Colors.black,
+        controller: TextEditingController(),
+        onChanged: (value) {
+          if (debounce?.isActive ?? false){
+            debounce?.cancel();
+          }
+          debounce =
+              Timer(Duration(milliseconds: delayMilliSec), () {
+                valueChange(value);
+              });
+        },
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          fillColor: Colors.white,
+          filled: true,
+          hintText: name,
+        ));
+  }
 }
