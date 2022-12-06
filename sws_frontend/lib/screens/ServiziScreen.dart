@@ -14,6 +14,7 @@ import 'package:frontend_sws/services/entity/Servizio.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:latlong2/latlong.dart';
+import '../components/aree/DropdownAree.dart';
 import '../components/mappa/MarkerMappa.dart';
 import '../components/mappa/PopupItemMappa.dart';
 import '../components/loading/AllPageLoad.dart';
@@ -22,7 +23,8 @@ import '../theme/theme.dart';
 
 class ServiziScreen extends StatefulWidget {
   final bool isServizi;
-  const ServiziScreen({Key? key, required this.isServizi}) : super(key: key);
+  bool isFilterOpen = false;
+  ServiziScreen({Key? key, required this.isServizi}) : super(key: key);
 
   @override
   State<ServiziScreen> createState() => _ServiziScreenState();
@@ -35,7 +37,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   late Future<List<PuntoMappaDto>?> initCallMap;
   final PopupController _popupController = PopupController();
   final PagingController<int, Servizio> _pagingController =
-  PagingController(firstPageKey: 0);
+      PagingController(firstPageKey: 0);
   ServizioService servizioService = ServizioService();
   String? markerSelectedId;
 
@@ -49,8 +51,8 @@ class _ServiziScreenState extends State<ServiziScreen>
     initCallMap = loadMapView();
   }
 
-  Future<List<PuntoMappaDto>?>loadMapView() async {
-    ServizioService servizioService=ServizioService();
+  Future<List<PuntoMappaDto>?> loadMapView() async {
+    ServizioService servizioService = ServizioService();
     return servizioService.findPuntiMappa(null);
   }
 
@@ -62,8 +64,7 @@ class _ServiziScreenState extends State<ServiziScreen>
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems =
-      await servizioService.serviziList(null, pageKey,false);
+      final newItems = await servizioService.serviziList(null, pageKey, false);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -79,68 +80,101 @@ class _ServiziScreenState extends State<ServiziScreen>
   Future<void> _pullRefresh() async {
     _pagingController.refresh();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
-        child: GFAppBar(
-          backgroundColor: AppColors.logoBlue,
-          searchBar: true,
-          searchHintText: "Cerca...",
-          searchHintStyle: const TextStyle(fontSize: 18, color: Colors.white),
-          searchTextStyle: const TextStyle(fontSize: 18, color: Colors.white),
-          searchBarColorTheme: AppColors.white,
-          //searchController: ,
-          leading: IconButton(
+      appBar: GFAppBar(
+        backgroundColor: AppColors.logoBlue,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            )),
+        automaticallyImplyLeading: true,
+        title: GFSegmentTabs(
+          height: 38,
+          tabController: tabController,
+          tabBarColor: appTheme.primaryColor,
+          labelColor: appTheme.primaryColor,
+          labelPadding: const EdgeInsets.all(8),
+          labelStyle: const TextStyle(fontSize: 16, fontFamily: "FredokaOne"),
+          unselectedLabelStyle:
+              const TextStyle(fontSize: 16, fontFamily: "FredokaOne"),
+          unselectedLabelColor: GFColors.WHITE,
+          indicator: const BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+          indicatorPadding: const EdgeInsets.all(0.6),
+          indicatorWeight: 4,
+          indicatorSize: TabBarIndicatorSize.tab,
+          border: Border.all(color: appTheme.primaryColor, width: 0.5),
+          length: 2,
+          tabs: const <Widget>[
+            Text(
+              "Lista",
+            ),
+            Text(
+              "Mappa",
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                setState(() {
+                  widget.isFilterOpen = !widget.isFilterOpen;
+                });
               },
               icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              )),
-          automaticallyImplyLeading: true,
-          title: GFSegmentTabs(
-            height: 38,
-            tabController: tabController,
-            tabBarColor: appTheme.primaryColor,
-            labelColor: appTheme.primaryColor,
-            labelPadding: const EdgeInsets.all(8),
-            labelStyle: const TextStyle(fontSize: 16, fontFamily: "FredokaOne"),
-            unselectedLabelStyle:
-                const TextStyle(fontSize: 16, fontFamily: "FredokaOne"),
-            unselectedLabelColor: GFColors.WHITE,
-            indicator: const BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-              ),
-            ),
-            indicatorPadding: const EdgeInsets.all(0.6),
-            indicatorWeight: 4,
-            indicatorSize: TabBarIndicatorSize.tab,
-            border: Border.all(color: appTheme.primaryColor, width: 0.5),
-            length: 2,
-            tabs: const <Widget>[
-              Text(
-                "Lista",
-              ),
-              Text(
-                "Mappa",
-              ),
-            ],
-          ),
-          actions: [
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.filter_list_outlined,
-                  color: AppColors.white,
-                ))
-          ],
+                Icons.search,
+                color: AppColors.white,
+              ))
+        ],
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(widget.isFilterOpen ? 100 : 0),
+          child: widget.isFilterOpen
+              ? Container(
+                  padding: const EdgeInsets.only(
+                      left: 16, right: 16, top: 3, bottom: 3),
+                  color: AppColors.logoBlue,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 320,
+                        height: 40,
+                        child: TextField(
+                            style: TextStyle(color: Colors.white),
+                            cursorColor: Colors.white,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                                labelStyle: TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                                labelText: 'Cerca un servizio',
+                                fillColor: Colors.white,
+                                floatingLabelStyle:
+                                    TextStyle(color: Colors.white))),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const DropdownAree()
+                    ],
+                  ),
+                )
+              : Container(),
         ),
       ),
       body: GFTabBarView(controller: tabController, children: <Widget>[
@@ -150,31 +184,29 @@ class _ServiziScreenState extends State<ServiziScreen>
             builder: ((context, snapshot) {
               List<Widget> children = [];
 
-              children.add( FlutterMap(
-
+              children.add(FlutterMap(
                   options: MapOptions(
                     center: LatLng(40.6824408, 14.7680961),
                     zoom: 15.0,
                     maxZoom: 30.0,
                     enableScrollWheel: true,
                     scrollWheelVelocity: 0.005,
-                    onTap: (_, __) { _popupController
-                        .hideAllPopups();
-                    markerSelectedId=null;},
+                    onTap: (_, __) {
+                      _popupController.hideAllPopups();
+                      markerSelectedId = null;
+                    },
                   ),
-
                   children: [
                     TileLayer(
-                        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
+                        urlTemplate:
+                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
                     MarkerClusterLayerWidget(
-
                       options: MarkerClusterLayerOptions(
                         onMarkerTap: (marker) {
                           setState(() {
-                            markerSelectedId=(marker as MarkerMappa).punto.posizione;
-
+                            markerSelectedId =
+                                (marker as MarkerMappa).punto.posizione;
                           });
-
                         },
                         spiderfyCircleRadius: 80,
                         spiderfySpiralDistanceMultiplier: 2,
@@ -187,40 +219,39 @@ class _ServiziScreenState extends State<ServiziScreen>
                           padding: EdgeInsets.all(50),
                           maxZoom: 15,
                         ),
-                        markers: snapshot.hasData? snapshot.data!.where((element) => element.posizione.isNotEmpty).map((e) =>
-                            MarkerMappa(punto:e,isSelected: markerSelectedId!=null && markerSelectedId==e.posizione)
-                        ).toList():[],
+                        markers: snapshot.hasData
+                            ? snapshot.data!
+                                .where(
+                                    (element) => element.posizione.isNotEmpty)
+                                .map((e) => MarkerMappa(
+                                    punto: e,
+                                    isSelected: markerSelectedId != null &&
+                                        markerSelectedId == e.posizione))
+                                .toList()
+                            : [],
                         polygonOptions: const PolygonOptions(
                             borderColor: Colors.blueAccent,
                             color: Colors.black12,
                             borderStrokeWidth: 3),
                         popupOptions: PopupOptions(
-
                             popupState: PopupState(),
                             popupSnap: PopupSnap.markerTop,
                             popupController: _popupController,
                             popupBuilder: (_, marker) => Container(
-                            
-                              color: Colors.transparent,
-                              child:
-                                    Column(
-                                        mainAxisSize: MainAxisSize.min,
-
-                                      children:(marker as MarkerMappa).punto.punti.map((e) =>
-                                        PopupItemMappa(
-                                          onTap: ()=>{},
-                                          nome: e.nome,
-                                          ente: e.ente,
-                                          struttura: e.struttura,
-                                          indirizzo: e.indirizzo,
-
-                                        )
-                                      ).toList()
-                                    )
-
-
-
-                            )),
+                                color: Colors.transparent,
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: (marker as MarkerMappa)
+                                        .punto
+                                        .punti
+                                        .map((e) => PopupItemMappa(
+                                              onTap: () => {},
+                                              nome: e.nome,
+                                              ente: e.ente,
+                                              struttura: e.struttura,
+                                              indirizzo: e.indirizzo,
+                                            ))
+                                        .toList()))),
                         builder: (context, markers) {
                           return Container(
                             decoration: BoxDecoration(
@@ -234,11 +265,9 @@ class _ServiziScreenState extends State<ServiziScreen>
                             ),
                           );
                         },
+                      ),
                     ),
-                ),
-                ]
-              )
-              );
+                  ]));
               if (!snapshot.hasData && !snapshot.hasError) {
                 children.add(const AllPageLoadTransparent());
               }
@@ -248,36 +277,31 @@ class _ServiziScreenState extends State<ServiziScreen>
                   children: children,
                 ),
               );
-            }
-            )),
+            })),
       ]),
     );
   }
 
-
-
   late Widget searchList = Scaffold(
     body: widget.isServizi
         ? RefreshIndicator(
-        onRefresh: _pullRefresh,
-        child: Column(children: <Widget>[
-          Flexible(
-            child: PagedListView<int, Servizio>(
-              shrinkWrap: false,
-              pagingController: _pagingController,
-              builderDelegate: PagedChildBuilderDelegate<Servizio>(
-                  itemBuilder: (context, item, index) => CardServizio(
-                    idServizio: item.id!,
-                    nomeServizio: item.nome,
-                    ente: item.struttura!.ente!.denominazione,
-                    area: item.aree!.map((e) => e.nome).join(", "),
-                    posizione: item.struttura?.posizione?.indirizzo,
-                  )),
-            ),
-          )
-        ]))
-        : Column(
-
-        ),
+            onRefresh: _pullRefresh,
+            child: Column(children: <Widget>[
+              Flexible(
+                child: PagedListView<int, Servizio>(
+                  shrinkWrap: false,
+                  pagingController: _pagingController,
+                  builderDelegate: PagedChildBuilderDelegate<Servizio>(
+                      itemBuilder: (context, item, index) => CardServizio(
+                            idServizio: item.id!,
+                            nomeServizio: item.nome,
+                            ente: item.struttura!.ente!.denominazione,
+                            area: item.aree!.map((e) => e.nome).join(", "),
+                            posizione: item.struttura?.posizione?.indirizzo,
+                          )),
+                ),
+              )
+            ]))
+        : Column(),
   );
 }
