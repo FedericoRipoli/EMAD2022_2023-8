@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/admin_screens/aree/GestioneArea.dart';
-import 'package:frontend_sws/components/filtri/FilterController.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/components/aree/AreaListItem.dart';
 import 'package:frontend_sws/util/ToastUtil.dart';
@@ -24,16 +23,13 @@ class _ListaAreeState extends State<ListaAree> {
   AreeService areeService = AreeService();
   final PagingController<int, Area> _pagingController =
       PagingController(firstPageKey: 0);
-  late List<FilterTextController> _inputFilter;
 
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
-    _inputFilter = <FilterTextController>[
-      FilterTextController(textPlaceholder: 'Nome', f: _executeSearch),
-    ];
+
     super.initState();
   }
 
@@ -55,9 +51,7 @@ class _ListaAreeState extends State<ListaAree> {
   void dispose() {
     _pagingController.dispose();
     super.dispose();
-    for (var el in _inputFilter) {
-      el.dispose();
-    }
+
   }
 
   @override
@@ -80,7 +74,6 @@ class _ListaAreeState extends State<ListaAree> {
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
-              FilterBar(controllers: _inputFilter),
               Flexible(
                   child: PagedListView<int, Area>(
                 shrinkWrap: false,

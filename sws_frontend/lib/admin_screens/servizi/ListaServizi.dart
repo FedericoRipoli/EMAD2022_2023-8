@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/filtri/FilterController.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/util/ToastUtil.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -28,7 +27,7 @@ class _ListaServiziState extends State<ListaServizi> {
   late String idEnte;
   final PagingController<int, Servizio> _pagingController =
       PagingController(firstPageKey: 0);
-  late List<FilterTextController> _inputFilter;
+
 
   @override
   void initState() {
@@ -36,9 +35,7 @@ class _ListaServiziState extends State<ListaServizi> {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
-    _inputFilter = <FilterTextController>[
-      FilterTextController(textPlaceholder: 'Nome', f: _executeSearch),
-    ];
+
     super.initState();
   }
 
@@ -65,9 +62,7 @@ class _ListaServiziState extends State<ListaServizi> {
   void dispose() {
     _pagingController.dispose();
     super.dispose();
-    for (var el in _inputFilter) {
-      el.dispose();
-    }
+
   }
 
   @override
@@ -91,7 +86,7 @@ class _ListaServiziState extends State<ListaServizi> {
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
-              FilterBar(controllers: _inputFilter),
+              //FilterBar(controllers: _inputFilter),
               Flexible(
                 child: PagedListView<int, Servizio>(
                   shrinkWrap: false,

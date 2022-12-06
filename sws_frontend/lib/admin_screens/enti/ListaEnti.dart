@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/filtri/FilterController.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/services/EnteService.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -25,16 +24,13 @@ class _ListaEntiState extends State<ListaEnti> {
   EnteService enteService = EnteService();
   final PagingController<int, Ente> _pagingController =
       PagingController(firstPageKey: 0);
-  late List<FilterTextController> _inputFilter;
 
   @override
   void initState() {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
-    _inputFilter = <FilterTextController>[
-      FilterTextController(textPlaceholder: 'Cerca ente', f: _executeSearch),
-    ];
+
     super.initState();
   }
 
@@ -86,7 +82,7 @@ class _ListaEntiState extends State<ListaEnti> {
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
-              FilterBar(controllers: _inputFilter),
+              //FilterBar(controllers: _inputFilter),
               Flexible(
                   child: PagedListView<int, Ente>(
                 scrollDirection: Axis.vertical,
