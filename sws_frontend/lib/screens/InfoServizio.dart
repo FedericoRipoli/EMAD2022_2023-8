@@ -1,77 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/generali/CustomButton.dart';
+import 'package:frontend_sws/components/loading/AllPageLoadTransparent.dart';
+import 'package:frontend_sws/services/ServizioService.dart';
+import 'package:frontend_sws/services/entity/Servizio.dart';
 import 'package:frontend_sws/theme/theme.dart';
-import 'package:getwidget/components/button/gf_button.dart';
-import 'package:getwidget/getwidget.dart';
 
 import '../components/generali/CustomAppBar.dart';
+import '../components/servizi/DetailPageService.dart';
 
-class InfoScreen extends StatefulWidget {
-  const InfoScreen({Key? key}) : super(key: key);
+class InfoServizio extends StatefulWidget {
+
+  String idServizio;
+
+  InfoServizio(this.idServizio, {super.key});
 
   @override
-  State<InfoScreen> createState() => _InfoScreenState();
+  State<StatefulWidget> createState() => _InfoServizioState();
+
 }
 
-class _InfoScreenState extends State<InfoScreen> with TickerProviderStateMixin {
-  AnimationController? animationController;
-  Animation<double>? animation;
-  double opacity1 = 0.0;
-  double opacity2 = 0.0;
-  double opacity3 = 0.0;
+class _InfoServizioState extends State<InfoServizio>{
+  final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
+  late Future<bool> initCall;
+  ServizioService servizioService = ServizioService();
+  Servizio? servizio;
+  bool loaded = false;
 
   @override
   void initState() {
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 1000), vsync: this);
-    animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-        parent: animationController!,
-        curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
-    setData();
     super.initState();
+    initCall = load();
   }
 
-  Future<void> setData() async {
-    animationController?.forward();
-    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+  Future<bool> load() async {
+    servizio = await servizioService.getServizio(widget.idServizio);
+
     setState(() {
-      opacity1 = 1.0;
+    loaded = true;
     });
-    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
-    setState(() {
-      opacity2 = 1.0;
-    });
-    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
-    setState(() {
-      opacity3 = 1.0;
-    });
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: "Info Servizio",
-        iconData: Icons.arrow_back_ios_new,
-      ),
-      backgroundColor: AppColors.white,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(6),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("data"),
-            GFButton(
-              text: "Contatta",
-              icon: Icon(Icons.call),
-              onPressed: () {},
-              size: GFSize.LARGE,
-              fullWidthButton: true,
-            )
-          ],
-        ),
-      ),
-    );
+        key: _scaffoldKeyAdmin,
+        resizeToAvoidBottomInset: false,
+        appBar: CustomAppBar(
+            title: "Info Servizio",
+            iconData: Icons.arrow_back,
+            onPressed: () => Navigator.pop(context)),
+        body: FutureBuilder<bool>(
+            future: initCall,
+            builder: ((context, snapshot) {
+              List<Widget> children = [];
+
+              if (!snapshot.hasData && !snapshot.hasError || !loaded) {
+                children.add(const AllPageLoadTransparent());
+              }
+              List<Widget> columnChild = [];
+              columnChild.add(
+                DetailPageService(
+                    title: servizio!.nome,
+                    ente: "servizio",
+                    area: servizio!.aree.toString())
+              );
+              children.add(SingleChildScrollView(
+                  child: Column(
+                    children: columnChild,
+                  )));
+              return AbsorbPointer(
+                absorbing: !(snapshot.hasData || snapshot.hasError),
+                child: Stack(
+                  children: children,
+                ),
+              );
+            })));
   }
+
 }

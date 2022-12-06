@@ -22,7 +22,7 @@ class CardServizio extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const InfoScreen()),
+          MaterialPageRoute(builder: (context) => InfoServizio("")),
         );
       },
       child: Container(
@@ -51,7 +51,7 @@ class CardServizio extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Nome Servizio 1",
+                      "$title",
                       textAlign: TextAlign.start,
                       style: const TextStyle(
                         color: Colors.black,
@@ -60,7 +60,7 @@ class CardServizio extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Nome Ente 1",
+                      "$ente",
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 16.0,
@@ -79,7 +79,7 @@ class CardServizio extends StatelessWidget {
                           color: AppColors.logoCadmiumOrange,
                         ),
                         Text(
-                          'Persone Anziane',
+                          '$area',
                           style: TextStyle(fontSize: 16),
                         ),
                       ],

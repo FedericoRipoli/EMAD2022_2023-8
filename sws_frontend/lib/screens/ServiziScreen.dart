@@ -10,7 +10,9 @@ import 'package:frontend_sws/components/mappa/PopupItemMappa.dart';
 import 'package:frontend_sws/components/servizi/CardServizio.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/services/ServizioService.dart';
+import 'package:frontend_sws/services/entity/Servizio.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:latlong2/latlong.dart';
 import '../components/mappa/MarkerMappa.dart';
 import '../components/mappa/PopupItemMappa.dart';
@@ -18,27 +20,34 @@ import '../components/loading/AllPageLoad.dart';
 import '../services/dto/PuntoMappaDTO.dart';
 import '../theme/theme.dart';
 
-class SearchScreen extends StatefulWidget {
+class ServiziScreen extends StatefulWidget {
   final bool isServizi;
-  const SearchScreen({Key? key, required this.isServizi}) : super(key: key);
+  const ServiziScreen({Key? key, required this.isServizi}) : super(key: key);
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<ServiziScreen> createState() => _ServiziScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen>
+class _ServiziScreenState extends State<ServiziScreen>
     with TickerProviderStateMixin {
   late TabController tabController;
   bool isChecked = false;
   late Future<List<PuntoMappaDto>?> initCallMap;
   final PopupController _popupController = PopupController();
+  final PagingController<int, Servizio> _pagingController =
+  PagingController(firstPageKey: 0);
+  ServizioService servizioService = ServizioService();
 
   @override
   void initState() {
     super.initState();
+    _pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
     tabController = TabController(length: 2, vsync: this);
     initCallMap = loadMapView();
   }
+
   Future<List<PuntoMappaDto>?>loadMapView() async {
     ServizioService servizioService=ServizioService();
     return servizioService.findPuntiMappa(null);
@@ -50,6 +59,25 @@ class _SearchScreenState extends State<SearchScreen>
     super.dispose();
   }
 
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      final newItems =
+      await servizioService.serviziList(null, pageKey);
+      final isLastPage = newItems == null || newItems.isEmpty;
+      if (isLastPage) {
+        _pagingController.appendLastPage(newItems!);
+      } else {
+        pageKey++;
+        _pagingController.appendPage(newItems, pageKey);
+      }
+    } catch (error) {
+      _pagingController.error = error;
+    }
+  }
+
+  Future<void> _pullRefresh() async {
+    _pagingController.refresh();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -194,8 +222,6 @@ class _SearchScreenState extends State<SearchScreen>
                             ),
                           );
                         },
-
-
                     ),
                 ),
                 ]
@@ -218,146 +244,28 @@ class _SearchScreenState extends State<SearchScreen>
 
 
 
-
-  /*Container(
-    child: FlutterMap(
-      options: MapOptions(
-        center: LatLng(40.6824408, 14.7680961),
-        zoom: 15.0,
-        maxZoom: 30.0,
-        enableScrollWheel: true,
-        scrollWheelVelocity: 0.005,
-      ),
-      children: [
-        TileLayer(
-            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
-        MarkerLayer(
-          markers: [
-            Marker(
-                width: 30.0,
-                height: 30.0,
-                point: LatLng(40.6824408, 14.7680961),
-                builder: (ctx) => const Icon(
-                      Icons.location_on,
-                      color: AppColors.logoBlue,
-                      size: 50,
-                    ))
-          ],
-        )
-      ],
-    ),
-  );*/
-
-  late Widget searchList = SingleChildScrollView(
-    child: widget.isServizi
-        ? Column(
-            children: <Widget>[
-              HorizontalListAree(),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(top: 18, bottom: 18),
-                    child: Text(
-                      "Risultati Ricerca:",
-                      style: TextStyle(
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.logoCadmiumOrange),
-                    ),
-                  ),
-                ],
-              ),
-              !isEmptyList
-                  ? ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(12),
-                      itemCount: listServices.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return listServices[index];
-                      },
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(
-                        color: AppColors.white,
-                        thickness: 0.0,
-                      ),
-                    )
-                  : const Center(
-                      child: Text(
-                        "Nessun Risultato :(",
-                        style:
-                            TextStyle(fontSize: 18, fontFamily: "FredokaOne"),
-                      ),
-                    ),
-            ],
+  late Widget searchList = Scaffold(
+    body: widget.isServizi
+        ? RefreshIndicator(
+        onRefresh: _pullRefresh,
+        child: Column(children: <Widget>[
+          Flexible(
+            child: PagedListView<int, Servizio>(
+              shrinkWrap: false,
+              pagingController: _pagingController,
+              builderDelegate: PagedChildBuilderDelegate<Servizio>(
+                  itemBuilder: (context, item, index) => CardServizio(
+                    title: item.nome,
+                    ente: "TODO nome ente",
+                    area: item.aree!.map((e) => e.nome).join(", "),
+                  )),
+            ),
           )
+        ]))
         : Column(
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Padding(
-                    padding: EdgeInsetsDirectional.only(top: 18, bottom: 18),
-                    child: Text(
-                      "Eventi più recenti in programma:",
-                      style: TextStyle(
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.logoCadmiumOrange),
-                    ),
-                  ),
-                ],
-              ),
-              !isEmptyList
-                  ? ListView.separated(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.all(12),
-                      itemCount: listEventi.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return listEventi[index];
-                      },
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(
-                        color: AppColors.white,
-                        thickness: 0.0,
-                      ),
-                    )
-                  : const Center(
-                      child: Text(
-                        "Nessun Risultato :(",
-                        style:
-                            TextStyle(fontSize: 18, fontFamily: "FredokaOne"),
-                      ),
-                    ),
-            ],
-          ),
+
+        ),
   );
 }
-
-List<CardServizio> listServices = [
-  const CardServizio(
-    title: "title",
-    ente: "subtitle",
-    area: "ambito",
-  ),
-  const CardServizio(
-    title: "title",
-    ente: "subtitle",
-    area: "ambito",
-  ),
-];
-
-List<CardEvento> listEventi = [
-  CardEvento(
-    luogo: '20:00',
-    data: '22 Dicembre',
-    imgPath: 'images/volantino.jpg',
-    nome: 'Luci di Salerno',
-  ),
-];
 
 bool isEmptyList = false;
