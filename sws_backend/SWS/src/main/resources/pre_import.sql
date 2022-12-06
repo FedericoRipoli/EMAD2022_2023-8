@@ -6,3 +6,5 @@ update import_servizi set struttura="Villa Formosa - Cava de' Tirreni", latlong=
                                                                                                                and indirizzo="Via Pietro Formosa, 19 - 84013 Cava de' Tirreni (SA)";
 update import_servizi set struttura="Villa Formosa - Siano", latlong="40.724125, 14.849915" where ente="Centro di Riabilitazione Lars S.r.l" and struttura="Villa Formosa"
 update import_servizi set struttura="Sede Cassiopea" where ente="Cassiopea Società Cooperativa Sociale" and servizio="Centro di prima accoglienza e di sistemazione alloggiativa temporanea" and indirizzo="Via Ostaglio - 84133 Salerno (SA)"
+update emad.struttura set denominazione=replace(denominazione,"\"\"","")  where denominazione like "%\"\"%"
+update emad.ente set denominazione=replace(denominazione,"\"\"","")  where denominazione like "%\"\"%"

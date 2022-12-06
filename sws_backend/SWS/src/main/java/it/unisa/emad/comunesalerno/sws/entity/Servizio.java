@@ -10,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -26,7 +27,7 @@ public class Servizio {
     @Lob
     private String contenuto;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Contatto contatto;
 
     @Enumerated(EnumType.STRING)
@@ -36,9 +37,9 @@ public class Servizio {
     private String note;
 
     @ElementCollection
-    private List<String> hashtags;
+    private Set<String> hashtags;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     private List<Area> aree;
 
     @ManyToOne

@@ -21,13 +21,12 @@ class AreaListItem extends StatelessWidget {
     return GFCard(
       elevation: 8,
       padding: EdgeInsets.zero,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28.0),
-      ),
+      borderRadius: BorderRadius.circular(28.0),
+
       title: GFListTile(
         padding: const EdgeInsets.all(8),
         avatar: const CustomAvatar(
-          imgAsset: "assets/images/user_default.png",
+          imgAsset: "images/area.png",
           size: 35,
         ),
         onTap: onTap,

@@ -37,6 +37,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   final PagingController<int, Servizio> _pagingController =
   PagingController(firstPageKey: 0);
   ServizioService servizioService = ServizioService();
+  String? markerSelectedId;
 
   @override
   void initState() {
@@ -157,8 +158,9 @@ class _ServiziScreenState extends State<ServiziScreen>
                     maxZoom: 30.0,
                     enableScrollWheel: true,
                     scrollWheelVelocity: 0.005,
-                    onTap: (_, __) => _popupController
-                        .hideAllPopups(),
+                    onTap: (_, __) { _popupController
+                        .hideAllPopups();
+                    markerSelectedId=null;},
                   ),
 
                   children: [
@@ -167,6 +169,13 @@ class _ServiziScreenState extends State<ServiziScreen>
                     MarkerClusterLayerWidget(
 
                       options: MarkerClusterLayerOptions(
+                        onMarkerTap: (marker) {
+                          setState(() {
+                            markerSelectedId=(marker as MarkerMappa).punto.posizione;
+
+                          });
+
+                        },
                         spiderfyCircleRadius: 80,
                         spiderfySpiralDistanceMultiplier: 2,
                         circleSpiralSwitchover: 12,
@@ -179,13 +188,14 @@ class _ServiziScreenState extends State<ServiziScreen>
                           maxZoom: 15,
                         ),
                         markers: snapshot.hasData? snapshot.data!.where((element) => element.posizione.isNotEmpty).map((e) =>
-                            MarkerMappa(e)
+                            MarkerMappa(punto:e,isSelected: markerSelectedId!=null && markerSelectedId==e.posizione)
                         ).toList():[],
                         polygonOptions: const PolygonOptions(
                             borderColor: Colors.blueAccent,
                             color: Colors.black12,
                             borderStrokeWidth: 3),
                         popupOptions: PopupOptions(
+
                             popupState: PopupState(),
                             popupSnap: PopupSnap.markerTop,
                             popupController: _popupController,
@@ -201,7 +211,9 @@ class _ServiziScreenState extends State<ServiziScreen>
                                           onTap: ()=>{},
                                           nome: e.nome,
                                           ente: e.ente,
+                                          struttura: e.struttura,
                                           indirizzo: e.indirizzo,
+
                                         )
                                       ).toList()
                                     )
@@ -267,5 +279,27 @@ class _ServiziScreenState extends State<ServiziScreen>
         ),
   );
 }
+
+List<CardServizio> listServices = [
+  const CardServizio(
+    title: "title",
+    ente: "subtitle",
+    area: "ambito",
+  ),
+  const CardServizio(
+    title: "title",
+    ente: "subtitle",
+    area: "ambito",
+  ),
+];
+
+List<CardEvento> listEventi = [
+  CardEvento(
+    luogo: '20:00',
+    data: '22 Dicembre',
+    imgPath: 'images/volantino.jpg',
+    nome: 'Luci di Salerno',
+  ),
+];
 
 bool isEmptyList = false;
