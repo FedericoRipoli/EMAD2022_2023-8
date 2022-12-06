@@ -1,11 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/aree/HorizontalListAree.dart';
 import 'package:frontend_sws/components/eventi/CardEvento.dart';
+import 'package:frontend_sws/components/loading/AllPageLoadTransparent.dart';
 import 'package:frontend_sws/components/servizi/CardServizio.dart';
 import 'package:frontend_sws/main.dart';
+import 'package:frontend_sws/services/ServizioService.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import '../components/generali/MarkerMappa.dart';
+import '../components/loading/AllPageLoad.dart';
+import '../services/dto/PuntoMappaDTO.dart';
 import '../theme/theme.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -20,11 +27,17 @@ class _SearchScreenState extends State<SearchScreen>
     with TickerProviderStateMixin {
   late TabController tabController;
   bool isChecked = false;
+  late Future<List<PuntoMappaDto>?> initCallMap;
 
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 2, vsync: this);
+    initCallMap = loadMapView();
+  }
+  Future<List<PuntoMappaDto>?>loadMapView() async {
+    ServizioService servizioService=ServizioService();
+    return servizioService.findPuntiMappa(null);
   }
 
   @override
@@ -99,12 +112,49 @@ class _SearchScreenState extends State<SearchScreen>
       ),
       body: GFTabBarView(controller: tabController, children: <Widget>[
         searchList,
-        searchMap,
+        FutureBuilder<List<PuntoMappaDto>?>(
+            future: initCallMap,
+            builder: ((context, snapshot) {
+              List<Widget> children = [];
+
+              children.add( FlutterMap(
+                  options: MapOptions(
+                    center: LatLng(40.6824408, 14.7680961),
+                    zoom: 15.0,
+                    maxZoom: 30.0,
+                    enableScrollWheel: true,
+                    scrollWheelVelocity: 0.005,
+                  ),
+                  children: [
+                    TileLayer(
+                        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
+                    MarkerLayer(
+                      markers:snapshot.hasData? snapshot.data!.where((element) => element.posizione.isNotEmpty).map((e) =>
+                        MarkerMappa(e.posizione).getMarker()
+                      ).toList():[],
+                    )
+                  ],
+                ),
+              );
+              if (!snapshot.hasData && !snapshot.hasError) {
+                children.add(const AllPageLoadTransparent());
+              }
+              return AbsorbPointer(
+                absorbing: !(snapshot.hasData || snapshot.hasError),
+                child: Stack(
+                  children: children,
+                ),
+              );
+            }
+            )),
       ]),
     );
   }
 
-  Widget searchMap = Container(
+
+
+
+  /*Container(
     child: FlutterMap(
       options: MapOptions(
         center: LatLng(40.6824408, 14.7680961),
@@ -131,7 +181,7 @@ class _SearchScreenState extends State<SearchScreen>
         )
       ],
     ),
-  );
+  );*/
 
   late Widget searchList = SingleChildScrollView(
     child: widget.isServizi
