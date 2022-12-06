@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/services/entity/Servizio.dart';
+import 'package:frontend_sws/theme/theme.dart';
 
 class DetailPageService2 extends StatefulWidget {
   Servizio servizio;
@@ -49,172 +50,226 @@ class _DetailPageService2State extends State<DetailPageService2>
         (MediaQuery.of(context).size.width / 1.2) +
         24.0;
     return Container(
+      alignment: Alignment.center,
       color: Colors.white,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
           children: <Widget>[
-        Column(
-          children: <Widget>[
-            AspectRatio(
-            aspectRatio: 1.5,
-            child: Image.asset('assets/design_course/webInterFace.png'),
-          ),
-          ],
-        ),
-      Positioned(
-        top: (MediaQuery.of(context).size.width / 1.2) - 70.0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(32.0),
-                topRight: Radius.circular(32.0)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: Colors.grey,
-                  offset: const Offset(1.1, 1.1),
-                  blurRadius: 10.0),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 8, right: 8),
-            child: Container(
-                constraints: BoxConstraints(
-                    minHeight: infoHeight,
-                    maxHeight: tempHeight > infoHeight
-                        ? tempHeight
-                        : infoHeight),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                Padding(
-                padding: const EdgeInsets.only(
-                    top: 20.0, left: 18, right: 16),
-                child: Text(
-                  widget.servizio.nome,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 22,
-                    letterSpacing: 0.27,
-                    color: Colors.black,
+            Column(
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height*0.28,
+                  child: AspectRatio(
+                  aspectRatio: 3/1.3,
+                  child: Image.asset(
+                    "assets/images/listtile_ente.png",
+                    fit: BoxFit.cover,),
                   ),
                 ),
-              ),
-                Padding(
-                padding: const EdgeInsets.only(
-                left: 16, right: 16, bottom: 8, top: 16),
-                child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    widget.servizio.struttura!.denominazione!,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w200,
-                      fontSize: 22,
-                      letterSpacing: 0.27,
-                      color: Colors.blue,
-                    ),
+              ],
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height*0.27,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(32.0),
+                      topRight: Radius.circular(32.0)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        color: Colors.grey,
+                        offset: const Offset(1.1, 1.1),
+                        blurRadius: 10.0),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            AnimatedOpacity(
-              duration: const Duration(milliseconds: 500),
-              opacity: opacity1,
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Row(
-                  children: <Widget>[
-                    getTimeBoxUI('24', 'Classe'),
-                    getTimeBoxUI('2hours', 'Time'),
-                    getTimeBoxUI('24', 'Seat'),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 500),
-                opacity: opacity2,
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16, right: 16, top: 8, bottom: 8),
-                  child: Text(
-                    'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.',
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w200,
-                      fontSize: 14,
-                      letterSpacing: 0.27,
-                      color: Colors.grey,
-                    ),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ),
-            ),
-            AnimatedOpacity(
-                duration: const Duration(milliseconds: 500),
-            opacity: opacity3,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 16, bottom: 16, right: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      height: 48,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(16.0),
-                        ),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: Colors.blue
-                                  .withOpacity(0.5),
-                              offset: const Offset(1.1, 1.1),
-                              blurRadius: 10.0),
-                        ],
-                      ),
-                      child: Center(
+                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  child: Container(
+                    color: AppColors.white,
+                      constraints: BoxConstraints(
+                          minHeight: infoHeight,
+                          maxHeight: tempHeight > infoHeight
+                              ? tempHeight
+                              : infoHeight),
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 20.0, left: 18, right: 16),
                         child: Text(
-                          'Contatta',
+                          widget.servizio.nome,
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                            letterSpacing: 0.0,
-                            color: Colors.white,
+                            fontSize: 25,
+                            letterSpacing: 0.27,
+                            color: Colors.black,
                           ),
                         ),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                        left: 16, right: 16, bottom: 8, top: 16),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              (widget.servizio.aree != null || widget.servizio.aree!.isNotEmpty)?
+                              widget.servizio.aree!.map((e) => e.nome).join(", ")
+                                  :"area di riferimento non disponinile",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w200,
+                                fontSize: 22,
+                                letterSpacing: 0.27,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              widget.servizio.struttura?.denominazione != null?
+                              widget.servizio.struttura!.denominazione!
+                              :"struttura non disponinile",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w200,
+                                fontSize: 22,
+                                letterSpacing: 0.27,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              widget.servizio.struttura?.posizione?.indirizzo != null?
+                              widget.servizio.struttura!.posizione!.indirizzo!
+                              : "" ,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w200,
+                                fontSize: 18,
+                                letterSpacing: 0.57,
+                                color: Colors.blue,
+                              ),
+                            )
+                          ],
+                        ),
                     ),
-                  )
+                  AnimatedOpacity(
+                    duration: const Duration(milliseconds: 500),
+                    opacity: opacity1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          getTimeBoxUI('Visualizza sulla mappa', 'Geolocalizza'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 500),
+                      opacity: opacity2,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16, right: 16, top: 8, bottom: 8),
+                        child: SingleChildScrollView(
+                          child: Text(
+                            'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.'
+                            +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
+                            +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
+                            +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
+                            +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
+                            +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15,
+                              letterSpacing: 0.27,
+                              color: Colors.black,
+                              ),
+                            //maxLines: 4,
+                            //overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                      ),
+                    ),
+                  ),
+                  AnimatedOpacity(
+                      duration: const Duration(milliseconds: 500),
+                  opacity: opacity3,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 16, bottom: 16, right: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: AppColors.logoCadmiumOrange,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(16.0),
+                              ),
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    color: Colors.blue
+                                        .withOpacity(0.5),
+                                    offset: const Offset(1.1, 1.1),
+                                    blurRadius: 10.0),
+                              ],
+                            ),
+                            child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Contatta',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 22,
+                                        letterSpacing: 0.0,
+                                        color: Colors.white,
+                                      )
+                                    ),
+                                    Icon(
+                                      Icons.phone,
+                                      color: Colors.white,)
+                                  ],
+                                )
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).padding.bottom,
+                )
                 ],
               ),
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).padding.bottom,
-          )
-          ],
-        ),
-      ),
-    ),
-    ),
-    ),
+          ),
+          ),
     ],
     ),
     ),
@@ -226,11 +281,11 @@ class _DetailPageService2State extends State<DetailPageService2>
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.ice,
           borderRadius: const BorderRadius.all(Radius.circular(16.0)),
           boxShadow: <BoxShadow>[
             BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
+                color: Colors.blue.withOpacity(0.2),
                 offset: const Offset(1.1, 1.1),
                 blurRadius: 8.0),
           ],
