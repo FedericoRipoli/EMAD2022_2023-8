@@ -11,7 +11,7 @@ class FilterTextController extends TextEditingController{
   FilterTextController({
     this.textPlaceholder = '',
     required this.f,
-    this.delayMilliSec = 500
+    this.delayMilliSec = 750
   });
 
   @override

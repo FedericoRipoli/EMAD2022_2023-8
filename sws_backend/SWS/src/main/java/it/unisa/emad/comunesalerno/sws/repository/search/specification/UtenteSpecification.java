@@ -29,7 +29,7 @@ public class UtenteSpecification implements Specification<Utente> {
         if(ente!=null){
             predicates.add(criteriaBuilder.like(
                     criteriaBuilder.lower(root.get(Utente_.ente).get(Ente_.denominazione)),
-                    "%" + name.toLowerCase() + "%"));
+                    "%" + ente.toLowerCase() + "%"));
 
         }
         if(isAdmin!=null){

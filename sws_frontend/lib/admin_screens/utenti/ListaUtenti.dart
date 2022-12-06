@@ -32,20 +32,27 @@ class _ListaUtentiState extends State<ListaUtenti> {
       _fetchPage(pageKey);
     });
     _inputFilter = <FilterTextController>[
-      FilterTextController(textPlaceholder: 'Cerca ente', f: _executeSearch),
-      FilterTextController(textPlaceholder: 'Cerca utente', f: _executeSearch)
+      FilterTextController(textPlaceholder: 'Cerca ente', f: _filterEnteChange),
+      FilterTextController(textPlaceholder: 'Cerca utente', f: _filterUtenteChange)
     ];
     super.initState();
   }
 
-  void _executeSearch(String text) {
-    print(text);
+  void _filterEnteChange(String text) {
+    filterEnte=text;
+    _pullRefresh();
+  }
+  void _filterUtenteChange(String text) {
+    filterUtente=text;
+    _pullRefresh();
   }
 
+  String? filterEnte;
+  String? filterUtente;
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems =
-          await utenteService.usersList(null, null, false, pageKey);
+          await utenteService.usersList(filterUtente, filterEnte, false, pageKey);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
