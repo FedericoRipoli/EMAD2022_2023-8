@@ -24,7 +24,6 @@ public class Struttura {
     @NotEmpty
     private String denominazione;
 
-    @JsonIgnore
     @ManyToOne(optional = false)
     private Ente ente;
 

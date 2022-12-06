@@ -19,6 +19,7 @@ public interface ServizioRepository extends JpaRepository<Servizio, String>, Jpa
                     "contatto",
                     "struttura",
                     "struttura.posizione",
+                    "struttura.ente",
                     "aree",
                     "hashtags"
             }
