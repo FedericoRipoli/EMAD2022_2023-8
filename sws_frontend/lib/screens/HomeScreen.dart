@@ -162,7 +162,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           opacity: opacity1,
           duration: const Duration(milliseconds: 500),
           child: TopicCard(
-            bgColor: AppColors.ice,
             title: "Hai bisogno di aiuto?",
             subtitle:
                 "Interagisci con Olivia sia via testo sia messaggi vocali",
@@ -177,12 +176,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ),
         const SizedBox(
-          height: 50,
+          height: 18,
         ),
         AnimatedOpacity(
           opacity: opacity1,
           duration: const Duration(milliseconds: 500),
           child: TopicCard(
+            bgColor: AppColors.ice,
             title: "Vuoi unirti a Salerno Amica?",
             subtitle: "Sei un ente e vuoi offrire i tuoi servizi? Contattaci",
             icon: Icons.question_answer,
@@ -203,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ),
         const SizedBox(
-          height: 18,
+          height: 50,
         ),
       ],
       fullyStretchable: true,

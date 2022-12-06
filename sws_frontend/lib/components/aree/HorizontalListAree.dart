@@ -6,7 +6,7 @@ import '../../theme/theme.dart';
 
 class HorizontalListAree extends StatefulWidget {
   static String id = 'it.unisa.emad.comunesalerno.sws.ipageutil.CardListAmbiti';
-  HorizontalListAree({Key? key}) : super(key: key);
+  const HorizontalListAree({Key? key}) : super(key: key);
 
   @override
   State<HorizontalListAree> createState() => _HorizontalListAreeState();
@@ -47,7 +47,7 @@ class _HorizontalListAreeState extends State<HorizontalListAree> {
           ),
         ),
         SizedBox(
-          height: 100,
+          height: 110,
           child: FutureBuilder<List<Area>?>(
             future: _fetchData(),
             builder: (context, snapshot) {
@@ -57,7 +57,7 @@ class _HorizontalListAreeState extends State<HorizontalListAree> {
                   shrinkWrap: true,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
-                    return ChipAmbito(
+                    return ChipArea(
                         label: snapshot.data![index].nome.toString(),
                         icon: Icons.accessibility);
                   },
@@ -80,10 +80,10 @@ class _HorizontalListAreeState extends State<HorizontalListAree> {
 *
 * */
 
-class ChipAmbito extends StatelessWidget {
+class ChipArea extends StatelessWidget {
   final String label;
   final IconData icon;
-  const ChipAmbito({Key? key, required this.label, required this.icon})
+  const ChipArea({Key? key, required this.label, required this.icon})
       : super(key: key);
 
   @override
@@ -92,9 +92,9 @@ class ChipAmbito extends StatelessWidget {
       onTap: () {},
       child: Container(
         alignment: Alignment.center,
-        width: 104,
-        height: 62,
-        padding: const EdgeInsets.all(2),
+        width: 114,
+        height: 82,
+        padding: const EdgeInsets.all(2.5),
         margin: const EdgeInsets.only(left: 10, bottom: 3, top: 3, right: 6),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -110,11 +110,11 @@ class ChipAmbito extends StatelessWidget {
             Icon(
               icon,
               color: AppColors.logoBlue,
-              size: 36,
+              size: 34,
             ),
             Text(
               label,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+              style: const TextStyle(fontSize: 13),
               textAlign: TextAlign.center,
             )
           ],
