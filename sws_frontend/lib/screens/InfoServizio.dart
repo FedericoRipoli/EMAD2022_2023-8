@@ -5,6 +5,7 @@ import 'package:frontend_sws/services/entity/Servizio.dart';
 
 import '../components/generali/CustomAppBar.dart';
 import '../components/servizi/DetailPageService2.dart';
+import '../theme/theme.dart';
 
 class InfoServizio extends StatefulWidget {
 
@@ -44,7 +45,7 @@ class _InfoServizioState extends State<InfoServizio>{
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(
-            title: "Info Servizio",
+            title: const AppTitle(label: "Info Servizio",),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(

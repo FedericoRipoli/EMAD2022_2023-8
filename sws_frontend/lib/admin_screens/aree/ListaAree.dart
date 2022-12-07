@@ -12,6 +12,7 @@ import '../../components/filtri/GenericFilter.dart';
 import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
+import '../../theme/theme.dart';
 
 class ListaAree extends StatefulWidget {
   const ListaAree({Key? key}) : super(key: key);
@@ -77,7 +78,7 @@ class _ListaAreeState extends State<ListaAree> {
                     .then((value) => _pullRefresh());
               }
             }),
-        appBar: const CustomAppBar(title: "Gestione Aree"),
+        appBar: const CustomAppBar(title: AppTitle(label: "Gestione Aree")),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[

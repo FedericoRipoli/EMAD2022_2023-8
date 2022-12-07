@@ -11,16 +11,18 @@ class TextFilter extends GenericFilter{
     required super.positionType,
     required super.valueChange,
     this.delayMilliSec=750,
+    this.textEditingController,
     this.debounce
   });
   Timer? debounce;
   int delayMilliSec;
+  TextEditingController? textEditingController;
 
   @override
   Widget getWidget() {
     return TextField(
         cursorColor: Colors.black,
-        controller: TextEditingController(),
+        controller: textEditingController ?? TextEditingController(),
         onChanged: (value) {
           if (debounce?.isActive ?? false){
             debounce?.cancel();

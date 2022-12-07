@@ -102,7 +102,7 @@ class _GestioneEnte extends State<GestioneEnte> {
                 onPressed: () => savePage(),
               ),
         appBar: CustomAppBar(
-            title: "Gestione Ente",
+            title: const AppTitle(label: "Gestione Ente"),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(

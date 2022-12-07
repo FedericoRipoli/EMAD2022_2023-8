@@ -6,6 +6,7 @@ import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/menu/DrawerMenu.dart';
+import '../../theme/theme.dart';
 import '../../util/ToastUtil.dart';
 
 class GestioneArea extends StatefulWidget {
@@ -88,7 +89,7 @@ class _GestioneArea extends State<GestioneArea> {
                 onPressed: () => savePage(),
               ),
         appBar: CustomAppBar(
-            title: "Gestione Area",
+            title: const AppTitle(label: "Gestione Area"),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(

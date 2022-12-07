@@ -12,6 +12,7 @@ import '../../components/servizi/ServizioListItem.dart';
 import '../../services/ServizioService.dart';
 import '../../services/UserService.dart';
 import '../../services/entity/Servizio.dart';
+import '../../theme/theme.dart';
 import 'GestioneServizio.dart';
 
 class ListaServizi extends StatefulWidget {
@@ -86,7 +87,7 @@ class _ListaServiziState extends State<ListaServizi> {
                             idEnte: idEnte))).then((value) => _pullRefresh());
               }
             }),
-        appBar: const CustomAppBar(title: "Gestione Servizi"),
+        appBar: const CustomAppBar(title: AppTitle(label: "Gestione Servizi")),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[

@@ -12,7 +12,7 @@ import '../components/generali/TopicCard.dart';
 import '../components/menu/DrawerMenu.dart';
 import '../services/UserService.dart';
 import 'Chat.dart';
-import 'ServiziScreen.dart';
+import 'servizi/ServiziScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

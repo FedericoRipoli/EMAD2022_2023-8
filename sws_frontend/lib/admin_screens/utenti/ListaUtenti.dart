@@ -13,6 +13,7 @@ import '../../components/filtri/GenericFilter.dart';
 import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
+import '../../theme/theme.dart';
 
 class ListaUtenti extends StatefulWidget {
   const ListaUtenti({Key? key}) : super(key: key);
@@ -86,7 +87,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
                     .then((value) => _pullRefresh());
               }
             }),
-        appBar: const CustomAppBar(title: "Gestione Utenti"),
+        appBar: const CustomAppBar(title: AppTitle(label: "Gestione Utenti")),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[

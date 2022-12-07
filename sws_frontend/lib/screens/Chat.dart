@@ -159,10 +159,10 @@ class _ChatPageState extends State<ChatPage> {
                   ? _startListening
                   : _stopListening,
             )),
-        appBar: const CustomAppBar(title: "Olivia"),
+        appBar: const CustomAppBar(title: AppTitle(label: "Olivia")),
         body: Container(
-          decoration: BoxDecoration(color: AppColors.ice),
-          padding: EdgeInsets.only(bottom: 100),
+          decoration: const BoxDecoration(color: AppColors.ice),
+          padding: const EdgeInsets.only(bottom: 100),
           child: Chat(
             theme: const DefaultChatTheme(
                 inputBackgroundColor: AppColors.ice,

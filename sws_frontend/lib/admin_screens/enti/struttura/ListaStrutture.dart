@@ -10,6 +10,7 @@ import '../../../services/entity/Struttura.dart';
 import '../../../components/generali/CustomAppBar.dart';
 import '../../../components/generali/CustomFloatingButton.dart';
 import '../../../components/enti/struttura/StrutturaListItem.dart';
+import '../../../theme/theme.dart';
 import '../../../util/ToastUtil.dart';
 import 'GestioneStruttura.dart';
 
@@ -80,7 +81,7 @@ class _ListaStruttureState extends State<ListaStrutture> {
           },
         ),
         appBar: CustomAppBar(
-            title: "Lista Strutture",
+            title: AppTitle(label: "Lista Strutture"),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
         body: RefreshIndicator(

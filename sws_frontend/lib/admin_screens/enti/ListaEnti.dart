@@ -10,6 +10,7 @@ import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/enti/EnteListItem.dart';
+import '../../theme/theme.dart';
 import '../../util/ToastUtil.dart';
 import 'GestioneEnte.dart';
 
@@ -83,7 +84,7 @@ class _ListaEntiState extends State<ListaEnti> {
             }
           },
         ),
-        appBar: const CustomAppBar(title: "Gestione Enti"),
+        appBar: const CustomAppBar(title: AppTitle(label: "Gestione Enti")),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[

@@ -119,7 +119,7 @@ class ServizioService {
       queryStringUtil.add("punti", "true");
 
       if (nome != null) {
-        queryStringUtil.add("nome", nome);
+        queryStringUtil.add("name", nome);
       }
 
       Uri u = Uri.parse(

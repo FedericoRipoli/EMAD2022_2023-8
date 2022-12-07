@@ -8,10 +8,18 @@ import '../../theme/theme.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final VoidCallback? onPressed;
-  final String title;
+  final Widget title;
   final IconData? iconData;
+  final List<Widget> actions;
+  final PreferredSizeWidget? bottom;
+
   const CustomAppBar(
-      {Key? key, this.onPressed, required this.title, this.iconData})
+      {Key? key,
+      this.onPressed,
+      required this.title,
+      this.iconData,
+      this.actions=const [],
+      this.bottom})
       : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -25,22 +33,24 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    return GFAppBar(
-      centerTitle: true,
-      title: AppTitle(label: widget.title),
-      leading: widget.onPressed != null && widget.iconData != null
-          ? GFIconButton(
-              icon: Icon(
-                widget.iconData,
-                color: Colors.white,
-              ),
-              onPressed: widget.onPressed,
-              type: GFButtonType.transparent,
-            )
-          : null,
-      searchBar: false,
-      elevation: 0,
-      backgroundColor: appTheme.primaryColor,
+    return AppBar(
+        centerTitle: true,
+        title: widget.title,
+        leading: widget.onPressed != null && widget.iconData != null
+            ? GFIconButton(
+                icon: Icon(
+                  widget.iconData,
+                  color: Colors.white,
+                ),
+                onPressed: widget.onPressed,
+                type: GFButtonType.transparent,
+              )
+            : null,
+        //searchBar: false,
+        elevation: 1,
+        backgroundColor: appTheme.primaryColor,
+        actions: widget.actions,
+        bottom: widget.bottom,
     );
   }
 }

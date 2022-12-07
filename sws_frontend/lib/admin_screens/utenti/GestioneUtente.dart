@@ -16,6 +16,7 @@ import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/menu/DrawerMenu.dart';
 import '../../services/dto/SignupDTO.dart';
+import '../../theme/theme.dart';
 import '../../util/ToastUtil.dart';
 
 class GestioneUtente extends StatefulWidget {
@@ -121,7 +122,7 @@ class _GestioneUtente extends State<GestioneUtente> {
                 onPressed: () => savePage(),
               ),
         appBar: CustomAppBar(
-            title: "Gestione Utente",
+            title: const AppTitle(label: "Gestione Utente"),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(

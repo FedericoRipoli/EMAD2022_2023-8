@@ -217,7 +217,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                 onPressed: () => savePage(),
               ),
         appBar: CustomAppBar(
-            title: "Gestione Servizio",
+            title:const  AppTitle(label: "Gestione Servizio"),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(

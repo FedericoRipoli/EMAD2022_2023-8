@@ -7,6 +7,7 @@ import '../../../components/generali/CustomFloatingButton.dart';
 import '../../../components/menu/DrawerMenu.dart';
 import '../../../services/entity/Posizione.dart';
 import '../../../services/entity/Struttura.dart';
+import '../../../theme/theme.dart';
 import '../../../util/ToastUtil.dart';
 
 class GestioneStruttura extends StatefulWidget {
@@ -108,7 +109,7 @@ class _GestioneStruttura extends State<GestioneStruttura> {
                 onPressed: () => savePage(),
               ),
         appBar: CustomAppBar(
-            title: "Gestione Struttura",
+            title:const AppTitle(label: "Gestione Struttura"),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(
