@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DetailPageService extends StatefulWidget {
   Servizio servizio;
-  DetailPageService({Key? key,required this.servizio}){}
+  DetailPageService({Key? key, required this.servizio}) {}
   @override
   _DetailPageServiceState createState() => _DetailPageServiceState();
 }
@@ -26,10 +26,12 @@ class _DetailPageServiceState extends State<DetailPageService>
         duration: const Duration(milliseconds: 1000), vsync: this);
     animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: animationController!,
-        curve: Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
+        curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
     setData();
-    isContactDisable = (widget.servizio.contatto?.telefono == null) || (widget.servizio.contatto!.telefono!.isEmpty);
-    isEmailDisable = (widget.servizio.contatto?.email == null) || (widget.servizio.contatto!.email!.isEmpty);
+    isContactDisable = (widget.servizio.contatto?.telefono == null) ||
+        (widget.servizio.contatto!.telefono!.isEmpty);
+    isEmailDisable = (widget.servizio.contatto?.email == null) ||
+        (widget.servizio.contatto!.email!.isEmpty);
     super.initState();
   }
 
@@ -64,18 +66,19 @@ class _DetailPageServiceState extends State<DetailPageService>
             Column(
               children: <Widget>[
                 Container(
-                  height: MediaQuery.of(context).size.height*0.26,
+                  height: MediaQuery.of(context).size.height * 0.26,
                   child: AspectRatio(
-                  aspectRatio: 3/1.3,
-                  child: Image.asset(
-                    "assets/images/servizi_sociali_default.jpg",
-                    fit: BoxFit.cover,),
+                    aspectRatio: 3 / 1.3,
+                    child: Image.asset(
+                      "assets/images/servizi_sociali_default.jpg",
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ],
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height*0.23,
+              top: MediaQuery.of(context).size.height * 0.18,
               bottom: 0,
               left: 0,
               right: 0,
@@ -90,287 +93,298 @@ class _DetailPageServiceState extends State<DetailPageService>
                         color: Colors.grey,
                         offset: const Offset(1.1, 1.1),
                         blurRadius: 10.0),
-                    ],
-                  ),
+                  ],
+                ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8, right: 8),
                   child: Container(
-                    margin: EdgeInsets.only(top:15),
+                    margin: EdgeInsets.only(top: 15),
                     color: AppColors.white,
-                      constraints: BoxConstraints(
-                          minHeight: infoHeight,
-                          maxHeight: tempHeight > infoHeight
-                              ? tempHeight
-                              : infoHeight),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 0.0, left: 18, right: 16),
-                        child: Text(
-                          widget.servizio.nome,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 25,
-                            letterSpacing: 0.10,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                        left: 16, right: 16, bottom: 0, top: 2),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              (widget.servizio.aree != null || widget.servizio.aree!.isNotEmpty)?
-                              widget.servizio.aree!.map((e) => e.nome).join(", ")
-                              :"Area di riferimento non disponinile",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w200,
-                                fontSize: 19,
-                                letterSpacing: 0,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              widget.servizio.struttura?.denominazione != null?
-                              widget.servizio.struttura!.denominazione!
-                              :"Struttura non disponinile",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w200,
-                                fontSize: 18,
-                                fontStyle: FontStyle.italic,
-                                letterSpacing: 0.27,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              widget.servizio.struttura?.posizione?.indirizzo != null?
-                              widget.servizio.struttura!.posizione!.indirizzo!
-                              : "Indirizzo non disponibile" ,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w200,
-                                fontSize: 16,
-                                fontStyle: FontStyle.italic,
-                                letterSpacing: 0.57,
-                                color: Colors.blue,
-                              ),
-                            )
-                          ],
-                        ),
-                    ),
-                  AnimatedOpacity(
-                    duration: const Duration(milliseconds: 500),
-                    opacity: opacity1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.all(0),
-                            child: TextButton(
-                                onPressed: () {
-
-                                },
-                                child: getTimeBoxUI('Visualizza sulla mappa', 'Geolocalizza')
+                    constraints: BoxConstraints(
+                        minHeight: infoHeight,
+                        maxHeight:
+                            tempHeight > infoHeight ? tempHeight : infoHeight),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 0.0, left: 18, right: 16),
+                          child: Text(
+                            widget.servizio.nome,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 25,
+                              letterSpacing: 0.10,
+                              color: Colors.black,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Informazioni sul servizio",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        letterSpacing: 0.57,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: AnimatedOpacity(
-                      duration: const Duration(milliseconds: 500),
-                      opacity: opacity2,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 5, right: 5, top: 1, bottom: 8),
-                        child: Scrollbar(
-                          thumbVisibility: true,
-                          radius: Radius.circular(20),
-                          thickness: 6,
-                          child: SingleChildScrollView(
-                              child: Container(
-                                width: double.maxFinite,
-                                decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 243, 240, 240),
-                                  borderRadius: BorderRadius.circular(10),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 0, top: 2),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                (widget.servizio.aree != null ||
+                                        widget.servizio.aree!.isNotEmpty)
+                                    ? widget.servizio.aree!
+                                        .map((e) => e.nome)
+                                        .join(", ")
+                                    : "Area di riferimento non disponinile",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w200,
+                                  fontSize: 19,
+                                  letterSpacing: 0,
+                                  color: Colors.black,
                                 ),
-                                padding: EdgeInsets.all(7),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      (widget.servizio!.contenuto != null)?
-                                      widget.servizio.contenuto!
-                                      : "Desrizione non disponibile",
-                                      textAlign: TextAlign.justify,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15,
-                                        letterSpacing: 0,
-                                        color: Colors.black,
-                                      ),
-                                      //maxLines: 4,
-                                      //overflow: TextOverflow.ellipsis,
-                                    )
-                                  ],
+                              ),
+                              Text(
+                                widget.servizio.struttura?.denominazione != null
+                                    ? widget.servizio.struttura!.denominazione!
+                                    : "Struttura non disponinile",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w200,
+                                  fontSize: 18,
+                                  letterSpacing: 0.27,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                widget.servizio.struttura?.posizione
+                                            ?.indirizzo !=
+                                        null
+                                    ? widget.servizio.struttura!.posizione!
+                                        .indirizzo!
+                                    : "Indirizzo non disponibile",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w200,
+                                  fontSize: 16,
+                                  letterSpacing: 0.57,
+                                  color: AppColors.logoBlue,
                                 ),
                               )
+                            ],
                           ),
                         ),
-                      ),
-                    ),
-                  ),
-                  AnimatedOpacity(
-                      duration: const Duration(milliseconds: 500),
-                  opacity: opacity3,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16, bottom: 16, right: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: isContactDisable? Colors.grey:Colors.green,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(16.0),
-                              ),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Colors.grey
-                                        .withOpacity(0.5),
-                                    offset: const Offset(1.1, 1.1),
-                                    blurRadius: 10.0),
+                        AnimatedOpacity(
+                          duration: const Duration(milliseconds: 500),
+                          opacity: opacity1,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.all(0),
+                                  child: TextButton(
+                                      onPressed: () {},
+                                      child: getTimeBoxUI(
+                                          'Visualizza sulla mappa',
+                                          'Geolocalizza')),
+                                ),
                               ],
                             ),
-                            child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () async {
-                                        if(!isContactDisable){
-                                          String number = widget.servizio.contatto!.telefono!;
-                                          Uri tel = Uri.parse("tel:$number");
-                                          await launchUrl(tel);
-                                        }
-                                      },
-                                      child: Text(
-                                          'Telefona',
-                                          textAlign: TextAlign.left,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18,
-                                            letterSpacing: 0.0,
-                                            color: Colors.white,
-                                          )
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Informazioni sul servizio",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              letterSpacing: 0.57,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 500),
+                            opacity: opacity2,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 5, right: 5, top: 1, bottom: 8),
+                              child: Scrollbar(
+                                thumbVisibility: true,
+                                radius: Radius.circular(20),
+                                thickness: 6,
+                                child: SingleChildScrollView(
+                                    child: Container(
+                                  width: double.maxFinite,
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 243, 240, 240),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  padding: EdgeInsets.all(7),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        (widget.servizio!.contenuto != null)
+                                            ? widget.servizio.contenuto!
+                                            : "Desrizione non disponibile",
+                                        textAlign: TextAlign.justify,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 15,
+                                          letterSpacing: 0,
+                                          color: Colors.black,
+                                        ),
+                                        //maxLines: 4,
+                                        //overflow: TextOverflow.ellipsis,
                                       )
+                                    ],
+                                  ),
+                                )),
+                              ),
+                            ),
+                          ),
+                        ),
+                        AnimatedOpacity(
+                          duration: const Duration(milliseconds: 500),
+                          opacity: opacity3,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 16, bottom: 16, right: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: isContactDisable
+                                          ? Colors.grey
+                                          : Colors.green,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(16.0),
+                                      ),
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            offset: const Offset(1.1, 1.1),
+                                            blurRadius: 10.0),
+                                      ],
                                     ),
-                                    Icon(
-                                      Icons.phone,
-                                      color: Colors.white,)
-                                  ],
-                                )
+                                    child: Center(
+                                        child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        TextButton(
+                                            onPressed: () async {
+                                              if (!isContactDisable) {
+                                                String number = widget.servizio
+                                                    .contatto!.telefono!;
+                                                Uri tel =
+                                                    Uri.parse("tel:$number");
+                                                await launchUrl(tel);
+                                              }
+                                            },
+                                            child: Text('Telefona',
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18,
+                                                  letterSpacing: 0.0,
+                                                  color: Colors.white,
+                                                ))),
+                                        Icon(
+                                          Icons.phone,
+                                          color: Colors.white,
+                                        )
+                                      ],
+                                    )),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Container(
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: isEmailDisable
+                                          ? Colors.grey
+                                          : Colors.green,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(16.0),
+                                      ),
+                                      boxShadow: <BoxShadow>[
+                                        BoxShadow(
+                                            color: Colors.grey.withOpacity(0.5),
+                                            offset: const Offset(1.1, 1.1),
+                                            blurRadius: 20.0),
+                                      ],
+                                    ),
+                                    child: Center(
+                                        child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        TextButton(
+                                            onPressed: () async {
+                                              if (!isEmailDisable) {
+                                                String email =
+                                                    Uri.encodeComponent(widget
+                                                        .servizio
+                                                        .contatto!
+                                                        .email!);
+                                                String subject =
+                                                    Uri.encodeComponent(
+                                                        "Informazioni su " +
+                                                            widget
+                                                                .servizio.nome);
+                                                String body = Uri.encodeComponent(
+                                                    "Salve, la contatto in merito...");
+                                                Uri mail = Uri.parse(
+                                                    "mailto:$email?subject=$subject&body=$body");
+                                                await launchUrl(mail);
+                                              }
+                                            },
+                                            child: Text('Email',
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18,
+                                                  letterSpacing: 0.0,
+                                                  color: Colors.white,
+                                                ))),
+                                        Icon(
+                                          Icons.email,
+                                          color: Colors.white,
+                                        )
+                                      ],
+                                    )),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                         SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: isEmailDisable? Colors.grey:Colors.green,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(16.0),
-                              ),
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    color: Colors.grey
-                                        .withOpacity(0.5),
-                                    offset: const Offset(1.1, 1.1),
-                                    blurRadius: 20.0),
-                              ],
-                            ),
-                            child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    TextButton(
-                                        onPressed: () async {
-                                          if(!isEmailDisable){
-                                            String email = Uri.encodeComponent(widget.servizio.contatto!.email!);
-                                            String subject = Uri.encodeComponent("Informazioni su "+widget.servizio.nome);
-                                            String body = Uri.encodeComponent("Salve, la contatto in merito...");
-                                            Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
-                                            await launchUrl(mail);
-                                          }
-                                        },
-                                        child: Text(
-                                            'Email',
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 18,
-                                              letterSpacing: 0.0,
-                                              color: Colors.white,
-                                            )
-                                        )
-                                    ),
-                                    Icon(
-                                      Icons.email,
-                                      color: Colors.white,)
-                                  ],
-                                )
-                            ),
-                          ),
-                        ),
+                          height: MediaQuery.of(context).padding.bottom,
+                        )
                       ],
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).padding.bottom,
-                )
-                ],
               ),
             ),
-          ),
-          ),
-          ),
-    ],
-    ),
-    ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -398,17 +412,17 @@ class _DetailPageServiceState extends State<DetailPageService>
               Text(
                 text1,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                   letterSpacing: 0.27,
-                  color: Colors.blue,
+                  color: AppColors.logoBlue,
                 ),
               ),
               Text(
                 txt2,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w200,
                   fontSize: 14,
                   letterSpacing: 0.27,
@@ -422,4 +436,3 @@ class _DetailPageServiceState extends State<DetailPageService>
     );
   }
 }
-

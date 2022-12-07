@@ -124,6 +124,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             title: "Servizi Politiche Sociali & Giovanili",
             subtitle: "Visualizza come mappa o come lista",
             icon: Icons.handshake,
+            bgColor: AppColors.ice,
+            btnColor: AppColors.ice,
             image: "assets/images/card_service_bg.png",
             onTap: () {
               Navigator.push(
@@ -141,7 +143,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           opacity: opacity1,
           duration: const Duration(milliseconds: 500),
           child: TopicCard(
-            bgColor: AppColors.ice,
+            bgColor: AppColors.white,
+            btnColor: AppColors.white,
             title: "Eventi nella zona di Salerno",
             subtitle: "Visualizza come mappa o come lista",
             icon: Icons.event_available,
@@ -162,6 +165,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           opacity: opacity1,
           duration: const Duration(milliseconds: 500),
           child: TopicCard(
+            bgColor: AppColors.ice,
+            btnColor: AppColors.ice,
             title: "Hai bisogno di aiuto?",
             subtitle:
                 "Interagisci con Olivia sia via testo sia messaggi vocali",
@@ -182,7 +187,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           opacity: opacity1,
           duration: const Duration(milliseconds: 500),
           child: TopicCard(
-            bgColor: AppColors.ice,
+            bgColor: AppColors.white,
+            btnColor: AppColors.white,
             title: "Vuoi unirti a Salerno Amica?",
             subtitle: "Sei un ente e vuoi offrire i tuoi servizi? Contattaci",
             icon: Icons.question_answer,
