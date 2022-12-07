@@ -1,7 +1,5 @@
 import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
-
-import '../../main.dart';
 import '../../theme/theme.dart';
 import '../generali/ConfirmBox.dart';
 import '../generali/CustomAvatar.dart';
@@ -24,7 +22,7 @@ class EnteListItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(28.0),
       title: GFListTile(
         avatar: const CustomAvatar(
-          imgAsset: "images/listtile_ente.png",
+          imgAsset: "assets/images/listtile_ente.png",
           size: 35,
         ),
         onTap: onTap,

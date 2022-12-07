@@ -64,18 +64,18 @@ class _DetailPageServiceState extends State<DetailPageService>
             Column(
               children: <Widget>[
                 Container(
-                  height: MediaQuery.of(context).size.height*0.25,
+                  height: MediaQuery.of(context).size.height*0.26,
                   child: AspectRatio(
                   aspectRatio: 3/1.3,
                   child: Image.asset(
-                    "assets/images/listtile_ente.png",
+                    "assets/images/servizi_sociali_default.jpg",
                     fit: BoxFit.cover,),
                   ),
                 ),
               ],
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height*0.24,
+              top: MediaQuery.of(context).size.height*0.23,
               bottom: 0,
               left: 0,
               right: 0,
@@ -130,11 +130,11 @@ class _DetailPageServiceState extends State<DetailPageService>
                             Text(
                               (widget.servizio.aree != null || widget.servizio.aree!.isNotEmpty)?
                               widget.servizio.aree!.map((e) => e.nome).join(", ")
-                                  :"area di riferimento non disponinile",
+                              :"Area di riferimento non disponinile",
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontWeight: FontWeight.w200,
-                                fontSize: 20,
+                                fontSize: 19,
                                 letterSpacing: 0,
                                 color: Colors.black,
                               ),
@@ -142,11 +142,12 @@ class _DetailPageServiceState extends State<DetailPageService>
                             Text(
                               widget.servizio.struttura?.denominazione != null?
                               widget.servizio.struttura!.denominazione!
-                              :"struttura non disponinile",
+                              :"Struttura non disponinile",
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontWeight: FontWeight.w200,
                                 fontSize: 18,
+                                fontStyle: FontStyle.italic,
                                 letterSpacing: 0.27,
                                 color: Colors.black,
                               ),
@@ -154,11 +155,12 @@ class _DetailPageServiceState extends State<DetailPageService>
                             Text(
                               widget.servizio.struttura?.posizione?.indirizzo != null?
                               widget.servizio.struttura!.posizione!.indirizzo!
-                              : "" ,
+                              : "Indirizzo non disponibile" ,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontWeight: FontWeight.w200,
                                 fontSize: 16,
+                                fontStyle: FontStyle.italic,
                                 letterSpacing: 0.57,
                                 color: Colors.blue,
                               ),
@@ -188,6 +190,19 @@ class _DetailPageServiceState extends State<DetailPageService>
                       ),
                     ),
                   ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Informazioni sul servizio",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        letterSpacing: 0.57,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                   Expanded(
                     child: AnimatedOpacity(
                       duration: const Duration(milliseconds: 500),
@@ -195,48 +210,38 @@ class _DetailPageServiceState extends State<DetailPageService>
                       child: Padding(
                         padding: const EdgeInsets.only(
                             left: 5, right: 5, top: 1, bottom: 8),
-                        child: SingleChildScrollView(
-
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 231, 228, 228),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            padding: EdgeInsets.all(7),
-                            child: Column(
-                              children: [
-                                Text(
-                                  "Informazioni sul servizio",
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 17,
-                                    letterSpacing: 0,
-                                    color: Colors.black,
-                                  ),
-                                  //maxLines: 4,
-                                  //overflow: TextOverflow.ellipsis,
+                        child: Scrollbar(
+                          thumbVisibility: true,
+                          radius: Radius.circular(20),
+                          thickness: 6,
+                          child: SingleChildScrollView(
+                              child: Container(
+                                width: double.maxFinite,
+                                decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 243, 240, 240),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                Text(
-                                  'Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.'
-                                  +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
-                                  +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
-                                  +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
-                                  +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry."
-                                  +"Lorem ipsum is simply dummy text of printing & typesetting industry, Lorem ipsum is simply dummy text of printing & typesetting industry.",
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 15,
-                                  letterSpacing: 0,
-                                  color: Colors.black,
-                                  ),
-                                  //maxLines: 4,
-                                  //overflow: TextOverflow.ellipsis,
-                                  )
-                              ],
-                            ),
-                          )
+                                padding: EdgeInsets.all(7),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      (widget.servizio!.contenuto != null)?
+                                      widget.servizio.contenuto!
+                                      : "Desrizione non disponibile",
+                                      textAlign: TextAlign.justify,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15,
+                                        letterSpacing: 0,
+                                        color: Colors.black,
+                                      ),
+                                      //maxLines: 4,
+                                      //overflow: TextOverflow.ellipsis,
+                                    )
+                                  ],
+                                ),
+                              )
+                          ),
                         ),
                       ),
                     ),
@@ -261,7 +266,7 @@ class _DetailPageServiceState extends State<DetailPageService>
                               ),
                               boxShadow: <BoxShadow>[
                                 BoxShadow(
-                                    color: Colors.blue
+                                    color: Colors.grey
                                         .withOpacity(0.5),
                                     offset: const Offset(1.1, 1.1),
                                     blurRadius: 10.0),
@@ -311,10 +316,10 @@ class _DetailPageServiceState extends State<DetailPageService>
                               ),
                               boxShadow: <BoxShadow>[
                                 BoxShadow(
-                                    color: Colors.blue
+                                    color: Colors.grey
                                         .withOpacity(0.5),
                                     offset: const Offset(1.1, 1.1),
-                                    blurRadius: 10.0),
+                                    blurRadius: 20.0),
                               ],
                             ),
                             child: Center(
