@@ -22,19 +22,18 @@ class PopupItemMappa extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-
         child: InkWell(
           splashColor: Colors.blue.withAlpha(30),
           onTap: onTap,
           child: Column(
-
-
-            //mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-               ListTile(
-                leading: const Icon(Icons.account_balance_outlined),
-                title: Text(nome),
-                subtitle: Text(struttura),
+              SizedBox(
+                width: MediaQuery.of(context).size.width*0.9,
+                child: ListTile(
+                  leading: const Icon(Icons.account_balance_outlined),
+                  title: Text(nome),
+                  subtitle: Text(struttura),
+                ),
               )
             ],
           ),

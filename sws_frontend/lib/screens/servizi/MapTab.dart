@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
+import 'package:frontend_sws/components/servizi/DetailPageService.dart';
+import 'package:frontend_sws/screens/InfoServizio.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../components/loading/AllPageLoadTransparent.dart';
@@ -9,6 +11,7 @@ import '../../components/mappa/MarkerMappa.dart';
 import '../../components/mappa/PopupItemMappa.dart';
 import '../../services/ServizioService.dart';
 import '../../services/dto/PuntoMappaDTO.dart';
+import '../../services/entity/Servizio.dart';
 
 class MapTab extends StatefulWidget {
   Future<List<PuntoMappaDto>?> initCallMap;
@@ -109,7 +112,11 @@ class _MapTabState extends State<MapTab> {
                                     .punto
                                     .punti
                                     .map((e) => PopupItemMappa(
-                                  onTap: () => {},
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(
+                                            builder: (context) => InfoServizio(e.id)));
+                                  },
                                   nome: e.nome,
                                   ente: e.ente,
                                   struttura: e.struttura,

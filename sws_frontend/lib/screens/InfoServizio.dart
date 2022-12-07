@@ -4,7 +4,7 @@ import 'package:frontend_sws/services/ServizioService.dart';
 import 'package:frontend_sws/services/entity/Servizio.dart';
 
 import '../components/generali/CustomAppBar.dart';
-import '../components/servizi/DetailPageService2.dart';
+import '../components/servizi/DetailPageService.dart';
 import '../theme/theme.dart';
 
 class InfoServizio extends StatefulWidget {
@@ -58,12 +58,7 @@ class _InfoServizioState extends State<InfoServizio>{
               }
               if(snapshot.hasData) {
                 children.add(
-                    DetailPageService2(servizio: servizio!)
-                  /*
-                DetailPageService(
-                    title: servizio!.nome,
-                    ente: "servizio",
-                    area: servizio!.aree!.map((e) => e.nome).join(", "))*/
+                    DetailPageService(servizio: servizio!)
                 );
               }
               return AbsorbPointer(
