@@ -15,7 +15,8 @@ import '../../services/entity/Servizio.dart';
 
 class MapTab extends StatefulWidget {
   Future<List<PuntoMappaDto>?> initCallMap;
-  MapTab({Key? key,required this.initCallMap}) : super(key: key);
+
+  MapTab({Key? key, required this.initCallMap}) : super(key: key);
 
   @override
   State<MapTab> createState() => _MapTabState();
@@ -28,15 +29,12 @@ class _MapTabState extends State<MapTab> {
   @override
   void initState() {
     super.initState();
-
   }
-
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-
   }
 
   @override
@@ -46,7 +44,8 @@ class _MapTabState extends State<MapTab> {
         builder: ((context, snapshot) {
           List<Widget> children = [];
 
-          children.add(FlutterMap(
+          children.add(
+              FlutterMap(
               options: MapOptions(
                 center: LatLng(40.6824408, 14.7680961),
                 zoom: 15.0,
@@ -56,18 +55,14 @@ class _MapTabState extends State<MapTab> {
                 onTap: (_, __) {
                   _popupController.hideAllPopups();
                   markerSelectedId = null;
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
               ),
               children: [
                 TileLayer(
-
                     urlTemplate:
-                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
                 MarkerClusterLayerWidget(
-
                   options: MarkerClusterLayerOptions(
                     onMarkerTap: (marker) {
                       setState(() {
@@ -88,13 +83,12 @@ class _MapTabState extends State<MapTab> {
                     ),
                     markers: snapshot.hasData
                         ? snapshot.data!
-                        .where(
-                            (element) => element.posizione.isNotEmpty)
-                        .map((e) => MarkerMappa(
-                        punto: e,
-                        isSelected: markerSelectedId != null &&
-                            markerSelectedId == e.posizione))
-                        .toList()
+                            .where((element) => element.posizione.isNotEmpty)
+                            .map((e) => MarkerMappa(
+                                punto: e,
+                                isSelected: markerSelectedId != null &&
+                                    markerSelectedId == e.posizione))
+                            .toList()
                         : [],
                     polygonOptions: const PolygonOptions(
                         borderColor: Colors.blueAccent,
@@ -112,16 +106,18 @@ class _MapTabState extends State<MapTab> {
                                     .punto
                                     .punti
                                     .map((e) => PopupItemMappa(
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(
-                                            builder: (context) => InfoServizio(e.id)));
-                                  },
-                                  nome: e.nome,
-                                  ente: e.ente,
-                                  struttura: e.struttura,
-                                  indirizzo: e.indirizzo,
-                                ))
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        InfoServizio(e.id)));
+                                          },
+                                          nome: e.nome,
+                                          ente: e.ente,
+                                          struttura: e.struttura,
+                                          indirizzo: e.indirizzo,
+                                        ))
                                     .toList()))),
                     builder: (context, markers) {
                       return Container(
@@ -138,7 +134,8 @@ class _MapTabState extends State<MapTab> {
                     },
                   ),
                 ),
-              ]));
+              ])
+          );
           if (!snapshot.hasData && !snapshot.hasError) {
             children.add(const AllPageLoadTransparent());
           }
@@ -150,8 +147,4 @@ class _MapTabState extends State<MapTab> {
           );
         }));
   }
-
-
-
-
 }
