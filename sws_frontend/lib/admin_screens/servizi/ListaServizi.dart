@@ -50,7 +50,7 @@ class _ListaServiziState extends State<ListaServizi> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await servizioService.serviziList(filterNome, pageKey, true);
+      final newItems = await servizioService.serviziList(filterNome,null,null, pageKey, true);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);

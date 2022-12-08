@@ -10,6 +10,7 @@ import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/services/entity/Servizio.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import '../../components/filtri/DropDownTextFilter.dart';
 import '../../components/filtri/FilterBar.dart';
 import '../../components/filtri/GenericFilter.dart';
 import '../../components/filtri/TextFilter.dart';
@@ -54,7 +55,15 @@ class _ServiziScreenState extends State<ServiziScreen>
     tabController = TabController(length: 2, vsync: this);
     initCallMap = loadMapView();
     initAree = loadListAree();
-    initEnti = loadListEnti();
+    initAree.then((vAree) {
+      initEnti = loadListEnti();
+      initEnti.then((vEnti) {
+        setState(() {
+
+        });
+      });
+    });
+
   }
 
   late Future<List<DropDownFilterItem>> initEnti;
@@ -96,14 +105,28 @@ class _ServiziScreenState extends State<ServiziScreen>
   }
 
   String? filterNome;
+  String? filterArea;
+  String? filterEnte;
   late Future<List<PuntoMappaDto>?> initCallMap;
   Future<List<PuntoMappaDto>?> loadMapView() async {
     ServizioService servizioService = ServizioService();
-    return servizioService.findPuntiMappa(filterNome);
+    return servizioService.findPuntiMappa(filterNome,filterEnte,filterArea);
   }
 
   void _filterNomeChange(String? text) {
     filterNome = text;
+    _pullRefresh();
+    initCallMap = loadMapView();
+    setState(() {});
+  }
+  void _filterEnteChange(String? text) {
+    filterEnte = text;
+    _pullRefresh();
+    initCallMap = loadMapView();
+    setState(() {});
+  }
+  void _filterAreaChange(String? text) {
+    filterArea = text;
     _pullRefresh();
     initCallMap = loadMapView();
     setState(() {});
@@ -118,7 +141,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems =
-          await servizioService.serviziList(filterNome, pageKey, false);
+          await servizioService.serviziList(filterNome,filterEnte,filterArea, pageKey, false);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -207,13 +230,13 @@ class _ServiziScreenState extends State<ServiziScreen>
                           DropDownFilter(
                               name: "Seleziona Area",
                               positionType: GenericFilterPositionType.row,
-                              valueChange: _filterNomeChange,//TODO
+                              valueChange: _filterAreaChange,//TODO
                               values: itemsAree
                           ),
-                          DropDownFilter(
+                          DropDownTextFilter(
                               name: "Seleziona Ente",
                               positionType: GenericFilterPositionType.row,
-                              valueChange: _filterNomeChange,//TODO
+                              valueChange: _filterEnteChange,//TODO
                               values: itemsEnti
                           )
                         ]

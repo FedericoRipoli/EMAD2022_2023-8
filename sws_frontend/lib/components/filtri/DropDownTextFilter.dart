@@ -2,12 +2,13 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'DropDownFilter.dart';
 import 'GenericFilter.dart';
 
-class DropDownFilter extends GenericFilter {
+class DropDownTextFilter extends GenericFilter {
   List<DropDownFilterItem> values;
-
-  DropDownFilter(
+  TextEditingController textEditingController =TextEditingController();
+  DropDownTextFilter(
       {required super.name,
       required super.positionType,
       required super.valueChange,
@@ -16,7 +17,11 @@ class DropDownFilter extends GenericFilter {
   @override
   Widget getWidget() {
     // TODO: implement getWidget
-    return DropdownButtonFormField2(
+    return
+      DropdownButtonHideUnderline(
+    child:
+
+      DropdownButtonFormField2(
         decoration: InputDecoration(
           //Add isDense true and zero Padding.
           //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
@@ -46,22 +51,45 @@ class DropDownFilter extends GenericFilter {
           borderRadius: BorderRadius.circular(15),
         ),
         items: values,
-        onChanged: valueChange);
+        onChanged: valueChange,
+        dropdownMaxHeight: 200,
+        searchController: textEditingController,
+        searchInnerWidget: Padding(
+          padding: const EdgeInsets.only(
+            top: 8,
+            bottom: 4,
+            right: 8,
+            left: 8,
+          ),
+          child: TextFormField(
+            controller: textEditingController,
+            decoration: InputDecoration(
+              isDense: true,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 8,
+              ),
+              hintText: 'Ricerca...',
+              hintStyle: const TextStyle(fontSize: 12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+          ),
+        ),
+        searchMatchFn: (item, searchValue) {
+          return (item as DropDownFilterItem).name.toLowerCase().contains(searchValue.toLowerCase());
+        },
+        //This to clear the search value when you close the menu
+        onMenuStateChange: (isOpen) {
+          if (!isOpen) {
+            textEditingController.clear();
+          }
+        },
+
+
+      )
+      );
   }
 }
 
-class DropDownFilterItem  extends DropdownMenuItem<String>{
-  final String? id;
-  final String name;
-
-  DropDownFilterItem({super.key,
-    this.id,
-    required this.name,
-  }) : super(
-    value: id,
-
-    child: Text(name,overflow: TextOverflow.ellipsis),
-  );
-
-
-}

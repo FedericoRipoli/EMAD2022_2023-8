@@ -22,7 +22,7 @@ class ServizioService {
   UserService userService = UserService();
 
   Future<List<Servizio>?> serviziList(
-      String? nome, int page, bool logged) async {
+      String? nome,String? idEnte, String? idArea, int page, bool logged) async {
 
     String? token;
     if(logged){
@@ -34,6 +34,12 @@ class ServizioService {
       queryStringUtil.addString("page=$page");
       if (nome != null) {
         queryStringUtil.add("name", nome);
+      }
+      if (idEnte != null) {
+        queryStringUtil.add("idEnte", idEnte);
+      }
+      if (idArea != null) {
+        queryStringUtil.add("idArea", idArea);
       }
 
       Uri u = Uri.parse(
@@ -112,7 +118,7 @@ class ServizioService {
     return null;
   }
 
-  Future<List<PuntoMappaDto>?> findPuntiMappa(String? nome) async {
+  Future<List<PuntoMappaDto>?> findPuntiMappa(String? nome, String? idEnte, String? idArea) async {
 
     try {
       QueryStringUtil queryStringUtil = QueryStringUtil();
@@ -121,7 +127,12 @@ class ServizioService {
       if (nome != null) {
         queryStringUtil.add("name", nome);
       }
-
+      if (idEnte != null) {
+        queryStringUtil.add("idEnte", idEnte);
+      }
+      if (idArea != null) {
+        queryStringUtil.add("idArea", idArea);
+      }
       Uri u = Uri.parse(
           "${RestURL.servizioService}?${queryStringUtil.getQueryString()}");
       var response = await http.get(u, headers: RestURL.defaultHeader);
