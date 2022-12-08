@@ -3,10 +3,10 @@ import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/theme/theme.dart';
 
 class HomeCardButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color bgColor;
   const HomeCardButton(
-      {Key? key, required this.onPressed, required this.bgColor})
+      {Key? key,  this.onPressed, required this.bgColor})
       : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class HomeCardButton extends StatelessWidget {
       text: "",
       textStyle: const TextStyle(
           color: AppColors.logoBlue, fontWeight: FontWeight.bold, fontSize: 18),
-      icon: Icon(
+      icon:const Icon(
         Icons.arrow_forward_ios_rounded,
         color: AppColors.logoBlue,
         size: 32,

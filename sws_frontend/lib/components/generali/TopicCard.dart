@@ -78,7 +78,7 @@ class TopicCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: HomeCardButton(
-                  onPressed: onTap,
+                  //onPressed: onTap,
                   bgColor: btnColor,
                 ),
               ),
