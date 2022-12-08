@@ -1,38 +1,27 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map/plugin_api.dart';
-import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
-import 'package:frontend_sws/components/aree/HorizontalListAree.dart';
-import 'package:frontend_sws/components/eventi/CardEvento.dart';
-import 'package:frontend_sws/components/loading/AllPageLoadTransparent.dart';
-import 'package:frontend_sws/components/mappa/PopupItemMappa.dart';
+import 'package:frontend_sws/components/filtri/DropDownFilter.dart';
 import 'package:frontend_sws/components/servizi/CardServizio.dart';
 import 'package:frontend_sws/main.dart';
+import 'package:frontend_sws/services/AreeService.dart';
+import 'package:frontend_sws/services/EnteService.dart';
 import 'package:frontend_sws/services/ServizioService.dart';
+import 'package:frontend_sws/services/entity/Area.dart';
+import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/services/entity/Servizio.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:latlong2/latlong.dart';
-import '../../components/aree/DropdownAree.dart';
 import '../../components/filtri/FilterBar.dart';
 import '../../components/filtri/GenericFilter.dart';
 import '../../components/filtri/TextFilter.dart';
-import '../../components/generali/CustomAppBar.dart';
-import '../../components/mappa/MarkerMappa.dart';
-import '../../components/mappa/PopupItemMappa.dart';
-import '../../components/loading/AllPageLoad.dart';
 import '../../services/dto/PuntoMappaDTO.dart';
 import '../../theme/theme.dart';
 import 'MapTab.dart';
 
 class ServiziScreen extends StatefulWidget {
-  final bool isServizi;
-  bool isFilterOpen = true;
-  TextEditingController filtroNomeController = TextEditingController();
-
   ServiziScreen({Key? key, required this.isServizi}) : super(key: key);
+  final bool isServizi;
+  bool isFilterOpen = false;
+  TextEditingController filtroNomeController = TextEditingController();
 
   @override
   State<ServiziScreen> createState() => _ServiziScreenState();
@@ -46,6 +35,16 @@ class _ServiziScreenState extends State<ServiziScreen>
       PagingController(firstPageKey: 0);
   ServizioService servizioService = ServizioService();
 
+  EnteService enteService = EnteService();
+  List<Ente>? listEnti;
+  List<DropDownFilterItem> itemsEnti = [];
+  String? dropdownValueEnti;
+
+  AreeService areeService = AreeService();
+  List<Area>? listAree;
+  List<DropDownFilterItem> itemsAree = [];
+  String? dropdownValueArea;
+
   @override
   void initState() {
     super.initState();
@@ -54,15 +53,54 @@ class _ServiziScreenState extends State<ServiziScreen>
     });
     tabController = TabController(length: 2, vsync: this);
     initCallMap = loadMapView();
+    initAree = loadListAree();
+    initEnti = loadListEnti();
   }
 
-  Future<List<PuntoMappaDto>?> loadMapView() async {
-    ServizioService servizioService = ServizioService();
-    return servizioService.findPuntiMappa(filterNome);
+  late Future<List<DropDownFilterItem>> initEnti;
+  Future<List<DropDownFilterItem>> loadListEnti() async{
+    listEnti = await enteService.enteList(null,null);
+    itemsEnti.add(DropDownFilterItem(
+      id: "",
+      name: "",
+    ));
+    if (listEnti != null) {
+      itemsEnti.addAll(listEnti!.map<DropDownFilterItem>((Ente value) {
+        return DropDownFilterItem(
+          id: value.id,
+          name: value.denominazione,
+        );
+      }).toList());
+      dropdownValueEnti = listEnti!.first.id;
+    }
+    return itemsEnti;
+  }
+
+  late Future<List<DropDownFilterItem>> initAree;
+  Future<List<DropDownFilterItem>> loadListAree() async{
+    listAree = await areeService.areeList(null);
+    itemsAree.add(DropDownFilterItem(
+      id: "",
+      name: "",
+    ));
+    if (listAree != null) {
+      itemsAree.addAll(listAree!.map<DropDownFilterItem>((Area value) {
+        return DropDownFilterItem(
+          id: value.id,
+          name: value.nome,
+        );
+      }).toList());
+      dropdownValueArea = listAree!.first.id;
+    }
+    return itemsAree;
   }
 
   String? filterNome;
   late Future<List<PuntoMappaDto>?> initCallMap;
+  Future<List<PuntoMappaDto>?> loadMapView() async {
+    ServizioService servizioService = ServizioService();
+    return servizioService.findPuntiMappa(filterNome);
+  }
 
   void _filterNomeChange(String? text) {
     filterNome = text;
@@ -136,12 +174,8 @@ class _ServiziScreenState extends State<ServiziScreen>
           border: Border.all(color: appTheme.primaryColor, width: 0.5),
           length: 2,
           tabs: const <Widget>[
-            Text(
-              "Lista",
-            ),
-            Text(
-              "Mappa",
-            ),
+            Text("Lista"),
+            Text("Mappa"),
           ],
         ),
         actions: [
@@ -157,15 +191,36 @@ class _ServiziScreenState extends State<ServiziScreen>
               ))
         ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(widget.isFilterOpen ? 100 : 0),
+          preferredSize: Size.fromHeight(widget.isFilterOpen ? 150 : 0),
           child: widget.isFilterOpen
-              ? FilterBar(filters: [
-                  TextFilter(
-                      name: 'Cerca un servizio...',
-                      textEditingController: widget.filtroNomeController,
-                      positionType: GenericFilterPositionType.row,
-                      valueChange: _filterNomeChange),
-                ])
+              ? Container(
+                child: Column(
+                  children: [
+                    FilterBar(
+                        filters: [
+                          TextFilter(
+                              name: 'Cerca un servizio...',
+                              textEditingController: widget.filtroNomeController,
+                              positionType: GenericFilterPositionType.col,
+                              valueChange: _filterNomeChange
+                          ),
+                          DropDownFilter(
+                              name: "Seleziona Area",
+                              positionType: GenericFilterPositionType.row,
+                              valueChange: _filterNomeChange,//TODO
+                              values: itemsAree
+                          ),
+                          DropDownFilter(
+                              name: "Seleziona Ente",
+                              positionType: GenericFilterPositionType.row,
+                              valueChange: _filterNomeChange,//TODO
+                              values: itemsEnti
+                          )
+                        ]
+                    ),
+                  ],
+                ),
+              )
               : Container(),
         ),
       ),
