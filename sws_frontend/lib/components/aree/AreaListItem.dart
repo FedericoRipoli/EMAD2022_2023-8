@@ -26,7 +26,7 @@ class AreaListItem extends StatelessWidget {
       title: GFListTile(
         padding: const EdgeInsets.all(8),
         avatar: const CustomAvatar(
-          imgAsset: "images/area.png",
+          imgAsset: "assets/images/area.png",
           size: 35,
         ),
         onTap: onTap,
