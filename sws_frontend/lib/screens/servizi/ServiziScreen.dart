@@ -29,7 +29,7 @@ import 'MapTab.dart';
 
 class ServiziScreen extends StatefulWidget {
   final bool isServizi;
-  bool isFilterOpen = false;
+  bool isFilterOpen = true;
   TextEditingController filtroNomeController = TextEditingController();
 
   ServiziScreen({Key? key, required this.isServizi}) : super(key: key);
@@ -54,7 +54,6 @@ class _ServiziScreenState extends State<ServiziScreen>
     });
     tabController = TabController(length: 2, vsync: this);
     initCallMap = loadMapView();
-
   }
 
   Future<List<PuntoMappaDto>?> loadMapView() async {
@@ -69,9 +68,7 @@ class _ServiziScreenState extends State<ServiziScreen>
     filterNome = text;
     _pullRefresh();
     initCallMap = loadMapView();
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -164,7 +161,7 @@ class _ServiziScreenState extends State<ServiziScreen>
           child: widget.isFilterOpen
               ? FilterBar(filters: [
                   TextFilter(
-                      name: 'Nome',
+                      name: 'Cerca un servizio...',
                       textEditingController: widget.filtroNomeController,
                       positionType: GenericFilterPositionType.row,
                       valueChange: _filterNomeChange),
