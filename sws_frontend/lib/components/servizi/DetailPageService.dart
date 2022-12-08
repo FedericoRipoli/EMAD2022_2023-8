@@ -62,7 +62,8 @@ class _DetailPageServiceState extends State<DetailPageService>
   Widget build(BuildContext context) {
     EdgeInsets defaultPaddingElement = const EdgeInsets.fromLTRB(30, 0, 30, 0);
     return Scaffold(
-      backgroundColor: Colors.black,
+      //backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
         body: CustomScrollView(
       slivers: [
         SliverAppBar(
