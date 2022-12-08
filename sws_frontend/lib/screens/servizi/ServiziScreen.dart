@@ -28,11 +28,10 @@ import '../../theme/theme.dart';
 import 'MapTab.dart';
 
 class ServiziScreen extends StatefulWidget {
-  final bool isServizi;
   bool isFilterOpen = true;
   TextEditingController filtroNomeController = TextEditingController();
 
-  ServiziScreen({Key? key, required this.isServizi}) : super(key: key);
+  ServiziScreen({Key? key}) : super(key: key);
 
   @override
   State<ServiziScreen> createState() => _ServiziScreenState();
@@ -41,7 +40,6 @@ class ServiziScreen extends StatefulWidget {
 class _ServiziScreenState extends State<ServiziScreen>
     with TickerProviderStateMixin {
   late TabController tabController;
-  bool isChecked = false;
   final PagingController<int, Servizio> _pagingController =
       PagingController(firstPageKey: 0);
   ServizioService servizioService = ServizioService();

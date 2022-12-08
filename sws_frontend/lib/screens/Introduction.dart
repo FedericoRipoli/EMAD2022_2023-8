@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend_sws/screens/HomeScreen.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:frontend_sws/theme/theme.dart';
@@ -19,7 +20,7 @@ class Introduction extends StatelessWidget {
               body:
                   "Salerno Amica è l'applicazione che ti aiuta a cercare e informarti su tutti gli "
                   'eventi e i servizi dei comuni di Salerno e Pellezzano per le politiche Giovanili e Sociali',
-              image: buildImage("assets/images/intro_welcome.png"),
+              image: buildImage("svg/intro_welcome.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -28,7 +29,7 @@ class Introduction extends StatelessWidget {
               body:
                   "A portata di smartphone tutti i servizi che il Comune di Salerno offre ai suoi cittadini. Cerca i servizi"
                   " filtrando le informazioni che ti interessano, apri la mappa interattiva, visualizza gli eventi in programma nel mese corrente...",
-              image: buildImage("assets/images/intro_explainer.png"),
+              image: buildImage("svg/intro_explain.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -37,7 +38,7 @@ class Introduction extends StatelessWidget {
               body:
                   "L'app pone particolare attenzione sull'accessibilità, rendere l'esperienza d'utilizzo semplice "
                   "e intuitiva per tutte le tipologie di utente è l'obiettivo primario di Salerno Amica",
-              image: buildImage("assets/images/intro_access.png"),
+              image: buildImage("svg/intro_access.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -46,7 +47,7 @@ class Introduction extends StatelessWidget {
               body:
                   'Hai dubbi o domande sui servizi offerti dal Comune di Salerno o su cosa fare? Interagisci '
                   'con Olivia che ti aiuterà a soddisfare le tue esigenze',
-              image: buildImage("assets/images/intro_chatbot.png"),
+              image: buildImage("svg/intro_chatbot.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -65,7 +66,7 @@ class Introduction extends StatelessWidget {
           isBottomSafeArea: true,
           skip: const Text("Salta",
               style: TextStyle(
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.bold,
                   fontSize: 18,
                   color: AppColors.logoBlue)),
           next: const Icon(
@@ -75,7 +76,7 @@ class Introduction extends StatelessWidget {
           done: const Text(
             "Continua",
             style: TextStyle(
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.bold,
                 fontSize: 18,
                 color: AppColors.logoBlue),
           ),
@@ -104,13 +105,14 @@ class Introduction extends StatelessWidget {
   }
 
   Widget buildImage(String imagePath) {
-    return Center(
-      child: Image.asset(
-        imagePath,
-        width: 400,
-        height: 400,
-      ),
-    );
+    return Container(
+        margin: EdgeInsets.all(5),
+        child: Center(
+          child: SvgPicture.asset(
+            imagePath,
+            width: 380,
+          ),
+        ));
   }
 
   PageDecoration getPageDecoration() {

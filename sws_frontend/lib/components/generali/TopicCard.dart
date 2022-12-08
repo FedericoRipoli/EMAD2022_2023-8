@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/theme/theme.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'HomeCardButton.dart';
 
 class TopicCard extends StatelessWidget {
-  final String title, subtitle;
+  final String title;
   final IconData icon;
   final String image;
   final VoidCallback onTap;
@@ -13,7 +14,6 @@ class TopicCard extends StatelessWidget {
   const TopicCard(
       {super.key,
       required this.title,
-      required this.subtitle,
       required this.icon,
       required this.image,
       required this.onTap,
@@ -26,23 +26,70 @@ class TopicCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.all(7),
+        height: 110,
+        margin: const EdgeInsets.all(8),
+        padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
             color: bgColor,
-            borderRadius: BorderRadius.circular(30.0),
+            borderRadius: BorderRadius.circular(26.0),
             boxShadow: const [
               BoxShadow(
                 color: AppColors.logoBlue,
                 spreadRadius: 0,
-                blurRadius: 1.7,
+                blurRadius: 0.9,
                 offset: Offset(1, 1), // changes position of shadow
               ),
             ]),
         child: Row(
           children: [
             Expanded(
+                flex: 2,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 32),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        title,
+                        textAlign: TextAlign.start,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                      const Text(
+                        "Scopri di più",
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: AppColors.logoBlue,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+            Expanded(
               flex: 1,
               child: Container(
+                margin: const EdgeInsets.all(3),
+                child: Icon(
+                  icon,
+                  size: 38,
+                  color: AppColors.logoCadmiumOrange,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/*child: Container(
                 margin: const EdgeInsets.all(5),
                 padding: const EdgeInsets.all(5),
                 decoration: const BoxDecoration(
@@ -56,36 +103,4 @@ class TopicCard extends StatelessWidget {
                     size: 36,
                   ),
                 ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: HomeCardButton(
-                  //onPressed: onTap,
-                  bgColor: btnColor,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+              ),*/

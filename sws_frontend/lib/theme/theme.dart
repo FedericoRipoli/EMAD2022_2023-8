@@ -18,7 +18,8 @@ class AppColors {
 
 class AppTitle extends StatelessWidget {
   final String label;
-  const AppTitle({Key? key, required this.label}) : super(key: key);
+  final Color? color;
+  const AppTitle({Key? key, required this.label, this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +27,26 @@ class AppTitle extends StatelessWidget {
         style: TextStyle(
           fontFamily: "FredokaOne",
           fontSize: 24,
-          letterSpacing: 2,
-          color: Colors.grey[100],
+          letterSpacing: 1,
+          color: color ?? AppColors.white,
+        ));
+  }
+}
+
+class HomeTitle extends StatelessWidget {
+  final String label;
+  final Color color;
+  const HomeTitle({Key? key, required this.label, required this.color})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(label,
+        style: TextStyle(
+          fontFamily: "FredokaOne",
+          fontSize: 32,
+          letterSpacing: 1,
+          color: color,
         ));
   }
 }

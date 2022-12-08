@@ -43,6 +43,8 @@ dependencies:
   html_editor_enhanced: 2.5.0
   flutter_map_marker_cluster: any
   textfield_tags: ^2.0.2
+  flutter_svg: ^1.1.6
+  flutter_screenutil: ^5.6.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.11.0
