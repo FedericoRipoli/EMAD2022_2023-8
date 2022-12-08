@@ -357,7 +357,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                             items: itemsStrutture,
                             validator: (value) {
                               if (value == null) {
-                                return 'Seleziona un ente';
+                                return 'Seleziona una struttura';
                               }
                             },
                             onChanged: (servizio == null ||
