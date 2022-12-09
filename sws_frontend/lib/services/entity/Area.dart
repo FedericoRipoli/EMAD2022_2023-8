@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:frontend_sws/util/ColorExtension.dart';
+
 Area areaFromJson(String str) => Area.fromJson(json.decode(str));
 
 String areaToJson(Area data) => json.encode(data.toJson());
@@ -12,14 +15,14 @@ class Area {
   Area({
     this.id,
     required this.nome,
-     this.icon,
-     this.color
+    required this.icon,
+    required this.color
   });
 
   String? id;
   String nome;
-  String? icon;
-  String? color;
+  String icon;
+  String color;
 
   factory Area.fromJson(Map<String, dynamic> json) => Area(
     id: json["id"],
@@ -34,4 +37,10 @@ class Area {
     "icon": icon,
     "color": color,
   };
+  IconData getIconData(){
+    return IconData(int.parse(icon),fontFamily: "MaterialIcons");
+  }
+  Color getColorData(){
+    return ColorExtension.fromHex(color);
+  }
 }

@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../services/entity/Area.dart';
 import '../../theme/theme.dart';
 import '../../screens/InfoServizio.dart';
 import 'package:frontend_sws/components/generali/Chips.dart';
 
 class CardServizio extends StatelessWidget {
-  final String nomeServizio, ente, area, idServizio;
+  final String nomeServizio, ente, idServizio;
+  final List<Area> aree;
   final String? descrizione, posizione, data;
+
   //final Widget toShow;
   const CardServizio(
       {Key? key,
       required this.idServizio,
       required this.nomeServizio,
       required this.ente,
-      required this.area,
+      required this.aree,
       this.descrizione,
       this.posizione,
       this.data})
@@ -69,6 +72,9 @@ class CardServizio extends StatelessWidget {
                             Icons.home_work,
                             color: AppColors.logoBlue,
                           ),
+                          const SizedBox(
+                            width: 5,
+                          ),
                           Text(
                             ente,
                             overflow: TextOverflow.ellipsis,
@@ -81,23 +87,27 @@ class CardServizio extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Wrap(
-                        children: [
-                          const Icon(
-                            Icons.tag_sharp,
-                            color: AppColors.logoBlue,
-                          ),
-                          Text(
-                            area,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.start,
-                            style: const TextStyle(
-                              color: AppColors.logoBlue,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                        ],
+                      Row(
+                        children: aree.map((e) {
+                          return Wrap(
+                            children: [
+                              Icon(
+                                e.getIconData(),
+                                color: e.getColorData(),
+                              ),
+                              Text(
+                                e.nome,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  color: e.getColorData(),
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                            ],
+                          );
+                        }).toList(),
                       )
                     ],
                   ),

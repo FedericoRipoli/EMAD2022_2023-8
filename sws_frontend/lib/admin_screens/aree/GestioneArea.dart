@@ -56,14 +56,10 @@ class _GestioneArea extends State<GestioneArea> {
         : null;
     if (area != null) {
       nomeController.text = (area!.nome);
-      if (area!.icon != null) {
-        _icon =
-            Icon(IconData(int.parse(area!.icon!), fontFamily: "MaterialIcons"));
-      }
+      _icon =
+          Icon(area!.getIconData());
 
-      if (area!.color != null) {
-        pickerColor = ColorExtension.fromHex(area!.color!);
-      }
+      pickerColor = area!.getColorData();
     }
     setState(() {
       loaded = true;

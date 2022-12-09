@@ -268,7 +268,7 @@ class _ServiziScreenState extends State<ServiziScreen>
                       idServizio: item.id!,
                       nomeServizio: item.nome,
                       ente: item.struttura!.ente!.denominazione,
-                      area: item.aree!.map((e) => e.nome).join(", "),
+                      aree: item.aree!,
                       posizione: item.struttura?.posizione?.indirizzo,
                     )),
           ),

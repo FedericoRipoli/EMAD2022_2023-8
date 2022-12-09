@@ -15,7 +15,11 @@ public class ServizioMappaDTO {
     private String posizione;
     private String indirizzo;
 
-    public ServizioMappaDTO(String id, String nome, String struttura, String ente,  String indirizzo,String posizione) {
+    private String area;
+    private String color;
+    private String icon;
+
+    public ServizioMappaDTO(String id, String nome, String struttura, String ente,  String indirizzo,String posizione, String area, String color, String icon) {
         this.id = id;
         this.nome = nome;
         this.struttura = struttura;
