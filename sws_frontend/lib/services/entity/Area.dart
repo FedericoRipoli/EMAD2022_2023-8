@@ -12,18 +12,26 @@ class Area {
   Area({
     this.id,
     required this.nome,
+     this.icon,
+     this.color
   });
 
   String? id;
   String nome;
+  String? icon;
+  String? color;
 
   factory Area.fromJson(Map<String, dynamic> json) => Area(
     id: json["id"],
     nome: json["nome"],
+    icon: json["icon"],
+    color: json["color"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "nome": nome,
+    "icon": icon,
+    "color": color,
   };
 }

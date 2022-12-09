@@ -44,6 +44,8 @@ public class AreaController {
         if (areaRepository.existsById(id)) {
             Area areaDb =areaRepository.findById(id).orElseThrow();
             areaDb.setNome(area.getNome());
+            areaDb.setColor(area.getColor());
+            areaDb.setIcon(area.getIcon());
             areaRepository.save(areaDb);
             return ResponseEntity.ok(areaDb);
         }
