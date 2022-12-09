@@ -16,8 +16,7 @@ class ServizioListItem extends StatelessWidget {
       required this.id,
       required this.onTap,
       required this.onDelete,
-      required this.statoOperazione
-      });
+      required this.statoOperazione});
 
   @override
   Widget build(BuildContext context) {
@@ -28,27 +27,28 @@ class ServizioListItem extends StatelessWidget {
       title: GFListTile(
         padding: const EdgeInsets.all(8),
         avatar: const CustomAvatar(
-          imgAsset: "assets/images/user_default.png",
+          icon: Icons.handshake_rounded,
           size: 35,
         ),
-
         onTap: onTap,
         titleText: name,
-        icon: Servizio.canEnteEdit(statoOperazione)? IconButton(
-          onPressed: () => {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return ConfirmBox(
-                  label: name,
-                  onDelete: onDelete,
-                );
-              },
-            ),
-          },
-          icon: const Icon(Icons.delete_rounded),
-          color: AppColors.logoCadmiumOrange,
-        ):null,
+        icon: Servizio.canEnteEdit(statoOperazione)
+            ? IconButton(
+                onPressed: () => {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ConfirmBox(
+                        label: name,
+                        onDelete: onDelete,
+                      );
+                    },
+                  ),
+                },
+                icon: const Icon(Icons.delete_rounded),
+                color: AppColors.logoCadmiumOrange,
+              )
+            : null,
       ),
     );
   }

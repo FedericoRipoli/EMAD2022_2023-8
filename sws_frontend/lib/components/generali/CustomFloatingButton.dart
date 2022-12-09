@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import '../../main.dart';
 import '../../theme/theme.dart';
 
 class CustomFloatingButton extends StatelessWidget {

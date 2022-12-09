@@ -6,31 +6,33 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
   runApp(MaterialApp(
-    builder: (context, widget) => ResponsiveWrapper.builder(
-      ClampingScrollWrapper(
-        child: widget!,
-      ),
-      maxWidth: 2100,
-      minWidth: 350,
-      defaultScale: true,
-      breakpoints: [
-        const ResponsiveBreakpoint.resize(350, name: MOBILE),
-        const ResponsiveBreakpoint.autoScale(600, name: TABLET),
-        const ResponsiveBreakpoint.resize(800, name: DESKTOP),
-        const ResponsiveBreakpoint.autoScale(1700, name: 'XL'),
-      ],
-    ),
-    debugShowCheckedModeBanner: false,
-    home: const Splash(),
-    theme: appTheme,
-    title: "Salerno Amica"
-  ));
+      builder: (context, widget) => ResponsiveWrapper.builder(
+            ClampingScrollWrapper(
+              child: widget!,
+            ),
+            maxWidth: 2100,
+            minWidth: 350,
+            defaultScale: true,
+            breakpoints: [
+              const ResponsiveBreakpoint.resize(350, name: MOBILE),
+              const ResponsiveBreakpoint.autoScale(600, name: TABLET),
+              const ResponsiveBreakpoint.resize(800, name: DESKTOP),
+              const ResponsiveBreakpoint.autoScale(1700, name: 'XL'),
+            ],
+          ),
+      debugShowCheckedModeBanner: false,
+      home: const Splash(),
+      theme: appTheme,
+      title: "Salerno Amica"));
 }
 
 ThemeData appTheme = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
   fontFamily: 'OpenSans',
   primaryColor: AppColors.logoBlue,
+
+  //colorSchemeSeed: Colors.indigo,
+  primarySwatch: Colors.blue,
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

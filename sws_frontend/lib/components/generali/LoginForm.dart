@@ -125,7 +125,7 @@ class _LoginFormState extends State<LoginForm> {
                   height: 200,
                   width: 200,
                   alignment: Alignment.center,
-                  child: AllPageLoad())),
+                  child: const AllPageLoad())),
     );
   }
 }

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/theme/theme.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-import 'HomeCardButton.dart';
 
 class TopicCard extends StatelessWidget {
   final String title;
@@ -31,7 +28,7 @@ class TopicCard extends StatelessWidget {
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
             color: bgColor,
-            borderRadius: BorderRadius.circular(26.0),
+            borderRadius: BorderRadius.circular(14.0),
             boxShadow: const [
               BoxShadow(
                 color: AppColors.logoBlue,

@@ -1,8 +1,5 @@
 import 'package:frontend_sws/theme/theme.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:flutter/material.dart';
-
-import '../../main.dart';
 
 class CustomMenuItem extends StatelessWidget {
   final String text;
@@ -13,17 +10,17 @@ class CustomMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 3,
-        color: AppColors.white,
+        elevation: 1,
+        color: Colors.white,
         child: ListTile(
             title: Text(
               text,
-              style: TextStyle(color: AppColors.black, fontSize: 16),
+              style: const TextStyle(color: AppColors.black, fontSize: 16),
             ),
             onTap: f,
             trailing: const Icon(
               Icons.arrow_forward_ios_sharp,
-              color: AppColors.logoCadmiumOrange,
+              color: AppColors.logoBlue,
             )));
   }
 }

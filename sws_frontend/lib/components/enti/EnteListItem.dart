@@ -22,7 +22,7 @@ class EnteListItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(28.0),
       title: GFListTile(
         avatar: const CustomAvatar(
-          imgAsset: "assets/images/listtile_ente.png",
+          icon: Icons.people_rounded,
           size: 35,
         ),
         onTap: onTap,

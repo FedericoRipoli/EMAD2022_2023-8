@@ -21,12 +21,10 @@ class UtenteListItem extends StatelessWidget {
     return GFCard(
       elevation: 8,
       padding: EdgeInsets.zero,
-
       borderRadius: BorderRadius.circular(28.0),
       title: GFListTile(
-
         avatar: const CustomAvatar(
-          imgAsset: "assets/images/user_default.png",
+          icon: Icons.face,
           size: 35,
         ),
         //color: AppColors.white,
@@ -47,7 +45,6 @@ class UtenteListItem extends StatelessWidget {
           },
           icon: const Icon(Icons.delete_rounded),
           color: AppColors.logoCadmiumOrange,
-
         ),
       ),
     );

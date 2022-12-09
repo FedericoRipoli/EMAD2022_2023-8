@@ -33,9 +33,9 @@ class _ConfirmBoxState extends State<ConfirmBox> {
           text: "Annulla",
           icon: const Icon(
             Icons.cancel,
-            color: AppColors.logoRed,
+            color: AppColors.white,
           ),
-          type: GFButtonType.outline,
+          type: GFButtonType.solid,
           shape: GFButtonShape.pills,
         ),
         GFButton(
@@ -44,9 +44,9 @@ class _ConfirmBoxState extends State<ConfirmBox> {
           text: "Conferma",
           icon: const Icon(
             Icons.check,
-            color: Colors.green,
+            color: Colors.white,
           ),
-          type: GFButtonType.outline,
+          type: GFButtonType.solid,
           shape: GFButtonShape.pills,
         ),
       ],

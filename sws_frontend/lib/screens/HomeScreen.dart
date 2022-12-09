@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     return AlertDialog(
                       shape: const RoundedRectangleBorder(
                           borderRadius:
-                              BorderRadius.all(Radius.circular(34.0))),
+                              BorderRadius.all(Radius.circular(24.0))),
                       content: LoginForm(userService: userService),
                     );
                   },

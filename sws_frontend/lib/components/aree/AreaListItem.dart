@@ -22,11 +22,10 @@ class AreaListItem extends StatelessWidget {
       elevation: 8,
       padding: EdgeInsets.zero,
       borderRadius: BorderRadius.circular(28.0),
-
       title: GFListTile(
         padding: const EdgeInsets.all(8),
         avatar: const CustomAvatar(
-          imgAsset: "assets/images/area.png",
+          icon: Icons.dashboard_rounded,
           size: 35,
         ),
         onTap: onTap,

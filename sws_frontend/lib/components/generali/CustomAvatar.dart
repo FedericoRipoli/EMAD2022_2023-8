@@ -4,8 +4,8 @@ import 'package:frontend_sws/theme/theme.dart';
 
 class CustomAvatar extends StatelessWidget {
   final double size;
-  final String imgAsset;
-  const CustomAvatar({Key? key, required this.size, required this.imgAsset})
+  final IconData icon;
+  const CustomAvatar({Key? key, required this.size, required this.icon})
       : super(key: key);
 
   @override
@@ -13,9 +13,6 @@ class CustomAvatar extends StatelessWidget {
     return GFAvatar(
         shape: GFAvatarShape.circle,
         backgroundColor: AppColors.white,
-        child: Image.asset(
-          imgAsset,
-          width: size,
-        ));
+        child: Icon(icon, size: size, color: AppColors.logoCadmiumOrange));
   }
 }

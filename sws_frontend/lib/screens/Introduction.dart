@@ -106,7 +106,7 @@ class Introduction extends StatelessWidget {
 
   Widget buildImage(String imagePath) {
     return Container(
-        margin: EdgeInsets.all(5),
+        margin: const EdgeInsets.all(5),
         child: Center(
           child: SvgPicture.asset(
             imagePath,

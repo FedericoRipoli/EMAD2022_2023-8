@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:frontend_sws/screens/HomeScreen.dart';
 import 'package:frontend_sws/screens/Introduction.dart';
 import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
-
 import '../loading/AllPageLoad.dart';
 
 class Splash extends StatefulWidget {
