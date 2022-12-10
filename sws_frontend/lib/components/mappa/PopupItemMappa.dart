@@ -8,6 +8,7 @@ class PopupItemMappa extends StatelessWidget {
   final String ente;
   final String struttura;
   final String indirizzo;
+  final IconData? customIcon;
 
   const PopupItemMappa(
       {Key? key,
@@ -15,7 +16,8 @@ class PopupItemMappa extends StatelessWidget {
       required this.nome,
       required this.ente,
       required this.struttura,
-      required this.indirizzo})
+      required this.indirizzo,
+      this.customIcon})
       : super(key: key);
 
   @override
@@ -28,9 +30,9 @@ class PopupItemMappa extends StatelessWidget {
           child: Column(
             children: <Widget>[
               SizedBox(
-                width: MediaQuery.of(context).size.width*0.9,
+                width: MediaQuery.of(context).size.width * 0.9,
                 child: ListTile(
-                  leading: const Icon(Icons.account_balance_outlined),
+                  leading: Icon(customIcon ?? Icons.account_balance_outlined),
                   title: Text(nome),
                   subtitle: Text(struttura),
                 ),

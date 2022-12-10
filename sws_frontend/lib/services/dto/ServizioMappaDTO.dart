@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+
 import '../entity/Area.dart';
 
 ServizioMappaDto servizioMappaDtoFromJson(String str) => ServizioMappaDto.fromJson(json.decode(str));
@@ -48,4 +50,8 @@ class ServizioMappaDto {
     "indirizzo": indirizzo,
     "customIcon": customIcon,
   };
+  IconData? getIconData(){
+
+    return customIcon!=null?IconData(int.parse(customIcon!),fontFamily: "MaterialIcons"):null;
+  }
 }
