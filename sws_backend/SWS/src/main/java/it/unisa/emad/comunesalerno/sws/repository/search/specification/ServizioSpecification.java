@@ -4,10 +4,7 @@ import it.unisa.emad.comunesalerno.sws.entity.*;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +18,7 @@ public class ServizioSpecification implements Specification<Servizio> {
     @Override
     public Predicate toPredicate(Root<Servizio> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
-        if (name != null) {
+        if (name != null && !name.isEmpty()) {
 
             List<Predicate> joinOrPreds = new ArrayList<>();
             joinOrPreds.add(criteriaBuilder.like(
@@ -30,7 +27,7 @@ public class ServizioSpecification implements Specification<Servizio> {
             List<String> tags= Arrays.stream(name.split(" ")).toList();
             tags.forEach(x->{
 
-                joinOrPreds.add(root.join(Servizio_.hashtags).in(Arrays.asList(x)));
+                joinOrPreds.add(root.join(Servizio_.hashtags, JoinType.LEFT).in(Arrays.asList(x)));
             });
             predicates.add(criteriaBuilder.or(joinOrPreds.toArray(new Predicate[joinOrPreds.size()])));
 
