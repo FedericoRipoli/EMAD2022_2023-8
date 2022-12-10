@@ -15,32 +15,32 @@ class Area {
   Area({
     this.id,
     required this.nome,
-    required this.icon,
-    required this.color
+   /* required this.icon,
+    required this.color*/
   });
 
   String? id;
   String nome;
-  String icon;
-  String color;
+ /* String icon;
+  String color;*/
 
   factory Area.fromJson(Map<String, dynamic> json) => Area(
     id: json["id"],
     nome: json["nome"],
-    icon: json["icon"],
-    color: json["color"],
+    /*icon: json["icon"],
+    color: json["color"],*/
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "nome": nome,
-    "icon": icon,
-    "color": color,
+    /*"icon": icon,
+    "color": color,*/
   };
-  IconData getIconData(){
+ /* IconData getIconData(){
     return IconData(int.parse(icon),fontFamily: "MaterialIcons");
   }
   Color getColorData(){
     return ColorExtension.fromHex(color);
-  }
+  }*/
 }

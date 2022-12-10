@@ -91,16 +91,16 @@ class CardServizio extends StatelessWidget {
                         children: aree.map((e) {
                           return Wrap(
                             children: [
-                              Icon(
-                                e.getIconData(),
-                                color: e.getColorData(),
+                              const Icon(
+                                Icons.tag,
+                                color: AppColors.logoBlue,
                               ),
                               Text(
                                 e.nome,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  color: e.getColorData(),
+                                style: const TextStyle(
+                                  color: AppColors.logoBlue,
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14.0,
                                 ),

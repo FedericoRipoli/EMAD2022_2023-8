@@ -32,7 +32,7 @@ class _GestioneArea extends State<GestioneArea> {
   bool loaded = false;
   final _formGlobalKey = GlobalKey<FormState>();
 
-  Icon? _icon;
+ /* Icon? _icon;
   Color pickerColor = AppColors.logoBlue;
   bool iconError = false;
 
@@ -43,7 +43,7 @@ class _GestioneArea extends State<GestioneArea> {
     _icon = Icon(icon);
     setState(() {});
   }
-
+*/
   @override
   void initState() {
     super.initState();
@@ -56,10 +56,10 @@ class _GestioneArea extends State<GestioneArea> {
         : null;
     if (area != null) {
       nomeController.text = (area!.nome);
-      _icon =
+     /* _icon =
           Icon(area!.getIconData());
 
-      pickerColor = area!.getColorData();
+      pickerColor = area!.getColorData();*/
     }
     setState(() {
       loaded = true;
@@ -68,14 +68,14 @@ class _GestioneArea extends State<GestioneArea> {
   }
 
   void savePage() async {
-    iconError = false;
+    //iconError = false;
 
     if (_formGlobalKey.currentState!.validate()) {
-      if (_icon == null) {
+      /*if (_icon == null) {
         iconError = true;
         setState(() {});
         return;
-      }
+      }*/
       _formGlobalKey.currentState?.save();
       setState(() {
         loaded = false;
@@ -85,12 +85,13 @@ class _GestioneArea extends State<GestioneArea> {
       if (widget.idArea == null) {
         nArea = await areeService.createArea(Area(
             nome: nomeController.value.text,
-            icon: _icon!.icon!.codePoint.toString(),
-            color: pickerColor.value.toRadixString(16)));
+            //icon: _icon!.icon!.codePoint.toString(),
+           // color: pickerColor.value.toRadixString(16)
+          ));
       } else {
         area!.nome = nomeController.value.text;
-        area!.icon = _icon!.icon!.codePoint.toString();
-        area!.color = pickerColor.value.toRadixString(16);
+        //area!.icon = _icon!.icon!.codePoint.toString();
+        //area!.color = pickerColor.value.toRadixString(16);
         nArea = await areeService.editArea(area!);
       }
       if (mounted) {}
@@ -108,9 +109,9 @@ class _GestioneArea extends State<GestioneArea> {
     }
   }
 
-  void changeColor(Color color) {
+ /* void changeColor(Color color) {
     setState(() => pickerColor = color);
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +159,7 @@ class _GestioneArea extends State<GestioneArea> {
                             labelText: 'Nome',
                           ),
                         ),
-                        if (loaded)
+                        /*if (loaded)
                           Column(
                             children: [
                               const SizedBox(
@@ -168,8 +169,8 @@ class _GestioneArea extends State<GestioneArea> {
                                   ? const Text(
                                       "Seleziona un colore per il marker mappa",
                                       style: TextStyle(color: Colors.red))
-                                  : Container(),
-                              Row(
+                                  : Container(),*/
+                              /*Row(
                                 children: [
                                   ElevatedButton(
                                     onPressed: _pickIcon,
@@ -206,7 +207,7 @@ class _GestioneArea extends State<GestioneArea> {
                                 ],
                               )
                             ],
-                          )
+                          )*/
                       ],
                     ),
                   )));

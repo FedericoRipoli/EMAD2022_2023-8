@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:frontend_sws/services/entity/Struttura.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:frontend_sws/theme/theme.dart';
@@ -50,7 +51,7 @@ class _GestioneServizio extends State<GestioneServizio> {
   TextEditingController contenutoController = TextEditingController();
   TextfieldTagsController tagController = TextfieldTagsController();
   late double _distanceToField;
-
+  Icon? _icon;
   bool loaded = false;
   final _formGlobalKey = GlobalKey<FormState>();
   late List<DropdownMenuItem<String>> itemsAree = [];
@@ -104,7 +105,7 @@ class _GestioneServizio extends State<GestioneServizio> {
       }).toList());
     }
     List<Struttura>? strutture =
-        await strutturaService.struttureList(null,widget.idEnte);
+        await strutturaService.struttureList(null, widget.idEnte);
     if (strutture != null) {
       itemsStrutture.add(const DropdownMenuItem<String>(
         value: null,
@@ -126,9 +127,11 @@ class _GestioneServizio extends State<GestioneServizio> {
       strutturaValue = servizio!.struttura!.id;
       areeValues = servizio!.aree!.map((e) => e.id!).toList();
       nomeController.text = (servizio!.nome);
-      servizio!.hashtags?.forEach((e) {tagController.addTag=(e);});
+      servizio!.hashtags?.forEach((e) {
+        tagController.addTag = (e);
+      });
       if (servizio!.contenuto != null) {
-        contenutoController.text=(servizio!.contenuto!);
+        contenutoController.text = (servizio!.contenuto!);
       }
       if (servizio!.note != null) {
         noteController.text = (servizio!.note!);
@@ -142,6 +145,9 @@ class _GestioneServizio extends State<GestioneServizio> {
             : "";
         emailController.text =
             servizio!.contatto!.email != null ? servizio!.contatto!.email! : "";
+      }
+      if (servizio!.customIcon != null) {
+        _icon = Icon(servizio!.getIconData());
       }
     }
 
@@ -160,17 +166,18 @@ class _GestioneServizio extends State<GestioneServizio> {
       Servizio? nServizio;
       if (widget.idServizio == null) {
         nServizio = await servizioService.createServizio(Servizio(
-            nome: nomeController.value.text,
-            contenuto:contenutoController.value.text,
-            contatto: Contatto(
-              telefono: telefonoController.value.text,
-              email: emailController.value.text,
-              sitoWeb: sitoWebController.value.text,
-
-            ),
-            hashtags: tagController.getTags,
-            idAree: areeValues,
-            idStruttura: strutturaValue));
+          nome: nomeController.value.text,
+          contenuto: contenutoController.value.text,
+          contatto: Contatto(
+            telefono: telefonoController.value.text,
+            email: emailController.value.text,
+            sitoWeb: sitoWebController.value.text,
+          ),
+          hashtags: tagController.getTags,
+          idAree: areeValues,
+          idStruttura: strutturaValue,
+          customIcon: _icon != null ? _icon!.icon!.codePoint.toString() : null,
+        ));
       } else {
         servizio!.nome = nomeController.value.text;
         servizio!.contatto!.telefono = telefonoController.value.text;
@@ -180,6 +187,8 @@ class _GestioneServizio extends State<GestioneServizio> {
         servizio!.idAree = areeValues;
         servizio!.idStruttura = strutturaValue;
         servizio!.hashtags = tagController.getTags;
+        servizio!.customIcon =
+            _icon != null ? _icon!.icon!.codePoint.toString() : null;
         nServizio = await servizioService.editServizio(servizio!);
       }
       if (mounted) {}
@@ -217,7 +226,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                 onPressed: () => savePage(),
               ),
         appBar: CustomAppBar(
-            title:const  AppTitle(label: "Gestione Servizio"),
+            title: const AppTitle(label: "Gestione Servizio"),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(
@@ -305,20 +314,19 @@ class _GestioneServizio extends State<GestioneServizio> {
                         height: 40,
                       ),
                       Container(
-                          padding: const EdgeInsets.only(left: 50, right: 50),
-                          child:TextFormField(
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-
-                            enabled: (servizio == null ||
-                                Servizio.canEnteEdit(servizio!.stato)),
-                            validator: (v) {},
-                            controller: contenutoController,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Descrizione',
-                            ),
+                        padding: const EdgeInsets.only(left: 50, right: 50),
+                        child: TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          enabled: (servizio == null ||
+                              Servizio.canEnteEdit(servizio!.stato)),
+                          validator: (v) {},
+                          controller: contenutoController,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Descrizione',
                           ),
+                        ),
                       ),
                       const SizedBox(
                         height: 40,
@@ -450,7 +458,6 @@ class _GestioneServizio extends State<GestioneServizio> {
                         height: 40,
                       ),
                       TextFieldTags(
-                        
                           textfieldTagsController: tagController,
                           initialTags: [],
                           textSeparators: const [' ', ','],
@@ -458,9 +465,11 @@ class _GestioneServizio extends State<GestioneServizio> {
                               onChanged, onSubmitted) {
                             return ((context, sc, tags, onTagDelete) {
                               return Padding(
-                                padding: const EdgeInsets.only(left: 50, right: 50),
+                                padding:
+                                    const EdgeInsets.only(left: 50, right: 50),
                                 child: TextField(
-                                  enabled: servizio==null || Servizio.canEnteEdit(servizio!.stato),
+                                  enabled: servizio == null ||
+                                      Servizio.canEnteEdit(servizio!.stato),
                                   controller: tec,
                                   focusNode: fn,
                                   decoration: InputDecoration(
@@ -543,11 +552,36 @@ class _GestioneServizio extends State<GestioneServizio> {
                                         : null,
                                   ),
                                   //onChanged: onChanged,
-                                 // onSubmitted: onSubmitted,
+                                  // onSubmitted: onSubmitted,
                                 ),
                               );
                             });
                           }),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(left: 50, right: 50),
+                          child: Row(
+                            children: [
+                              ElevatedButton(
+                                onPressed: _pickIcon,
+                                child: const Text('Seleziona l\'icona'),
+                              ),
+                              const SizedBox(width: 30),
+                              AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 300),
+                                child: _icon ?? Container(),
+                              ),
+                              if (_icon != null)
+                                IconButton(
+                                    onPressed: _removeIcon,
+                                    icon: const Icon(
+                                      Icons.clear,
+                                      color: Colors.red,
+                                    ))
+                            ],
+                          )),
                       const SizedBox(
                         height: 40,
                       ),
@@ -578,5 +612,18 @@ class _GestioneServizio extends State<GestioneServizio> {
                 ),
               );
             })));
+  }
+
+  _pickIcon() async {
+    IconData? icon = await FlutterIconPicker.showIconPicker(context,
+        iconPackModes: [IconPack.material]);
+
+    _icon = Icon(icon);
+    setState(() {});
+  }
+
+  _removeIcon() {
+    _icon = null;
+    setState(() {});
   }
 }

@@ -58,14 +58,13 @@ public class ServizioController {
                                       @RequestParam(value = "idArea", required = false) String idArea,
                                       @RequestParam(value = "idEnte", required = false) String idEnte,
                                       @RequestParam(value = "idStruttura", required = false) String idStruttura,
-                                      @RequestParam(value = "tags", required = false) List<String> tags,
                                       @RequestParam(value = "stato", required = false) StatoOperazione stato,
                                       @RequestParam(value = "punti", defaultValue = "false") boolean punti,
                                       Pageable pageable) {
 
         if (user == null) stato = StatoOperazione.APPROVATO;
         if (user != null && !user.isAdmin()) idEnte = user.getEnte().getId();
-        ServizioSpecification specification = new ServizioSpecification(name, idArea, idEnte, idStruttura, tags, stato);
+        ServizioSpecification specification = new ServizioSpecification(name, idArea, idEnte, idStruttura,  stato);
         if (!punti) {
             Page<Servizio> toRet = servizioRepository.findAll(specification, pageable);
             return ResponseEntity.ok(toRet);
