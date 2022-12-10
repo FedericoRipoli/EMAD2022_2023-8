@@ -35,11 +35,9 @@ public class ServizioRepositoryCustomImpl implements ServizioRepositoryCustom {
                         cb.concat(cb.concat(
                                 root.join(Servizio_.struttura).join(Struttura_.posizione).get(Posizione_.latitudine),
                                 cb.literal(", ")
-                        ), root.join(Servizio_.struttura).join(Struttura_.posizione).get(Posizione_.longitudine))
-
-
-                )
-
+                        ), root.join(Servizio_.struttura).join(Struttura_.posizione).get(Posizione_.longitudine)),
+                        root.get(Servizio_.customIcon)
+                        )
         );
         cq.where(specification.toPredicate(root,cq,cb));
         return em.createQuery(cq).getResultList();

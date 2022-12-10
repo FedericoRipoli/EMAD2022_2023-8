@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 import 'Area.dart';
 import 'Contatto.dart';
 import 'Struttura.dart';
@@ -37,6 +39,7 @@ class Servizio {
     this.contatto,
     this.idStruttura,
     this.idAree,
+    this.customIcon,
   });
 
 
@@ -53,6 +56,7 @@ class Servizio {
   Contatto? contatto;
   String? idStruttura;
   List<String>? idAree;
+  String? customIcon;
 
   factory Servizio.fromJson(Map<String, dynamic> json) =>
       Servizio(
@@ -61,6 +65,7 @@ class Servizio {
         contenuto: json["contenuto"],
         stato: json["stato"],
         note: json["note"],
+        customIcon: json["customIcon"],
         dataCreazione: json["dataCreazione"],
         dataUltimaModifica: json["dataUltimaModifica"],
         hashtags: json["hashtags"] != null ? List<String>.from(
@@ -83,6 +88,7 @@ class Servizio {
         "contenuto": contenuto,
         "stato": stato,
         "note": note,
+        "customIcon": customIcon,
         "dataCreazione": dataCreazione,
         "dataUltimaModifica": dataUltimaModifica,
         "hashtags": hashtags != null
@@ -96,4 +102,9 @@ class Servizio {
         "idStruttura": idStruttura,
         "idAree": idAree,
       };
+
+  IconData? getIconData(){
+
+    return customIcon!=null?IconData(int.parse(customIcon!),fontFamily: "MaterialIcons"):null;
+  }
 }

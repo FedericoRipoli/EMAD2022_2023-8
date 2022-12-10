@@ -45,6 +45,8 @@ public class Servizio {
     @ManyToOne
     private Struttura struttura;
 
+    private String customIcon;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCreazione;
     @Temporal(TemporalType.TIMESTAMP)

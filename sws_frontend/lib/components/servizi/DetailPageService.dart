@@ -90,7 +90,7 @@ class _DetailPageServiceState extends State<DetailPageService>
                   padding:
                       EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 0),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         bottomRight: Radius.circular(0),
                         bottomLeft: Radius.circular(0),
                         topRight: Radius.circular(0),
@@ -211,13 +211,13 @@ class _DetailPageServiceState extends State<DetailPageService>
                                                 .struttura!
                                                 .posizione!
                                                 .longitudine!)),
-                                        builder: (ctx) => const Icon(
-                                          Icons.location_on,
+                                        builder: (ctx) =>  Icon(
+                                          widget.servizio.customIcon!=null? widget.servizio.getIconData() : Icons.location_on,
                                           size: 50,
                                           color: AppColors.logoCadmiumOrange,
                                         ),
-                                        width: 30.0,
-                                        height: 30.0,
+                                        width: 50.0,
+                                        height: 50.0,
                                       )
                                     ],
                                     polygonOptions: const PolygonOptions(

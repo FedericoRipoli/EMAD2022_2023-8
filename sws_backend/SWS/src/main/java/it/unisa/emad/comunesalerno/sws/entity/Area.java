@@ -25,6 +25,4 @@ public class Area {
     @NotNull
     private String nome;
 
-    private String icon;
-    private String color;
 }

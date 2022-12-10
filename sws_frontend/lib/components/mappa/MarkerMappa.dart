@@ -14,11 +14,12 @@ class MarkerMappa extends Marker {
           point: LatLng(double.parse(punto.posizione.split(", ")[0]),
               double.parse(punto.posizione.split(", ")[1])),
           builder: (ctx) => Icon(
-            Icons.location_on,
+            punto.customIcon==null ?Icons.location_on : punto.getIconData()!,
             size: 50,
             color: isSelected!=null && isSelected! ? AppColors.logoCadmiumOrange:AppColors.logoBlue,
           ),
           width: 30.0,
           height: 30.0,
         );
+
 }

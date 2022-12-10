@@ -44,8 +44,7 @@ class _MapTabState extends State<MapTab> {
         builder: ((context, snapshot) {
           List<Widget> children = [];
 
-          children.add(
-              FlutterMap(
+          children.add(FlutterMap(
               options: MapOptions(
                 center: LatLng(40.6824408, 14.7680961),
                 zoom: 15.0,
@@ -113,6 +112,7 @@ class _MapTabState extends State<MapTab> {
                                                     builder: (context) =>
                                                         InfoServizio(e.id)));
                                           },
+                                          customIcon: e.getIconData(),
                                           nome: e.nome,
                                           ente: e.ente,
                                           struttura: e.struttura,
@@ -134,8 +134,7 @@ class _MapTabState extends State<MapTab> {
                     },
                   ),
                 ),
-              ])
-          );
+              ]));
           if (!snapshot.hasData && !snapshot.hasError) {
             children.add(const AllPageLoadTransparent());
           }

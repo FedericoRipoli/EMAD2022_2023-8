@@ -4,6 +4,10 @@
 
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+
+import '../entity/Area.dart';
+
 ServizioMappaDto servizioMappaDtoFromJson(String str) => ServizioMappaDto.fromJson(json.decode(str));
 
 String servizioMappaDtoToJson(ServizioMappaDto data) => json.encode(data.toJson());
@@ -16,6 +20,7 @@ class ServizioMappaDto {
     required this.indirizzo,
     required this.ente,
     this.posizione,
+    this.customIcon
   });
 
   String id;
@@ -24,6 +29,7 @@ class ServizioMappaDto {
   String ente;
   String indirizzo;
   String? posizione;
+  String? customIcon;
 
   factory ServizioMappaDto.fromJson(Map<String, dynamic> json) => ServizioMappaDto(
     id: json["id"],
@@ -31,6 +37,7 @@ class ServizioMappaDto {
     struttura: json["struttura"],
     ente: json["ente"],
     posizione: json["posizione"],
+    customIcon: json["customIcon"],
     indirizzo: json["indirizzo"],
   );
 
@@ -41,5 +48,10 @@ class ServizioMappaDto {
     "ente": ente,
     "posizione": posizione,
     "indirizzo": indirizzo,
+    "customIcon": customIcon,
   };
+  IconData? getIconData(){
+
+    return customIcon!=null?IconData(int.parse(customIcon!),fontFamily: "MaterialIcons"):null;
+  }
 }
