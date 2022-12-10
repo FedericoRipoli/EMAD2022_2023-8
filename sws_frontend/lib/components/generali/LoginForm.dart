@@ -50,7 +50,7 @@ class _LoginFormState extends State<LoginForm> {
                           style: TextStyle(
                               color: AppColors.logoCadmiumOrange,
                               fontFamily: "FredokaOne",
-                              fontSize: 28),
+                              fontSize: 24),
                         )),
                     Container(
                         alignment: Alignment.center,
@@ -58,7 +58,7 @@ class _LoginFormState extends State<LoginForm> {
                         child: const Text(
                           'Inserisci le credenziali fornite dal Comune',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                           ),
                           textAlign: TextAlign.center,
                         )),

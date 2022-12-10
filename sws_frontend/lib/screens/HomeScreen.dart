@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       alwaysShowLeadingAndAction: true,
       headerWidget: headerWidget(context),
       curvedBodyRadius: 20,
-      headerExpandedHeight: 0.28,
+      headerExpandedHeight: 0.23,
       body: [
         TopicCard(
           title: "Servizi Politiche Sociali & Giovanili",
@@ -147,47 +147,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget headerWidget(BuildContext context) {
     return Container(
       color: AppColors.logoBlue,
-      child: Container(
-          margin: EdgeInsets.only(top: 50, left: 40),
+      child: Center(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  HomeTitle(
-                    label: "Salerno",
-                    color: AppColors.white,
-                  ),
-                  SizedBox(
-                    height: 4,
-                  ),
-                  HomeTitle(
-                    label: "Amica",
-                    color: AppColors.logoCadmiumOrange,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    "Vivi la città di Salerno\nEsplora le possibilità...",
-                    style: TextStyle(
-                        color: AppColors.ice,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600),
-                  )
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.only(right: 50, bottom: 80),
-                child: Image.asset(
-                  "images/logo.png",
-                  width: 90,
-                ),
-              )
-            ],
-          )),
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          HomeTitle(
+            label: "Salerno\nAmica",
+            color: AppColors.white,
+          ),
+          Image.asset(
+            "assets/images/logo.png",
+            width: 80,
+          ),
+        ],
+      )),
     );
   }
 }
