@@ -564,7 +564,9 @@ class _GestioneServizio extends State<GestioneServizio> {
                           child: Row(
                             children: [
                               ElevatedButton(
-                                onPressed: Servizio.canEnteEdit(servizio!.stato)
+                                onPressed:(servizio == null ||
+                                    Servizio.canEnteEdit(servizio!.stato))
+
                                     ? _pickIcon
                                     : null,
                                 child: const Text('Seleziona l\'icona'),
@@ -576,10 +578,10 @@ class _GestioneServizio extends State<GestioneServizio> {
                               ),
                               if (_icon != null)
                                 IconButton(
-                                    onPressed:
-                                        Servizio.canEnteEdit(servizio!.stato)
-                                            ? _removeIcon
-                                            : null,
+                                    onPressed:(servizio == null ||
+                                        Servizio.canEnteEdit(servizio!.stato))
+                                        ? _removeIcon
+                                        : null,
                                     icon: const Icon(
                                       Icons.clear,
                                       color: Colors.red,
