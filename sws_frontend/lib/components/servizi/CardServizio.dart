@@ -36,7 +36,7 @@ class CardServizio extends StatelessWidget {
         margin: const EdgeInsets.all(16),
         color: AppColors.greyLight,
         child: Column(
-          children: [ListTile(), ListTile()],
+          children: const [ListTile(), ListTile()],
         ),
       ),
     );

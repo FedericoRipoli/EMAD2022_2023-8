@@ -50,7 +50,7 @@ class _GestioneUtente extends State<GestioneUtente> {
   }
 
   Future<bool> load() async {
-    enti = await enteService.enteList(null, null);
+    enti = await enteService.enteList(null, null, "sort=denominazione&denominazione.dir=asc");
     if (enti != null) {
       itemsEnte.add(const DropdownMenuItem<String>(
         value: null,
