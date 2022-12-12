@@ -64,7 +64,7 @@ class _ServiziScreenState extends State<ServiziScreen>
 
   late Future<List<DropDownFilterItem>> initEnti;
   Future<List<DropDownFilterItem>> loadListEnti() async {
-    listEnti = await enteService.enteList(null, null);
+    listEnti = await enteService.enteList(null, null, "sort=denominazione&denominazione.dir=asc");
     itemsEnti.add(DropDownFilterItem(
       id: "",
       name: "",

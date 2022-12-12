@@ -46,7 +46,7 @@ class _ListaEntiState extends State<ListaEnti> {
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await enteService.enteList(filterNome, pageKey);
+      final newItems = await enteService.enteList(filterNome, pageKey, "sort=denominazione&denominazione.dir=asc");
 
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {

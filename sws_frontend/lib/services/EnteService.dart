@@ -12,7 +12,7 @@ class EnteService {
   final log = Logger('EnteServiceLogger');
   UserService userService = UserService();
 
-  Future<List<Ente>?> enteList(String? name, int? page) async {
+  Future<List<Ente>?> enteList(String? name, int? page, String? order) async {
     try {
 
       QueryStringUtil queryStringUtil=QueryStringUtil();
@@ -25,6 +25,12 @@ class EnteService {
 
       } else {
         queryStringUtil.addString(RestURL.queryRemovePagination);
+      }
+      if(order!=null){
+        //sort=denominazione&denominazione.dir=asc
+        queryStringUtil.addString(order);
+
+
       }
 
       Uri u = Uri.parse("${RestURL.enteService}?${queryStringUtil.getQueryString()}");
