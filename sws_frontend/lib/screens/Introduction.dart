@@ -20,7 +20,7 @@ class Introduction extends StatelessWidget {
               body:
                   "Salerno Amica è l'applicazione che ti aiuta a cercare e informarti su tutti gli "
                   'eventi e i servizi dei comuni di Salerno e Pellezzano per le politiche Giovanili e Sociali',
-              image: buildImage("images/svg/intro_welcome.svg"),
+              image: buildImage("assets/svg/intro_welcome.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -29,7 +29,7 @@ class Introduction extends StatelessWidget {
               body:
                   "A portata di smartphone tutti i servizi che il Comune di Salerno offre ai suoi cittadini. Cerca i servizi"
                   " filtrando le informazioni che ti interessano, apri la mappa interattiva, visualizza gli eventi in programma nel mese corrente...",
-              image: buildImage("images/svg/intro_explain.svg"),
+              image: buildImage("assets/svg/intro_explain.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -38,7 +38,7 @@ class Introduction extends StatelessWidget {
               body:
                   "L'app pone particolare attenzione sull'accessibilità, rendere l'esperienza d'utilizzo semplice "
                   "e intuitiva per tutte le tipologie di utente è l'obiettivo primario di Salerno Amica",
-              image: buildImage("images/svg/intro_access.svg"),
+              image: buildImage("assets/svg/intro_access.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -47,7 +47,7 @@ class Introduction extends StatelessWidget {
               body:
                   'Hai dubbi o domande sui servizi offerti dal Comune di Salerno o su cosa fare? Interagisci '
                   'con Olivia che ti aiuterà a soddisfare le tue esigenze',
-              image: buildImage("images/svg/intro_chatbot.svg"),
+              image: buildImage("assets/svg/intro_chatbot.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
