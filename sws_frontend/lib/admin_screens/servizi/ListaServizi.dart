@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/components/filtri/DropDownFilter.dart';
 import 'package:frontend_sws/components/menu/DrawerMenu.dart';
 import 'package:frontend_sws/util/ToastUtil.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -26,7 +27,7 @@ class ListaServizi extends StatefulWidget {
 class _ListaServiziState extends State<ListaServizi> {
   ServizioService servizioService = ServizioService();
   UserService userService = UserService();
-
+  List<DropDownFilterItem> itemsFilterStato=[];
   late String idEnte;
   final PagingController<int, Servizio> _pagingController =
       PagingController(firstPageKey: 0);
@@ -38,19 +39,27 @@ class _ListaServiziState extends State<ListaServizi> {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
+    itemsFilterStato.add(DropDownFilterItem(name: "Tutti"));
+
+    itemsFilterStato.addAll(Servizio.getStatiList().entries.map((e) => DropDownFilterItem(name: e.value,id:e.key)).toList());
 
     super.initState();
   }
   String? filterNome;
+  String? filterStato;
 
   void _filterNomeChanged(String? text) {
     filterNome=text;
     _pullRefresh();
   }
+  void _filterStatoChanged(String? text) {
+    filterStato=text;
+    _pullRefresh();
+  }
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await servizioService.serviziList(filterNome,null,null, pageKey, true);
+      final newItems = await servizioService.serviziList(filterNome,null,null,filterStato, pageKey, true);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -93,7 +102,8 @@ class _ListaServiziState extends State<ListaServizi> {
             child: Column(children: <Widget>[
               FilterBar(filters:[
                 TextFilter(name: 'Nome', positionType: GenericFilterPositionType.row, valueChange: _filterNomeChanged),
-
+                DropDownFilter(name:"Stato",positionType: GenericFilterPositionType.row, valueChange: _filterStatoChanged,
+                    values: itemsFilterStato)
               ]),
               Flexible(
                 child: PagedListView<int, Servizio>(

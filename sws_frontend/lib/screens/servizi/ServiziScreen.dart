@@ -139,7 +139,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await servizioService.serviziList(
-          filterNome, filterEnte, filterArea, pageKey, false);
+          filterNome, filterEnte, filterArea,null, pageKey, false);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);

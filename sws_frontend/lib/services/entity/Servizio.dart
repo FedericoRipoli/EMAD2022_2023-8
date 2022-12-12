@@ -21,6 +21,15 @@ class Servizio {
   static const String ANNULLATO = "ANNULLATO";
   static const String DA_CANCELLARE = "DA_CANCELLARE";
 
+  static Map<String, String> getStatiList(){
+    Map<String,String> toRet={
+      DA_APPROVARE:"Da approvare",APPROVATO:"Approvato",IN_MODIFICA:"In modifica",
+      ANNULLATO:"Annullato", DA_CANCELLARE:"Da cancellare",
+    };
+    return toRet;
+
+  }
+
   static bool canEnteEdit(String? stato) {
     return stato==null || stato == APPROVATO || stato == IN_MODIFICA;
   }
