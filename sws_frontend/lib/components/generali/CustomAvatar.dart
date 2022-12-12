@@ -13,6 +13,6 @@ class CustomAvatar extends StatelessWidget {
     return GFAvatar(
         shape: GFAvatarShape.circle,
         backgroundColor: AppColors.white,
-        child: Icon(icon, size: size, color: AppColors.logoCadmiumOrange));
+        child: Icon(icon, size: size, color: AppColors.logoBlue));
   }
 }

@@ -15,13 +15,14 @@ class TopicCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
-      margin: const EdgeInsets.all(14),
-      color: AppColors.greyLight,
+      elevation: 4,
+      margin: const EdgeInsets.only(left: 16, right: 16, bottom: 10, top: 6),
+      color: AppColors.ice,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ListTile(
+            minVerticalPadding: 12,
             onTap: onTap,
             title: Text(
               title,

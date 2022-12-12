@@ -20,7 +20,7 @@ class CustomMenuItem extends StatelessWidget {
             onTap: f,
             trailing: const Icon(
               Icons.arrow_forward_ios_sharp,
-              color: AppColors.logoBlue,
+              color: AppColors.logoCadmiumOrange,
             )));
   }
 }

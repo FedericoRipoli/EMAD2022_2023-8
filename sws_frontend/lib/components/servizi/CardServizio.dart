@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 import '../../services/entity/Area.dart';
 import '../../theme/theme.dart';
 import '../../screens/InfoServizio.dart';
+import 'package:frontend_sws/components/generali/Chips.dart';
 import 'package:frontend_sws/components/generali/Chips.dart';
 
 class CardServizio extends StatelessWidget {
@@ -29,87 +31,65 @@ class CardServizio extends StatelessWidget {
           MaterialPageRoute(builder: (context) => InfoServizio(idServizio)),
         );
       },
-      child: Container(
-        height: 160,
-        margin: const EdgeInsets.all(8),
-        //padding: const EdgeInsets.all(3),
-        decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(26.0),
-            boxShadow: const [
-              BoxShadow(
-                color: AppColors.logoBlue,
-                spreadRadius: 0,
-                blurRadius: 0.9,
-                offset: Offset(1, 1), // changes position of shadow
-              ),
-            ]),
-        child: Row(
+      child: Card(
+        color: AppColors.ice,
+        elevation: 4,
+        margin: const EdgeInsets.only(left: 16, right: 16, bottom: 10, top: 6),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-                flex: 2,
-                child: Container(
-                  margin: const EdgeInsets.only(left: 32),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        nomeServizio,
-                        overflow: TextOverflow.fade,
-                        textAlign: TextAlign.start,
+            ListTile(
+              minVerticalPadding: 6,
+              title: Text(
+                nomeServizio,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18.0,
+                ),
+              ),
+              trailing: const Icon(
+                Icons.handshake_rounded,
+                color: AppColors.logoCadmiumOrange,
+                size: 32,
+              ),
+              subtitle: Text(
+                ente,
+                style: const TextStyle(
+                    color: AppColors.logoBlue, fontWeight: FontWeight.w600),
+              ),
+              /* avatar: const Icon(
+                Icons.home_work,
+                color: AppColors.logoBlue,
+              ),*/
+            ),
+            const SizedBox(
+              height: 2,
+            ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 4, left: 6),
+              child: Column(
+                children: aree.map((e) {
+                  return Chip(
+                      backgroundColor: AppColors.ice,
+                      label: Text(
+                        e.nome,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.0,
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12.0,
                         ),
                       ),
-                      Wrap(
-                        children: [
-                          const Icon(
-                            Icons.home_work,
-                            color: AppColors.logoBlue,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            ente,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.start,
-                            style: const TextStyle(
-                              color: AppColors.logoBlue,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: aree.map((e) {
-                          return Wrap(
-                            children: [
-                              const Icon(
-                                Icons.tag,
-                                color: AppColors.logoBlue,
-                              ),
-                              Text(
-                                e.nome,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.start,
-                                style: const TextStyle(
-                                  color: AppColors.logoBlue,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                      )
-                    ],
-                  ),
-                )),
+                      elevation: 4,
+                      avatar: const Icon(
+                        Icons.tag,
+                        color: AppColors.black,
+                      ));
+                }).toList(),
+              ),
+            )
           ],
         ),
       ),

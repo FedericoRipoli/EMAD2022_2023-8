@@ -139,7 +139,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await servizioService.serviziList(
-          filterNome, filterEnte, filterArea,null, pageKey, false);
+          filterNome, filterEnte, filterArea, null, pageKey, false);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -162,11 +162,6 @@ class _ServiziScreenState extends State<ServiziScreen>
       //resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
       appBar: GFAppBar(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(24),
-          ),
-        ),
         centerTitle: true,
         backgroundColor: AppColors.logoBlue,
         leading: IconButton(

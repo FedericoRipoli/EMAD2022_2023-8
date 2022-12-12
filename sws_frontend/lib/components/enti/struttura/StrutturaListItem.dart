@@ -18,7 +18,8 @@ class StrutturaListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
+      elevation: 4,
+      color: AppColors.ice,
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 10, top: 6),
       child: GFListTile(
         padding: const EdgeInsets.all(4),

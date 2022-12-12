@@ -28,7 +28,7 @@ ThemeData appTheme = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
   fontFamily: 'OpenSans',
   primaryColor: AppColors.logoBlue,
-  useMaterial3: true,
+  //useMaterial3: true,
   //colorSchemeSeed: Colors.indigo,
   primarySwatch: Colors.indigo,
   appBarTheme: const AppBarTheme(
