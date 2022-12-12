@@ -18,7 +18,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
       this.onPressed,
       required this.title,
       this.iconData,
-      this.actions=const [],
+      this.actions = const [],
       this.bottom})
       : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
@@ -34,23 +34,31 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        centerTitle: true,
-        title: widget.title,
-        leading: widget.onPressed != null && widget.iconData != null
-            ? GFIconButton(
-                icon: Icon(
-                  widget.iconData,
-                  color: Colors.white,
-                ),
-                onPressed: widget.onPressed,
-                type: GFButtonType.transparent,
-              )
-            : null,
-        //searchBar: false,
-        elevation: 1,
-        backgroundColor: appTheme.primaryColor,
-        actions: widget.actions,
-        bottom: widget.bottom,
+      centerTitle: true,
+      title: widget.title,
+      leading: widget.onPressed != null && widget.iconData != null
+          ? GFIconButton(
+              icon: Icon(
+                widget.iconData,
+                color: AppColors.white,
+              ),
+              onPressed: widget.onPressed,
+              type: GFButtonType.transparent,
+            )
+          : GFIconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: AppColors.white,
+              ),
+              color: Colors.transparent,
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+      //searchBar: false,
+      elevation: 1,
+      backgroundColor: appTheme.primaryColor,
+      actions: widget.actions,
+      bottom: widget.bottom,
     );
   }
 }

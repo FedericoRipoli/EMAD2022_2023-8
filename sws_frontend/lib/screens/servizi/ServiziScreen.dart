@@ -24,7 +24,6 @@ class ServiziScreen extends StatefulWidget {
 
   ServiziScreen({Key? key}) : super(key: key);
 
-
   @override
   State<ServiziScreen> createState() => _ServiziScreenState();
 }
@@ -58,17 +57,14 @@ class _ServiziScreenState extends State<ServiziScreen>
     initAree.then((vAree) {
       initEnti = loadListEnti();
       initEnti.then((vEnti) {
-        setState(() {
-
-        });
+        setState(() {});
       });
     });
-
   }
 
   late Future<List<DropDownFilterItem>> initEnti;
-  Future<List<DropDownFilterItem>> loadListEnti() async{
-    listEnti = await enteService.enteList(null,null);
+  Future<List<DropDownFilterItem>> loadListEnti() async {
+    listEnti = await enteService.enteList(null, null);
     itemsEnti.add(DropDownFilterItem(
       id: "",
       name: "",
@@ -86,7 +82,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   }
 
   late Future<List<DropDownFilterItem>> initAree;
-  Future<List<DropDownFilterItem>> loadListAree() async{
+  Future<List<DropDownFilterItem>> loadListAree() async {
     listAree = await areeService.areeList(null);
     itemsAree.add(DropDownFilterItem(
       id: "",
@@ -110,7 +106,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   late Future<List<PuntoMappaDto>?> initCallMap;
   Future<List<PuntoMappaDto>?> loadMapView() async {
     ServizioService servizioService = ServizioService();
-    return servizioService.findPuntiMappa(filterNome,filterEnte,filterArea);
+    return servizioService.findPuntiMappa(filterNome, filterEnte, filterArea);
   }
 
   void _filterNomeChange(String? text) {
@@ -119,12 +115,14 @@ class _ServiziScreenState extends State<ServiziScreen>
     initCallMap = loadMapView();
     setState(() {});
   }
+
   void _filterEnteChange(String? text) {
     filterEnte = text;
     _pullRefresh();
     initCallMap = loadMapView();
     setState(() {});
   }
+
   void _filterAreaChange(String? text) {
     filterArea = text;
     _pullRefresh();
@@ -140,8 +138,8 @@ class _ServiziScreenState extends State<ServiziScreen>
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems =
-          await servizioService.serviziList(filterNome,filterEnte,filterArea, pageKey, false);
+      final newItems = await servizioService.serviziList(
+          filterNome, filterEnte, filterArea, pageKey, false);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -164,6 +162,11 @@ class _ServiziScreenState extends State<ServiziScreen>
       //resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.white,
       appBar: GFAppBar(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(24),
+          ),
+        ),
         centerTitle: true,
         backgroundColor: AppColors.logoBlue,
         leading: IconButton(
@@ -191,7 +194,7 @@ class _ServiziScreenState extends State<ServiziScreen>
               Radius.circular(20),
             ),
           ),
-          indicatorPadding: const EdgeInsets.all(0.6),
+          //indicatorPadding: const EdgeInsets.all(0.6),
           indicatorWeight: 4,
           indicatorSize: TabBarIndicatorSize.tab,
           border: Border.all(color: appTheme.primaryColor, width: 0.5),
@@ -209,7 +212,7 @@ class _ServiziScreenState extends State<ServiziScreen>
                 });
               },
               icon: const Icon(
-                Icons.search,
+                Icons.arrow_drop_up,
                 color: AppColors.white,
               ))
         ],
@@ -217,33 +220,28 @@ class _ServiziScreenState extends State<ServiziScreen>
           preferredSize: Size.fromHeight(widget.isFilterOpen ? 150 : 0),
           child: widget.isFilterOpen
               ? Container(
-                child: Column(
-                  children: [
-                    FilterBar(
-                        filters: [
-                          TextFilter(
-                              name: 'Cerca un servizio...',
-                              textEditingController: widget.filtroNomeController,
-                              positionType: GenericFilterPositionType.col,
-                              valueChange: _filterNomeChange
-                          ),
-                          DropDownFilter(
-                              name: "Seleziona Area",
-                              positionType: GenericFilterPositionType.row,
-                              valueChange: _filterAreaChange,//TODO
-                              values: itemsAree
-                          ),
-                          DropDownTextFilter(
-                              name: "Seleziona Ente",
-                              positionType: GenericFilterPositionType.row,
-                              valueChange: _filterEnteChange,//TODO
-                              values: itemsEnti
-                          )
-                        ]
-                    ),
-                  ],
-                ),
-              )
+                  child: Column(
+                    children: [
+                      FilterBar(filters: [
+                        TextFilter(
+                            name: 'Cerca un servizio...',
+                            textEditingController: widget.filtroNomeController,
+                            positionType: GenericFilterPositionType.col,
+                            valueChange: _filterNomeChange),
+                        DropDownFilter(
+                            name: "Seleziona Area",
+                            positionType: GenericFilterPositionType.row,
+                            valueChange: _filterAreaChange, //TODO
+                            values: itemsAree),
+                        DropDownTextFilter(
+                            name: "Seleziona Ente",
+                            positionType: GenericFilterPositionType.row,
+                            valueChange: _filterEnteChange, //TODO
+                            values: itemsEnti)
+                      ]),
+                    ],
+                  ),
+                )
               : Container(),
         ),
       ),

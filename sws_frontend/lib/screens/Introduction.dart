@@ -17,37 +17,52 @@ class Introduction extends StatelessWidget {
           pages: [
             PageViewModel(
               title: 'Benvenuto in Salerno Amica',
-              body:
-                  "Salerno Amica è l'applicazione che ti aiuta a cercare e informarti su tutti gli "
-                  'eventi e i servizi dei comuni di Salerno e Pellezzano per le politiche Giovanili e Sociali',
-              image: buildImage("images/svg/intro_welcome.svg"),
+              body: "Salerno Amica è l'applicazione che racchiude tutti i "
+                  'servizi in ambito Politiche Sociali e Giovanili del Comune di Salerno e provincia',
+              image: buildImage("/svg/intro_welcome.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: "Che cos'è Salerno Amica?",
+              title: "Cosa ti offre Salerno Amica?",
               body:
-                  "A portata di smartphone tutti i servizi che il Comune di Salerno offre ai suoi cittadini. Cerca i servizi"
-                  " filtrando le informazioni che ti interessano, apri la mappa interattiva, visualizza gli eventi in programma nel mese corrente...",
-              image: buildImage("images/svg/intro_explain.svg"),
+                  "A portata di smartphone tutti i servizi gratuiti che il Comune di Salerno offre ai suoi cittadini. Cerca i"
+                  "servizi filtrando le informazioni che ti interessano o esplora la mappa interattiva",
+              image: buildImage("svg/intro_explain.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
               title: "Focus sull'accessibilità",
               body:
-                  "L'app pone particolare attenzione sull'accessibilità, rendere l'esperienza d'utilizzo semplice "
-                  "e intuitiva per tutte le tipologie di utente è l'obiettivo primario di Salerno Amica",
-              image: buildImage("images/svg/intro_access.svg"),
+                  "L'app pone particolare attenzione sull'accessibilità, l'obiettivo primario di Salerno Amica è"
+                  "rendere l'esperienza d'utilizzo semplice e intuitiva per tutti",
+              image: buildImage("svg/intro_access.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
             PageViewModel(
-              title: 'Chiedi aiuto al nostro chatbot',
+              title: 'Tieniti aggiornato sugli ultimi eventi',
               body:
-                  'Hai dubbi o domande sui servizi offerti dal Comune di Salerno o su cosa fare? Interagisci '
-                  'con Olivia che ti aiuterà a soddisfare le tue esigenze',
-              image: buildImage("images/svg/intro_chatbot.svg"),
+                  'Non sai cosa fare stasera? guarda tutti gli eventi in programma nella zona di Salerno e dintorni',
+              image: buildImage("svg/intro_event.svg"),
+              //getPageDecoration, a method to customise the page style
+              decoration: getPageDecoration(),
+            ),
+            PageViewModel(
+              title: 'La mappa dei defibrillatori a portata di mano',
+              body:
+                  'Visualizza sulla mappa interattiva i defibrillatori presenti sul territorio e quelli più vicini a te',
+              image: buildImage("svg/intro_def.svg"),
+              //getPageDecoration, a method to customise the page style
+              decoration: getPageDecoration(),
+            ),
+            PageViewModel(
+              title: 'Chiedi aiuto ad Olivia',
+              body:
+                  'Hai dubbi sui servizi offerti dal Comune di Salerno o su cosa fare? Interagisci '
+                  'con Olivia, ti aiuterà a comprendere meglio Salerno Amica',
+              image: buildImage("svg/intro_chatbot.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),

@@ -16,7 +16,7 @@ class CustomFloatingButton extends StatelessWidget {
         elevation: 3,
         hoverElevation: 1,
         onPressed: onPressed,
-        backgroundColor: AppColors.logoCadmiumOrange,
+        backgroundColor: AppColors.logoBlue,
         child: Icon(
           iconData,
           size: 28,

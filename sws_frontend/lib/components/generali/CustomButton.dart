@@ -5,14 +5,12 @@ import 'package:frontend_sws/theme/theme.dart';
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String textButton;
-  final bool status;
   final IconData? icon;
 
   const CustomButton(
       {Key? key,
       required this.onPressed,
       required this.textButton,
-      required this.status,
       this.icon})
       : super(key: key);
 

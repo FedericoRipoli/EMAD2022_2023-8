@@ -8,6 +8,8 @@ class AppColors {
   static const Color ice = Color(0xFFE9EFFF);
   static const Color white = Color(0xFFFFFFFF);
   static const Color black = Color(0xFF000000);
+  static const Color greyLight = Color(0xFFFFFFFE);
+  static const Color detailBlue = Color(0xFFE6F4F1);
   // logo colors
   static const Color logoBlue = Color(0XFF0973BA);
   static const Color logoYellow = Color(0XFFFCDE05);
@@ -26,7 +28,7 @@ class AppTitle extends StatelessWidget {
     return Text(label,
         style: TextStyle(
           fontFamily: "FredokaOne",
-          fontSize: 24,
+          fontSize: 20,
           letterSpacing: 1,
           color: color ?? AppColors.white,
         ));
@@ -34,19 +36,27 @@ class AppTitle extends StatelessWidget {
 }
 
 class HomeTitle extends StatelessWidget {
-  final String label;
-  final Color color;
-  const HomeTitle({Key? key, required this.label, required this.color})
-      : super(key: key);
+  const HomeTitle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Text(label,
+    return RichText(
+      text: const TextSpan(
         style: TextStyle(
           fontFamily: "FredokaOne",
-          fontSize: 32,
           letterSpacing: 1,
-          color: color,
-        ));
+          fontSize: 32.0,
+          color: Colors.white,
+        ),
+        children: <TextSpan>[
+          TextSpan(text: 'Salerno\n'),
+          TextSpan(
+              text: 'Amica',
+              style: TextStyle(
+                color: AppColors.logoCadmiumOrange,
+              )),
+        ],
+      ),
+    );
   }
 }

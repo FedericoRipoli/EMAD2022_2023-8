@@ -8,9 +8,7 @@ class AllPageLoad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: LoadingAnimationWidget.flickr(
-            size: 80,
-            leftDotColor: AppColors.logoCadmiumOrange,
-            rightDotColor: AppColors.logoBlue));
+        child:
+            LoadingAnimationWidget.beat(size: 80, color: AppColors.logoBlue));
   }
 }

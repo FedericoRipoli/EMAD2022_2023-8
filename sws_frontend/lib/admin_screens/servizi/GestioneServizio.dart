@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:frontend_sws/services/entity/Struttura.dart';
@@ -565,8 +564,9 @@ class _GestioneServizio extends State<GestioneServizio> {
                           child: Row(
                             children: [
                               ElevatedButton(
-
-                                onPressed:Servizio.canEnteEdit(servizio!.stato)? _pickIcon:null,
+                                onPressed: Servizio.canEnteEdit(servizio!.stato)
+                                    ? _pickIcon
+                                    : null,
                                 child: const Text('Seleziona l\'icona'),
                               ),
                               const SizedBox(width: 30),
@@ -576,8 +576,10 @@ class _GestioneServizio extends State<GestioneServizio> {
                               ),
                               if (_icon != null)
                                 IconButton(
-
-                                    onPressed:Servizio.canEnteEdit(servizio!.stato) ? _removeIcon:null,
+                                    onPressed:
+                                        Servizio.canEnteEdit(servizio!.stato)
+                                            ? _removeIcon
+                                            : null,
                                     icon: const Icon(
                                       Icons.clear,
                                       color: Colors.red,

@@ -14,4 +14,3 @@ update import_servizi set struttura="Sede Cassiopea" where ente="Cassiopea Socie
 /* dopo import rest */
 update emad.struttura set denominazione=replace(denominazione,"\"\"","")  where denominazione like "%\"\"%";
 update emad.ente set denominazione=replace(denominazione,"\"\"","")  where denominazione like "%\"\"%";
-update area set color="ff0973ba" , icon="60978";

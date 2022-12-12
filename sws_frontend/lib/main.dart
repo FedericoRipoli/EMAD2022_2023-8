@@ -7,9 +7,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 void main() {
   runApp(MaterialApp(
       builder: (context, widget) => ResponsiveWrapper.builder(
-            ClampingScrollWrapper(
-              child: widget!,
-            ),
+            ClampingScrollWrapper.builder(context, widget!),
             maxWidth: 2100,
             minWidth: 350,
             defaultScale: true,
@@ -30,9 +28,9 @@ ThemeData appTheme = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
   fontFamily: 'OpenSans',
   primaryColor: AppColors.logoBlue,
-
+  useMaterial3: true,
   //colorSchemeSeed: Colors.indigo,
-  primarySwatch: Colors.blue,
+  primarySwatch: Colors.indigo,
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

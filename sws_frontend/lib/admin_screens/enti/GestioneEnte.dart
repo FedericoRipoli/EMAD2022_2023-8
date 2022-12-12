@@ -171,8 +171,7 @@ class _GestioneEnte extends State<GestioneEnte> {
                                                                   ente!.id!)));
                                             },
                                             icon: Icons.account_balance_rounded,
-                                            textButton: "Gestione strutture",
-                                            status: false)
+                                            textButton: "Gestione strutture",)
                                       ],
                                     )
                                   : null),
