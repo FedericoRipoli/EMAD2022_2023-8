@@ -22,7 +22,7 @@ class ServizioService {
   UserService userService = UserService();
 
   Future<List<Servizio>?> serviziList(
-      String? nome,String? idEnte, String? idArea, int page, bool logged) async {
+      String? nome,String? idEnte, String? idArea,String? stato, int page, bool logged) async {
 
     String? token;
     if(logged){
@@ -40,6 +40,9 @@ class ServizioService {
       }
       if (idArea != null) {
         queryStringUtil.add("idArea", idArea);
+      }
+      if (stato != null) {
+        queryStringUtil.add("stato", stato);
       }
 
       Uri u = Uri.parse(
