@@ -39,7 +39,10 @@ class _ConfirmBoxState extends State<ConfirmBox> {
           shape: GFButtonShape.pills,
         ),
         GFButton(
-          onPressed: widget.onDelete,
+          onPressed: () {
+            widget.onDelete.call();
+            Navigator.pop(context);
+            },
           color: Colors.green,
           text: "Conferma",
           icon: const Icon(
