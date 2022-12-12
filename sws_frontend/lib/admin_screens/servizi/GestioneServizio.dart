@@ -8,6 +8,8 @@ import 'package:frontend_sws/theme/theme.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../components/generali/CustomAppBar.dart';
+import '../../components/generali/CustomDropDown.dart';
+import '../../components/generali/CustomDropDownText.dart';
 import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/menu/DrawerMenu.dart';
@@ -54,7 +56,7 @@ class _GestioneServizio extends State<GestioneServizio> {
   bool loaded = false;
   final _formGlobalKey = GlobalKey<FormState>();
   late List<DropdownMenuItem<String>> itemsAree = [];
-  late List<DropdownMenuItem<String>> itemsStrutture = [];
+  late List<CustomDropDownItem> itemsStrutture = [];
   List<Area>? aree = [];
 
   @override
@@ -106,15 +108,15 @@ class _GestioneServizio extends State<GestioneServizio> {
     List<Struttura>? strutture =
         await strutturaService.struttureList(null, widget.idEnte);
     if (strutture != null) {
-      itemsStrutture.add(const DropdownMenuItem<String>(
-        value: null,
-        child: Text(""),
+      itemsStrutture.add( CustomDropDownItem(
+        id: null,
+        name: "",
       ));
       itemsStrutture
-          .addAll(strutture!.map<DropdownMenuItem<String>>((Struttura value) {
-        return DropdownMenuItem<String>(
-          value: value.id,
-          child: Text(value.denominazione!),
+          .addAll(strutture!.map<CustomDropDownItem>((Struttura value) {
+        return CustomDropDownItem(
+          id: value.id,
+          name: (value.denominazione!),
         );
       }).toList());
     }
@@ -233,9 +235,7 @@ class _GestioneServizio extends State<GestioneServizio> {
             builder: ((context, snapshot) {
               List<Widget> children = [];
 
-              if (!snapshot.hasData && !snapshot.hasError || !loaded) {
-                children.add(const AllPageLoadTransparent());
-              }
+
               List<Widget> columnChild = [];
               columnChild.add(Form(
                   key: _formGlobalKey,
@@ -332,50 +332,25 @@ class _GestioneServizio extends State<GestioneServizio> {
                       ),
                       Padding(
                           padding: const EdgeInsets.only(left: 50, right: 50),
-                          child: DropdownButtonFormField2<String>(
-                            value: strutturaValue,
-                            decoration: InputDecoration(
-                              //Add isDense true and zero Padding.
-                              //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                              isDense: true,
-                              contentPadding: EdgeInsets.zero,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              //Add more decoration as you want here
-                              //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                            ),
-                            isExpanded: true,
-                            hint: const Text(
-                              'Seleziona struttura',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            icon: const Icon(
-                              Icons.arrow_drop_down,
-                              color: Colors.black45,
-                            ),
-                            iconSize: 30,
-                            buttonHeight: 60,
-                            buttonPadding:
-                                const EdgeInsets.only(left: 20, right: 10),
-                            dropdownDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            items: itemsStrutture,
+                          child: CustomDropDown(
+                            values: itemsStrutture,
+                            name: 'Seleziona struttura',
                             validator: (value) {
                               if (value == null) {
                                 return 'Seleziona una struttura';
                               }
                             },
                             onChanged: (servizio == null ||
-                                    Servizio.canEnteEdit(servizio!.stato))
+                                Servizio.canEnteEdit(servizio!.stato))
                                 ? (value) {
-                                    //Do something when changing the item if you want.
-                                  }
+                              //Do something when changing the item if you want.
+                            }
                                 : null,
                             onSaved: (value) {
                               strutturaValue = value.toString();
                             },
+                            value: strutturaValue,
+
                           )),
                       const SizedBox(
                         height: 40,
@@ -611,6 +586,9 @@ class _GestioneServizio extends State<GestioneServizio> {
                   child: Column(
                 children: columnChild,
               )));
+              if (!snapshot.hasData && !snapshot.hasError || !loaded) {
+                children.add(const AllPageLoadTransparent());
+              }
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
                 child: Stack(
