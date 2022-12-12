@@ -11,6 +11,7 @@ import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
+import '../../components/generali/CustomDropDownText.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
@@ -41,7 +42,7 @@ class _GestioneUtente extends State<GestioneUtente> {
   TextEditingController passwordController = TextEditingController();
   String? dropdownValue;
   bool loaded = false;
-  List<DropdownMenuItem<String>> itemsEnte = [];
+  List<CustomDropDownItem> itemsEnte = [];
   final _formGlobalKey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -52,14 +53,14 @@ class _GestioneUtente extends State<GestioneUtente> {
   Future<bool> load() async {
     enti = await enteService.enteList(null, null, "sort=denominazione&denominazione.dir=asc");
     if (enti != null) {
-      itemsEnte.add(const DropdownMenuItem<String>(
-        value: null,
-        child: Text(""),
+      itemsEnte.add(CustomDropDownItem(
+        id: null,
+        name: "",
       ));
-      itemsEnte.addAll(enti!.map<DropdownMenuItem<String>>((Ente value) {
-        return DropdownMenuItem<String>(
-          value: value.id,
-          child: Text(value.denominazione),
+      itemsEnte.addAll(enti!.map<CustomDropDownItem>((Ente value) {
+        return CustomDropDownItem(
+          id: value.id,
+          name: value.denominazione,
         );
       }).toList());
     }
@@ -130,9 +131,7 @@ class _GestioneUtente extends State<GestioneUtente> {
             builder: ((context, snapshot) {
               List<Widget> children = [];
 
-              if (!snapshot.hasData && !snapshot.hasError || !loaded) {
-                children.add(const AllPageLoadTransparent());
-              }
+
               List<Widget> columnChild = [];
               columnChild.add(Form(
                   key: _formGlobalKey,
@@ -178,49 +177,24 @@ class _GestioneUtente extends State<GestioneUtente> {
                       ),
                       Padding(
                           padding: const EdgeInsets.only(left: 50, right: 50),
-                          child: DropdownButtonFormField2(
-
-                            value: dropdownValue,
-                            decoration: InputDecoration(
-                              //Add isDense true and zero Padding.
-                              //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                              isDense: true,
-                              contentPadding: EdgeInsets.zero,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              //Add more decoration as you want here
-                              //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                            ),
-                            isExpanded: true,
-                            hint: const Text(
-                              'Seleziona ente',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                            icon: const Icon(
-                              Icons.arrow_drop_down,
-                              color: Colors.black45,
-                            ),
-                            iconSize: 30,
-                            buttonHeight: 60,
-                            buttonPadding:
-                                const EdgeInsets.only(left: 20, right: 10),
-                            dropdownDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            items: itemsEnte,
-                            validator: (value) {
-                              if (value == null) {
-                                return 'Seleziona un ente';
+                          child: CustomDropDownText(
+                            value:dropdownValue,
+                            name:"Seleziona ente",
+                            values: itemsEnte,
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Seleziona un ente';
+                                }
+                              },
+                              onChanged: (value) {
+                                //Do something when changing the item if you want.
+                              },
+                              onSaved: (value) {
+                                dropdownValue = value.toString();
                               }
-                            },
-                            onChanged: (value) {
-                              //Do something when changing the item if you want.
-                            },
-                            onSaved: (value) {
-                              dropdownValue = value.toString();
-                            },
-                          ))
+
+                          )
+                      )
                     ],
                   )));
 
@@ -228,6 +202,9 @@ class _GestioneUtente extends State<GestioneUtente> {
                   child: Column(
                 children: columnChild,
               )));
+              if (!snapshot.hasData && !snapshot.hasError || !loaded) {
+                children.add(const AllPageLoadTransparent());
+              }
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
                 child: Stack(

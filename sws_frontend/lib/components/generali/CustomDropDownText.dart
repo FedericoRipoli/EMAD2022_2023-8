@@ -10,13 +10,14 @@ class CustomDropDownText extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String?)? onChanged;
   final void Function(String?)? onSaved;
+  final String? value;
   CustomDropDownText({
     required this.values,
     required this.name,
     required this.validator,
     required this.onChanged,
     required this.onSaved,
-
+    this.value,
     super.key});
 
 
@@ -27,13 +28,15 @@ class CustomDropDownText extends StatelessWidget {
         child:
 
         DropdownButtonFormField2(
+
+          value: value,
           decoration: InputDecoration(
             //Add isDense true and zero Padding.
             //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
               isDense: true,
               contentPadding: EdgeInsets.zero,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(4),
               ),
               fillColor: Colors.white,
               filled: true
