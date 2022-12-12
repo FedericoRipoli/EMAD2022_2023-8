@@ -18,11 +18,10 @@ class UtenteListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GFCard(
-      elevation: 8,
-      padding: EdgeInsets.zero,
-      borderRadius: BorderRadius.circular(28.0),
-      title: GFListTile(
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.only(left: 16, right: 16, bottom: 10, top: 6),
+      child: GFListTile(
         avatar: const CustomAvatar(
           icon: Icons.face,
           size: 35,
