@@ -14,6 +14,7 @@ class RestURL {
   static String struttureEnteService = "${baseURL}struttureente";
   static String servizioService = "${baseURL}servizi";
   static String eventoService = "${baseURL}eventi";
+  static String impostazioniService = "${baseURL}impostazioni";
 
   static String pageabelContent = "content";
   static String queryRemovePagination = "paging=false";
