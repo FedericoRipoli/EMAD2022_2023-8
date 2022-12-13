@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/admin_screens/servizi/ListaServizi.dart';
+import 'package:frontend_sws/admin_screens/validazione/ListaServiziDaValidare.dart';
 import 'package:frontend_sws/components/generali/CustomAvatar.dart';
 import 'package:frontend_sws/admin_screens/aree/ListaAree.dart';
 import 'package:frontend_sws/screens/HomeScreen.dart';
@@ -103,6 +104,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
             checkChangePage(ListaAree.id);
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const ListaAree()));
+          }));
+      w.add(CustomMenuItem(
+          text: 'Servizi Da Validare',
+          f: () {
+            checkChangePage(ListaServiziDaValidare.id);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ListaServiziDaValidare()));
           }));
     }
     if (userService.isLogged() && admin != null && !admin) {
