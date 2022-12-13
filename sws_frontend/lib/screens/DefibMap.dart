@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../components/generali/CustomButton.dart';
 import '../theme/theme.dart';
+import '../util/ToastUtil.dart';
 
 class DefibMap extends StatefulWidget {
   const DefibMap({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
   TextEditingController emailController = TextEditingController();
   TextEditingController telefonoController = TextEditingController();
   TextEditingController descrizioneController = TextEditingController();
-  late File imageFile;
+  File? imageFile;
   bool acceptPolicy = false;
 
   @override
@@ -121,6 +122,17 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                       icon: Icons.camera_alt,
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  child: imageFile != null
+                      ? Image.file(imageFile!)
+                      : const Text(
+                          "Nessuna immagine selezionata",
+                          textAlign: TextAlign.center,
+                        ),
                 ),
                 CheckboxListTile(
                   title: const Text(
