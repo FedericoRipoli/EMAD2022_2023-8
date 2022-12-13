@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../components/generali/CustomButton.dart';
 import '../theme/theme.dart';
-import '../util/ToastUtil.dart';
 
 class DefibMap extends StatefulWidget {
   const DefibMap({Key? key}) : super(key: key);
@@ -35,15 +34,16 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
           child: Form(
             child: ListView(
               scrollDirection: Axis.vertical,
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               padding: const EdgeInsets.only(
                   left: 25.0, top: 10.0, right: 25.0, bottom: 25.0),
               children: <Widget>[
                 const Text(
-                  "Cosa Fare?",
+                  "Cosa puoi fare?",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 24,
+                      fontSize: 20,
                       color: AppColors.logoCadmiumOrange),
                   textAlign: TextAlign.center,
                 ),
@@ -63,7 +63,7 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       TextSpan(
                           text:
-                              " nel momento del bisogno, aggiungine uno nuovo indicando:\n"
+                              " nel momento del bisogno, aggiungine uno nuovo indicando:\n\n"
                               "Il tuo nome & cognome 🙂\nL'email ✉\nIl numero di telefono 📞\nUn'eventuale descrizione per facilitarne il ritrovamento ℹ\nUn'eventuale immagine del defibrillatore 📷")
                     ],
                   ),
