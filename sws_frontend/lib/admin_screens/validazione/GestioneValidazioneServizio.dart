@@ -9,8 +9,8 @@ import 'package:frontend_sws/theme/theme.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../components/generali/CustomAppBar.dart';
-import '../../components/generali/CustomDropDown.dart';
-import '../../components/generali/CustomDropDownText.dart';
+import '../../components/generali/input/CustomDropDown.dart';
+import '../../components/generali/input/CustomDropDownText.dart';
 import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/menu/DrawerMenu.dart';

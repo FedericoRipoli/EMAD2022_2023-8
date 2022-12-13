@@ -148,4 +148,36 @@ class ServizioService {
     }
     return null;
   }
+
+
+
+  Future<Servizio?> editStatoServizio(String id, String stato, String? note) async {
+    String? token = await userService.getUser();
+    try {
+      QueryStringUtil queryStringUtil = QueryStringUtil();
+      queryStringUtil.add("punti", "true");
+
+        queryStringUtil.add("stato", stato);
+      if (note != null) {
+        queryStringUtil.add("note", note);
+      }
+      Uri u = Uri.parse(
+          "${RestURL.editStatoServizioService}/$id?${queryStringUtil.getQueryString()}");
+
+
+
+      var response = await http.put(
+         u,
+          headers: RestURL.authHeader(token!));
+
+      if (response.statusCode == 200) {
+        return servizioFromJson(utf8.decode(response.bodyBytes));
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return null;
+  }
+
+
 }
