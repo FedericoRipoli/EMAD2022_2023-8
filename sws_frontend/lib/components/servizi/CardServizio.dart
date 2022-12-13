@@ -71,24 +71,28 @@ class CardServizio extends StatelessWidget {
               height: 2,
             ),
             Container(
-              margin: const EdgeInsets.only(bottom: 8, left: 8, top: 8),
+              margin: const EdgeInsets.only(bottom: 8, left: 8, top: 6),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: aree.map((e) {
-                  return Chip(
-                    backgroundColor: AppColors.greyLight,
-                    label: Text(
-                      e.nome,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        color: AppColors.black,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12.0,
-                      ),
-                    ),
-                    elevation: 4,
-                    avatar: const Icon(Icons.accessibility,
-                        color: AppColors.logoBlue),
-                  );
+                  return Container(
+                      margin: const EdgeInsets.all(3),
+                      child: Chip(
+                        backgroundColor: AppColors.greyLight,
+                        label: Text(
+                          e.nome,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: AppColors.black,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                        elevation: 4,
+                        avatar: const Icon(Icons.accessibility,
+                            color: AppColors.logoBlue),
+                      ));
                 }).toList(),
               ),
             )

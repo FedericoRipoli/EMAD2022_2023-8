@@ -43,7 +43,7 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                   "Cosa Fare?",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 24,
                       color: AppColors.logoCadmiumOrange),
                   textAlign: TextAlign.center,
                 ),
@@ -53,7 +53,7 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                 RichText(
                   text: const TextSpan(
                     style: TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 18.0,
                       color: Colors.black,
                     ),
                     children: <TextSpan>[
@@ -79,7 +79,7 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                 ),
                 const Text(
                   "Aggiungi una descrizione",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
@@ -101,7 +101,7 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                 ),
                 const Text(
                   "Aggiungi un'immagine",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(

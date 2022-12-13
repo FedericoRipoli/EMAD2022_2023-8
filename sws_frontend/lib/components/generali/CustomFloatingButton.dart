@@ -12,9 +12,11 @@ class CustomFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         heroTag: null,
-        elevation: 3,
-        hoverElevation: 1,
+        elevation: 4,
+        hoverElevation: 2,
         onPressed: onPressed,
         backgroundColor: AppColors.logoBlue,
         child: Icon(
