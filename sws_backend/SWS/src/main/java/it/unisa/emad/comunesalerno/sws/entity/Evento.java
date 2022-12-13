@@ -26,14 +26,10 @@ public class Evento {
     @OneToOne(cascade = CascadeType.ALL)
     private Contatto contatto;
 
-    @Enumerated(EnumType.STRING)
-    private StatoOperazione stato;
 
-    @Lob
-    private String note;
+    @OneToOne
+    private ImageData locandina;
 
-    @ElementCollection
-    private List<String> hashtags;
 
     @OneToMany
     private List<Area> aree;
@@ -47,9 +43,6 @@ public class Evento {
     private Date dataCreazione;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUltimaModifica;
-
-    @ManyToOne
-    private Ente ente;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Posizione posizione;
