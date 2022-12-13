@@ -206,8 +206,8 @@ class _ServiziScreenState extends State<ServiziScreen>
                   widget.isFilterOpen = !widget.isFilterOpen;
                 });
               },
-              icon: const Icon(
-                Icons.arrow_drop_up,
+              icon: Icon(
+                widget.isFilterOpen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                 color: AppColors.white,
               ))
         ],
