@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
+import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/services/entity/Struttura.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:frontend_sws/theme/theme.dart';
@@ -13,6 +14,8 @@ import '../../components/generali/CustomDropDownText.dart';
 import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/menu/DrawerMenu.dart';
+import '../../components/servizi/DetailPageService.dart';
+import '../../components/servizi/DetailServiceToValidate.dart';
 import '../../services/AreeService.dart';
 import '../../services/ServizioService.dart';
 import '../../services/StrutturaService.dart';
@@ -35,28 +38,20 @@ class GestioneValidazioneServizio extends StatefulWidget {
 class _GestioneServizio extends State<GestioneValidazioneServizio> {
   late Future<bool> initCall;
   ServizioService servizioService = ServizioService();
-
-  AreeService areeService = AreeService();
-  StrutturaService strutturaService = StrutturaService();
-  Servizio? servizio;
-  String? strutturaValue;
-  List<String> areeValues = [];
-  final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
-
-  TextEditingController noteController = TextEditingController();
-  TextEditingController nomeController = TextEditingController();
-  TextEditingController telefonoController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController sitoWebController = TextEditingController();
-  TextEditingController contenutoController = TextEditingController();
-  TextfieldTagsController tagController = TextfieldTagsController();
   late double _distanceToField;
-  Icon? _icon;
-  bool loaded = false;
-  final _formGlobalKey = GlobalKey<FormState>();
-  late List<DropdownMenuItem<String>> itemsAree = [];
 
-  List<Area>? aree = [];
+  Servizio? servizio;
+  Ente? _ente;
+  Struttura? _struttura;
+  Contatto? _contatto;
+  String?  _nome = "", _contenuto = "", _note = "";
+  List<String> _aree = [];
+  List<String> _tags = [];
+  Icon? _icon;
+
+  final _formGlobalKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
+  bool loaded = false;
 
   @override
   void initState() {
@@ -65,38 +60,42 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
   }
 
   Future<bool> load() async {
-
     servizio = widget.idServizio != null
         ? await servizioService.getServizio(widget.idServizio!)
         : null;
+    /*
     if (servizio != null) {
-      strutturaValue = servizio!.struttura!.id;
-      areeValues = servizio!.aree!.map((e) => e.id!).toList();
-      nomeController.text = (servizio!.nome);
-      servizio!.hashtags?.forEach((e) {
-        tagController.addTag = (e);
-      });
+      if(servizio!.struttura != null){
+        _struttura = servizio!.struttura!;
+      }
+      if(servizio!.struttura!.ente != null){
+        _ente = servizio!.struttura!.ente!;
+      }
+      if(servizio!.aree != null){
+        _aree = servizio!.aree!.map((e) => e.nome!).toList();
+      }
+      if(servizio!.nome != null){
+        _nome = (servizio!.nome);
+      }
+      if(servizio!.hashtags != null){
+        servizio!.hashtags?.forEach((e) {
+          _tags.add(e.toString());
+        });
+      }
       if (servizio!.contenuto != null) {
-        contenutoController.text = (servizio!.contenuto!);
+        _contenuto = (servizio!.contenuto!);
       }
       if (servizio!.note != null) {
-        noteController.text = (servizio!.note!);
+        _note = (servizio!.note!);
       }
       if (servizio!.contatto != null) {
-        sitoWebController.text = servizio!.contatto!.sitoWeb != null
-            ? servizio!.contatto!.sitoWeb!
-            : "";
-        telefonoController.text = servizio!.contatto!.telefono != null
-            ? servizio!.contatto!.telefono!
-            : "";
-        emailController.text =
-        servizio!.contatto!.email != null ? servizio!.contatto!.email! : "";
+        _contatto = servizio!.contatto!;
       }
       if (servizio!.customIcon != null) {
         _icon = Icon(servizio!.getIconData());
       }
     }
-
+     */
     setState(() {
       loaded = true;
     });
@@ -104,52 +103,7 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
   }
 
   void savePage() async {
-    if (_formGlobalKey.currentState!.validate()) {
-      _formGlobalKey.currentState?.save();
-      setState(() {
-        loaded = false;
-      });
-      Servizio? nServizio;
-      if (widget.idServizio == null) {
-        nServizio = await servizioService.createServizio(Servizio(
-          nome: nomeController.value.text,
-          contenuto: contenutoController.value.text,
-          contatto: Contatto(
-            telefono: telefonoController.value.text,
-            email: emailController.value.text,
-            sitoWeb: sitoWebController.value.text,
-          ),
-          hashtags: tagController.getTags,
-          idAree: areeValues,
-          idStruttura: strutturaValue,
-          customIcon: _icon != null ? _icon!.icon!.codePoint.toString() : null,
-        ));
-      } else {
-        servizio!.nome = nomeController.value.text;
-        servizio!.contatto!.telefono = telefonoController.value.text;
-        servizio!.contatto!.email = emailController.value.text;
-        servizio!.contatto!.sitoWeb = sitoWebController.value.text;
-        servizio!.contenuto = contenutoController.value.text;
-        servizio!.idAree = areeValues;
-        servizio!.idStruttura = strutturaValue;
-        servizio!.hashtags = tagController.getTags;
-        servizio!.customIcon =
-        _icon != null ? _icon!.icon!.codePoint.toString() : null;
-        nServizio = await servizioService.editServizio(servizio!);
-      }
-      if (mounted) {}
-      if (nServizio != null) {
-        Navigator.of(context).pop();
-        ToastUtil.success(
-            "Servizio ${widget.idServizio == null ? 'aggiunto' : 'modificato'}",
-            context);
-      } else {
-        ToastUtil.error("Errore server", context);
-      }
-      setState(() {
-        loaded = true;
-      });
-    }
+
   }
 
   @override
@@ -180,24 +134,13 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
             builder: ((context, snapshot) {
               List<Widget> children = [];
 
-
-              List<Widget> columnChild = [];
-              columnChild.add(SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Text(""),
-                    ],
-                  ),
-                ),
-              ));
-
-              children.add(SingleChildScrollView(
-                  child: Column(
-                    children: columnChild,
-                  )));
               if (!snapshot.hasData && !snapshot.hasError || !loaded) {
                 children.add(const AllPageLoadTransparent());
+              }
+              if(snapshot.hasData) {
+                children.add(
+                    DetailServiceToValidate(servizio: servizio!)
+                );
               }
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
@@ -206,18 +149,5 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
                 ),
               );
             })));
-  }
-
-  _pickIcon() async {
-    IconData? icon = await FlutterIconPicker.showIconPicker(context,
-        iconPackModes: [IconPack.material]);
-
-    _icon = Icon(icon);
-    setState(() {});
-  }
-
-  _removeIcon() {
-    _icon = null;
-    setState(() {});
   }
 }
