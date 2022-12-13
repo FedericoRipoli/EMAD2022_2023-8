@@ -23,6 +23,9 @@ class ServizioListItem extends StatelessWidget {
     return Card(
       elevation: 4,
       color: AppColors.ice,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 10, top: 6),
       child: GFListTile(
         padding: const EdgeInsets.all(8),

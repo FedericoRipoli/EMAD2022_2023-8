@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
+import 'package:frontend_sws/components/generali/CustomTextField.dart';
 import 'package:frontend_sws/services/AreeService.dart';
 import 'package:frontend_sws/services/entity/Area.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
@@ -32,7 +33,7 @@ class _GestioneArea extends State<GestioneArea> {
   bool loaded = false;
   final _formGlobalKey = GlobalKey<FormState>();
 
- /* Icon? _icon;
+  /* Icon? _icon;
   Color pickerColor = AppColors.logoBlue;
   bool iconError = false;
 
@@ -56,7 +57,7 @@ class _GestioneArea extends State<GestioneArea> {
         : null;
     if (area != null) {
       nomeController.text = (area!.nome);
-     /* _icon =
+      /* _icon =
           Icon(area!.getIconData());
 
       pickerColor = area!.getColorData();*/
@@ -84,10 +85,10 @@ class _GestioneArea extends State<GestioneArea> {
 
       if (widget.idArea == null) {
         nArea = await areeService.createArea(Area(
-            nome: nomeController.value.text,
-            //icon: _icon!.icon!.codePoint.toString(),
-           // color: pickerColor.value.toRadixString(16)
-          ));
+          nome: nomeController.value.text,
+          //icon: _icon!.icon!.codePoint.toString(),
+          // color: pickerColor.value.toRadixString(16)
+        ));
       } else {
         area!.nome = nomeController.value.text;
         //area!.icon = _icon!.icon!.codePoint.toString();
@@ -109,7 +110,7 @@ class _GestioneArea extends State<GestioneArea> {
     }
   }
 
- /* void changeColor(Color color) {
+  /* void changeColor(Color color) {
     setState(() => pickerColor = color);
   }*/
 
@@ -145,20 +146,13 @@ class _GestioneArea extends State<GestioneArea> {
                     child: Column(
                       children: [
                         const SizedBox(
-                          height: 80,
+                          height: 40,
                         ),
-                        TextFormField(
-                          validator: (v) {
-                            if (v == null || v.isEmpty) {
-                              return "Inserisci il campo nome";
-                            }
-                          },
+                        CustomTextField(
                           controller: nomeController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Nome',
-                          ),
-                        ),
+                          label: "Nome Area",
+                          validator: "Inserisci il campo nome",
+                        )
                         /*if (loaded)
                           Column(
                             children: [
@@ -170,7 +164,7 @@ class _GestioneArea extends State<GestioneArea> {
                                       "Seleziona un colore per il marker mappa",
                                       style: TextStyle(color: Colors.red))
                                   : Container(),*/
-                              /*Row(
+                        /*Row(
                                 children: [
                                   ElevatedButton(
                                     onPressed: _pickIcon,

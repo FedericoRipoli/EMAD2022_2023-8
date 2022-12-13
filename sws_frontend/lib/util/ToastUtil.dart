@@ -9,7 +9,7 @@ class ToastUtil {
       context,
       toastPosition: GFToastPosition.BOTTOM,
       textStyle: const TextStyle(fontSize: 18, color: GFColors.DARK),
-      backgroundColor: Colors.grey.withOpacity(0.7),
+      backgroundColor: Colors.white,
       trailing: Icon(iconData, color: iconColor),
     );
   }

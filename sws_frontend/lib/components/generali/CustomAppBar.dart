@@ -12,6 +12,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final IconData? iconData;
   final List<Widget> actions;
   final PreferredSizeWidget? bottom;
+  final Widget? flexibleSpace;
 
   const CustomAppBar(
       {Key? key,
@@ -19,7 +20,8 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
       required this.title,
       this.iconData,
       this.actions = const [],
-      this.bottom})
+      this.bottom,
+      this.flexibleSpace})
       : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -51,6 +53,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       backgroundColor: appTheme.primaryColor,
       actions: widget.actions,
       bottom: widget.bottom,
+      flexibleSpace: widget.flexibleSpace,
     );
   }
 }

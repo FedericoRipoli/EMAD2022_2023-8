@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/generali/CustomButton.dart';
+import 'package:frontend_sws/components/generali/CustomTextField.dart';
 import 'package:frontend_sws/main.dart';
 import 'package:frontend_sws/services/UserService.dart';
 import 'package:getwidget/getwidget.dart';
@@ -17,7 +18,7 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var _isLoading = false;
   var _loginError = false;
@@ -62,32 +63,10 @@ class _LoginFormState extends State<LoginForm> {
                           ),
                           textAlign: TextAlign.center,
                         )),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      child: TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                          ),
-                          labelText: 'Username',
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      child: TextField(
-                        obscureText: true,
-                        controller: passwordController,
-                        cursorColor: appTheme.primaryColor,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18.0),
-                          ),
-                          labelText: 'Password',
-                        ),
-                      ),
-                    ),
+                    CustomTextField(
+                        controller: usernameController, label: "Username"),
+                    CustomTextField(
+                        controller: passwordController, label: "Password"),
                     Container(
                       margin: const EdgeInsets.only(top: 25),
                       height: 60,
@@ -95,7 +74,7 @@ class _LoginFormState extends State<LoginForm> {
                       child: CustomButton(
                         onPressed: () async {
                           bool res = await login(
-                              emailController.text, passwordController.text);
+                              usernameController.text, passwordController.text);
                           if (mounted) {
                             if (res) Navigator.pop(context);
                           }

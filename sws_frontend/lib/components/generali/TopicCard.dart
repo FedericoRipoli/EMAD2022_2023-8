@@ -18,6 +18,9 @@ class TopicCard extends StatelessWidget {
       elevation: 4,
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 10, top: 6),
       color: AppColors.ice,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
