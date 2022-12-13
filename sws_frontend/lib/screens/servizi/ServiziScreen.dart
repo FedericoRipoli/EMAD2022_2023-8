@@ -117,7 +117,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   }
 
   void _filterEnteChange(String? text) {
-    filterEnte = text;
+    filterEnte = text!=null && text.isNotEmpty?text:null;
     _pullRefresh();
     initCallMap = loadMapView();
     setState(() {});
