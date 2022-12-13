@@ -11,7 +11,7 @@ import 'package:frontend_sws/main.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
-import '../../components/generali/CustomDropDownText.dart';
+import '../../components/generali/input/CustomDropDownText.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';

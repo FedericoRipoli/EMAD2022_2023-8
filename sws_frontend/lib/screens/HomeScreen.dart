@@ -144,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       //color: AppColors.logoBlue,
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/bg.jpg"),
+          image: AssetImage("assets/images/bg.jpg"),
           fit: BoxFit.cover,
         ),
       ),

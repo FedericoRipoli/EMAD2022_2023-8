@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/admin_screens/servizi/ListaServizi.dart';
+import 'package:frontend_sws/admin_screens/validazione/ListaServiziDaValidare.dart';
 import 'package:frontend_sws/components/generali/CustomAvatar.dart';
 import 'package:frontend_sws/admin_screens/aree/ListaAree.dart';
 import 'package:frontend_sws/screens/HomeScreen.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/getwidget.dart';
 import '../../admin_screens/enti/ListaEnti.dart';
+import '../../admin_screens/impostazioni_defribillatori/ImpostazioniDefibrillatori.dart';
 import '../../admin_screens/utenti/ListaUtenti.dart';
 import '../../services/UserService.dart';
 import 'CustomMenuItem.dart';
@@ -103,6 +105,20 @@ class _DrawerMenuState extends State<DrawerMenu> {
             checkChangePage(ListaAree.id);
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const ListaAree()));
+          }));
+      w.add(CustomMenuItem(
+          text: 'Servizi Da Validare',
+          f: () {
+            checkChangePage(ListaServiziDaValidare.id);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ListaServiziDaValidare()));
+          }));
+      w.add(CustomMenuItem(
+          text: 'Imp. defibrillatori',
+          f: () {
+            checkChangePage(ImpostazioniDefibrillatori.id);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ImpostazioniDefibrillatori()));
           }));
     }
     if (userService.isLogged() && admin != null && !admin) {
