@@ -4,7 +4,9 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:frontend_sws/services/AreeService.dart';
 import 'package:frontend_sws/services/entity/Area.dart';
-import '../../components/generali/CustomDropDownText.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
+import '../../components/generali/input/CustomDropDownText.dart';
+import '../../components/generali/input/CustomHtmlEditor.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
@@ -40,12 +42,13 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
   List<Area>? aree;
   List<CustomDropDownItem> itemsAree = [];
   String? dropdownValueAree;
+  HtmlEditorController htmlController = HtmlEditorController();
 
   Icon? _icon;
 
   Impostazioni? impostazioni;
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
-
+  String initialHtmlText="";
   bool loaded = false;
   bool iconError = false;
   final _formGlobalKey = GlobalKey<FormState>();
@@ -98,6 +101,7 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
     if (impostazioni != null) {
       dropdownValueAree = impostazioni!.idArea;
       dropdownValueEnte = impostazioni!.idEnte;
+      initialHtmlText = impostazioni!.privacyPolicy;
       _icon = Icon(impostazioni!.getIconData());
     }
     setState(() {
@@ -126,7 +130,7 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
             icon: _icon!.icon!.codePoint.toString(),
             idEnte: dropdownValueEnte!,
             idArea: dropdownValueAree!,
-            privacyPolicy: "privacyPolicy");
+            privacyPolicy: await htmlController.getText());
 
         nImpostazioni  =
             await impostazioniService.createImpostazioni(nImpostazioni!);
@@ -134,7 +138,7 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
         impostazioni!.icon = _icon!.icon!.codePoint.toString();
         impostazioni!.idEnte = dropdownValueEnte!;
         impostazioni!.idArea = dropdownValueAree!;
-        impostazioni!.privacyPolicy = "Privacy";
+        impostazioni!.privacyPolicy = await htmlController.getText();
 
         nImpostazioni =
             await impostazioniService.editImpostazioni(impostazioni!);
@@ -218,6 +222,14 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
                             onSaved: (value) {
                               dropdownValueAree = value.toString();
                             }),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        CustomHtmlEditor(
+                          controller: htmlController,
+                          initialText: initialHtmlText,
+
+                        ),
                         const SizedBox(
                           height: 40,
                         ),
