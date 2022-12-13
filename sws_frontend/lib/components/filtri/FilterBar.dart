@@ -63,7 +63,7 @@ class _FilterBar extends State<FilterBar> {
       }
     }
     return Container(
-        //margin: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         color: AppColors.logoBlue,
         alignment: Alignment.center,
         child: Column(

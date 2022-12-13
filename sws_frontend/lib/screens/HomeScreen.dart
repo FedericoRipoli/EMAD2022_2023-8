@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
       ),
       child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
+          filter: ImageFilter.blur(sigmaX: 9.0, sigmaY: 9.0),
           child: Center(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
