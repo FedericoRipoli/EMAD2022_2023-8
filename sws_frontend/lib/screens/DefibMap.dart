@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:frontend_sws/components/generali/CustomAppBar.dart';
 import 'package:frontend_sws/components/generali/CustomTextField.dart';
 import 'package:image_picker/image_picker.dart';
@@ -153,31 +152,26 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
     });
   }
 
-  /// Get from gallery
-  _getFromGallery() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.gallery,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        imageFile = File(pickedFile.path);
-      });
+  Future _getFromGallery() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      setState(() => imageFile = imageTemp);
+    } catch (e) {
+      print('Errore inserimento immagine: $e');
     }
   }
 
   /// Get from Camera
-  _getFromCamera() async {
-    PickedFile? pickedFile = await ImagePicker().getImage(
-      source: ImageSource.camera,
-      maxWidth: 1800,
-      maxHeight: 1800,
-    );
-    if (pickedFile != null) {
-      setState(() {
-        imageFile = File(pickedFile.path);
-      });
+  Future _getFromCamera() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.camera);
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      setState(() => imageFile = imageTemp);
+    } catch (e) {
+      print('Errore inserimento immagine: $e');
     }
   }
 }
