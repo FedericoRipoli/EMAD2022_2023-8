@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/servizi")
+@RequestMapping
 public class ServizioController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class ServizioController {
     @Autowired
     EnteRepository enteRepository;
 
-    @PostMapping
+    @PostMapping("/api/servizi")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity createServizio(@AuthenticationPrincipal Utente user, @RequestBody Servizio servizio) {
         servizio.setId(null);
@@ -52,7 +52,7 @@ public class ServizioController {
         return ResponseEntity.ok(servizio);
     }
 
-    @GetMapping
+    @GetMapping("/api/servizi")
     public ResponseEntity listServizi(@AuthenticationPrincipal Utente user,
                                       @RequestParam(value = "name", required = false) String name,
                                       @RequestParam(value = "idArea", required = false) String idArea,
@@ -85,12 +85,12 @@ public class ServizioController {
 
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/servizi/{id}")
     public ResponseEntity getServizio(@PathVariable String id) {
         return ResponseEntity.ok(servizioRepository.findById(id).orElseThrow());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/api/servizi/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity deleteServizio(@AuthenticationPrincipal Utente user, @PathVariable String id) {
         Servizio servizio = servizioRepository.findById(id).orElseThrow();
@@ -108,7 +108,7 @@ public class ServizioController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/api/servizi/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity updateServizio(@PathVariable String id, @AuthenticationPrincipal Utente user, @RequestBody Servizio servizio) {
         if (servizioRepository.existsById(id)) {
@@ -124,6 +124,22 @@ public class ServizioController {
         }
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
+
+    @PutMapping("/api/statoservizio/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity updateStatoServizio(@PathVariable String id, @RequestParam(value = "note",required = false) String note,
+                                              @RequestParam(value = "stato",required = true) String stato) {
+        if (servizioRepository.existsById(id)) {
+            Servizio s=servizioRepository.findById(id).orElseThrow();
+            s.setStato(StatoOperazione.valueOf(stato));
+            if(note!=null){
+                s.setNote(note);
+            }
+            ResponseEntity.ok(servizioRepository.save(s));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    }
+
 
     private Servizio setValues(Servizio servizio, Utente user) {
         if (servizio.getIdStruttura() == null) {

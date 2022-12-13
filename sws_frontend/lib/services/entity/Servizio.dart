@@ -18,13 +18,12 @@ class Servizio {
   static const String DA_APPROVARE = "DA_APPROVARE";
   static const String APPROVATO = "APPROVATO";
   static const String IN_MODIFICA = "IN_MODIFICA";
-  static const String ANNULLATO = "ANNULLATO";
   static const String DA_CANCELLARE = "DA_CANCELLARE";
 
   static Map<String, String> getStatiList(){
     Map<String,String> toRet={
       DA_APPROVARE:"Da approvare",APPROVATO:"Approvato",IN_MODIFICA:"In modifica",
-      ANNULLATO:"Annullato", DA_CANCELLARE:"Da cancellare",
+      DA_CANCELLARE:"Da cancellare",
     };
     return toRet;
 
