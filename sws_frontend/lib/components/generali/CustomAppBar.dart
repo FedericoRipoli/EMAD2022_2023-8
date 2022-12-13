@@ -45,15 +45,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               onPressed: widget.onPressed,
               type: GFButtonType.transparent,
             )
-          : GFIconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: AppColors.white,
-              ),
-              color: Colors.transparent,
-              onPressed: () {
-                Navigator.pop(context);
-              }),
+          : null,
       //searchBar: false,
       elevation: 1,
       backgroundColor: appTheme.primaryColor,
