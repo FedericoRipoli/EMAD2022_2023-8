@@ -90,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       alwaysShowLeadingAndAction: true,
       headerWidget: headerWidget(context),
       curvedBodyRadius: 20,
-      headerExpandedHeight: 0.35,
+      headerExpandedHeight: 0.28,
       body: [
         TopicCard(
           title: "Servizi per le politiche Sociali & Giovanili",
@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
       ),
       child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 9.0, sigmaY: 9.0),
+          filter: ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
           child: Center(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

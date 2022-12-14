@@ -68,6 +68,9 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                     ],
                   ),
                 ),
+                const Divider(
+                  thickness: 1,
+                ),
                 CustomTextField(
                     controller: nomeCognomeController, label: "Nome & Cognome"),
                 CustomTextField(controller: emailController, label: "E-mail"),
@@ -77,9 +80,12 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                 const SizedBox(
                   height: 8,
                 ),
+                const Divider(
+                  thickness: 1,
+                ),
                 const Text(
                   "Aggiungi una descrizione",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
@@ -99,13 +105,16 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                 const SizedBox(
                   height: 8,
                 ),
+                const Divider(
+                  thickness: 1,
+                ),
                 const Text(
                   "Aggiungi un'immagine",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
-                  height: 4,
+                  height: 8,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -134,6 +143,9 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                           textAlign: TextAlign.center,
                         ),
                 ),
+                const Divider(
+                  thickness: 1,
+                ),
                 CheckboxListTile(
                   title: const Text(
                     "Ho letto e accetto la Privacy Policy.",
@@ -143,6 +155,9 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                   onChanged: _onAccept,
                   selectedTileColor: AppColors.white,
                   activeColor: AppColors.logoCadmiumOrange,
+                ),
+                const Divider(
+                  thickness: 1,
                 ),
                 const SizedBox(
                   height: 16,
