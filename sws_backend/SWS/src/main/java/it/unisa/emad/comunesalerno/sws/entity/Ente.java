@@ -33,8 +33,5 @@ public class Ente {
     @OneToMany(mappedBy = "ente")
     @JsonIgnore
     private List<Struttura> strutture;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "ente")
-    private List<Evento> eventi;
+    
 }
