@@ -10,8 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 class DetailServiceToValidate extends StatefulWidget {
   Servizio servizio;
 
-  DetailServiceToValidate({Key? key, required this.servizio}) {}
-
+  DetailServiceToValidate({super.key, required this.servizio});
   @override
   _DetailServiceToValidateState createState() => _DetailServiceToValidateState();
 }
@@ -84,6 +83,16 @@ class _DetailServiceToValidateState extends State<DetailServiceToValidate>
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                                Text(
+                                  "Stato: ${widget.servizio.stato}",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    letterSpacing: 0,
+                                    color: AppColors.logoRed,
+                                  ),
+                                ),
                                 Text(
                                   widget.servizio.nome,
                                   textAlign: TextAlign.center,

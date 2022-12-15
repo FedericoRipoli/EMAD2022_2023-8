@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/services/entity/Struttura.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -9,6 +10,7 @@ import 'package:frontend_sws/theme/theme.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../components/generali/CustomAppBar.dart';
+import '../../components/generali/InModificaServizio.dart';
 import '../../components/generali/input/CustomDropDown.dart';
 import '../../components/generali/input/CustomDropDownText.dart';
 import '../../components/generali/CustomFloatingButton.dart';
@@ -118,12 +120,31 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
         drawer: DrawerMenu(currentPage: GestioneValidazioneServizio.id),
-        floatingActionButton: !loaded ||
-            (servizio != null && !Servizio.canEnteEdit(servizio!.stato))
-            ? null
-            : CustomFloatingButton(
-          iconData: Icons.save_rounded,
-          onPressed: () => savePage(),
+        floatingActionButton: SpeedDial(
+          backgroundColor: AppColors.logoBlue,
+          icon: Icons.multiple_stop,
+          children: [
+            SpeedDialChild(
+              child: const Icon(Icons.edit),
+              label: 'In modifica',
+              backgroundColor: AppColors.logoCyan,
+              onTap: () {
+                modificaServizio();
+              },
+            ),
+            SpeedDialChild(
+              child: const Icon(Icons.delete_forever),
+              label: 'Elimina',
+              backgroundColor: AppColors.detailBlue,
+              onTap: () {/* Do something */},
+            ),
+            SpeedDialChild(
+              child: const Icon(Icons.verified_outlined),
+              label: 'Approva',
+              backgroundColor: AppColors.logoCadmiumOrange,
+              onTap: () {/* Do something */},
+            ),
+          ],
         ),
         appBar: CustomAppBar(
             title: const AppTitle(label: "Validazione Servizio"),
@@ -149,5 +170,25 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
                 ),
               );
             })));
+  }
+
+  void approvaServizio(){
+
+  }
+  void eliminaServizio() {
+
+  }
+  void modificaServizio(){
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius:
+              BorderRadius.all(Radius.circular(20.0))),
+          content: InModificaServizio(),
+        );
+      },
+    ).then((value) => setState(() => {}));
   }
 }
