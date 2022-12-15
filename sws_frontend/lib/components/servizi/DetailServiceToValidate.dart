@@ -85,9 +85,7 @@ class _DetailServiceToValidateState extends State<DetailServiceToValidate>
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  (widget.servizio.nome != null )
-                                      ? widget.servizio.nome
-                                      : "Servizio senza nome",
+                                  widget.servizio.nome,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -117,7 +115,7 @@ class _DetailServiceToValidateState extends State<DetailServiceToValidate>
                                           null
                                       ? widget
                                           .servizio.struttura!.denominazione!
-                                      : "Struttura non disponinile",
+                                      : "Struttura non disponibile",
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w200,
