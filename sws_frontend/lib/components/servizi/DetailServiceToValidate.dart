@@ -312,6 +312,40 @@ class _DetailServiceToValidateState extends State<DetailServiceToValidate>
                         const SizedBox(
                           height: 20,
                         ),
+                        if(widget.servizio.note!=null)
+                        const Text(
+                          "Note inviate",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            letterSpacing: 0.57,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Padding(
+                          padding: defaultPaddingElement,
+                          child: Text(
+                            (widget.servizio!.note != null && widget.servizio!.note!.isNotEmpty)
+                                ? widget.servizio.note!
+                                : "Nessuna nota",
+                            textAlign: TextAlign.justify,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15,
+                              letterSpacing: 0,
+                              color: Colors.black,
+                            ),
+                            //maxLines: 4,
+                            //overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                       ],
                     ),
                   );

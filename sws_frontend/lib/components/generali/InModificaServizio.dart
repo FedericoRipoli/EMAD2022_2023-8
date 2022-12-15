@@ -2,22 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/generali/CustomButton.dart';
 import 'package:frontend_sws/components/generali/CustomTextField.dart';
 import 'package:frontend_sws/main.dart';
+import 'package:frontend_sws/services/ServizioService.dart';
 import 'package:frontend_sws/services/UserService.dart';
 import 'package:getwidget/getwidget.dart';
+import '../../services/entity/Servizio.dart';
 import '../../theme/theme.dart';
+import '../../util/ToastUtil.dart';
 import '../loading/AllPageLoad.dart';
 
 // Form Login Ente / Comune
 class InModificaServizio extends StatefulWidget {
-  final UserService? userService;
+  Servizio servizio;
 
-  const InModificaServizio({Key? key, this.userService}) : super(key: key);
+  InModificaServizio({super.key, required this.servizio});
 
   @override
   State<InModificaServizio> createState() => _InModificaServizioState();
 }
 
 class _InModificaServizioState extends State<InModificaServizio> {
+  final ServizioService servizioService = ServizioService();
+
   TextEditingController noteController = TextEditingController();
   var _isLoading = false;
   var _serverError = false;
@@ -25,12 +30,20 @@ class _InModificaServizioState extends State<InModificaServizio> {
   Future<bool> edit() async {
     setState(() => {_isLoading = true, _serverError = false});
 
+    Servizio? s = await servizioService.editStatoServizio(
+        widget.servizio.id!, Servizio.IN_MODIFICA, noteController.text);
+    if(mounted){}
+    Navigator.of(context).pop();
 
-
-   /* setState(() => {_isLoading = false, _serverError = a == null});
-    if (a != null) {
+    if (s == null) {
+      ToastUtil.error("Errore server", context);
+    } else {
+      ToastUtil.success("Servizio inviato per la modifica", context);
+    }
+    setState(() => {_isLoading = false});
+    if (s != null) {
       return true;
-    }*/
+    }
     return false;
   }
 
@@ -39,23 +52,22 @@ class _InModificaServizioState extends State<InModificaServizio> {
     return SingleChildScrollView(
       child: Container(
           padding: const EdgeInsets.all(6),
-
           child: !_isLoading
               ? Column(
                   children: [
                     Container(
-                      width: 400,
+                        width: 400,
                         alignment: Alignment.center,
                         child: const Text(
-
                           'Aggiungi note',
                           style: TextStyle(
-
                               color: AppColors.logoCadmiumOrange,
                               fontFamily: "FredokaOne",
                               fontSize: 24),
                         )),
-                    const SizedBox(height: 5,),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Container(
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: TextFormField(
@@ -75,28 +87,10 @@ class _InModificaServizioState extends State<InModificaServizio> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(top: 25),
-
                       child: CustomButton(
                         onPressed: () async {
                           bool res = await edit();
-                          if (mounted) {
-                            if (res) Navigator.pop(context);
-                          }
-                          if (_serverError) {
-                            if(mounted){}
-                            GFToast.showToast(
-                              'Errore server',
-                              context,
-                              toastPosition: GFToastPosition.BOTTOM,
-                              textStyle: const TextStyle(
-                                  fontSize: 20, color: GFColors.DARK),
-                              backgroundColor: Colors.white,
-                              trailing: const Icon(
-                                Icons.error_outline,
-                                color: GFColors.DANGER,
-                              ),
-                            );
-                          }
+
                         },
                         textButton: "Richiedi modifiche",
                         icon: Icons.login_outlined,

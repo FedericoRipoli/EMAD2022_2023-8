@@ -176,12 +176,15 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
     showDialog(
       context: context,
       builder: (context) {
-        return const AlertDialog(
-          shape: RoundedRectangleBorder(
+        return  AlertDialog(
+          shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          content: InModificaServizio(),
+          content: InModificaServizio(servizio:servizio!),
         );
       },
-    ).then((value) => setState(() => {}));
+    ).then((value) {
+      activeLoad();
+      load();
+    });
   }
 }
