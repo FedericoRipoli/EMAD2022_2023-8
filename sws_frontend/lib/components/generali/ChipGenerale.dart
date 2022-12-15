@@ -4,19 +4,23 @@ import 'package:frontend_sws/theme/theme.dart';
 class ChipGenerale extends StatelessWidget {
   final String label;
   final IconData icon;
-  const ChipGenerale({Key? key, required this.label, required this.icon})
+  final Color? iconColor;
+  final Color? backgroundColor;
+
+  const ChipGenerale({Key? key, required this.label, required this.icon, this.iconColor,this.backgroundColor})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Chip(
+      padding: const EdgeInsets.all(10),
       label: Text(label),
       elevation: 3,
       avatar: Icon(
         icon,
-        color: AppColors.logoBlue,
+        color: iconColor ?? AppColors.logoBlue,
       ),
-      backgroundColor: AppColors.white,
+      backgroundColor: backgroundColor ?? AppColors.white,
     );
   }
 }

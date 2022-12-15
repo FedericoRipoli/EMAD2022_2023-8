@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
 import 'package:photo_view/photo_view.dart';
-import '../generali/Chips.dart';
+import '../generali/ChipGenerale.dart';
 import 'package:frontend_sws/components/generali/CustomButton.dart';
 
 class CardEvento extends StatelessWidget {

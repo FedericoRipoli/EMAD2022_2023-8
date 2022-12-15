@@ -4,8 +4,8 @@ import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 import '../../services/entity/Area.dart';
 import '../../theme/theme.dart';
 import '../../screens/InfoServizio.dart';
-import 'package:frontend_sws/components/generali/Chips.dart';
-import 'package:frontend_sws/components/generali/Chips.dart';
+import 'package:frontend_sws/components/generali/ChipGenerale.dart';
+import 'package:frontend_sws/components/generali/ChipGenerale.dart';
 
 class CardServizio extends StatelessWidget {
   final String nomeServizio, ente, idServizio;

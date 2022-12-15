@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
+import 'package:frontend_sws/components/generali/ChipGenerale.dart';
 import 'package:frontend_sws/services/entity/Servizio.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:latlong2/latlong.dart';
@@ -102,7 +103,7 @@ class _DetailServiceToValidateState extends State<DetailServiceToValidate>
                                           .map((e) => e.nome)
                                           .join(", ")
                                       : "Nessuna area di riferimento",
-                                  textAlign: TextAlign.left,
+                                  textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w200,
                                     fontSize: 16,
@@ -110,13 +111,14 @@ class _DetailServiceToValidateState extends State<DetailServiceToValidate>
                                     color: Colors.black,
                                   ),
                                 ),
+                                const SizedBox(height: 20,),
                                 Text(
                                   widget.servizio.struttura?.denominazione !=
                                           null
                                       ? widget
                                           .servizio.struttura!.denominazione!
                                       : "Struttura non disponinile",
-                                  textAlign: TextAlign.left,
+                                  textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w200,
                                     fontSize: 18,
@@ -131,7 +133,7 @@ class _DetailServiceToValidateState extends State<DetailServiceToValidate>
                                       ? widget.servizio.struttura!.posizione!
                                           .indirizzo!
                                       : "Indirizzo non disponibile",
-                                  textAlign: TextAlign.left,
+                                  textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w200,
                                     fontSize: 16,
@@ -227,28 +229,43 @@ class _DetailServiceToValidateState extends State<DetailServiceToValidate>
                         Row(
                           children: [
                             Expanded(
-                                child: Padding(
+                                flex: 1,
+                                child: ChipGenerale(
+                                  label: widget.servizio.contatto?.telefono != null ? widget.servizio.contatto!.telefono!
+                                      : "Nessun recapito",
+                                  icon: Icons.phone,
+                                  backgroundColor: AppColors.ice,
+
+                                ),
+
+
+                              /*Padding(
                                     padding: defaultPaddingElement,
-                                    child: Text("Recapito telefonico:\n"+ (
-                                        (widget.servizio.contatto?.telefono != null) ?
+                                    child: Text("Recapito telefonico:\n${(widget.servizio.contatto?.telefono != null) ?
                                           widget.servizio.contatto!.telefono!
-                                          : "nessun recapito"),
+                                          : "nessun recapito"}",
                                       textAlign: TextAlign.left,
                                     ),
-                                ),
-                              flex: 1,
+                                ),*/
                             ),
                             Expanded(
+                                flex: 1,
                                 child: Padding(
                                     padding: defaultPaddingElement,
-                                    child: Text("E-mail:\n"+ (
-                                        (widget.servizio.contatto?.email != null) ?
+                                    child: ChipGenerale(
+                                      label: widget.servizio.contatto?.email != null ? widget.servizio.contatto!.email!
+                                          : "Nessun e-mail",
+                                      icon: Icons.mail,
+                                      backgroundColor: AppColors.ice,
+
+                                    ),
+
+                                  /*Text("E-mail:\n${(widget.servizio.contatto?.email != null) ?
                                           widget.servizio.contatto!.email!
-                                          : "nessuna e-mail"),
+                                          : "nessuna e-mail"}",
                                       textAlign: TextAlign.left,
-                                    )
+                                    )*/
                                 ),
-                              flex: 1,
                             )
                           ],
                         ),

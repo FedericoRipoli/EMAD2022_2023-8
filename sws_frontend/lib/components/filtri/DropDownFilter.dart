@@ -6,12 +6,14 @@ import 'GenericFilter.dart';
 
 class DropDownFilter extends GenericFilter {
   List<DropDownFilterItem> values;
+  String? defaultValue;
 
   DropDownFilter(
       {required super.name,
       required super.positionType,
       required super.valueChange,
-      required this.values});
+      required this.values,
+      this.defaultValue});
 
   @override
   Widget getWidget() {
@@ -46,6 +48,7 @@ class DropDownFilter extends GenericFilter {
           borderRadius: BorderRadius.circular(15),
         ),
         items: values,
+        value: defaultValue,
         onChanged: valueChange);
   }
 }

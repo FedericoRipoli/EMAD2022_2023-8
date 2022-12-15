@@ -40,7 +40,7 @@ class _ListaServiziDaValidareState extends State<ListaServiziDaValidare> {
 
     itemsFilterStato.add(DropDownFilterItem(name: "Tutti"));
     itemsFilterStato.addAll(Servizio.getStatiList().entries.map((e) => DropDownFilterItem(name: e.value,id:e.key)).toList());
-
+    filterStato=Servizio.DA_APPROVARE;
     super.initState();
   }
   String? filterNome;
@@ -101,7 +101,7 @@ class _ListaServiziDaValidareState extends State<ListaServiziDaValidare> {
               FilterBar(filters:[
                 TextFilter(name: 'Nome', positionType: GenericFilterPositionType.row, valueChange: _filterNomeChanged),
                 DropDownFilter(name:"Stato",positionType: GenericFilterPositionType.row, valueChange: _filterStatoChanged,
-                    values: itemsFilterStato)
+                    values: itemsFilterStato, defaultValue: filterStato)
               ]),
               Flexible(
                 child: PagedListView<int, Servizio>(
