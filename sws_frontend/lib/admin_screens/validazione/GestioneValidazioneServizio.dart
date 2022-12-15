@@ -43,21 +43,13 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
   late double _distanceToField;
 
   Servizio? servizio;
-  Ente? _ente;
-  Struttura? _struttura;
-  Contatto? _contatto;
-  String?  _nome = "", _contenuto = "", _note = "";
-  List<String> _aree = [];
-  List<String> _tags = [];
-  Icon? _icon;
-
-  final _formGlobalKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
   bool loaded = false;
 
   @override
   void initState() {
     super.initState();
+    loaded = false;
     initCall = load();
   }
 
@@ -65,47 +57,11 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
     servizio = widget.idServizio != null
         ? await servizioService.getServizio(widget.idServizio!)
         : null;
-    /*
-    if (servizio != null) {
-      if(servizio!.struttura != null){
-        _struttura = servizio!.struttura!;
-      }
-      if(servizio!.struttura!.ente != null){
-        _ente = servizio!.struttura!.ente!;
-      }
-      if(servizio!.aree != null){
-        _aree = servizio!.aree!.map((e) => e.nome!).toList();
-      }
-      if(servizio!.nome != null){
-        _nome = (servizio!.nome);
-      }
-      if(servizio!.hashtags != null){
-        servizio!.hashtags?.forEach((e) {
-          _tags.add(e.toString());
-        });
-      }
-      if (servizio!.contenuto != null) {
-        _contenuto = (servizio!.contenuto!);
-      }
-      if (servizio!.note != null) {
-        _note = (servizio!.note!);
-      }
-      if (servizio!.contatto != null) {
-        _contatto = servizio!.contatto!;
-      }
-      if (servizio!.customIcon != null) {
-        _icon = Icon(servizio!.getIconData());
-      }
-    }
-     */
+
     setState(() {
       loaded = true;
     });
     return true;
-  }
-
-  void savePage() async {
-
   }
 
   @override
@@ -136,13 +92,17 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
               child: const Icon(Icons.delete_forever),
               label: 'Elimina',
               backgroundColor: AppColors.detailBlue,
-              onTap: () {/* Do something */},
+              onTap: () {
+                eliminaServizio();
+              },
             ),
             SpeedDialChild(
               child: const Icon(Icons.verified_outlined),
               label: 'Approva',
               backgroundColor: AppColors.logoCadmiumOrange,
-              onTap: () {/* Do something */},
+              onTap: () {
+                approvaServizio();
+              },
             ),
           ],
         ),
@@ -155,13 +115,11 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
             builder: ((context, snapshot) {
               List<Widget> children = [];
 
+              if (snapshot.hasData) {
+                children.add(DetailServiceToValidate(servizio: servizio!));
+              }
               if (!snapshot.hasData && !snapshot.hasError || !loaded) {
                 children.add(const AllPageLoadTransparent());
-              }
-              if(snapshot.hasData) {
-                children.add(
-                    DetailServiceToValidate(servizio: servizio!)
-                );
               }
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
@@ -172,20 +130,55 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
             })));
   }
 
-  void approvaServizio(){
+  void activeLoad(){
+    loaded = false;
+    setState(() {});
+  }
+  void deactiveLoad(){
+    loaded = true;
+    setState(() {});
+  }
+
+  void approvaServizio() async{
+    activeLoad();
+    Servizio? nServizio=await servizioService.editStatoServizio(servizio!.id!, Servizio.APPROVATO,null);
+    if(nServizio==null){
+      if(mounted){}
+      //Navigator.pop(context);
+      ToastUtil.error("Errore server", context);
+    }
+    else{
+      servizio=nServizio;
+    }
+    deactiveLoad();
+    //operazioni
 
   }
-  void eliminaServizio() {
+
+  void eliminaServizio() async {
+    activeLoad();
+    bool nServizio=await servizioService.deleteServizio(servizio!.id!);
+    if(mounted){}
+
+    if(!nServizio){
+      ToastUtil.error("Errore server", context);
+    }
+    else{
+      Navigator.of(context).pop();
+      ToastUtil.success("Servizio eliminato", context);
+
+    }
+    deactiveLoad();
 
   }
-  void modificaServizio(){
+
+  void modificaServizio() {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius:
-              BorderRadius.all(Radius.circular(20.0))),
+        return const AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
           content: InModificaServizio(),
         );
       },

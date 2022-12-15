@@ -135,7 +135,7 @@ public class ServizioController {
             if(note!=null){
                 s.setNote(note);
             }
-            ResponseEntity.ok(servizioRepository.save(s));
+            return ResponseEntity.ok(servizioRepository.save(s));
         }
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }

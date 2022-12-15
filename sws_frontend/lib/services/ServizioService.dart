@@ -155,7 +155,7 @@ class ServizioService {
     String? token = await userService.getUser();
     try {
       QueryStringUtil queryStringUtil = QueryStringUtil();
-      queryStringUtil.add("punti", "true");
+
 
         queryStringUtil.add("stato", stato);
       if (note != null) {

@@ -121,7 +121,7 @@ class _ListaServiziDaValidareState extends State<ListaServiziDaValidare> {
                                           idServizio: item.id)))
                                       .then((v) => _pullRefresh())
                         },
-                        onDelete: () {
+                        /*onDelete: () {
                           servizioService
                               .deleteServizio(item.id!)
                               .then((value) {
@@ -133,7 +133,7 @@ class _ListaServiziDaValidareState extends State<ListaServiziDaValidare> {
                             }
                             _pullRefresh();
                           });
-                        },
+                        },*/
                       )),
                 ),
               )

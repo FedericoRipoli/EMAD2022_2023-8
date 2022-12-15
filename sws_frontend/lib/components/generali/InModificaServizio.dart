@@ -83,6 +83,7 @@ class _InModificaServizioState extends State<InModificaServizio> {
                             if (res) Navigator.pop(context);
                           }
                           if (_serverError) {
+                            if(mounted){}
                             GFToast.showToast(
                               'Errore server',
                               context,

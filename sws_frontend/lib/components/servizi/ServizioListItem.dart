@@ -8,14 +8,15 @@ import '../generali/ConfirmBox.dart';
 
 class ServizioListItem extends StatelessWidget {
   final String name, id;
-  final VoidCallback onTap, onDelete;
+  final VoidCallback onTap;
+  final VoidCallback ? onDelete;
   final String statoOperazione;
   const ServizioListItem(
       {super.key,
       required this.name,
       required this.id,
       required this.onTap,
-      required this.onDelete,
+      this.onDelete,
       required this.statoOperazione});
 
   @override
@@ -35,7 +36,7 @@ class ServizioListItem extends StatelessWidget {
         ),
         onTap: onTap,
         titleText: name,
-        icon: Servizio.canEnteEdit(statoOperazione)
+        icon:onDelete!=null && Servizio.canEnteEdit(statoOperazione)
             ? IconButton(
                 onPressed: () => {
                   showDialog(
@@ -43,7 +44,7 @@ class ServizioListItem extends StatelessWidget {
                     builder: (context) {
                       return ConfirmBox(
                         label: name,
-                        onDelete: onDelete,
+                        onDelete: onDelete!,
                       );
                     },
                   ),
