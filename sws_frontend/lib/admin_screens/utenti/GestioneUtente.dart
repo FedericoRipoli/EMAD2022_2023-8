@@ -10,7 +10,6 @@ import 'package:frontend_sws/services/entity/Utente.dart';
 import '../../components/generali/input/CustomDropDownText.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/generali/CustomAppBar.dart';
-import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/menu/DrawerMenu.dart';
 import '../../services/dto/SignupDTO.dart';
 import '../../theme/theme.dart';
@@ -203,8 +202,8 @@ class _GestioneUtente extends State<GestioneUtente> {
                           onPressed: savePage,
                           fullWidth: true,
                           textButton: usernameController.text != ""
-                              ? "MODIFICA"
-                              : "AGGIUNGI",
+                              ? "APPLICA MODIFICHE"
+                              : "SALVA INFORMAZIONI",
                           icon: usernameController.text != ""
                               ? Icons.mode
                               : Icons.save,

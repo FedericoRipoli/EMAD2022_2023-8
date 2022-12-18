@@ -5,9 +5,9 @@ import 'package:frontend_sws/components/generali/CustomButton.dart';
 import 'package:frontend_sws/services/EnteService.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/theme/theme.dart';
+import '../../components/generali/CustomTextField.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/generali/CustomAppBar.dart';
-import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/menu/DrawerMenu.dart';
 import '../../util/ToastUtil.dart';
 
@@ -24,6 +24,7 @@ class GestioneEnte extends StatefulWidget {
 class _GestioneEnte extends State<GestioneEnte> {
   late Future<bool> initCall;
   EnteService enteService = EnteService();
+  bool isBlank = true;
 
   Ente? ente;
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
@@ -37,6 +38,9 @@ class _GestioneEnte extends State<GestioneEnte> {
   void initState() {
     super.initState();
     initCall = load();
+    if (nomeController.text != "") {
+      isBlank = false;
+    }
   }
 
   Future<bool> load() async {
@@ -93,12 +97,6 @@ class _GestioneEnte extends State<GestioneEnte> {
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
         drawer: DrawerMenu(currentPage: GestioneEnte.id),
-        floatingActionButton: !loaded
-            ? null
-            : CustomFloatingButton(
-                iconData: Icons.save_rounded,
-                onPressed: () => savePage(),
-              ),
         appBar: CustomAppBar(
             title: const AppTitle(label: "Gestione Ente"),
             iconData: Icons.arrow_back,
@@ -113,73 +111,117 @@ class _GestioneEnte extends State<GestioneEnte> {
               List<Widget> columnChild = [];
               columnChild.add(Form(
                   key: _formGlobalKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 80,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
-                          validator: (v) {
-                            if (v == null || v.isEmpty) {
-                              return "Inserisci il campo denominazione";
-                            }
-                          },
-                          controller: nomeController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Denominazione',
-                          ),
+                  child: Container(
+                    margin: const EdgeInsets.all(18),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Wrap(
+                          children: const [
+                            Icon(
+                              Icons.home_work,
+                              color: AppColors.logoCadmiumOrange,
+                              size: 24,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text("aggiungi/modifica Enti")
+                          ],
                         ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          nomeController.text != ""
+                              ? "Modifica le informazioni dell'ente selezionato"
+                              : "Inserisci un nuovo ente completando i campi sottostanti:",
+                          style: const TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        CustomTextField(
+                          controller: nomeController,
+                          label: "Nome Ente",
+                          validator: "Inserisci il campo Nome",
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        // descrizione
+                        const Text(
+                          "Aggiungi una descrizione per l'ente",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        TextField(
                           keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          validator: (v) {},
+                          maxLines: 4,
                           controller: contenutoController,
                           decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Descrizione',
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 1, color: Colors.grey), //<-- SEE HERE
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                              child: ente?.id != null
-                                  ? Column(
-                                      children: [
-                                        CustomButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ListaStrutture(
-                                                            idEnte:
-                                                                ente!.id!)));
-                                          },
-                                          icon: Icons.account_balance_rounded,
-                                          textButton: "Gestione strutture",
-                                        )
-                                      ],
-                                    )
-                                  : null),
-                          const SizedBox(
-                            height: 40,
-                          )
-                        ],
-                      )
-                    ],
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        Text(
+                          nomeController.text != ""
+                              ? "Modifica le strutture dell'ente"
+                              : "Aggiungi una nuova struttura all'ente in creazione",
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w700),
+                          textAlign: TextAlign.center,
+                        ),
+
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          ListaStrutture(idEnte: ente!.id!)));
+                            },
+                            child: Text(
+                              ente?.id != null
+                                  ? "Modifica Strutture"
+                                  : "Aggiungi strutture",
+                              style: const TextStyle(fontSize: 18),
+                            )),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        CustomButton(
+                          onPressed: savePage,
+                          fullWidth: true,
+                          textButton: nomeController.text != ""
+                              ? "APPLICA MODIFICHE"
+                              : "SALVA INFORMAZIONI",
+                          icon: nomeController.text != ""
+                              ? Icons.mode
+                              : Icons.add,
+                        ),
+                      ],
+                    ),
                   )));
 
               children.add(SingleChildScrollView(

@@ -41,13 +41,14 @@ class _ListaStruttureState extends State<ListaStrutture> {
   String? filterNome;
 
   void _filterNomeChanged(String? text) {
-    filterNome=text;
+    filterNome = text;
     _pullRefresh();
   }
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await strutturaService.struttureList(filterNome, widget.idEnte);
+      final newItems =
+          await strutturaService.struttureList(filterNome, widget.idEnte);
 
       _pagingController.appendLastPage(newItems!);
     } catch (error) {
@@ -87,9 +88,11 @@ class _ListaStruttureState extends State<ListaStrutture> {
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
-              FilterBar(filters:[
-                TextFilter(name: 'Nome', positionType: GenericFilterPositionType.row, valueChange: _filterNomeChanged),
-
+              FilterBar(filters: [
+                TextFilter(
+                    name: 'Ricerca nome struttura...',
+                    positionType: GenericFilterPositionType.row,
+                    valueChange: _filterNomeChanged),
               ]),
               Flexible(
                   child: PagedListView<int, Struttura>(

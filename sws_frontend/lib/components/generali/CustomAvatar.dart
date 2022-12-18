@@ -12,7 +12,7 @@ class CustomAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return GFAvatar(
         shape: GFAvatarShape.circle,
-        backgroundColor: AppColors.white,
-        child: Icon(icon, size: size, color: AppColors.logoBlue));
+        backgroundColor: AppColors.logoBlue,
+        child: Icon(icon, size: size, color: AppColors.white));
   }
 }

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/components/generali/CustomTextField.dart';
 import 'package:frontend_sws/services/StrutturaService.dart';
+import '../../../components/generali/CustomButton.dart';
 import '../../../components/loading/AllPageLoadTransparent.dart';
 import '../../../components/generali/CustomAppBar.dart';
 import '../../../components/generali/CustomFloatingButton.dart';
@@ -102,14 +104,8 @@ class _GestioneStruttura extends State<GestioneStruttura> {
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
         drawer: DrawerMenu(currentPage: GestioneStruttura.id),
-        floatingActionButton: !loaded
-            ? null
-            : CustomFloatingButton(
-                iconData: Icons.save_rounded,
-                onPressed: () => savePage(),
-              ),
         appBar: CustomAppBar(
-            title:const AppTitle(label: "Gestione Struttura"),
+            title: const AppTitle(label: "Gestione Struttura"),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(
@@ -123,84 +119,81 @@ class _GestioneStruttura extends State<GestioneStruttura> {
               List<Widget> columnChild = [];
               columnChild.add(Form(
                   key: _formGlobalKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 80,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
-                          validator: (v) {
-                            if (v == null || v.isEmpty) {
-                              return "Inserisci il campo denominazione";
-                            }
-                          },
+                  child: Container(
+                    margin: const EdgeInsets.all(18),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Wrap(
+                          children: const [
+                            Icon(
+                              Icons.home_work,
+                              color: AppColors.logoCadmiumOrange,
+                              size: 24,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text("aggiungi/modifica Strutture")
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          denominazioneController.text != ""
+                              ? "Modifica le informazioni della struttura selezionata"
+                              : "Inserisci una nuova struttura completando i campi sottostanti:",
+                          style: const TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        CustomTextField(
                           controller: denominazioneController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Denominazione',
-                          ),
+                          label: "Nome struttura",
+                          validator: "Inserisci nome struttura",
                         ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
-                          validator: (v) {
-                            if (v == null || v.isEmpty) {
-                              return "Inserisci il campo indirizzo";
-                            }
-                          },
+                        CustomTextField(
                           controller: indirizzoController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Indirizzo',
-                          ),
+                          label: "Indirizzo struttura",
+                          validator: "Inserisci indirizzo struttura",
                         ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
-                          validator: (v) {
-                            if (v == null || v.isEmpty) {
-                              return "Inserisci il campo latitudine";
-                            }
-                          },
+                        CustomTextField(
+                          controller: indirizzoController,
+                          label: "Indirizzo struttura",
+                          validator: "Inserisci indirizzo struttura",
+                        ),
+                        CustomTextField(
                           controller: latitudineController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Latitudine',
-                          ),
+                          label: "Latitudine",
+                          validator: "Inserisci latitudine struttura",
                         ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
-                          validator: (v) {
-                            if (v == null || v.isEmpty) {
-                              return "Inserisci il campo longitudine";
-                            }
-                          },
+                        CustomTextField(
                           controller: longitudineController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Longitudine',
-                          ),
+                          label: "Longitudine",
+                          validator: "Inserisci longitudine struttura",
                         ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                    ],
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CustomButton(
+                          onPressed: savePage,
+                          fullWidth: true,
+                          textButton: denominazioneController.text != ""
+                              ? "APPLICA MODIFICHE"
+                              : "SALVA INFORMAZIONI",
+                          icon: denominazioneController.text != ""
+                              ? Icons.mode
+                              : Icons.add,
+                        ),
+                      ],
+                    ),
                   )));
 
               children.add(SingleChildScrollView(
