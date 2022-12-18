@@ -49,7 +49,7 @@ class CardServizio extends StatelessWidget {
                 style: const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.w600,
-                  fontSize: 18.0,
+                  fontSize: 20.0,
                 ),
               ),
               trailing: const Icon(
@@ -60,7 +60,9 @@ class CardServizio extends StatelessWidget {
               subtitle: Text(
                 ente,
                 style: const TextStyle(
-                    color: AppColors.logoBlue, fontWeight: FontWeight.w600),
+                    color: AppColors.logoBlue,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
               ),
               /* avatar: const Icon(
                 Icons.home_work,
@@ -86,7 +88,7 @@ class CardServizio extends StatelessWidget {
                           style: const TextStyle(
                             color: AppColors.black,
                             fontWeight: FontWeight.w700,
-                            fontSize: 12.0,
+                            fontSize: 14.0,
                           ),
                         ),
                         elevation: 4,

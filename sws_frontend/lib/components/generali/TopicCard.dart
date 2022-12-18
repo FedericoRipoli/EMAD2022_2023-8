@@ -16,7 +16,7 @@ class TopicCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      margin: const EdgeInsets.only(left: 12, right: 12, bottom: 12, top: 0),
+      margin: const EdgeInsets.only(left: 12, right: 12, bottom: 12, top: 5),
       color: AppColors.detailBlue,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -34,7 +34,7 @@ class TopicCard extends StatelessWidget {
               ),
               Text(title,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 20)),
+                      fontWeight: FontWeight.bold, fontSize: 22)),
               const Text(
                 "Scopri di più",
                 style: TextStyle(

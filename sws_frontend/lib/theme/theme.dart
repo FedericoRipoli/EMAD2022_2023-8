@@ -15,7 +15,7 @@ class AppColors {
   static const Color logoYellow = Color(0XFFFCDE05);
   static const Color logoCyan = Color(0XFF4EB8E6);
   static const Color logoRed = Color(0XFFF1615F);
-  static const Color logoCadmiumOrange = Color(0XFFF7954A);
+  static const Color logoCadmiumOrange = Color(0XFFfd7e1c); //F7954A
   // util colors
   static const Color bgWhite = Color(0XFFFCFEFC);
   static const Color newBlue = Color(0XFF4B37C3);

@@ -1,28 +1,15 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-import 'package:frontend_sws/services/entity/Ente.dart';
-import 'package:frontend_sws/services/entity/Struttura.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:frontend_sws/theme/theme.dart';
-import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/InModificaServizio.dart';
-import '../../components/generali/input/CustomDropDown.dart';
-import '../../components/generali/input/CustomDropDownText.dart';
-import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/menu/DrawerMenu.dart';
-import '../../components/servizi/DetailPageService.dart';
+import 'package:frontend_sws/components/generali/ConfirmBox.dart';
 import '../../components/servizi/DetailServiceToValidate.dart';
-import '../../services/AreeService.dart';
 import '../../services/ServizioService.dart';
-import '../../services/StrutturaService.dart';
-import '../../services/entity/Area.dart';
-import '../../services/entity/Contatto.dart';
 import '../../services/entity/Servizio.dart';
 import '../../util/ToastUtil.dart';
 
@@ -78,10 +65,10 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
         drawer: DrawerMenu(currentPage: GestioneValidazioneServizio.id),
         floatingActionButton: SpeedDial(
           backgroundColor: AppColors.logoBlue,
-          icon: Icons.multiple_stop,
+          icon: Icons.swap_horiz,
           children: [
             SpeedDialChild(
-              child: const Icon(Icons.edit),
+              child: const Icon(Icons.edit, color: AppColors.white),
               label: 'In modifica',
               backgroundColor: AppColors.logoCyan,
               onTap: () {
@@ -89,17 +76,28 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
               },
             ),
             SpeedDialChild(
-              child: const Icon(Icons.delete_forever),
-              label: 'Elimina',
-              backgroundColor: AppColors.detailBlue,
+              child: const Icon(Icons.delete_forever, color: AppColors.white),
+              label: 'Elimina Servizio',
+              backgroundColor: AppColors.logoRed,
               onTap: () {
-                eliminaServizio();
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ConfirmBox(
+                      label: "il servizio",
+                      onDelete: eliminaServizio,
+                    );
+                  },
+                );
               },
             ),
             SpeedDialChild(
-              child: const Icon(Icons.verified_outlined),
+              child: const Icon(
+                Icons.verified_outlined,
+                color: AppColors.white,
+              ),
               label: 'Approva',
-              backgroundColor: AppColors.logoCadmiumOrange,
+              backgroundColor: Colors.green,
               onTap: () {
                 approvaServizio();
               },
@@ -130,56 +128,53 @@ class _GestioneServizio extends State<GestioneValidazioneServizio> {
             })));
   }
 
-  void activeLoad(){
+  void activeLoad() {
     loaded = false;
     setState(() {});
   }
-  void deactiveLoad(){
+
+  void deactiveLoad() {
     loaded = true;
     setState(() {});
   }
 
-  void approvaServizio() async{
+  void approvaServizio() async {
     activeLoad();
-    Servizio? nServizio=await servizioService.editStatoServizio(servizio!.id!, Servizio.APPROVATO,null);
-    if(nServizio==null){
-      if(mounted){}
+    Servizio? nServizio = await servizioService.editStatoServizio(
+        servizio!.id!, Servizio.APPROVATO, null);
+    if (nServizio == null) {
+      if (mounted) {}
       //Navigator.pop(context);
       ToastUtil.error("Errore server", context);
-    }
-    else{
-      servizio=nServizio;
+    } else {
+      servizio = nServizio;
     }
     deactiveLoad();
     //operazioni
-
   }
 
   void eliminaServizio() async {
     activeLoad();
-    bool nServizio=await servizioService.deleteServizio(servizio!.id!);
-    if(mounted){}
+    bool nServizio = await servizioService.deleteServizio(servizio!.id!);
+    if (mounted) {}
 
-    if(!nServizio){
+    if (!nServizio) {
       ToastUtil.error("Errore server", context);
-    }
-    else{
+    } else {
       Navigator.of(context).pop();
       ToastUtil.success("Servizio eliminato", context);
-
     }
     deactiveLoad();
-
   }
 
   void modificaServizio() {
     showDialog(
       context: context,
       builder: (context) {
-        return  AlertDialog(
+        return AlertDialog(
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          content: InModificaServizio(servizio:servizio!),
+          content: InModificaServizio(servizio: servizio!),
         );
       },
     ).then((value) {

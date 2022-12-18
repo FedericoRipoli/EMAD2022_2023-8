@@ -1,17 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:frontend_sws/components/generali/CustomTextField.dart';
 import 'package:frontend_sws/services/AreeService.dart';
 import 'package:frontend_sws/services/entity/Area.dart';
+import '../../components/generali/CustomButton.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/menu/DrawerMenu.dart';
 import '../../theme/theme.dart';
 import '../../util/ToastUtil.dart';
-import '../../util/ColorExtension.dart';
 
 class GestioneArea extends StatefulWidget {
   String? idArea;
@@ -120,12 +118,6 @@ class _GestioneArea extends State<GestioneArea> {
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
         drawer: DrawerMenu(currentPage: GestioneArea.id),
-        floatingActionButton: !loaded
-            ? null
-            : CustomFloatingButton(
-                iconData: Icons.save_rounded,
-                onPressed: () => savePage(),
-              ),
         appBar: CustomAppBar(
             title: const AppTitle(label: "Gestione Area"),
             iconData: Icons.arrow_back,
@@ -140,20 +132,54 @@ class _GestioneArea extends State<GestioneArea> {
               }
               List<Widget> columnChild = [];
               columnChild.add(Form(
-                  key: _formGlobalKey,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 50, right: 50),
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 40,
-                        ),
-                        CustomTextField(
-                          controller: nomeController,
-                          label: "Nome Area",
-                          validator: "Inserisci il campo nome",
-                        )
-                        /*if (loaded)
+                key: _formGlobalKey,
+                child: Container(
+                  margin: const EdgeInsets.all(18),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Wrap(
+                        children: const [
+                          Icon(
+                            Icons.home_work,
+                            color: AppColors.logoCadmiumOrange,
+                            size: 24,
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text("aggiungi/modifica Aree di riferimento")
+                        ],
+                      ),
+                      Text(
+                        nomeController.text != ""
+                            ? "Modifica il nome identificativo dell'area di riferimento selezionata"
+                            : "Inserisci una nuova area di riferimento indicandone il nome identificativo:",
+                        style: const TextStyle(fontSize: 18),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      CustomTextField(
+                        controller: nomeController,
+                        label: "Nome Area",
+                        validator: "Inserisci il campo nome",
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      CustomButton(
+                        onPressed: savePage,
+                        fullWidth: true,
+                        textButton: nomeController.text != ""
+                            ? "APPLICA MODIFICHE"
+                            : "SALVA INFORMAZIONI",
+                        icon:
+                            nomeController.text != "" ? Icons.mode : Icons.add,
+                      ),
+                      /*if (loaded)
                           Column(
                             children: [
                               const SizedBox(
@@ -164,7 +190,7 @@ class _GestioneArea extends State<GestioneArea> {
                                       "Seleziona un colore per il marker mappa",
                                       style: TextStyle(color: Colors.red))
                                   : Container(),*/
-                        /*Row(
+                      /*Row(
                                 children: [
                                   ElevatedButton(
                                     onPressed: _pickIcon,
@@ -202,9 +228,10 @@ class _GestioneArea extends State<GestioneArea> {
                               )
                             ],
                           )*/
-                      ],
-                    ),
-                  )));
+                    ],
+                  ),
+                ),
+              ));
 
               children.add(SingleChildScrollView(
                   child: Column(

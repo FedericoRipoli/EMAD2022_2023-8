@@ -67,7 +67,10 @@ class _LoginFormState extends State<LoginForm> {
                     CustomTextField(
                         controller: usernameController, label: "Username"),
                     CustomTextField(
-                        controller: passwordController, label: "Password"),
+                      controller: passwordController,
+                      label: "Password",
+                      isPassword: true,
+                    ),
                     Container(
                       margin: const EdgeInsets.only(top: 25),
                       height: 60,

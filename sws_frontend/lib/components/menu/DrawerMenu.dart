@@ -107,7 +107,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 MaterialPageRoute(builder: (context) => const ListaAree()));
           }));
       w.add(CustomMenuItem(
-          text: 'Servizi Da Validare',
+          text: 'Validazione Servizi',
           f: () {
             checkChangePage(ListaServiziDaValidare.id);
             Navigator.push(
@@ -116,7 +116,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     builder: (context) => const ListaServiziDaValidare()));
           }));
       w.add(CustomMenuItem(
-          text: 'Imp. defibrillatori',
+          text: 'Impostazioni Defibrillatori',
           f: () {
             checkChangePage(ImpostazioniDefibrillatori.id);
             Navigator.push(

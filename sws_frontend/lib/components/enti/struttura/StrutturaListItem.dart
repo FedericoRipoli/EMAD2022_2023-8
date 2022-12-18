@@ -45,7 +45,7 @@ class StrutturaListItem extends StatelessWidget {
             ),
           },
           icon: const Icon(Icons.delete_rounded),
-          color: AppColors.logoCadmiumOrange,
+          color: AppColors.logoRed,
         ),
       ),
     );

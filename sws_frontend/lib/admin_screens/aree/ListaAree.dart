@@ -36,8 +36,6 @@ class _ListaAreeState extends State<ListaAree> {
     super.initState();
   }
 
-
-
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await areeService.areeList(filterNome);
@@ -47,19 +45,18 @@ class _ListaAreeState extends State<ListaAree> {
       _pagingController.error = error;
     }
   }
+
   String? filterNome;
 
   void _filterNomeChanged(String? text) {
-    filterNome=text;
+    filterNome = text;
     _pullRefresh();
   }
-
 
   @override
   void dispose() {
     _pagingController.dispose();
     super.dispose();
-
   }
 
   @override
@@ -82,9 +79,11 @@ class _ListaAreeState extends State<ListaAree> {
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
-              FilterBar(filters:[
-                TextFilter(name: 'Nome', positionType: GenericFilterPositionType.row, valueChange: _filterNomeChanged),
-
+              FilterBar(filters: [
+                TextFilter(
+                    name: 'Ricerca per nome area...',
+                    positionType: GenericFilterPositionType.row,
+                    valueChange: _filterNomeChanged),
               ]),
               Flexible(
                   child: PagedListView<int, Area>(

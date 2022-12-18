@@ -168,6 +168,7 @@ class _GestioneUtente extends State<GestioneUtente> {
                           controller: passwordController,
                           label: "Password",
                           validator: "Inserisci il campo Password",
+                          isPassword: true,
                         ),
                         const SizedBox(
                           height: 10,
