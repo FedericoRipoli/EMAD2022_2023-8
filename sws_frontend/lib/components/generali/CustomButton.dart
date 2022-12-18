@@ -7,19 +7,22 @@ class CustomButton extends StatelessWidget {
   final String textButton;
   final IconData? icon;
   final Color? bgColor;
+  final bool? fullWidth;
 
   const CustomButton(
       {Key? key,
       required this.onPressed,
       required this.textButton,
       this.icon,
-      this.bgColor})
+      this.bgColor,
+      this.fullWidth})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GFButton(
       elevation: 12,
+      fullWidthButton: fullWidth ?? false,
       disabledColor: Colors.blueGrey,
       color: bgColor ?? AppColors.logoBlue,
       padding: const EdgeInsets.only(left: 18, right: 18),

@@ -20,7 +20,7 @@ class UtenteListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      color: AppColors.ice,
+      color: AppColors.detailBlue,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),

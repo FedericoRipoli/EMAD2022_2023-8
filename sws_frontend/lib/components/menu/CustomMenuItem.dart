@@ -10,8 +10,11 @@ class CustomMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 1,
-        color: Colors.white,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        color: AppColors.detailBlue,
         child: ListTile(
             title: Text(
               text,

@@ -38,11 +38,12 @@ class _ListaUtentiState extends State<ListaUtenti> {
   }
 
   void _filterEnteChange(String? text) {
-    filterEnte=text;
+    filterEnte = text;
     _pullRefresh();
   }
+
   void _filterUtenteChange(String? text) {
-    filterUtente=text;
+    filterUtente = text;
     _pullRefresh();
   }
 
@@ -50,8 +51,8 @@ class _ListaUtentiState extends State<ListaUtenti> {
   String? filterUtente;
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems =
-          await utenteService.usersList(filterUtente, filterEnte, false, pageKey);
+      final newItems = await utenteService.usersList(
+          filterUtente, filterEnte, false, pageKey);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -68,7 +69,6 @@ class _ListaUtentiState extends State<ListaUtenti> {
   void dispose() {
     _pagingController.dispose();
     super.dispose();
-
   }
 
   @override
@@ -87,16 +87,21 @@ class _ListaUtentiState extends State<ListaUtenti> {
                     .then((value) => _pullRefresh());
               }
             }),
-        appBar: const CustomAppBar(title: AppTitle(label: "Gestione Utenti")),
+        appBar:
+            const CustomAppBar(title: AppTitle(label: "Gestione Admin Enti")),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
               FilterBar(filters: [
-                TextFilter(name: 'Ente', positionType: GenericFilterPositionType.row, valueChange: _filterEnteChange),
-                TextFilter(name: 'Utente', positionType: GenericFilterPositionType.row, valueChange: _filterUtenteChange),
-
+                TextFilter(
+                    name: 'Ricerca ente...',
+                    positionType: GenericFilterPositionType.row,
+                    valueChange: _filterEnteChange),
+                TextFilter(
+                    name: 'Ricerca utente...',
+                    positionType: GenericFilterPositionType.row,
+                    valueChange: _filterUtenteChange),
               ]),
-
               Flexible(
                 child: PagedListView<int, Utente>(
                   shrinkWrap: false,

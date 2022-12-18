@@ -40,13 +40,14 @@ class _ListaEntiState extends State<ListaEnti> {
   String? filterNome;
 
   void _filterNomeChanged(String? text) {
-    filterNome=text;
+    filterNome = text;
     _pullRefresh();
   }
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await enteService.enteList(filterNome, pageKey, "sort=denominazione&denominazione.dir=asc");
+      final newItems = await enteService.enteList(
+          filterNome, pageKey, "sort=denominazione&denominazione.dir=asc");
 
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
@@ -88,9 +89,11 @@ class _ListaEntiState extends State<ListaEnti> {
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[
-              FilterBar(filters:[
-                TextFilter(name: 'Nome', positionType: GenericFilterPositionType.row, valueChange: _filterNomeChanged),
-
+              FilterBar(filters: [
+                TextFilter(
+                    name: 'Ricerca per nome...',
+                    positionType: GenericFilterPositionType.row,
+                    valueChange: _filterNomeChanged),
               ]),
               Flexible(
                   child: PagedListView<int, Ente>(

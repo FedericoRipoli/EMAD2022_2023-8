@@ -21,7 +21,7 @@ class EnteListItem extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      color: AppColors.ice,
+      color: AppColors.detailBlue,
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 10, top: 6),
       child: GFListTile(
         avatar: const CustomAvatar(

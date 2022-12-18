@@ -110,15 +110,19 @@ class _DrawerMenuState extends State<DrawerMenu> {
           text: 'Servizi Da Validare',
           f: () {
             checkChangePage(ListaServiziDaValidare.id);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ListaServiziDaValidare()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ListaServiziDaValidare()));
           }));
       w.add(CustomMenuItem(
           text: 'Imp. defibrillatori',
           f: () {
             checkChangePage(ImpostazioniDefibrillatori.id);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ImpostazioniDefibrillatori()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ImpostazioniDefibrillatori()));
           }));
     }
     if (userService.isLogged() && admin != null && !admin) {

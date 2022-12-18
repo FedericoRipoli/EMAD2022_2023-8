@@ -50,8 +50,9 @@ class _LoginFormState extends State<LoginForm> {
                           'Login',
                           style: TextStyle(
                               color: AppColors.logoCadmiumOrange,
-                              fontFamily: "FredokaOne",
-                              fontSize: 24),
+                              fontFamily: "Lexend",
+                              fontWeight: FontWeight.bold,
+                              fontSize: 26),
                         )),
                     Container(
                         alignment: Alignment.center,

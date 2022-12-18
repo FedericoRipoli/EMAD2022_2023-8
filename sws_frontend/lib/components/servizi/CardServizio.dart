@@ -35,7 +35,7 @@ class CardServizio extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        color: AppColors.ice,
+        color: AppColors.detailBlue,
         elevation: 4,
         margin: const EdgeInsets.only(left: 16, right: 16, bottom: 12, top: 10),
         child: Column(
@@ -79,7 +79,7 @@ class CardServizio extends StatelessWidget {
                   return Container(
                       margin: const EdgeInsets.all(3),
                       child: Chip(
-                        backgroundColor: AppColors.greyLight,
+                        backgroundColor: AppColors.bgWhite,
                         label: Text(
                           e.nome,
                           overflow: TextOverflow.ellipsis,

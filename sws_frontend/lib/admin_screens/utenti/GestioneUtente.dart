@@ -1,16 +1,12 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/components/generali/CustomButton.dart';
+import 'package:frontend_sws/components/generali/CustomTextField.dart';
 import 'package:frontend_sws/services/EnteService.dart';
 import 'package:frontend_sws/services/UtenteService.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/services/entity/Utente.dart';
-import 'package:getwidget/components/appbar/gf_appbar.dart';
-import 'package:frontend_sws/main.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-
+// component
 import '../../components/generali/input/CustomDropDownText.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/generali/CustomAppBar.dart';
@@ -51,7 +47,8 @@ class _GestioneUtente extends State<GestioneUtente> {
   }
 
   Future<bool> load() async {
-    enti = await enteService.enteList(null, null, "sort=denominazione&denominazione.dir=asc");
+    enti = await enteService.enteList(
+        null, null, "sort=denominazione&denominazione.dir=asc");
     if (enti != null) {
       itemsEnte.add(CustomDropDownItem(
         id: null,
@@ -116,14 +113,8 @@ class _GestioneUtente extends State<GestioneUtente> {
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
         drawer: DrawerMenu(currentPage: GestioneUtente.id),
-        floatingActionButton: !loaded
-            ? null
-            : CustomFloatingButton(
-                iconData: Icons.save_rounded,
-                onPressed: () => savePage(),
-              ),
         appBar: CustomAppBar(
-            title: const AppTitle(label: "Gestione Utente"),
+            title: const AppTitle(label: "Gestione Admin Enti"),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(
@@ -131,71 +122,95 @@ class _GestioneUtente extends State<GestioneUtente> {
             builder: ((context, snapshot) {
               List<Widget> children = [];
 
-
               List<Widget> columnChild = [];
               columnChild.add(Form(
                   key: _formGlobalKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 80,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
-                          validator: (v) {
-                            if (v == null || v.isEmpty) {
-                              return "Inserisci il campo username";
-                            }
-                          },
-                          controller: usernameController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Username',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                          padding: const EdgeInsets.only(left: 50, right: 50),
-                          child: TextFormField(
-                            validator: (v) {
-                              if (v == null || v.isEmpty) {
-                                return "Inserisci il campo passoword";
-                              }
-                            },
-                            controller: passwordController,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Password',
+                  child: Container(
+                    margin: const EdgeInsets.all(18),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Wrap(
+                          children: const [
+                            Icon(
+                              Icons.account_circle_sharp,
+                              color: AppColors.logoCadmiumOrange,
+                              size: 24,
                             ),
-                          )),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(left: 50, right: 50),
-                          child: CustomDropDownText(
-                            value:dropdownValue,
-                            name:"Seleziona ente",
-                            values: itemsEnte,
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Seleziona un ente';
-                                }
-                              },
-                              onChanged: (value) {
-                                //Do something when changing the item if you want.
-                              },
-                              onSaved: (value) {
-                                dropdownValue = value.toString();
-                              }
-
-                          )
-                      )
-                    ],
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text("aggiungi/modifica Admin Enti")
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          usernameController.text != ""
+                              ? "Modifica le credenziali di accesso del responsabile selezionato"
+                              : "Inserisci un nuovo amministratore per un ente di tua scelta. Seleziona l'ente di cui fa parte per permettere l'accesso.",
+                          style: const TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        CustomTextField(
+                          controller: usernameController,
+                          label: "Username",
+                          validator: "Inserisci il campo Username",
+                        ),
+                        CustomTextField(
+                          controller: passwordController,
+                          label: "Password",
+                          validator: "Inserisci il campo Password",
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            child: CustomDropDownText(
+                                value: dropdownValue,
+                                name: "Seleziona ente",
+                                values: itemsEnte,
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Seleziona un ente';
+                                  }
+                                },
+                                onChanged: (value) {
+                                  //Do something when changing the item if you want.
+                                },
+                                onSaved: (value) {
+                                  dropdownValue = value.toString();
+                                })),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CustomButton(
+                          onPressed: savePage,
+                          fullWidth: true,
+                          textButton: usernameController.text != ""
+                              ? "MODIFICA"
+                              : "AGGIUNGI",
+                          icon: usernameController.text != ""
+                              ? Icons.mode
+                              : Icons.save,
+                        )
+                      ],
+                    ),
                   )));
 
               children.add(SingleChildScrollView(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 
+import '../theme/theme.dart';
+
 class ToastUtil {
   static void show(
       String text, BuildContext context, IconData iconData, Color iconColor) {
@@ -9,7 +11,7 @@ class ToastUtil {
       context,
       toastPosition: GFToastPosition.BOTTOM,
       textStyle: const TextStyle(fontSize: 18, color: GFColors.DARK),
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.ice,
       trailing: Icon(iconData, color: iconColor),
     );
   }
