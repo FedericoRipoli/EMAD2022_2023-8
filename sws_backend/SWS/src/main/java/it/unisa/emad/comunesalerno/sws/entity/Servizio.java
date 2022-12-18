@@ -30,6 +30,9 @@ public class Servizio {
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Contatto contatto;
 
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private ImageData immagine;
+
     @Enumerated(EnumType.STRING)
     private StatoOperazione stato;
 
