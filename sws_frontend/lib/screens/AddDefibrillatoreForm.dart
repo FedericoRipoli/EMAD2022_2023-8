@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/generali/CustomAppBar.dart';
 import 'package:frontend_sws/components/generali/CustomTextField.dart';
+import 'package:frontend_sws/components/mappa/MapPicker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../components/generali/CustomButton.dart';
 import '../theme/theme.dart';
 
-class DefibMap extends StatefulWidget {
-  const DefibMap({Key? key}) : super(key: key);
+// nome cognome -> struttura con posizione
+//
+
+class AddDefibrillatoreForm extends StatefulWidget {
+  const AddDefibrillatoreForm({Key? key}) : super(key: key);
 
   @override
-  State<DefibMap> createState() => _DefibMapState();
+  State<AddDefibrillatoreForm> createState() => _AddDefibrillatoreFormState();
 }
 
-class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
+class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
+    with TickerProviderStateMixin {
   TextEditingController nomeCognomeController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController telefonoController = TextEditingController();
   TextEditingController descrizioneController = TextEditingController();
+  TextEditingController indirizzoController = TextEditingController();
+
   File? imageFile;
   bool acceptPolicy = false;
 
@@ -43,13 +50,14 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                   "Cosa puoi fare?",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 22,
                       color: AppColors.logoCadmiumOrange),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
-                  height: 6,
+                  height: 12,
                 ),
+                // descrizione
                 RichText(
                   text: const TextSpan(
                     style: TextStyle(
@@ -63,26 +71,30 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       TextSpan(
                           text:
-                              " nel momento del bisogno, aggiungine uno nuovo indicando:\n\n"
-                              "Il tuo nome & cognome 🙂\nL'email ✉\nIl numero di telefono 📞\nUn'eventuale descrizione per facilitarne il ritrovamento ℹ\nUn'eventuale immagine del defibrillatore 📷")
+                              " nel momento del bisogno, aggiungine uno nuovo indicando:")
                     ],
                   ),
                 ),
                 const Divider(
                   thickness: 1,
                 ),
+                // form
                 CustomTextField(
                     controller: nomeCognomeController, label: "Nome & Cognome"),
                 CustomTextField(controller: emailController, label: "E-mail"),
                 CustomTextField(
                     controller: telefonoController,
                     label: "Numero di Telefono"),
-                const SizedBox(
-                  height: 8,
-                ),
+                CustomTextField(
+                    controller: indirizzoController, label: "Indirizzo"),
                 const Divider(
                   thickness: 1,
                 ),
+                const SizedBox(
+                  height: 12,
+                ),
+
+                // descrizione
                 const Text(
                   "Aggiungi una descrizione",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -102,11 +114,21 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
+
+                // posizione
                 const SizedBox(
-                  height: 8,
+                  height: 16,
                 ),
-                const Divider(
-                  thickness: 1,
+                const Text("Aggiungi la posizione geografica",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center),
+                const SizedBox(
+                  height: 10,
+                ),
+                MapPicker(),
+                // immagine
+                const SizedBox(
+                  height: 16,
                 ),
                 const Text(
                   "Aggiungi un'immagine",
@@ -133,7 +155,7 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                   ],
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 12,
                 ),
                 Container(
                   child: imageFile != null
@@ -143,9 +165,37 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                           textAlign: TextAlign.center,
                         ),
                 ),
+                const SizedBox(
+                  height: 16,
+                ),
+                // termini privacy
                 const Divider(
                   thickness: 1,
                 ),
+                TextButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0))),
+                          title: const Text("Privacy Policy"),
+                          content: const Text("Qui andranno le policy"),
+                          actions: <Widget>[
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(ctx).pop();
+                                },
+                                child: const Text("Chiudi")),
+                          ],
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Leggi la privacy policy",
+                      style: TextStyle(color: AppColors.logoBlue),
+                    )),
                 CheckboxListTile(
                   title: const Text(
                     "Ho letto e accetto la Privacy Policy.",
@@ -159,13 +209,14 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
                 const Divider(
                   thickness: 1,
                 ),
+
                 const SizedBox(
-                  height: 16,
+                  height: 20,
                 ),
                 CustomButton(
                   onPressed: () {},
                   icon: Icons.add,
-                  textButton: 'Inserisci defibrillatore',
+                  textButton: 'AGGIUNGI',
                 )
               ],
             ),
@@ -202,15 +253,3 @@ class _DefibMapState extends State<DefibMap> with TickerProviderStateMixin {
     }
   }
 }
-
-/***Dati da inserire**
-
-    Nome e cognome (una sola stringa)
-
-    email
-
-    telefono
-
-    descrizione
-
-    immagine*/

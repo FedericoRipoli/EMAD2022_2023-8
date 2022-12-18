@@ -12,6 +12,7 @@ import '../../components/mappa/PopupItemMappa.dart';
 import '../../services/ServizioService.dart';
 import '../../services/dto/PuntoMappaDTO.dart';
 import '../../services/entity/Servizio.dart';
+import '../../theme/theme.dart';
 
 class MapTab extends StatefulWidget {
   Future<List<PuntoMappaDto>?> initCallMap;
@@ -90,7 +91,7 @@ class _MapTabState extends State<MapTab> {
                             .toList()
                         : [],
                     polygonOptions: const PolygonOptions(
-                        borderColor: Colors.blueAccent,
+                        borderColor: AppColors.logoBlue,
                         color: Colors.black12,
                         borderStrokeWidth: 3),
                     popupOptions: PopupOptions(
@@ -123,7 +124,7 @@ class _MapTabState extends State<MapTab> {
                       return Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: Colors.blue),
+                            color: AppColors.logoBlue),
                         child: Center(
                           child: Text(
                             markers.length.toString(),

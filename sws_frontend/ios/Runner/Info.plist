@@ -8,6 +8,8 @@
     <!-- Permission options for the `microphone` group -->
     <key>NSMicrophoneUsageDescription</key>
     <string>microphone</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>App needs access to location and direction when open.</string>
     <!-- Permission options for the `photos` group -->
     <key>NSPhotoLibraryUsageDescription</key>
     <string>photos</string>

@@ -2,8 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:draggable_home/draggable_home.dart';
+import 'package:frontend_sws/components/generali/AddDefCard.dart';
 import 'package:frontend_sws/components/generali/CustomFloatingButton.dart';
-import 'package:frontend_sws/screens/DefibMap.dart';
+import 'package:frontend_sws/screens/AddDefibrillatoreForm.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/components/button/gf_icon_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
@@ -90,77 +91,81 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       alwaysShowLeadingAndAction: true,
       headerWidget: headerWidget(context),
       curvedBodyRadius: 20,
-      headerExpandedHeight: 0.28,
+      headerExpandedHeight: 0.26,
       body: [
-        TopicCard(
-          title: "Servizi per le politiche Sociali & Giovanili",
-          icon: Icons.handshake,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ServiziScreen()),
-            );
-          },
+        const Text(
+          "Esplora le funzionalità",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
-        TopicCard(
-          title: "Ultimi eventi nella zona di Salerno e dintorni",
-          icon: Icons.event_available,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => EventiScreen()),
-            );
-          },
+        const Icon(Icons.keyboard_double_arrow_up_rounded),
+        GridView.count(
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          crossAxisCount: 2,
+          mainAxisSpacing: 1,
+          crossAxisSpacing: 1,
+          children: [
+            TopicCard(
+              title: "Servizi",
+              icon: Icons.handshake,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ServiziScreen()),
+                );
+              },
+            ),
+            TopicCard(
+              title: "Eventi",
+              icon: Icons.event_available,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EventiScreen()),
+                );
+              },
+            ),
+            TopicCard(
+              title: "Olivia",
+              icon: Icons.live_help_rounded,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ChatPage()),
+                );
+              },
+            ),
+            TopicCard(
+              title: "Defibrillatori",
+              icon: Icons.monitor_heart,
+              onTap: () {},
+            ),
+          ],
         ),
-        TopicCard(
-          title: "Hai dubbi su cosa fare? Chiedi aiuto ad Olivia",
-          icon: Icons.live_help_rounded,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ChatPage()),
-            );
-          },
-        ),
-        TopicCard(
-          title: "Cerca i defibrillatori vicino a te utilizzando la mappa",
-          icon: Icons.monitor_heart,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const DefibMap()),
-            );
-          },
-        ),
+        const AddDefCard(),
       ],
       fullyStretchable: false,
-      backgroundColor: AppColors.greyLight,
+      backgroundColor: AppColors.bgWhite,
       appBarColor: AppColors.logoBlue,
     );
   }
 
   Widget headerWidget(BuildContext context) {
     return Container(
-      //color: AppColors.logoBlue,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/images/bg.jpg"),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
-          child: Center(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const HomeTitle(),
-              Image.asset(
-                "assets/images/logo.png",
-                width: 88,
-              ),
-            ],
-          ))),
+      color: AppColors.logoBlue,
+      child: Center(
+          child: Container(
+              margin: const EdgeInsets.only(top: 8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const HomeTitle(),
+                  Image.asset(
+                    "assets/images/logo.png",
+                    width: 82,
+                  ),
+                ],
+              ))),
     );
   }
 }

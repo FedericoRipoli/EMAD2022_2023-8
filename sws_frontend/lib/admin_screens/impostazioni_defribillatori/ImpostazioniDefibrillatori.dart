@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:frontend_sws/services/AreeService.dart';
 import 'package:frontend_sws/services/entity/Area.dart';
@@ -17,7 +16,6 @@ import '../../services/entity/Ente.dart';
 import '../../services/entity/Impostazioni.dart';
 import '../../theme/theme.dart';
 import '../../util/ToastUtil.dart';
-import '../../util/ColorExtension.dart';
 
 class ImpostazioniDefibrillatori extends StatefulWidget {
   static String id =
@@ -48,7 +46,7 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
 
   Impostazioni? impostazioni;
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
-  String initialHtmlText="";
+  String initialHtmlText = "";
   bool loaded = false;
   bool iconError = false;
   final _formGlobalKey = GlobalKey<FormState>();
@@ -132,7 +130,7 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
             idArea: dropdownValueAree!,
             privacyPolicy: await htmlController.getText());
 
-        nImpostazioni  =
+        nImpostazioni =
             await impostazioniService.createImpostazioni(nImpostazioni!);
       } else {
         impostazioni!.icon = _icon!.icon!.codePoint.toString();
@@ -228,7 +226,6 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
                         CustomHtmlEditor(
                           controller: htmlController,
                           initialText: initialHtmlText,
-
                         ),
                         const SizedBox(
                           height: 40,

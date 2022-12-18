@@ -161,11 +161,11 @@ class _ChatPageState extends State<ChatPage> {
             )),
         appBar: const CustomAppBar(title: AppTitle(label: "Olivia")),
         body: Container(
-          decoration: const BoxDecoration(color: AppColors.ice),
+          decoration: const BoxDecoration(color: AppColors.bgLightBlue),
           padding: const EdgeInsets.only(bottom: 100),
           child: Chat(
             theme: const DefaultChatTheme(
-                inputBackgroundColor: AppColors.ice,
+                inputBackgroundColor: AppColors.bgLightBlue,
                 sendButtonIcon: Icon(
                   Icons.send,
                   color: AppColors.logoBlue,
@@ -209,7 +209,7 @@ class _ChatPageState extends State<ChatPage> {
         nipWidth: 5,
         color: _user.id != message.author.id ||
                 message.type == types.MessageType.image
-            ? AppColors.ice
+            ? AppColors.bgLightBlue
             : AppColors.logoBlue,
         margin: nextMessageInGroup
             ? const BubbleEdges.symmetric(horizontal: 6)

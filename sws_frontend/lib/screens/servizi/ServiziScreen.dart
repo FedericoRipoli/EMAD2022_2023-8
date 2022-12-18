@@ -64,7 +64,8 @@ class _ServiziScreenState extends State<ServiziScreen>
 
   late Future<List<DropDownFilterItem>> initEnti;
   Future<List<DropDownFilterItem>> loadListEnti() async {
-    listEnti = await enteService.enteList(null, null, "sort=denominazione&denominazione.dir=asc");
+    listEnti = await enteService.enteList(
+        null, null, "sort=denominazione&denominazione.dir=asc");
     itemsEnti.add(DropDownFilterItem(
       id: "",
       name: "",
@@ -117,7 +118,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   }
 
   void _filterEnteChange(String? text) {
-    filterEnte = text!=null && text.isNotEmpty?text:null;
+    filterEnte = text != null && text.isNotEmpty ? text : null;
     _pullRefresh();
     initCallMap = loadMapView();
     setState(() {});
@@ -164,6 +165,7 @@ class _ServiziScreenState extends State<ServiziScreen>
       appBar: GFAppBar(
         centerTitle: true,
         backgroundColor: AppColors.logoBlue,
+        brightness: Brightness.dark,
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -207,7 +209,9 @@ class _ServiziScreenState extends State<ServiziScreen>
                 });
               },
               icon: Icon(
-                widget.isFilterOpen ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                widget.isFilterOpen
+                    ? Icons.arrow_drop_up
+                    : Icons.arrow_drop_down,
                 color: AppColors.white,
               ))
         ],

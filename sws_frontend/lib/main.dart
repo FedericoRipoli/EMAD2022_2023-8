@@ -30,7 +30,7 @@ ThemeData appTheme = ThemeData(
   primaryColor: AppColors.logoBlue,
   //useMaterial3: true,
   //colorSchemeSeed: Colors.indigo,
-  primarySwatch: Colors.indigo,
+  primarySwatch: blueMaterialColor,
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -40,3 +40,17 @@ ThemeData appTheme = ThemeData(
   ),
 );
 // E0E3EC
+
+Map<int, Color> blueColorSwatch = {
+  50: Color.fromRGBO(9, 115, 186, .1),
+  100: Color.fromRGBO(9, 115, 186, .2),
+  200: Color.fromRGBO(9, 115, 186, .3),
+  300: Color.fromRGBO(9, 115, 186, .4),
+  400: Color.fromRGBO(9, 115, 186, .5),
+  500: Color.fromRGBO(9, 115, 186, .6),
+  700: Color.fromRGBO(9, 115, 186, .8),
+  800: Color.fromRGBO(9, 115, 186, .9),
+  600: Color.fromRGBO(9, 115, 186, .7),
+  900: Color.fromRGBO(9, 115, 186, 1),
+};
+MaterialColor blueMaterialColor = MaterialColor(0xFF0973BA, blueColorSwatch);
