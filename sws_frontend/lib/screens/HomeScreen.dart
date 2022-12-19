@@ -5,6 +5,7 @@ import 'package:draggable_home/draggable_home.dart';
 import 'package:frontend_sws/components/generali/AddDefCard.dart';
 import 'package:frontend_sws/components/generali/CustomFloatingButton.dart';
 import 'package:frontend_sws/screens/AddDefibrillatoreForm.dart';
+import 'package:frontend_sws/services/ImpostazioniService.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/components/button/gf_icon_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
@@ -12,6 +13,7 @@ import '../components/generali/LoginForm.dart';
 import '../components/generali/TopicCard.dart';
 import '../components/menu/DrawerMenu.dart';
 import '../services/UserService.dart';
+import '../services/entity/Impostazioni.dart';
 import 'Chat.dart';
 import 'InfoScreen.dart';
 import 'eventi/EventiScreen.dart';
@@ -28,10 +30,25 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   UserService userService = UserService();
+  ImpostazioniService impostazioniService=ImpostazioniService();
+  late Future<bool> initCall;
+  Impostazioni? impostazioni;
+  @override
+  void initState() {
+    super.initState();
+    initCall = load();
+  }
+  Future<bool> load() async {
+    impostazioni=await impostazioniService.getImpostazioni();
+    setState(() {
 
+    });
+    return true;
+  }
   @override
   Widget build(BuildContext context) {
-    return DraggableHome(
+    return
+      DraggableHome(
       key: _scaffoldKey,
       drawer: userService.isLogged()
           ? DrawerMenu(currentPage: HomeScreen.id)
@@ -117,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
             TopicCard(
               title: "Eventi",
+
               icon: Icons.event_available,
               onTap: () {
                 Navigator.push(
@@ -136,13 +154,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               },
             ),
             TopicCard(
+              disabled:impostazioni ==null,
               title: "Defibrillatori",
               icon: Icons.monitor_heart,
               onTap: () {},
             ),
           ],
         ),
-        const AddDefCard(),
+        AddDefCard(disabled: impostazioni ==null),
       ],
       fullyStretchable: false,
       backgroundColor: AppColors.bgWhite,
