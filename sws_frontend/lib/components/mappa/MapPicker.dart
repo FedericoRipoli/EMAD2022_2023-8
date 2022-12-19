@@ -1,7 +1,10 @@
+import 'package:geolocator/geolocator.dart' as gl;
 import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+
+import '../loading/AllPageLoad.dart';
 
 class MapPicker extends StatefulWidget {
   MapPicker({Key? key}) : super(key: key);
@@ -13,62 +16,86 @@ class MapPicker extends StatefulWidget {
 }
 
 class _MapPicker extends State<MapPicker> {
-  double defaultLat = 40.6824408, defaultLong = 14.7680961;
   late Marker _locationMarker;
-  Location location = Location();
-  //late LocationData _currentPosition;
+  LatLng centerPosition=LatLng(40.6824408, 14.7680961);
+  bool loaded=false;
 
+
+
+
+
+  /// Determine the current position of the device.
+  ///
+  /// When the location services are not enabled or permissions
+  /// are denied the `Future` will return an error.
+  void _determinePosition() async {
+    bool serviceEnabled;
+    gl.LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await gl.Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
+
+    permission = await gl.Geolocator.checkPermission();
+    if (permission == gl.LocationPermission.denied) {
+      permission = await gl.Geolocator.requestPermission();
+      if (permission == gl.LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
+      }
+    }
+
+    if (permission == gl.LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    gl.Position currentPosition = await  gl.Geolocator.getCurrentPosition(desiredAccuracy: gl.LocationAccuracy.bestForNavigation);
+    centerPosition=LatLng(currentPosition.latitude, currentPosition.longitude);
+    _locationMarker = Marker(
+        point: centerPosition,
+        builder: (ctx) => const Icon(
+          Icons.location_on,
+          color: Colors.red,
+          size: 32,
+        ));
+    loaded=true;
+    setState(() {
+
+    });
+  }
   @override
   void initState() {
     super.initState();
-    //_getUserLocation();
-    _locationMarker = Marker(
-        point: LatLng(defaultLat, defaultLong),
-        builder: (ctx) => const Icon(
-              Icons.location_on,
-              color: Colors.red,
-              size: 32,
-            ));
+    _determinePosition();
   }
 
   // get user current location
-  /*
-  _getUserLocation() async {
-    late bool serviceEnabled;
-    late PermissionStatus permissionGranted;
 
-    serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) {
-        return;
-      }
-    }
-    // Check if permission is granted
-    permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
 
-    _currentPosition = await location.getLocation();
-    location.onLocationChanged.listen((LocationData currentLocation) {
-      setState(() {
-        _currentPosition = currentLocation;
-      });
-    });
-  }
-  */
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return !loaded?
+    const AllPageLoad()
+    : SizedBox(
         width: 200,
         height: 250,
         child: FlutterMap(
           options: MapOptions(
-            center: LatLng(defaultLat, defaultLong),
+            center: centerPosition,
             zoom: 15.0,
             maxZoom: 30.0,
             enableScrollWheel: true,

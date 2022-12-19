@@ -162,6 +162,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ],
         ),
         AddDefCard(disabled: impostazioni ==null),
+        //AddDefCard(),
       ],
       fullyStretchable: false,
       backgroundColor: AppColors.bgWhite,
