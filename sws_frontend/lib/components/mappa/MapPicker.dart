@@ -91,7 +91,6 @@ class _MapPicker extends State<MapPicker> {
     return !loaded?
     const AllPageLoad()
     : SizedBox(
-        width: 200,
         height: 250,
         child: FlutterMap(
           options: MapOptions(
