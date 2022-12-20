@@ -218,7 +218,7 @@ class _GestioneEnte extends State<GestioneEnte> {
                               : "SALVA INFORMAZIONI",
                           icon: nomeController.text != ""
                               ? Icons.mode
-                              : Icons.add,
+                              : Icons.save,
                         ),
                       ],
                     ),

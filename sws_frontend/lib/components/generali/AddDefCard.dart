@@ -5,19 +5,18 @@ import '../../screens/AddDefibrillatoreForm.dart';
 
 class AddDefCard extends StatelessWidget {
   final bool disabled;
-  const AddDefCard({Key? key,this.disabled=false}) : super(key: key);
+  const AddDefCard({Key? key, this.disabled = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return
-      Container(
-
-            foregroundDecoration:!disabled?null: const BoxDecoration(
-              color: Colors.grey,
-              backgroundBlendMode: BlendMode.saturation,
-            ),
-
-        child:Card(
+    return Container(
+        foregroundDecoration: !disabled
+            ? null
+            : const BoxDecoration(
+                color: AppColors.white,
+                backgroundBlendMode: BlendMode.saturation,
+              ),
+        child: Card(
           elevation: 8,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
@@ -25,13 +24,15 @@ class AddDefCard extends StatelessWidget {
           margin: const EdgeInsets.all(16),
           color: AppColors.detailBlue,
           child: ListTile(
-            onTap:disabled?null: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const AddDefibrillatoreForm()),
-              );
-            },
+            onTap: disabled
+                ? null
+                : () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddDefibrillatoreForm()),
+                    );
+                  },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
@@ -45,8 +46,6 @@ class AddDefCard extends StatelessWidget {
               size: 24,
             ),
           ),
-        )
-
-      );
+        ));
   }
 }

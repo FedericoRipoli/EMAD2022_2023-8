@@ -40,7 +40,7 @@ class _DetailServiceToValidateState extends State<DetailServiceToValidate> {
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                               letterSpacing: 0,
-                              color: AppColors.logoBlue,
+                              color: AppColors.logoCadmiumOrange,
                             ),
                           ),
                           const Divider(

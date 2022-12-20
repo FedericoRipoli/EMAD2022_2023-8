@@ -1,10 +1,8 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:frontend_sws/components/generali/AddDefCard.dart';
 import 'package:frontend_sws/components/generali/CustomFloatingButton.dart';
-import 'package:frontend_sws/screens/AddDefibrillatoreForm.dart';
 import 'package:frontend_sws/services/ImpostazioniService.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/components/button/gf_icon_button.dart';
@@ -30,7 +28,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   UserService userService = UserService();
-  ImpostazioniService impostazioniService=ImpostazioniService();
+  ImpostazioniService impostazioniService = ImpostazioniService();
   late Future<bool> initCall;
   Impostazioni? impostazioni;
   @override
@@ -38,17 +36,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.initState();
     initCall = load();
   }
-  Future<bool> load() async {
-    impostazioni=await impostazioniService.getImpostazioni();
-    setState(() {
 
-    });
+  Future<bool> load() async {
+    impostazioni = await impostazioniService.getImpostazioni();
+    setState(() {});
     return true;
   }
+
   @override
   Widget build(BuildContext context) {
-    return
-      DraggableHome(
+    return DraggableHome(
       key: _scaffoldKey,
       drawer: userService.isLogged()
           ? DrawerMenu(currentPage: HomeScreen.id)
@@ -106,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       alwaysShowLeadingAndAction: true,
-      headerWidget: headerWidget(context),
+      headerWidget: headerWidgetWithImage(context),
       curvedBodyRadius: 20,
       headerExpandedHeight: 0.26,
       body: [
@@ -134,7 +131,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
             TopicCard(
               title: "Eventi",
-
               icon: Icons.event_available,
               onTap: () {
                 Navigator.push(
@@ -154,14 +150,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               },
             ),
             TopicCard(
-              disabled:impostazioni ==null,
+              disabled: impostazioni == null,
               title: "Defibrillatori",
               icon: Icons.monitor_heart,
               onTap: () {},
             ),
           ],
         ),
-        AddDefCard(disabled: impostazioni ==null),
+        AddDefCard(disabled: impostazioni == null),
         //AddDefCard(),
       ],
       fullyStretchable: false,
@@ -188,4 +184,31 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ))),
     );
   }
+}
+
+Widget headerWidgetWithImage(BuildContext context) {
+  return Container(
+      //color: AppColors.logoBlue,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/bg.jpg"),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
+        child: Center(
+            child: Container(
+                margin: const EdgeInsets.only(top: 8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const HomeTitle(),
+                    Image.asset(
+                      "assets/images/logo.png",
+                      width: 82,
+                    ),
+                  ],
+                ))),
+      ));
 }

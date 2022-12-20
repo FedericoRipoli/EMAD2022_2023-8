@@ -177,7 +177,7 @@ class _GestioneArea extends State<GestioneArea> {
                             ? "APPLICA MODIFICHE"
                             : "SALVA INFORMAZIONI",
                         icon:
-                            nomeController.text != "" ? Icons.mode : Icons.add,
+                            nomeController.text != "" ? Icons.mode : Icons.save,
                       ),
                       /*if (loaded)
                           Column(

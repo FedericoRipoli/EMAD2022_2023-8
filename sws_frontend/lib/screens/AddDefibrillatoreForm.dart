@@ -50,7 +50,7 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
   @override
   Widget build(BuildContext context) {
     return !loaded
-        ? AllPageLoad()
+        ? const AllPageLoad()
         : Scaffold(
             appBar: const CustomAppBar(
               title: AppTitle(
@@ -102,173 +102,176 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
                     ),
                     Form(
                         key: _formGlobalKey,
-                        child:Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              CustomTextField(
+                                controller: nomeCognomeController,
+                                label: "Nome & Cognome",
+                                validator: "Inserisci il campo nome",
+                              ),
+                              CustomTextField(
+                                controller: emailController,
+                                label: "E-mail",
+                                validator: "Inserisci il campo email",
+                              ),
+                              CustomTextField(
+                                controller: telefonoController,
+                                label: "Numero di Telefono",
+                                validator:
+                                    "Inserisci il campo numero di telefono",
+                              ),
+                              CustomTextField(
+                                controller: indirizzoController,
+                                label: "Indirizzo",
+                                validator: "Inserisci il campo indirizzo",
+                              ),
+                              const Divider(
+                                thickness: 1,
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+
+                              // descrizione
+                              const Text(
+                                "Aggiungi una descrizione",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              TextFormField(
+                                validator: (v) {
+                                  if (v == null || v.isEmpty) {
+                                    return "Inserisci il campo descrizione";
+                                  }
+                                },
+                                keyboardType: TextInputType.multiline,
+                                maxLines: 4,
+                                controller: descrizioneController,
+                                decoration: const InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 1,
+                                        color: Colors.grey), //<-- SEE HERE
+                                  ),
+                                ),
+                              ),
+
+                              // posizione
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              const Text("Aggiungi la posizione geografica",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              MapPicker(),
+                              // immagine
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              const Text(
+                                "Aggiungi un'immagine",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  CustomTextField(
-                                    controller: nomeCognomeController,
-                                    label: "Nome & Cognome",
-                                    validator: "Inserisci il campo nome",
-                                  ),
-                                  CustomTextField(
-                                    controller: emailController,
-                                    label: "E-mail",
-                                    validator: "Inserisci il campo email",
-                                  ),
-                                  CustomTextField(
-                                    controller: telefonoController,
-                                    label: "Numero di Telefono",
-                                    validator: "Inserisci il campo numero di telefono",
-                                  ),
-                                  CustomTextField(
-                                    controller: indirizzoController,
-                                    label: "Indirizzo",
-                                    validator: "Inserisci il campo indirizzo",
-                                  ),
-                                  const Divider(
-                                    thickness: 1,
-                                  ),
-                                  const SizedBox(
-                                    height: 12,
-                                  ),
-
-                                  // descrizione
-                                  const Text(
-                                    "Aggiungi una descrizione",
-                                    style:
-                                    TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  TextFormField(
-                                    validator: (v) {
-                                      if (v == null || v.isEmpty) {
-                                        return "Inserisci il campo descrizione";
-                                      }
-                                    },
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: 4,
-                                    controller: descrizioneController,
-                                    decoration: const InputDecoration(
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey), //<-- SEE HERE
-                                      ),
-                                    ),
-                                  ),
-
-                                  // posizione
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  const Text("Aggiungi la posizione geografica",
-                                      style: TextStyle(
-                                          fontSize: 16, fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  MapPicker(),
-                                  // immagine
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  const Text(
-                                    "Aggiungi un'immagine",
-                                    style:
-                                    TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      CustomButton(
-                                        onPressed: _getFromGallery,
-                                        textButton: "Galleria",
-                                        icon: Icons.photo_library,
-                                      ),
-                                      CustomButton(
-                                        onPressed: _getFromCamera,
-                                        textButton: "Fotocamera",
-                                        icon: Icons.camera_alt,
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 12,
-                                  ),
-                                  Container(
-                                    child: imageFile != null
-                                        ? Image.file(imageFile!)
-                                        : const Text(
-                                      "Nessuna immagine selezionata",
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  // termini privacy
-                                  const Divider(
-                                    thickness: 1,
-                                  ),
-                                  TextButton(
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (ctx) => AlertDialog(
-                                            shape: const RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(20.0))),
-                                            title: const Text("Privacy Policy"),
-                                            content: const Text("Qui andranno le policy"),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(ctx).pop();
-                                                  },
-                                                  child: const Text("Chiudi")),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      child: const Text(
-                                        "Leggi la privacy policy",
-                                        style: TextStyle(color: AppColors.logoBlue),
-                                      )),
-                                  CheckboxListTile(
-                                    title: const Text(
-                                      "Ho letto e accetto la Privacy Policy.",
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    value: acceptPolicy,
-                                    onChanged: _onAccept,
-                                    selectedTileColor: AppColors.white,
-                                    activeColor: AppColors.logoCadmiumOrange,
-                                  ),
-                                  const Divider(
-                                    thickness: 1,
-                                  ),
-
-                                  const SizedBox(
-                                    height: 20,
+                                  CustomButton(
+                                    onPressed: _getFromGallery,
+                                    textButton: "Galleria",
+                                    icon: Icons.photo_library,
                                   ),
                                   CustomButton(
-                                    onPressed: savePage,
-                                    icon: Icons.add,
-                                    textButton: 'AGGIUNGI',
-                                  )
-                                ])
-                    ),
+                                    onPressed: _getFromCamera,
+                                    textButton: "Fotocamera",
+                                    icon: Icons.camera_alt,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Container(
+                                child: imageFile != null
+                                    ? Image.file(imageFile!)
+                                    : const Text(
+                                        "Nessuna immagine selezionata",
+                                        textAlign: TextAlign.center,
+                                      ),
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              // termini privacy
+                              const Divider(
+                                thickness: 1,
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (ctx) => AlertDialog(
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20.0))),
+                                        title: const Text("Privacy Policy"),
+                                        content: const Text(
+                                            "Qui andranno le policy"),
+                                        actions: <Widget>[
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(ctx).pop();
+                                              },
+                                              child: const Text("Chiudi")),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    "Leggi la privacy policy",
+                                    style: TextStyle(color: AppColors.logoBlue),
+                                  )),
+                              CheckboxListTile(
+                                title: const Text(
+                                  "Ho letto e accetto la Privacy Policy.",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                                value: acceptPolicy,
+                                onChanged: _onAccept,
+                                selectedTileColor: AppColors.white,
+                                activeColor: AppColors.logoCadmiumOrange,
+                              ),
+                              const Divider(
+                                thickness: 1,
+                              ),
 
-
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              CustomButton(
+                                fullWidth: true,
+                                onPressed: savePage,
+                                icon: Icons.add,
+                                textButton: 'AGGIUNGI',
+                              )
+                            ])),
                   ],
                 ),
               ),

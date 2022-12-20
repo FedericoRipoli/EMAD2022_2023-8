@@ -4,6 +4,7 @@ import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:frontend_sws/services/AreeService.dart';
 import 'package:frontend_sws/services/entity/Area.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
+import '../../components/generali/CustomButton.dart';
 import '../../components/generali/input/CustomDropDownText.dart';
 import '../../components/generali/input/CustomHtmlEditor.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
@@ -160,12 +161,6 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
         drawer: DrawerMenu(currentPage: ImpostazioniDefibrillatori.id),
-        floatingActionButton: !loaded
-            ? null
-            : CustomFloatingButton(
-                iconData: Icons.save_rounded,
-                onPressed: () => savePage(),
-              ),
         appBar: CustomAppBar(
             title: const AppTitle(label: "Impostazioni defibrillatori"),
             iconData: Icons.arrow_back,
@@ -178,14 +173,36 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
               List<Widget> columnChild = [];
               columnChild.add(Form(
                   key: _formGlobalKey,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 50, right: 50),
+                  child: Container(
+                    margin: const EdgeInsets.all(18),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const SizedBox(
-                          height: 80,
+                        Wrap(
+                          children: const [
+                            Icon(
+                              Icons.monitor_heart,
+                              color: AppColors.logoCadmiumOrange,
+                              size: 24,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text("Impostazioni di visualizzazione")
+                          ],
                         ),
-                        const Text("Seleziona un ente"),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        const Text(
+                          "Seleziona l'ente",
+                          style: TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
                         CustomDropDownText(
                             value: dropdownValueEnte,
                             name: "Seleziona ente",
@@ -202,9 +219,16 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
                               dropdownValueEnte = value.toString();
                             }),
                         const SizedBox(
-                          height: 40,
+                          height: 30,
                         ),
-                        const Text("Seleziona un'area"),
+                        const Text(
+                          "Seleziona l'area",
+                          style: TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
                         CustomDropDownText(
                             value: dropdownValueAree,
                             name: "Seleziona aree",
@@ -223,20 +247,36 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
                         const SizedBox(
                           height: 40,
                         ),
+                        const Text(
+                          "Aggiungi una descrizione",
+                          style: TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
                         CustomHtmlEditor(
                           controller: htmlController,
                           initialText: initialHtmlText,
+                        ),
+                        const Divider(
+                          thickness: 2,
                         ),
                         const SizedBox(
                           height: 40,
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            ElevatedButton(
+                            TextButton(
                               onPressed: _pickIcon,
-                              child: const Text('Seleziona l\'icona'),
+                              child: const Text(
+                                'Seleziona l\'icona',
+                                style: TextStyle(fontSize: 18),
+                              ),
                             ),
-                            const SizedBox(width: 30),
+                            const SizedBox(width: 15),
                             AnimatedSwitcher(
                               duration: const Duration(milliseconds: 300),
                               child: _icon ?? Container(),
@@ -247,6 +287,15 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
                                 style: TextStyle(color: Colors.red),
                               )
                           ],
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        CustomButton(
+                          onPressed: savePage,
+                          fullWidth: true,
+                          textButton: "SALVA MODIFICHE",
+                          icon: Icons.save,
                         )
                       ],
                     ),

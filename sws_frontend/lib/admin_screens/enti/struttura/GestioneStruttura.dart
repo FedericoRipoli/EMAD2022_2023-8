@@ -190,7 +190,7 @@ class _GestioneStruttura extends State<GestioneStruttura> {
                               : "SALVA INFORMAZIONI",
                           icon: denominazioneController.text != ""
                               ? Icons.mode
-                              : Icons.add,
+                              : Icons.save,
                         ),
                       ],
                     ),

@@ -7,12 +7,7 @@ import 'package:html_editor_enhanced/html_editor.dart';
 class CustomHtmlEditor extends StatelessWidget {
   HtmlEditorController controller;
   String? initialText;
-  CustomHtmlEditor({
-    required this.controller,
-    this.initialText,
-    super.key});
-
-
+  CustomHtmlEditor({required this.controller, this.initialText, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +15,13 @@ class CustomHtmlEditor extends StatelessWidget {
       controller: controller, //required
       htmlEditorOptions: HtmlEditorOptions(
         hint: "Testo...",
-
         initialText: initialText ?? "",
       ),
       otherOptions: const OtherOptions(
-        height: 400,
-        decoration: BoxDecoration(
-          color: Colors.white
-        )
-
-      ),
+          height: 200,
+          decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: AppColors.black)),
+              color: Colors.white)),
     );
   }
 }
-
