@@ -5,15 +5,16 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:frontend_sws/services/RestURL.dart';
+import 'package:frontend_sws/services/web_socket/WebMessage.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:uuid/uuid.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:web_socket_channel/io.dart';
 
 import '../components/generali/CustomAppBar.dart';
 import '../components/generali/CustomFloatingButton.dart';
-import '../main.dart';
 import 'package:frontend_sws/util/TtsManager.dart';
 import 'package:frontend_sws/util/SharedPreferencesUtils.dart';
 
@@ -29,6 +30,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   late TtsManager _ttsManager;
+  late IOWebSocketChannel _chatBotChannel;
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
@@ -37,6 +39,7 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     super.initState();
     _initSpeech();
+    _initWebSocket();
     _loadMessages();
     _ttsManager = TtsManager();
     if (_messages.isEmpty) {
@@ -54,6 +57,7 @@ class _ChatPageState extends State<ChatPage> {
     _ttsManager.stop();
     _saveMessages();
     super.dispose();
+    _chatBotChannel.sink.close();
   }
 
   /// This has to happen only once per app
@@ -62,9 +66,22 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {});
   }
 
+  // Inizializzzione del WebSocket
+  void _initWebSocket() {
+    _chatBotChannel = IOWebSocketChannel.connect(RestURL.OliviaService);
+    _chatBotChannel.stream.listen((message) {
+      var input = jsonDecode(message);
+      WebMessage response = WebMessage.fromJson(input);
+      _sendMessage(response.content!, _bot);
+    });
+  }
+
   /// Each time to start a speech recognition session
   void _startListening() async {
-    await _speechToText.listen(onResult: _onSpeechResult);
+    await _speechToText.listen(
+        onResult: _onSpeechResult,
+        pauseFor: const Duration(seconds: 3)
+    );
     setState(() {});
   }
 
@@ -76,17 +93,9 @@ class _ChatPageState extends State<ChatPage> {
     await _speechToText.stop();
 
     //FINITO L'ASCOLTO MANDA IL MESSAGGIO NELLA CHAT
-    final textMessage = types.TextMessage(
-      author: _user,
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: const Uuid().v4(),
-      text: _lastWords,
-    );
-    if (textMessage.text.isNotEmpty &&
-        textMessage.text.length != 0 &&
-        textMessage.text != "") _addMessage(textMessage);
+    if (_lastWords.isNotEmpty &&
+        _lastWords != "") _sendMessage(_lastWords, _user);
     _lastWords = "";
-    print(_lastWords);
 
     //AGGIORNA LO STATO DELLA CHAT
     setState(() {});
@@ -109,21 +118,39 @@ class _ChatPageState extends State<ChatPage> {
     firstName: 'Olivia',
   );
 
+  // Gestisce l'azione da fare quando si preme il tasto invio
   void _handleSendPressed(types.PartialText message) {
+    _sendMessage(message.text, _user);
+  }
+
+  // La funzione di invio del messaggio
+  void _sendMessage(String message, types.User sender) {
     final textMessage = types.TextMessage(
-      author: _user,
+      author: sender,
       createdAt: DateTime.now().millisecondsSinceEpoch,
       id: const Uuid().v4(),
-      text: message.text,
+      text: message,
     );
 
     _addMessage(textMessage);
+    if (sender == _user) _chatBotResponse(message);
   }
 
   void _addMessage(types.Message message) {
     setState(() {
       _messages.insert(0, message);
     });
+  }
+
+  // Gestisce l'invio al Server dell'AI
+  void _chatBotResponse(String text) {
+    String sendingMessage = json.encode(WebMessage(
+        type:1,
+        content:text)
+        .toJson()
+    );
+    print(sendingMessage);
+    _chatBotChannel.sink.add(sendingMessage);
   }
 
   void _saveMessages() async {
