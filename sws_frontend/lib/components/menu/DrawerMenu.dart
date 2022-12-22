@@ -9,6 +9,7 @@ import 'package:getwidget/getwidget.dart';
 import '../../admin_screens/enti/ListaEnti.dart';
 import '../../admin_screens/impostazioni_defribillatori/ImpostazioniDefibrillatori.dart';
 import '../../admin_screens/utenti/ListaUtenti.dart';
+import 'package:frontend_sws/admin_screens/eventi/ListaEventi.dart';
 import '../../services/UserService.dart';
 import 'CustomMenuItem.dart';
 
@@ -114,6 +115,13 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const ListaServiziDaValidare()));
+          }));
+      w.add(CustomMenuItem(
+          text: 'Gestione Eventi',
+          f: () {
+            checkChangePage(ListaEventi.id);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ListaEventi()));
           }));
       w.add(CustomMenuItem(
           text: 'Impostazioni Defibrillatori',

@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
+import 'package:frontend_sws/components/generali/CustomTextField.dart';
 import 'package:frontend_sws/services/entity/Struttura.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../components/generali/CustomAppBar.dart';
+import '../../components/generali/CustomButton.dart';
 import '../../components/generali/input/CustomDropDown.dart';
 import '../../components/generali/input/CustomDropDownText.dart';
 import '../../components/generali/CustomFloatingButton.dart';
@@ -108,7 +110,7 @@ class _GestioneServizio extends State<GestioneServizio> {
     List<Struttura>? strutture =
         await strutturaService.struttureList(null, widget.idEnte);
     if (strutture != null) {
-      itemsStrutture.add( CustomDropDownItem(
+      itemsStrutture.add(CustomDropDownItem(
         id: null,
         name: "",
       ));
@@ -219,13 +221,6 @@ class _GestioneServizio extends State<GestioneServizio> {
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
         drawer: DrawerMenu(currentPage: GestioneServizio.id),
-        floatingActionButton: !loaded ||
-                (servizio != null && !Servizio.canEnteEdit(servizio!.stato))
-            ? null
-            : CustomFloatingButton(
-                iconData: Icons.save_rounded,
-                onPressed: () => savePage(),
-              ),
         appBar: CustomAppBar(
             title: const AppTitle(label: "Gestione Servizio"),
             iconData: Icons.arrow_back,
@@ -235,128 +230,101 @@ class _GestioneServizio extends State<GestioneServizio> {
             builder: ((context, snapshot) {
               List<Widget> children = [];
 
-
               List<Widget> columnChild = [];
               columnChild.add(Form(
                   key: _formGlobalKey,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 80,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
-                          enabled: (servizio == null ||
-                              Servizio.canEnteEdit(servizio!.stato)),
-                          validator: (v) {
-                            if (v == null || v.isEmpty) {
-                              return "Inserisci il campo nome";
+                  child: Container(
+                    margin: const EdgeInsets.all(18),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Wrap(
+                          children: const [
+                            Icon(
+                              Icons.handshake_rounded,
+                              color: AppColors.logoCadmiumOrange,
+                              size: 24,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text("Modifica/Aggiungi servizio")
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          nomeController.text != ""
+                              ? "Modifica tutte le informazioni del servizio"
+                              : "Inserisci un nuovo servizio inserendo tutte le informazioni.",
+                          style: const TextStyle(fontSize: 18),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        CustomTextField(
+                          controller: nomeController,
+                          label: "Nome servizio",
+                          validator: "Inserisci il campo nome",
+                        ),
+                        CustomTextField(
+                          controller: emailController,
+                          label: "Email referente",
+                          validator: "Inserisci il campo email",
+                        ),
+                        CustomTextField(
+                          controller: telefonoController,
+                          label: "Telefono referente",
+                          validator: "Inserisci il campo telefono",
+                        ),
+                        CustomTextField(
+                          controller: sitoWebController,
+                          label: "Sito WEB",
+                          validator: "Inserisci il campo sito WEB",
+                        ),
+                        CustomTextField(
+                          controller: contenutoController,
+                          label: "Descrizione servizio",
+                          validator: "Inserisci il campo sito WEB",
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const Text(
+                          "Scegli l'aree di riferimento di cui il servizio fa parte e i tag per facilitare la ricerca",
+                          style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.center,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        CustomDropDown(
+                          values: itemsStrutture,
+                          name: 'Seleziona struttura',
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Seleziona una struttura';
                             }
                           },
-                          controller: nomeController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Nome',
-                          ),
+                          onChanged: (servizio == null ||
+                                  Servizio.canEnteEdit(servizio!.stato))
+                              ? (value) {
+                                  //Do something when changing the item if you want.
+                                }
+                              : null,
+                          onSaved: (value) {
+                            strutturaValue = value.toString();
+                          },
+                          value: strutturaValue,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
-                          enabled: (servizio == null ||
-                              Servizio.canEnteEdit(servizio!.stato)),
-                          validator: (v) {},
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'E-mail',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
-                          enabled: (servizio == null ||
-                              Servizio.canEnteEdit(servizio!.stato)),
-                          validator: (v) {},
-                          controller: telefonoController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Telefono',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
-                          enabled: (servizio == null ||
-                              Servizio.canEnteEdit(servizio!.stato)),
-                          validator: (v) {},
-                          controller: sitoWebController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Sito Web',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(left: 50, right: 50),
-                        child: TextFormField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          enabled: (servizio == null ||
-                              Servizio.canEnteEdit(servizio!.stato)),
-                          validator: (v) {},
-                          controller: contenutoController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Descrizione',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(left: 50, right: 50),
-                          child: CustomDropDown(
-                            values: itemsStrutture,
-                            name: 'Seleziona struttura',
-                            validator: (value) {
-                              if (value == null) {
-                                return 'Seleziona una struttura';
-                              }
-                            },
-                            onChanged: (servizio == null ||
-                                Servizio.canEnteEdit(servizio!.stato))
-                                ? (value) {
-                              //Do something when changing the item if you want.
-                            }
-                                : null,
-                            onSaved: (value) {
-                              strutturaValue = value.toString();
-                            },
-                            value: strutturaValue,
-
-                          )),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(left: 50, right: 50),
+                        Container(
+                          margin: const EdgeInsets.all(10),
                           child: DropdownButtonFormField2<String>(
                             value: areeValues.isEmpty ? null : areeValues.last,
                             decoration: InputDecoration(
@@ -365,7 +333,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                               isDense: true,
                               contentPadding: EdgeInsets.zero,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(4),
+                                borderRadius: BorderRadius.circular(20),
                               ),
                               //Add more decoration as you want here
                               //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
@@ -384,7 +352,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                             buttonPadding:
                                 const EdgeInsets.only(left: 20, right: 10),
                             dropdownDecoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             items: itemsAree,
                             validator: (value) {
@@ -427,159 +395,181 @@ class _GestioneServizio extends State<GestioneServizio> {
                                 },
                               ).toList();
                             },
-                          )),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      TextFieldTags(
-                          textfieldTagsController: tagController,
-                          initialTags: [],
-                          textSeparators: const [' ', ','],
-                          inputfieldBuilder: (context, tec, fn, error,
-                              onChanged, onSubmitted) {
-                            return ((context, sc, tags, onTagDelete) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 50, right: 50),
-                                child: TextField(
-                                  enabled: servizio == null ||
-                                      Servizio.canEnteEdit(servizio!.stato),
-                                  controller: tec,
-                                  focusNode: fn,
-                                  decoration: InputDecoration(
-                                    isDense: true,
-                                    border: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.logoBlue,
-                                        width: 3.0,
+                          ),
+                        ),
+                        TextFieldTags(
+                            textfieldTagsController: tagController,
+                            initialTags: [],
+                            textSeparators: const [' ', ','],
+                            inputfieldBuilder: (context, tec, fn, error,
+                                onChanged, onSubmitted) {
+                              return ((context, sc, tags, onTagDelete) {
+                                return Container(
+                                  margin: const EdgeInsets.all(10),
+                                  child: TextField(
+                                    enabled: servizio == null ||
+                                        Servizio.canEnteEdit(servizio!.stato),
+                                    controller: tec,
+                                    focusNode: fn,
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      border: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: AppColors.logoBlue,
+                                          width: 3.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
                                       ),
-                                    ),
-                                    focusedBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: AppColors.logoBlue,
-                                        width: 3.0,
+                                      focusedBorder: const OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: AppColors.logoBlue,
+                                          width: 3.0,
+                                        ),
                                       ),
-                                    ),
-                                    helperStyle: const TextStyle(
-                                        color: AppColors.logoBlue),
-                                    hintText: tagController.hasTags
-                                        ? ''
-                                        : "Tag di ricerca...",
-                                    errorText: error,
-                                    prefixIconConstraints: BoxConstraints(
-                                        maxWidth: _distanceToField * 0.74),
-                                    prefixIcon: tags.isNotEmpty
-                                        ? SingleChildScrollView(
-                                            controller: sc,
-                                            scrollDirection: Axis.horizontal,
-                                            child: Row(
-                                                children:
-                                                    tags.map((String tag) {
-                                              return Container(
-                                                decoration: const BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(15.0),
-                                                  ),
-                                                  color: AppColors.logoBlue,
-                                                ),
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5.0),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 10.0,
-                                                        vertical: 5.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    InkWell(
-                                                      child: Text(
-                                                        '$tag',
-                                                        style: const TextStyle(
-                                                            color:
-                                                                Colors.white),
-                                                      ),
-                                                      onTap: () {
-                                                        //print("$tag selected");
-                                                      },
+                                      helperStyle: const TextStyle(
+                                          color: AppColors.logoBlue),
+                                      hintText: tagController.hasTags
+                                          ? ''
+                                          : "Tag di ricerca...",
+                                      errorText: error,
+                                      prefixIconConstraints: BoxConstraints(
+                                          maxWidth: _distanceToField * 0.60),
+                                      prefixIcon: tags.isNotEmpty
+                                          ? SingleChildScrollView(
+                                              controller: sc,
+                                              scrollDirection: Axis.horizontal,
+                                              child: Row(
+                                                  children:
+                                                      tags.map((String tag) {
+                                                return Container(
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(15.0),
                                                     ),
-                                                    const SizedBox(width: 4.0),
-                                                    InkWell(
-                                                      child: const Icon(
-                                                        Icons.cancel,
-                                                        size: 14.0,
-                                                        color: Color.fromARGB(
-                                                            255, 233, 233, 233),
+                                                    color: AppColors.logoBlue,
+                                                  ),
+                                                  margin: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 5.0),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10.0,
+                                                      vertical: 5.0),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      InkWell(
+                                                        child: Text(
+                                                          '$tag',
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                        ),
+                                                        onTap: () {
+                                                          //print("$tag selected");
+                                                        },
                                                       ),
-                                                      onTap: () {
-                                                        onTagDelete(tag);
-                                                      },
-                                                    )
-                                                  ],
-                                                ),
-                                              );
-                                            }).toList()),
-                                          )
-                                        : null,
+                                                      const SizedBox(
+                                                          width: 4.0),
+                                                      InkWell(
+                                                        child: const Icon(
+                                                          Icons.cancel,
+                                                          size: 14.0,
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              233,
+                                                              233,
+                                                              233),
+                                                        ),
+                                                        onTap: () {
+                                                          onTagDelete(tag);
+                                                        },
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              }).toList()),
+                                            )
+                                          : null,
+                                    ),
+                                    //onChanged: onChanged,
+                                    // onSubmitted: onSubmitted,
                                   ),
-                                  //onChanged: onChanged,
-                                  // onSubmitted: onSubmitted,
+                                );
+                              });
+                            }),
+                        Container(
+                            margin: const EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                CustomButton(
+                                  bgColor: AppColors.logoBlue,
+                                  onPressed: () => (servizio == null ||
+                                          Servizio.canEnteEdit(servizio!.stato))
+                                      ? _pickIcon
+                                      : null,
+                                  textButton: 'Seleziona l\'icona',
+                                  icon: Icons.insert_emoticon_rounded,
                                 ),
-                              );
-                            });
-                          }),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(left: 50, right: 50),
-                          child: Row(
-                            children: [
-                              ElevatedButton(
-                                onPressed:(servizio == null ||
-                                    Servizio.canEnteEdit(servizio!.stato))
-
-                                    ? _pickIcon
-                                    : null,
-                                child: const Text('Seleziona l\'icona'),
+                                const SizedBox(width: 10),
+                                AnimatedSwitcher(
+                                  duration: const Duration(milliseconds: 300),
+                                  child: _icon ?? Container(),
+                                ),
+                                if (_icon != null)
+                                  IconButton(
+                                      onPressed: (servizio == null ||
+                                              Servizio.canEnteEdit(
+                                                  servizio!.stato))
+                                          ? _removeIcon
+                                          : null,
+                                      icon: const Icon(
+                                        Icons.clear,
+                                        color: Colors.red,
+                                      ))
+                              ],
+                            )),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        (servizio != null && servizio!.note != null)
+                            ? TextField(
+                                enabled: false,
+                                controller: noteController,
+                                maxLines: null,
+                                keyboardType: TextInputType.multiline,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  labelText: 'Note admin',
+                                ))
+                            : const SizedBox(
+                                height: 0,
                               ),
-                              const SizedBox(width: 30),
-                              AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 300),
-                                child: _icon ?? Container(),
-                              ),
-                              if (_icon != null)
-                                IconButton(
-                                    onPressed:(servizio == null ||
-                                        Servizio.canEnteEdit(servizio!.stato))
-                                        ? _removeIcon
-                                        : null,
-                                    icon: const Icon(
-                                      Icons.clear,
-                                      color: Colors.red,
-                                    ))
-                            ],
-                          )),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      (servizio != null && servizio!.note != null)
-                          ? TextField(
-                              enabled: false,
-                              controller: noteController,
-                              maxLines: null,
-                              keyboardType: TextInputType.multiline,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Note admin',
-                              ))
-                          : const SizedBox(
-                              height: 0,
-                            ),
-                    ],
+                        CustomButton(
+                          onPressed: () => !loaded ||
+                                  (servizio != null &&
+                                      !Servizio.canEnteEdit(servizio!.stato))
+                              ? null
+                              : savePage,
+                          fullWidth: true,
+                          textButton: nomeController.text != ""
+                              ? "APPLICA MODIFICHE"
+                              : "SALVA INFORMAZIONI",
+                          icon: nomeController.text != ""
+                              ? Icons.mode
+                              : Icons.save,
+                        )
+                      ],
+                    ),
                   )));
 
               children.add(SingleChildScrollView(

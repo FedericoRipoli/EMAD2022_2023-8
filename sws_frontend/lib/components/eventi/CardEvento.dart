@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import '../../theme/theme.dart';
-import 'package:photo_view/photo_view.dart';
-import '../generali/ChipGenerale.dart';
-import 'package:frontend_sws/components/generali/CustomButton.dart';
 
 class CardEvento extends StatelessWidget {
-  final String luogo, data, imgPath, nome;
-  const CardEvento(
-      {Key? key,
-      required this.luogo,
-      required this.data,
-      required this.imgPath,
-      required this.nome})
-      : super(key: key);
+  final String luogo, nomeEvento, idEvento;
+  final String? contenuto, imgPath, dataInizio, dataFine;
+
+  const CardEvento({
+    Key? key,
+    required this.luogo,
+    required this.nomeEvento,
+    required this.idEvento,
+    this.contenuto,
+    this.dataInizio,
+    this.dataFine,
+    this.imgPath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class CardEvento extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      nome,
+                      nomeEvento,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.black,
@@ -78,22 +80,8 @@ class CardEvento extends StatelessWidget {
                           color: AppColors.logoCadmiumOrange,
                         ),
                         Text(
-                          data,
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.access_time,
-                          size: 16,
-                          color: AppColors.logoCadmiumOrange,
-                        ),
-                        Text(
-                          data,
-                          style: const TextStyle(fontSize: 14),
+                          " DAL $dataInizio AL $dataFine",
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ],
                     ),

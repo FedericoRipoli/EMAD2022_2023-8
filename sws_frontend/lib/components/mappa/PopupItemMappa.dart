@@ -24,6 +24,9 @@ class PopupItemMappa extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: InkWell(
           splashColor: Colors.blue.withAlpha(30),
           onTap: onTap,
@@ -32,9 +35,16 @@ class PopupItemMappa extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ListTile(
-                  leading: Icon(customIcon ?? Icons.account_balance_outlined),
+                  leading: Icon(
+                    customIcon ?? Icons.account_balance_outlined,
+                    color: AppColors.logoCadmiumOrange,
+                  ),
                   title: Text(nome),
                   subtitle: Text(struttura),
+                  trailing: const Icon(
+                    Icons.info_outline_rounded,
+                    color: AppColors.logoCadmiumOrange,
+                  ),
                 ),
               )
             ],

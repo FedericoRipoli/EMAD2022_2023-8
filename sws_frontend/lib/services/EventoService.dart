@@ -1,13 +1,10 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:logging/logging.dart';
-
 import '../util/QueryStringUtil.dart';
 import 'RestURL.dart';
 import 'UserService.dart';
 import 'dto/ListResponse.dart';
-import 'dto/PuntoMappaDTO.dart';
-
 import 'entity/Evento.dart';
 
 class EventoService {
@@ -57,7 +54,7 @@ class EventoService {
     return null;
   }
 
-  Future<bool> deleteEventoo(String id) async {
+  Future<bool> deleteEvento(String id) async {
     String? token = await userService.getUser();
     try {
       var response = await http.delete(

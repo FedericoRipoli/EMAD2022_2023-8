@@ -1,6 +1,6 @@
-
 class RestURL {
-  static String baseURL = "http://192.168.178.21:8080/api/";
+  //static String baseURL = "http://192.168.178.21:8080/api/";
+  static String baseURL = "http://localhost:8080/api/";
   //Login
   //static String baseURL = "https://emadsalerno-emadsalerno.azuremicroservices.io/api/";
   static Uri login = Uri.parse("${baseURL}auth/login");

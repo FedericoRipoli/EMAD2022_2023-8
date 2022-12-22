@@ -124,7 +124,7 @@ class _MapTabState extends State<MapTab> {
                       return Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: AppColors.logoBlue),
+                            color: AppColors.logoCadmiumOrange),
                         child: Center(
                           child: Text(
                             markers.length.toString(),
