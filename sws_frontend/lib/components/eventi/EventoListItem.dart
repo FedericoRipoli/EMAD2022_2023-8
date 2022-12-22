@@ -10,14 +10,14 @@ class EventoListItem extends StatelessWidget {
   final String name, id;
   final VoidCallback onTap;
   final VoidCallback? onDelete;
-  final String statoOperazione;
+  final String? statoOperazione;
   const EventoListItem(
       {Key? key,
       required this.name,
       required this.id,
       required this.onTap,
       this.onDelete,
-      required this.statoOperazione})
+      this.statoOperazione})
       : super(key: key);
 
   @override

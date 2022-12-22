@@ -119,7 +119,7 @@ class _ListaEventiState extends State<ListaEventi> {
                       itemBuilder: (context, item, index) => EventoListItem(
                             name: item.nome,
                             id: item.id!,
-                            statoOperazione: item.stato!,
+                            //statoOperazione: item.stato!,
                             onTap: () => {
                               Navigator.push(
                                   context,

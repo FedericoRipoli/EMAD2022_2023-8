@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/services/EventoService.dart';
 
+import '../../components/generali/CustomAppBar.dart';
+import '../../components/menu/DrawerMenu.dart';
 import '../../services/entity/Evento.dart';
+import '../../theme/theme.dart';
 
 class GestioneEvento extends StatefulWidget {
   String? idEvento;
@@ -38,7 +41,17 @@ class _GestioneEventoState extends State<GestioneEvento> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+        key: _scaffoldKeyAdmin,
+        resizeToAvoidBottomInset: false,
+        drawer: DrawerMenu(currentPage: GestioneEvento.id),
+        appBar: CustomAppBar(
+            title: const AppTitle(label: "Gestione Servizio"),
+            iconData: Icons.arrow_back,
+            onPressed: () => Navigator.pop(context)),
+        body: Center(
+          child: Text("Gestione Evento"),
+        ));
   }
 }
 
