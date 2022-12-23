@@ -105,9 +105,7 @@ class _GestioneEnte extends State<GestioneEnte> {
             future: initCall,
             builder: ((context, snapshot) {
               List<Widget> children = [];
-              if (!snapshot.hasData && !snapshot.hasError || !loaded) {
-                children.add(const AllPageLoadTransparent());
-              }
+
               List<Widget> columnChild = [];
               columnChild.add(Form(
                   key: _formGlobalKey,
@@ -228,6 +226,9 @@ class _GestioneEnte extends State<GestioneEnte> {
                   child: Column(
                 children: columnChild,
               )));
+              if (!snapshot.hasData && !snapshot.hasError || !loaded) {
+                children.add(const AllPageLoadTransparent());
+              }
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
                 child: Stack(
