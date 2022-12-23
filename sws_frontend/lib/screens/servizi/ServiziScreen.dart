@@ -102,6 +102,8 @@ class _ServiziScreenState extends State<ServiziScreen>
     if(widget.idAreaSelected!=null){
       filterArea=dropdownValueArea=widget.idAreaSelected;
       _pullRefresh();
+      initCallMap = loadMapView();
+      setState(() {});
     }
     return itemsAree;
   }
