@@ -153,7 +153,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               disabled: impostazioni == null,
               title: "Defibrillatori",
               icon: Icons.monitor_heart,
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ServiziScreen(idAreaSelected: impostazioni?.idArea,)),
+                );
+              },
             ),
           ],
         ),

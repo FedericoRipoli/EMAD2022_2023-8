@@ -21,8 +21,8 @@ import 'MapTab.dart';
 class ServiziScreen extends StatefulWidget {
   bool isFilterOpen = true;
   TextEditingController filtroNomeController = TextEditingController();
-
-  ServiziScreen({Key? key}) : super(key: key);
+  String? idAreaSelected;
+  ServiziScreen({Key? key, this.idAreaSelected}) : super(key: key);
 
   @override
   State<ServiziScreen> createState() => _ServiziScreenState();
@@ -77,8 +77,9 @@ class _ServiziScreenState extends State<ServiziScreen>
           name: value.denominazione,
         );
       }).toList());
-      dropdownValueEnti = listEnti!.first.id;
+      //dropdownValueEnti = listEnti!.first.id;
     }
+
     return itemsEnti;
   }
 
@@ -96,7 +97,11 @@ class _ServiziScreenState extends State<ServiziScreen>
           name: value.nome,
         );
       }).toList());
-      dropdownValueArea = listAree!.first.id;
+      //dropdownValueArea = listAree!.first.id;
+    }
+    if(widget.idAreaSelected!=null){
+      filterArea=dropdownValueArea=widget.idAreaSelected;
+      _pullRefresh();
     }
     return itemsAree;
   }
@@ -231,7 +236,8 @@ class _ServiziScreenState extends State<ServiziScreen>
                             name: "Seleziona Area",
                             positionType: GenericFilterPositionType.row,
                             valueChange: _filterAreaChange, //TODO
-                            values: itemsAree),
+                            values: itemsAree,
+                            defaultValue: dropdownValueArea),
                         DropDownTextFilter(
                             name: "Seleziona Ente",
                             positionType: GenericFilterPositionType.row,
