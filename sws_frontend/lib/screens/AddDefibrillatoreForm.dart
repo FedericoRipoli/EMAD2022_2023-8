@@ -142,7 +142,7 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
                               ),
                               CustomTextField(
                                 controller: indirizzoController,
-                                label: "Indirizzo",
+                                label: "Indirizzo completo (via, città, provincia, cap)",
                                 validator: "Inserisci il campo indirizzo",
                               ),
                               const Divider(
