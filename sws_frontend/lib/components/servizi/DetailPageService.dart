@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
@@ -235,6 +237,24 @@ class _DetailPageServiceState extends State<DetailPageService> {
                         ),
                         const SizedBox(
                           height: 20,
+                        ),
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        widget.servizio.immagine!=null?
+                            Padding(padding: const EdgeInsets.all(10),child: Image.memory(base64Decode(widget.servizio.immagine!.imageData)),)
+
+                            : const Text("Nessuna immagine",
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15,
+                              letterSpacing: 0,
+                              color: Colors.black,
+                            )
+                        ),
+                        const Divider(
+                          thickness: 2,
                         ),
                         Row(
                           children: [
