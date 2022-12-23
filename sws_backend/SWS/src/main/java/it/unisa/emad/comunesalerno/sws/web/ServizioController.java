@@ -2,14 +2,8 @@ package it.unisa.emad.comunesalerno.sws.web;
 
 import it.unisa.emad.comunesalerno.sws.dto.PuntoMappaDTO;
 import it.unisa.emad.comunesalerno.sws.dto.ServizioMappaDTO;
-import it.unisa.emad.comunesalerno.sws.entity.Servizio;
-import it.unisa.emad.comunesalerno.sws.entity.StatoOperazione;
-import it.unisa.emad.comunesalerno.sws.entity.Struttura;
-import it.unisa.emad.comunesalerno.sws.entity.Utente;
-import it.unisa.emad.comunesalerno.sws.repository.AreaRepository;
-import it.unisa.emad.comunesalerno.sws.repository.EnteRepository;
-import it.unisa.emad.comunesalerno.sws.repository.ServizioRepository;
-import it.unisa.emad.comunesalerno.sws.repository.StrutturaRepository;
+import it.unisa.emad.comunesalerno.sws.entity.*;
+import it.unisa.emad.comunesalerno.sws.repository.*;
 import it.unisa.emad.comunesalerno.sws.repository.search.specification.ServizioSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,15 +14,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping
 public class ServizioController {
 
+    @Autowired
+    ImpostazioniRepository impostazioniRepository;
     @Autowired
     ServizioRepository servizioRepository;
     @Autowired
@@ -51,7 +44,22 @@ public class ServizioController {
         servizioRepository.save(servizio);
         return ResponseEntity.ok(servizio);
     }
-
+    @PostMapping("/api/defibrillatori")
+    public ResponseEntity createDefibrillatore(@RequestBody Servizio servizio) {
+        if(servizioRepository.existsAllByStatoEqualsAndContatto_EmailEquals(StatoOperazione.DA_APPROVARE,servizio.getContatto().getEmail())){
+            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+        }
+        Impostazioni impostazioni=impostazioniRepository.findAll().stream().findFirst().orElseThrow();
+        servizio.setNome(impostazioni.getNomeServizio());
+        servizio.setCustomIcon(impostazioni.getIcon());
+        servizio.setStato(StatoOperazione.DA_APPROVARE);
+        Area area=areeRepository.findById(impostazioni.getIdArea()).orElseThrow();
+        Ente ente=enteRepository.findById(impostazioni.getIdEnte()).orElseThrow();
+        servizio.setAree(Arrays.asList(area));
+        servizio.getStruttura().setEnte(ente);
+        servizioRepository.save(servizio);
+        return ResponseEntity.ok(servizio);
+    }
     @GetMapping("/api/servizi")
     public ResponseEntity listServizi(@AuthenticationPrincipal Utente user,
                                       @RequestParam(value = "name", required = false) String name,

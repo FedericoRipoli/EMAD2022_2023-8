@@ -1,14 +1,26 @@
+import 'dart:convert';
+import 'package:path/path.dart' as p;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/generali/CustomAppBar.dart';
 import 'package:frontend_sws/components/generali/CustomTextField.dart';
 import 'package:frontend_sws/components/mappa/MapPicker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:mime/mime.dart';
 import 'dart:io';
 import '../components/generali/CustomButton.dart';
 import '../components/loading/AllPageLoad.dart';
 import '../services/ImpostazioniService.dart';
+import '../services/ServizioService.dart';
+import '../services/entity/Contatto.dart';
+import '../services/entity/ImageData.dart';
 import '../services/entity/Impostazioni.dart';
+import '../services/entity/Posizione.dart';
+import '../services/entity/Servizio.dart';
+import '../services/entity/Struttura.dart';
 import '../theme/theme.dart';
+import '../util/ToastUtil.dart';
 
 // nome cognome -> struttura con posizione
 //
@@ -28,11 +40,17 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
   TextEditingController descrizioneController = TextEditingController();
   TextEditingController indirizzoController = TextEditingController();
   final _formGlobalKey = GlobalKey<FormState>();
-  File? imageFile;
+  PickedFile? imageFile;
   bool acceptPolicy = false;
   bool loaded = false;
   Impostazioni? impostazioni;
+  ServizioService servizioService = ServizioService();
   ImpostazioniService impostazioniService = ImpostazioniService();
+  LatLng? posizione;
+
+  bool errorImmagine = false;
+  bool errorPolicy = false;
+  bool errorPosizione = false;
 
   @override
   void initState() {
@@ -174,7 +192,14 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
                               const SizedBox(
                                 height: 10,
                               ),
-                              MapPicker(),
+                              MapPicker(
+                                mapValueChanged: (value) => posizione = value,
+                              ),
+                              errorPosizione
+                                  ? const Text(
+                                      "Devi selezionare una posizione sulla mappa!",
+                                      style: TextStyle(color: Colors.red))
+                                  : Container(),
                               // immagine
                               const SizedBox(
                                 height: 16,
@@ -210,12 +235,18 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
                               ),
                               Container(
                                 child: imageFile != null
-                                    ? Image.file(imageFile!)
+                                    ? (kIsWeb
+                                        ? Image.network(imageFile!.path)
+                                        : Image.file(File(imageFile!.path)))
                                     : const Text(
                                         "Nessuna immagine selezionata",
                                         textAlign: TextAlign.center,
                                       ),
                               ),
+                              errorImmagine
+                                  ? const Text("Devi inserire una foto!",
+                                      style: TextStyle(color: Colors.red))
+                                  : Container(),
                               const SizedBox(
                                 height: 16,
                               ),
@@ -258,6 +289,11 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
                                 selectedTileColor: AppColors.white,
                                 activeColor: AppColors.logoCadmiumOrange,
                               ),
+                              errorPolicy
+                                  ? const Text(
+                                      "Devi accettare la Privacy Policy!",
+                                      style: TextStyle(color: Colors.red))
+                                  : Container(),
                               const Divider(
                                 thickness: 1,
                               ),
@@ -278,8 +314,64 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
             ));
   }
 
-  void savePage() {
-    if (_formGlobalKey.currentState!.validate()) {}
+  void savePage() async {
+    loaded = true;
+    setState(() {});
+    bool val = validateNoFormField();
+    setState(() {});
+    if (_formGlobalKey.currentState!.validate() && val) {
+      Servizio defibrillatore = Servizio(
+          nome: "nome",
+          contatto: Contatto(
+              telefono: telefonoController.text, email: emailController.text),
+          contenuto: descrizioneController.text,
+          struttura: Struttura(
+            denominazione: nomeCognomeController.text,
+            posizione: Posizione(
+              indirizzo: indirizzoController.text,
+              latitudine: posizione!.latitude.toString(),
+              longitudine: posizione!.longitude.toString(),
+            ),
+          ),
+          immagine: ImageData(
+              imageData: base64Encode(await imageFile!.readAsBytes()),
+              type: lookupMimeType(imageFile!.path) != null
+                  ? lookupMimeType(imageFile!.path)!
+                  : "image",
+              nome: p.basename(imageFile!.path)));
+      Servizio? s;
+      try {
+        s = await servizioService.createDefibrillatore(defibrillatore);
+      } catch (e) {
+        if (mounted) {}
+
+        Navigator.of(context).pop();
+        ToastUtil.error(e.toString(), context);
+        return;
+      }
+      if (mounted) {}
+      if (s == null) {
+        ToastUtil.error("Errore server", context);
+      } else {
+        Navigator.of(context).pop();
+        ToastUtil.success("Defibrillatore inviato per la verifica", context);
+      }
+    }
+  }
+
+  bool validateNoFormField() {
+    bool ret = false;
+    errorImmagine = errorPolicy = errorPosizione = false;
+    if (imageFile == null) {
+      ret = errorImmagine = true;
+    }
+    if (!acceptPolicy) {
+      ret = errorPolicy = true;
+    }
+    if (posizione == null) {
+      ret = errorPosizione = true;
+    }
+    return !ret;
   }
 
   _onAccept(bool? value) {
@@ -288,26 +380,22 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
     });
   }
 
-  Future _getFromGallery() async {
+  Future _getImage(ImageSource source) async {
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      final image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => imageFile = imageTemp);
+      setState(() => imageFile = PickedFile(image.path));
     } catch (e) {
       print('Errore inserimento immagine: $e');
     }
   }
 
+  Future _getFromGallery() async {
+    _getImage(ImageSource.gallery);
+  }
+
   /// Get from Camera
   Future _getFromCamera() async {
-    try {
-      final image = await ImagePicker().pickImage(source: ImageSource.camera);
-      if (image == null) return;
-      final imageTemp = File(image.path);
-      setState(() => imageFile = imageTemp);
-    } catch (e) {
-      print('Errore inserimento immagine: $e');
-    }
+    _getImage(ImageSource.camera);
   }
 }

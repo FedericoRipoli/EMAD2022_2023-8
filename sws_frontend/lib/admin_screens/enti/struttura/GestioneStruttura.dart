@@ -161,11 +161,7 @@ class _GestioneStruttura extends State<GestioneStruttura> {
                           label: "Indirizzo struttura",
                           validator: "Inserisci indirizzo struttura",
                         ),
-                        CustomTextField(
-                          controller: indirizzoController,
-                          label: "Indirizzo struttura",
-                          validator: "Inserisci indirizzo struttura",
-                        ),
+
                         CustomTextField(
                           controller: latitudineController,
                           label: "Latitudine",

@@ -1,6 +1,6 @@
 
 class RestURL {
-  static String baseURL = "http://192.168.178.21:8080/api/";
+  static String baseURL = "http://localhost:8080/api/";
   //Login
   //static String baseURL = "https://emadsalerno-emadsalerno.azuremicroservices.io/api/";
   static Uri login = Uri.parse("${baseURL}auth/login");
@@ -14,11 +14,12 @@ class RestURL {
   static String struttureService = "${baseURL}strutture";
   static String struttureEnteService = "${baseURL}struttureente";
   static String servizioService = "${baseURL}servizi";
+  static String defibrillatoriService = "${baseURL}defibrillatori";
   static String editStatoServizioService = "${baseURL}statoservizio";
   static String eventoService = "${baseURL}eventi";
   static String impostazioniService = "${baseURL}impostazioni";
 
-  static Uri OliviaService = Uri.parse("ws://192.168.178.21:8081/websocket");
+  static Uri oliviaService = Uri.parse("ws://192.168.178.21:8081/websocket");
 
   static String pageabelContent = "content";
   static String queryRemovePagination = "paging=false";

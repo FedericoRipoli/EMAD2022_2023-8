@@ -1,5 +1,6 @@
 package it.unisa.emad.comunesalerno.sws.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import it.unisa.emad.comunesalerno.sws.utility.ImageUtil;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

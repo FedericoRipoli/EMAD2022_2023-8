@@ -16,6 +16,7 @@ public class Impostazioni {
     @Column(name = "id", nullable = false)
     private String id;
 
+    private String nomeServizio;
     private String idEnte;
     private String idArea;
     private String icon;

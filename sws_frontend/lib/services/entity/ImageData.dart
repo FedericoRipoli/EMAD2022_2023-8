@@ -10,13 +10,13 @@ String imageDataToJson(ImageData data) => json.encode(data.toJson());
 
 class ImageData {
   ImageData({
-    required this.id,
+    this.id,
     required this.imageData,
     required this.nome,
     required this.type,
   });
 
-  String id;
+  String? id;
   String imageData;
   String nome;
   String type;

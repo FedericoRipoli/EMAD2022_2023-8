@@ -1,5 +1,6 @@
 package it.unisa.emad.comunesalerno.sws.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class Servizio {
     private Contatto contatto;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ImageData immagine;
 
     @Enumerated(EnumType.STRING)
@@ -45,7 +47,7 @@ public class Servizio {
     @ManyToMany
     private List<Area> aree;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Struttura struttura;
 
     private String customIcon;

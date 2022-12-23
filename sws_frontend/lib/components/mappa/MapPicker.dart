@@ -7,7 +7,8 @@ import 'package:latlong2/latlong.dart';
 import '../loading/AllPageLoad.dart';
 
 class MapPicker extends StatefulWidget {
-  MapPicker({Key? key}) : super(key: key);
+  final ValueChanged<LatLng?> mapValueChanged;
+  const MapPicker({Key? key,required this.mapValueChanged}) : super(key: key);
 
   @override
   _MapPicker createState() {
@@ -71,7 +72,10 @@ class _MapPicker extends State<MapPicker> {
           color: Colors.red,
           size: 32,
         ));
+    widget.mapValueChanged!(centerPosition);
+
     loaded=true;
+
     setState(() {
 
     });
@@ -80,6 +84,8 @@ class _MapPicker extends State<MapPicker> {
   void initState() {
     super.initState();
     _determinePosition();
+    widget.mapValueChanged!(centerPosition);
+
   }
 
   // get user current location
@@ -99,8 +105,7 @@ class _MapPicker extends State<MapPicker> {
             maxZoom: 30.0,
             enableScrollWheel: true,
             scrollWheelVelocity: 0.005,
-            onTap: (tapPosition, point) => {
-              print(point.toString()),
+            onTap: (tapPosition, point)  {
               // salvare la posizione qui
               setState(() {
                 _locationMarker = Marker(
@@ -110,7 +115,8 @@ class _MapPicker extends State<MapPicker> {
                           color: Colors.red,
                           size: 32,
                         ));
-              })
+              });
+              widget.mapValueChanged!(point);
             },
           ),
           children: [

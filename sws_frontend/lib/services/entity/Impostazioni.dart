@@ -17,6 +17,7 @@ class Impostazioni {
     required this.idEnte,
     required this.idArea,
     required this.privacyPolicy,
+    required this.nomeServizio,
   });
 
   String? id;
@@ -24,6 +25,7 @@ class Impostazioni {
   String idEnte;
   String idArea;
   String privacyPolicy;
+  String nomeServizio;
 
   factory Impostazioni.fromJson(Map<String, dynamic> json) => Impostazioni(
     id: json["id"],
@@ -31,6 +33,7 @@ class Impostazioni {
     idEnte: json["idEnte"],
     idArea: json["idArea"],
     privacyPolicy: json["privacyPolicy"],
+    nomeServizio: json["nomeServizio"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -39,6 +42,7 @@ class Impostazioni {
     "idEnte": idEnte,
     "idArea": idArea,
     "privacyPolicy": privacyPolicy,
+    "nomeServizio": nomeServizio,
   };
   IconData getIconData(){
 

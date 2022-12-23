@@ -68,6 +68,7 @@ public class WebSecurity {
                         .antMatchers(HttpMethod.GET, "/api/servizi").permitAll()
                         .antMatchers(HttpMethod.GET, "/api/servizi/{id}").permitAll()
                         .antMatchers(HttpMethod.GET, "/api/impostazioni").permitAll()
+                        .antMatchers(HttpMethod.POST, "/api/defibrillatori").permitAll()
 
                         .anyRequest().authenticated()
                 )

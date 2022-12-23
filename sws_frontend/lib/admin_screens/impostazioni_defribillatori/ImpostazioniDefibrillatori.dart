@@ -5,6 +5,7 @@ import 'package:frontend_sws/services/AreeService.dart';
 import 'package:frontend_sws/services/entity/Area.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import '../../components/generali/CustomButton.dart';
+import '../../components/generali/CustomTextField.dart';
 import '../../components/generali/input/CustomDropDownText.dart';
 import '../../components/generali/input/CustomHtmlEditor.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
@@ -29,6 +30,8 @@ class ImpostazioniDefibrillatori extends StatefulWidget {
 }
 
 class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
+  TextEditingController nomeController = TextEditingController();
+
   late Future<bool> initCall;
   ImpostazioniService impostazioniService = ImpostazioniService();
 
@@ -100,6 +103,7 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
     if (impostazioni != null) {
       dropdownValueAree = impostazioni!.idArea;
       dropdownValueEnte = impostazioni!.idEnte;
+      nomeController.text = impostazioni!.nomeServizio;
       initialHtmlText = impostazioni!.privacyPolicy;
       _icon = Icon(impostazioni!.getIconData());
     }
@@ -129,6 +133,7 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
             icon: _icon!.icon!.codePoint.toString(),
             idEnte: dropdownValueEnte!,
             idArea: dropdownValueAree!,
+            nomeServizio: nomeController.text!,
             privacyPolicy: await htmlController.getText());
 
         nImpostazioni =
@@ -137,6 +142,7 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
         impostazioni!.icon = _icon!.icon!.codePoint.toString();
         impostazioni!.idEnte = dropdownValueEnte!;
         impostazioni!.idArea = dropdownValueAree!;
+        impostazioni!.nomeServizio =nomeController.text!;
         impostazioni!.privacyPolicy = await htmlController.getText();
 
         nImpostazioni =
@@ -194,6 +200,14 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
                         ),
                         const SizedBox(
                           height: 8,
+                        ),
+                        CustomTextField(
+                          controller: nomeController,
+                          label: "Nome servizio",
+                          validator: "Inserisci il campo nome servizio",
+                        ),
+                        const SizedBox(
+                          height: 6,
                         ),
                         const Text(
                           "Seleziona l'ente",

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:logging/logging.dart';
 
@@ -175,6 +176,26 @@ class ServizioService {
       }
     } catch (e) {
       log.severe(e);
+    }
+    return null;
+  }
+  Future<Servizio?> createDefibrillatore(Servizio servizio) async {
+    Response? response ;
+    try {
+      response = (await http.post(Uri.parse(RestURL.defibrillatoriService),
+          body: servizioToJson(servizio), headers: RestURL.defaultHeader));
+
+
+    } catch (e) {
+      log.severe(e);
+    }
+    if(response!=null) {
+      if (response.statusCode == 200) {
+        return servizioFromJson(utf8.decode(response.bodyBytes));
+      }
+      else if(response.statusCode==405){
+        throw Exception("L'ultimo defibrillatore inserito è ancora in validazione");
+      }
     }
     return null;
   }

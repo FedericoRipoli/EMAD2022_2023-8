@@ -68,7 +68,7 @@ class _ChatPageState extends State<ChatPage> {
 
   // Inizializzzione del WebSocket
   void _initWebSocket() {
-    _chatBotChannel = IOWebSocketChannel.connect(RestURL.OliviaService);
+    _chatBotChannel = IOWebSocketChannel.connect(RestURL.oliviaService);
     _chatBotChannel.stream.listen((message) {
       var input = jsonDecode(message);
       WebMessage response = WebMessage.fromJson(input);
