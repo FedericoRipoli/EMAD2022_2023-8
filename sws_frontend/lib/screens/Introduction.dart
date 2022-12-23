@@ -137,8 +137,14 @@ class Introduction extends StatelessWidget {
       bodyPadding: EdgeInsets.only(top: 8, left: 15, right: 15),
       titlePadding: EdgeInsets.only(top: 30),
       titleTextStyle: TextStyle(
-          color: AppColors.logoBlue, fontSize: 22, fontFamily: "Lexend"),
-      bodyTextStyle: TextStyle(color: Colors.black87, fontSize: 16),
+          color: AppColors.logoBlue,
+          fontSize: 22,
+          fontFamily: "Lexend",
+          fontWeight: FontWeight.bold),
+      bodyTextStyle: TextStyle(
+        color: Colors.black87,
+        fontSize: 16,
+      ),
     );
   }
 

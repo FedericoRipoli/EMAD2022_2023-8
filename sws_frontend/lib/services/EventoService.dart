@@ -1,20 +1,18 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:logging/logging.dart';
-
 import '../util/QueryStringUtil.dart';
 import 'RestURL.dart';
 import 'UserService.dart';
 import 'dto/ListResponse.dart';
-import 'dto/PuntoMappaDTO.dart';
-
 import 'entity/Evento.dart';
 
 class EventoService {
   final log = Logger('EventoServiceLogger');
   UserService userService = UserService();
 
-  Future<List<Evento>?> eventiList(String? nome, int page, bool logged) async {
+  Future<List<Evento>?> eventiList(String? nome, String? idArea, String? stato,
+      int page, bool logged) async {
     String? token;
     if (logged) {
       token = await userService.getUser();
@@ -25,6 +23,12 @@ class EventoService {
       queryStringUtil.addString("page=$page");
       if (nome != null) {
         queryStringUtil.add("name", nome);
+      }
+      if (idArea != null) {
+        queryStringUtil.add("idArea", idArea);
+      }
+      if (stato != null) {
+        queryStringUtil.add("stato", stato);
       }
 
       Uri u = Uri.parse(
@@ -57,7 +61,7 @@ class EventoService {
     return null;
   }
 
-  Future<bool> deleteEventoo(String id) async {
+  Future<bool> deleteEvento(String id) async {
     String? token = await userService.getUser();
     try {
       var response = await http.delete(
@@ -73,7 +77,7 @@ class EventoService {
     return false;
   }
 
-  Future<Evento?> editServizio(Evento evento) async {
+  Future<Evento?> editEvento(Evento evento) async {
     String? token = await userService.getUser();
     try {
       var response = await http.put(

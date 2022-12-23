@@ -7,6 +7,25 @@ Evento eventoFromJson(String str) => Evento.fromJson(json.decode(str));
 String eventoToJson(Evento data) => json.encode(data.toJson());
 
 class Evento {
+  static const String DA_APPROVARE = "DA_APPROVARE";
+  static const String APPROVATO = "APPROVATO";
+  static const String IN_MODIFICA = "IN_MODIFICA";
+  static const String DA_CANCELLARE = "DA_CANCELLARE";
+
+  static Map<String, String> getStatiList() {
+    Map<String, String> toRet = {
+      DA_APPROVARE: "Da approvare",
+      APPROVATO: "Approvato",
+      IN_MODIFICA: "In modifica",
+      DA_CANCELLARE: "Da cancellare",
+    };
+    return toRet;
+  }
+
+  static bool canEnteEdit(String? stato) {
+    return stato == null || stato == APPROVATO || stato == IN_MODIFICA;
+  }
+
   String? id;
   String nome;
   String? contenuto;

@@ -1,27 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:frontend_sws/components/generali/Splash.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 void main() {
   runApp(MaterialApp(
-      builder: (context, widget) => ResponsiveWrapper.builder(
-            ClampingScrollWrapper.builder(context, widget!),
-            maxWidth: 2100,
-            minWidth: 350,
-            defaultScale: true,
-            breakpoints: [
-              const ResponsiveBreakpoint.resize(350, name: MOBILE),
-              const ResponsiveBreakpoint.autoScale(600, name: TABLET),
-              const ResponsiveBreakpoint.resize(800, name: DESKTOP),
-              const ResponsiveBreakpoint.autoScale(1700, name: 'XL'),
-            ],
-          ),
-      debugShowCheckedModeBanner: false,
-      home: const Splash(),
-      theme: appTheme,
-      title: "Salerno Amica"));
+    builder: (context, widget) => ResponsiveWrapper.builder(
+      ClampingScrollWrapper.builder(context, widget!),
+      maxWidth: 2100,
+      minWidth: 350,
+      defaultScale: true,
+      breakpoints: [
+        const ResponsiveBreakpoint.resize(350, name: MOBILE),
+        const ResponsiveBreakpoint.autoScale(600, name: TABLET),
+        const ResponsiveBreakpoint.resize(800, name: DESKTOP),
+        const ResponsiveBreakpoint.autoScale(1700, name: 'XL'),
+      ],
+    ),
+    debugShowCheckedModeBanner: false,
+    home: const Splash(),
+    theme: appTheme,
+    title: "Salerno Amica",
+    localizationsDelegates: const [
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ],
+    supportedLocales: const [
+      Locale('de', 'DE'),
+      Locale('en', 'US'),
+      Locale('it', 'IT'),
+    ],
+    locale: const Locale('it'),
+  ));
 }
 
 ThemeData appTheme = ThemeData(
