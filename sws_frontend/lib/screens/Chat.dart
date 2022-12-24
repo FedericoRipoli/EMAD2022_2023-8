@@ -31,7 +31,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   late TtsManager _ttsManager;
   late IOWebSocketChannel _chatBotChannel;
-  SpeechToText _speechToText = SpeechToText();
+  final SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
 
@@ -40,8 +40,8 @@ class _ChatPageState extends State<ChatPage> {
     super.initState();
     _initSpeech();
     _initWebSocket();
-    _loadMessages();
-    _ttsManager = TtsManager();
+    //_loadMessages();
+    //_ttsManager = TtsManager();
     if (_messages.isEmpty) {
       _addMessage(types.TextMessage(
         author: _bot,
@@ -68,12 +68,18 @@ class _ChatPageState extends State<ChatPage> {
 
   // Inizializzzione del WebSocket
   void _initWebSocket() {
-    _chatBotChannel = IOWebSocketChannel.connect(RestURL.oliviaService);
-    _chatBotChannel.stream.listen((message) {
-      var input = jsonDecode(message);
-      WebMessage response = WebMessage.fromJson(input);
-      _sendMessage(response.content!, _bot);
-    });
+    try{
+      _chatBotChannel = IOWebSocketChannel.connect(RestURL.oliviaService);
+      _chatBotChannel.stream.listen((message) {
+        var input = jsonDecode(message);
+        WebMessage response = WebMessage.fromJson(input);
+        _sendMessage(response.content!, _bot);
+      });
+    }
+    catch(e){
+
+    }
+
   }
 
   /// Each time to start a speech recognition session
@@ -204,7 +210,8 @@ class _ChatPageState extends State<ChatPage> {
                   AppColors.logoBlue,
                   AppColors.grayPurple
                 ],
-                secondaryColor: AppColors.grayPurple),
+                secondaryColor: AppColors.grayPurple
+            ),
             bubbleBuilder: _bubbleBuilder,
             messages: _messages,
             l10n: const ChatL10nEn(
@@ -230,7 +237,6 @@ class _ChatPageState extends State<ChatPage> {
     required nextMessageInGroup,
   }) =>
       Bubble(
-        child: child,
         radius: Radius.circular(40),
         nipHeight: 40,
         nipWidth: 5,
@@ -246,5 +252,6 @@ class _ChatPageState extends State<ChatPage> {
             : _user.id != message.author.id
                 ? BubbleNip.leftBottom
                 : BubbleNip.rightBottom,
+        child: child,
       );
 }

@@ -14,6 +14,7 @@ import '../services/UserService.dart';
 import '../services/entity/Impostazioni.dart';
 import 'Chat.dart';
 import 'InfoScreen.dart';
+import 'OliviaChat.dart';
 import 'eventi/EventiScreen.dart';
 import 'servizi/ServiziScreen.dart';
 
@@ -96,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           if (mounted) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ChatPage()),
+              MaterialPageRoute(builder: (context) => const OliviaChat()),
             );
           }
         },
@@ -145,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ChatPage()),
+                  MaterialPageRoute(builder: (context) => const OliviaChat()),
                 );
               },
             ),
