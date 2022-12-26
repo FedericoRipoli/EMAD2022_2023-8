@@ -292,7 +292,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                         CustomTextField(
                           controller: contenutoController,
                           label: "Descrizione servizio",
-                          validator: "Inserisci il campo sito WEB",
+                          validator: "Inserisci il campo descrizione",
                         ),
                         const SizedBox(
                           height: 16,

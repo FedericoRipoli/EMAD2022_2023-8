@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/eventi/CardEvento.dart';
 import 'package:getwidget/components/appbar/gf_appbar.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:intl/intl.dart';
 import '../../components/filtri/DropDownFilter.dart';
 import '../../components/filtri/FilterBar.dart';
 import '../../components/filtri/GenericFilter.dart';
@@ -71,13 +72,17 @@ class _EventiScreenState extends State<EventiScreen>
       firstDate: DateTime(2022, 1, 1),
       lastDate: DateTime(2030, 12, 31),
       currentDate: DateTime.now(),
-      saveText: 'Salva scelta',
+      saveText: 'SALVA SCELTA',
     );
 
     if (result != null) {
-      print(result.start.toString());
+      String formattedStartDate = DateFormat('yyyy-MM-dd').format(result.start);
+      String formattedEndDate = DateFormat('yyyy-MM-dd').format(result.end);
+      DateTimeRange formattedResult = DateTimeRange(
+          start: DateTime.parse(formattedStartDate),
+          end: DateTime.parse(formattedEndDate));
       setState(() {
-        _selectedDateRange = result;
+        _selectedDateRange = formattedResult;
       });
     }
   }
@@ -167,6 +172,7 @@ class _EventiScreenState extends State<EventiScreen>
                                     ))
                               ],
                             )
+                          // DateFormat('yyyy-MM-dd').format(pickedDate)
                           : Text(
                               "Dal ${_selectedDateRange?.start.toString().split(' ')[0]} al ${_selectedDateRange?.end.toString().split(' ')[0]}",
                               style: const TextStyle(
@@ -212,7 +218,6 @@ class _EventiScreenState extends State<EventiScreen>
     );
   }
 
-  @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => throw UnimplementedError();
 }
