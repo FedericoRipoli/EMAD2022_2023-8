@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_sws/components/loading/AllPageLoadTransparent.dart';
-import 'package:frontend_sws/services/ServizioService.dart';
-import 'package:frontend_sws/services/entity/Servizio.dart';
 
-import '../components/generali/CustomAppBar.dart';
-import '../components/servizi/DetailPageService.dart';
-import '../theme/theme.dart';
+import '../../components/generali/CustomAppBar.dart';
+import '../../components/loading/AllPageLoadTransparent.dart';
+import '../../services/EventoService.dart';
+import '../../services/entity/Evento.dart';
+import '../../theme/theme.dart';
 
-class InfoServizio extends StatefulWidget {
-
-  String idServizio;
-
-  InfoServizio(this.idServizio, {super.key});
+class InfoEvento extends StatefulWidget {
+  final String idEvento;
+  const InfoEvento({Key? key, required this.idEvento}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _InfoServizioState();
-
+  State<InfoEvento> createState() => _InfoEventoState();
 }
 
-class _InfoServizioState extends State<InfoServizio>{
+class _InfoEventoState extends State<InfoEvento> {
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
   late Future<bool> initCall;
-  ServizioService servizioService = ServizioService();
-  Servizio? servizio;
+  EventoService eventoService = EventoService();
+  Evento? evento;
   bool loaded = false;
 
   @override
@@ -32,9 +28,9 @@ class _InfoServizioState extends State<InfoServizio>{
   }
 
   Future<bool> load() async {
-    servizio = await servizioService.getServizio(widget.idServizio);
+    evento = await eventoService.getEvento(widget.idEvento);
     setState(() {
-    loaded = true;
+      loaded = true;
     });
     return true;
   }
@@ -45,7 +41,9 @@ class _InfoServizioState extends State<InfoServizio>{
         key: _scaffoldKeyAdmin,
         resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(
-            title: const AppTitle(label: "Info Servizio",),
+            title: const AppTitle(
+              label: "Info Servizio",
+            ),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
         body: FutureBuilder<bool>(
@@ -56,10 +54,10 @@ class _InfoServizioState extends State<InfoServizio>{
               if (!snapshot.hasData && !snapshot.hasError || !loaded) {
                 children.add(const AllPageLoadTransparent());
               }
-              if(snapshot.hasData) {
-                children.add(
-                    DetailPageService(servizio: servizio!)
-                );
+              if (snapshot.hasData) {
+                children.add(Container(
+                  child: Text(evento!.nome),
+                ));
               }
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
@@ -69,5 +67,4 @@ class _InfoServizioState extends State<InfoServizio>{
               );
             })));
   }
-
 }

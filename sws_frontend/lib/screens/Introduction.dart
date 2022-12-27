@@ -26,7 +26,7 @@ class Introduction extends StatelessWidget {
             PageViewModel(
               title: "Cosa ti offre Salerno Amica?",
               body:
-                  "A portata di smartphone tutti i servizi gratuiti che il Comune di Salerno offre ai suoi cittadini. Cerca i"
+                  "A portata di smartphone tutti i servizi gratuiti che il Comune di Salerno offre ai suoi cittadini. Cerca i "
                   "servizi filtrando le informazioni che ti interessano o esplora la mappa interattiva",
               image: buildImage("svg/intro_explain.svg"),
               //getPageDecoration, a method to customise the page style
@@ -35,7 +35,7 @@ class Introduction extends StatelessWidget {
             PageViewModel(
               title: "Focus sull'accessibilità",
               body:
-                  "L'app pone particolare attenzione sull'accessibilità, l'obiettivo primario di Salerno Amica è"
+                  "L'app pone particolare attenzione sull'accessibilità, l'obiettivo primario di Salerno Amica è "
                   "rendere l'esperienza d'utilizzo semplice e intuitiva per tutti",
               image: buildImage("svg/intro_access.svg"),
               //getPageDecoration, a method to customise the page style

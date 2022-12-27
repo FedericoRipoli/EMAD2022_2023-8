@@ -207,11 +207,16 @@ class _EventiScreenState extends State<EventiScreen>
                 pagingController: _pagingController,
                 builderDelegate: PagedChildBuilderDelegate<Evento>(
                     itemBuilder: (context, item, index) => CardEvento(
-                          idEvento: item.id!,
-                          nomeEvento: item.nome,
-                          contenuto: item.contenuto,
-                          luogo: 'Salerno (SA)',
-                        )),
+                        idEvento: item.id!,
+                        nomeEvento: item.nome,
+                        contenuto: item.contenuto,
+                        luogo: 'Salerno (SA)',
+                        telefono: item.contatto?.telefono,
+                        email: item.contatto?.email,
+                        dataInizio: item.dataInizio,
+                        dataFine: item.dataFine,
+                        aree: item.aree,
+                        tags: item.hashtags)),
               ),
             )
           ])),
