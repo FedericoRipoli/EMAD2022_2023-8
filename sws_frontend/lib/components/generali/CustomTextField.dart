@@ -7,14 +7,15 @@ class CustomTextField extends StatelessWidget {
   final String? validator;
   final bool? isPassword;
   final VoidCallback? onTap;
-
+  final bool multiline;
   const CustomTextField(
       {Key? key,
       required this.controller,
       required this.label,
       this.validator,
       this.isPassword = false,
-      this.onTap})
+      this.onTap,
+      this.multiline=false})
       : super(key: key);
 
   @override
@@ -22,6 +23,7 @@ class CustomTextField extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       child: TextFormField(
+
         onTap: onTap ?? null,
         obscureText: isPassword ?? false,
         controller: controller,
@@ -37,6 +39,9 @@ class CustomTextField extends StatelessWidget {
           ),
           labelText: label,
         ),
+
+        keyboardType: multiline? TextInputType.multiline : TextInputType.text ,
+        maxLines: null,
       ),
     );
   }

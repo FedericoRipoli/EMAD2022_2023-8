@@ -271,6 +271,7 @@ class _GestioneEventoState extends State<GestioneEvento> {
                         controller: contenutoController,
                         label: "Descrizione evento",
                         validator: "Inserisci il campo descrizione",
+                        multiline:true
                       ),
                       CustomTextField(
                         controller: dataInizioController,

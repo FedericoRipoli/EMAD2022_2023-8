@@ -293,6 +293,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                           controller: contenutoController,
                           label: "Descrizione servizio",
                           validator: "Inserisci il campo descrizione",
+                          multiline: true,
                         ),
                         const SizedBox(
                           height: 16,
