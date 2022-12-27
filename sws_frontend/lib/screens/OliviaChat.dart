@@ -13,6 +13,9 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:uuid/uuid.dart';
 
 import '../components/generali/CustomAppBar.dart';
+import '../services/ChatBotService.dart';
+import '../services/dto/OliviaReceiveMessage.dart';
+import '../services/dto/OliviaSendMessage.dart';
 import '../theme/theme.dart';
 import '../util/TtsManager.dart';
 
@@ -35,7 +38,15 @@ class _OliviaChatState extends State<OliviaChat> {
     firstName: 'Olivia',
   );
   bool isListen = false;
-
+  late ChatBotService chatBotService;
+  void onMessageReceive(OliviaReceiveMessage message){
+    if(message.content!=null) {
+      _sendMessage(message.content!, _bot);
+    } else {
+      _sendMessage("Errore", _bot);
+    }
+    removeTyping();
+  }
   void _initSpeech() async {
     await _speechToText.initialize();
     loaded=true;
@@ -45,7 +56,10 @@ class _OliviaChatState extends State<OliviaChat> {
   @override
   void initState() {
     super.initState();
-    _ttsManager = TtsManager();
+    _ttsManager = TtsManager(
+
+    );
+    chatBotService=ChatBotService(onMessageReceive);
     _addMessage(chattypes.TextMessage(
       author: _bot,
       createdAt: DateTime.now().millisecondsSinceEpoch,
@@ -181,9 +195,12 @@ class _OliviaChatState extends State<OliviaChat> {
     );
   }
 
+
+
   @override
   void dispose() {
     _ttsManager.stop();
+    chatBotService.close();
     super.dispose();
   }
 
@@ -212,6 +229,7 @@ class _OliviaChatState extends State<OliviaChat> {
 
     stopListen();
     addBotTyping();
+    chatBotService.send(OliviaSendMessage(content: message.text));
   }
 
   void _sendMessage(String message, chattypes.User sender) {
@@ -223,7 +241,6 @@ class _OliviaChatState extends State<OliviaChat> {
     );
 
     _addMessage(textMessage);
-    if (sender == _user) _chatBotResponse(message);
   }
 
   void _addMessage(chattypes.Message message) {
@@ -232,7 +249,7 @@ class _OliviaChatState extends State<OliviaChat> {
     });
   }
 
-  void _chatBotResponse(String text) {}
+
 
   Widget _bubbleBuilder(
     Widget child, {

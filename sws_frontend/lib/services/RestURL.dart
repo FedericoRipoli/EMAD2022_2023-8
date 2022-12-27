@@ -19,7 +19,7 @@ class RestURL {
   static String eventoService = "${baseURL}eventi";
   static String impostazioniService = "${baseURL}impostazioni";
 
-  static Uri oliviaService = Uri.parse("ws://192.168.178.21:8081/websocket");
+  static Uri oliviaService = Uri.parse("ws://localhost:8081/websocket");
 
   static String pageabelContent = "content";
   static String queryRemovePagination = "paging=false";
