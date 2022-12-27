@@ -113,6 +113,7 @@ class _ListaEventiState extends State<ListaEventi> {
               ]),
               Flexible(
                 child: PagedListView<int, Evento>(
+
                   shrinkWrap: false,
                   pagingController: _pagingController,
                   builderDelegate: PagedChildBuilderDelegate<Evento>(
