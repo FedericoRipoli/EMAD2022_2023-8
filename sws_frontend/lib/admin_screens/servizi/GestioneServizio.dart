@@ -273,27 +273,37 @@ class _GestioneServizio extends State<GestioneServizio> {
                           controller: nomeController,
                           label: "Nome servizio",
                           validator: "Inserisci il campo nome",
+                          enabled: (servizio == null ||
+                              Servizio.canEnteEdit(servizio!.stato)),
                         ),
                         CustomTextField(
                           controller: emailController,
                           label: "Email referente",
                           validator: "Inserisci il campo email",
+                          enabled: (servizio == null ||
+                              Servizio.canEnteEdit(servizio!.stato)),
                         ),
                         CustomTextField(
                           controller: telefonoController,
                           label: "Telefono referente",
                           validator: "Inserisci il campo telefono",
+                          enabled: (servizio == null ||
+                              Servizio.canEnteEdit(servizio!.stato)),
                         ),
                         CustomTextField(
                           controller: sitoWebController,
                           label: "Sito WEB",
                           validator: "Inserisci il campo sito WEB",
+                          enabled: (servizio == null ||
+                              Servizio.canEnteEdit(servizio!.stato)),
                         ),
                         CustomTextField(
                           controller: contenutoController,
                           label: "Descrizione servizio",
                           validator: "Inserisci il campo descrizione",
                           multiline: true,
+                          enabled: (servizio == null ||
+                              Servizio.canEnteEdit(servizio!.stato)),
                         ),
                         const SizedBox(
                           height: 16,
@@ -401,7 +411,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                         ),
                         TextFieldTags(
                             textfieldTagsController: tagController,
-                            initialTags: [],
+                            initialTags: ["servizio"],
                             textSeparators: const [' ', ','],
                             inputfieldBuilder: (context, tec, fn, error,
                                 onChanged, onSubmitted) {
@@ -500,26 +510,42 @@ class _GestioneServizio extends State<GestioneServizio> {
                                             )
                                           : null,
                                     ),
-                                    //onChanged: onChanged,
-                                    // onSubmitted: onSubmitted,
+                                    onChanged: onChanged,
+                                    onSubmitted: onSubmitted,
                                   ),
                                 );
                               });
                             }),
-                        Container(
-                            margin: const EdgeInsets.all(10),
+                        TextButton(
+                            onPressed: () {
+                              tagController.clearTags();
+                            },
+                            child: const Text(
+                              "SVUOTA TAG",
+                              style: TextStyle(
+                                  color: AppColors.logoCadmiumOrange,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(left: 50, right: 50),
                             child: Row(
                               children: [
-                                CustomButton(
-                                  bgColor: AppColors.logoBlue,
-                                  onPressed: () => (servizio == null ||
+                                ElevatedButton(
+                                  onPressed: (servizio == null ||
                                           Servizio.canEnteEdit(servizio!.stato))
                                       ? _pickIcon
                                       : null,
-                                  textButton: 'Seleziona l\'icona',
-                                  icon: Icons.insert_emoticon_rounded,
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                  ),
+                                  child: const Text('Seleziona l\'icona'),
                                 ),
-                                const SizedBox(width: 10),
+                                const SizedBox(width: 30),
                                 AnimatedSwitcher(
                                   duration: const Duration(milliseconds: 300),
                                   child: _icon ?? Container(),
