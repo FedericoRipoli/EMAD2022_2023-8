@@ -12,6 +12,7 @@ import '../../components/filtri/GenericFilter.dart';
 import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
+import '../../components/generali/CustomPagedListView.dart';
 import '../../theme/theme.dart';
 
 class ListaAree extends StatefulWidget {
@@ -86,7 +87,32 @@ class _ListaAreeState extends State<ListaAree> {
                     valueChange: _filterNomeChanged),
               ]),
               Flexible(
-                  child: PagedListView<int, Area>(
+                  child: CustomPagedListView<Area>(
+                    pagingController: _pagingController,
+                    itemBuilder: (context, item, index) => AreaListItem(
+                      name: item.nome,
+                      id: item.id!,
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    GestioneArea(item.id)))
+                            .then((v) => _pullRefresh())
+                      },
+                      onDelete: () {
+                        areeService.deleteArea(item.id!).then((value) {
+                          if (value) {
+                            ToastUtil.success("Area eliminata", context);
+                          } else {
+                            ToastUtil.error("Errore server", context);
+                          }
+                          _pullRefresh();
+                        });
+                      },
+                    )),
+                  )
+                  /*PagedListView<int, Area>(
                 shrinkWrap: false,
                 pagingController: _pagingController,
                 builderDelegate: PagedChildBuilderDelegate<Area>(
@@ -112,7 +138,7 @@ class _ListaAreeState extends State<ListaAree> {
                             });
                           },
                         )),
-              ))
+              ))*/
             ])));
   }
 

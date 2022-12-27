@@ -34,6 +34,7 @@ class _ListaEventiState extends State<ListaEventi> {
 
   @override
   void initState() {
+
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
@@ -71,6 +72,7 @@ class _ListaEventiState extends State<ListaEventi> {
     } catch (error) {
       _pagingController.error = error;
     }
+
   }
 
   @override
@@ -118,6 +120,7 @@ class _ListaEventiState extends State<ListaEventi> {
                   pagingController: _pagingController,
                   builderDelegate: PagedChildBuilderDelegate<Evento>(
                       itemBuilder: (context, item, index) => EventoListItem(
+
                             name: item.nome,
                             id: item.id!,
                             //statoOperazione: item.stato!,
