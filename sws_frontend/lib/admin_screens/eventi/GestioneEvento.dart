@@ -268,11 +268,10 @@ class _GestioneEventoState extends State<GestioneEvento> {
                         validator: "Inserisci il campo sito WEB",
                       ),
                       CustomTextField(
-                        controller: contenutoController,
-                        label: "Descrizione evento",
-                        validator: "Inserisci il campo descrizione",
-                        multiline:true
-                      ),
+                          controller: contenutoController,
+                          label: "Descrizione evento",
+                          validator: "Inserisci il campo descrizione",
+                          multiline: true),
                       CustomTextField(
                         controller: dataInizioController,
                         label: "Data inizio evento",
@@ -402,7 +401,7 @@ class _GestioneEventoState extends State<GestioneEvento> {
                       ),
                       TextFieldTags(
                           textfieldTagsController: tagController,
-                          initialTags: [],
+                          initialTags: const ["evento"],
                           textSeparators: const [' ', ','],
                           inputfieldBuilder: (context, tec, fn, error,
                               onChanged, onSubmitted) {
@@ -494,12 +493,22 @@ class _GestioneEventoState extends State<GestioneEvento> {
                                           )
                                         : null,
                                   ),
-                                  //onChanged: onChanged,
-                                  // onSubmitted: onSubmitted,
+                                  onChanged: onChanged,
+                                  onSubmitted: onSubmitted,
                                 ),
                               );
                             });
                           }),
+                      TextButton(
+                          onPressed: () {
+                            tagController.clearTags();
+                          },
+                          child: const Text(
+                            "SVUOTA TAG",
+                            style: TextStyle(
+                                color: AppColors.logoCadmiumOrange,
+                                fontWeight: FontWeight.w700),
+                          )),
                       const Divider(
                         thickness: 2,
                       ),
