@@ -41,7 +41,7 @@ class CustomTextField extends StatelessWidget {
         ),
 
         keyboardType: multiline? TextInputType.multiline : TextInputType.text ,
-        maxLines: null,
+        maxLines: multiline?null:1,
       ),
     );
   }
