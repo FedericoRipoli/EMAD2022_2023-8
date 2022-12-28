@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -47,6 +48,8 @@ public class Evento {
     @OneToOne(cascade = CascadeType.ALL)
     private Posizione posizione;
 
+    @ElementCollection
+    private Set<String> hashtags;
 
     @PrePersist
     public void prePersist(){
