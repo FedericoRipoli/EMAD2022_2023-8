@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/components/eventi/CardEvento.dart';
+import 'package:frontend_sws/util/ManageDate.dart';
 import 'package:getwidget/components/appbar/gf_appbar.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:intl/intl.dart';
@@ -173,11 +174,12 @@ class _EventiScreenState extends State<EventiScreen>
                                     ))
                               ],
                             )
-                          // DateFormat('yyyy-MM-dd').format(pickedDate)
                           : Text(
-                              "Dal ${_selectedDateRange?.start.toString().split(' ')[0]} al ${_selectedDateRange?.end.toString().split(' ')[0]}",
+                              "DA ${ManageDate.formatDate(_selectedDateRange?.start, context)}"
+                              "\nA ${ManageDate.formatDate(_selectedDateRange?.end, context)}",
                               style: const TextStyle(
                                   color: AppColors.white, fontSize: 16),
+                              textAlign: TextAlign.center,
                             ),
                     ),
                   ],
@@ -203,22 +205,20 @@ class _EventiScreenState extends State<EventiScreen>
           onRefresh: _pullRefresh,
           child: Column(children: <Widget>[
             Flexible(
-              child:  CustomPagedListView<Evento>(
-                    pagingController: _pagingController,
-
-                    itemBuilder: (context, item, index) => CardEvento(
-                        idEvento: item.id!,
-                        nomeEvento: item.nome,
-                        contenuto: item.contenuto,
-                        luogo: 'Salerno (SA)',
-                        telefono: item.contatto?.telefono,
-                        email: item.contatto?.email,
-                        dataInizio: item.dataInizio,
-                        dataFine: item.dataFine,
-                        aree: item.aree,
-                        tags: item.hashtags)),
-              ),
-
+              child: CustomPagedListView<Evento>(
+                  pagingController: _pagingController,
+                  itemBuilder: (context, item, index) => CardEvento(
+                      idEvento: item.id!,
+                      nomeEvento: item.nome,
+                      contenuto: item.contenuto,
+                      luogo: 'Salerno (SA)',
+                      telefono: item.contatto?.telefono,
+                      email: item.contatto?.email,
+                      dataInizio: item.dataInizio,
+                      dataFine: item.dataFine,
+                      aree: item.aree,
+                      tags: item.hashtags)),
+            ),
           ])),
     );
   }

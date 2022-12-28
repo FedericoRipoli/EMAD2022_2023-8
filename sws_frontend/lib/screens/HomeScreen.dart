@@ -157,7 +157,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ServiziScreen(idAreaSelected: impostazioni?.idArea,)),
+                  MaterialPageRoute(
+                      builder: (context) => ServiziScreen(
+                            idAreaSelected: impostazioni?.idArea,
+                          )),
                 );
               },
             ),
@@ -202,7 +205,7 @@ Widget headerWidgetWithImage(BuildContext context) {
         ),
       ),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
+        filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
         child: Center(
             child: Container(
                 margin: const EdgeInsets.only(top: 8),

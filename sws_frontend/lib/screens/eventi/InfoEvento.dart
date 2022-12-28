@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../components/eventi/DetailPageEvento.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../services/EventoService.dart';
@@ -42,7 +43,7 @@ class _InfoEventoState extends State<InfoEvento> {
         resizeToAvoidBottomInset: false,
         appBar: CustomAppBar(
             title: const AppTitle(
-              label: "Info Servizio",
+              label: "Info Evento",
             ),
             iconData: Icons.arrow_back,
             onPressed: () => Navigator.pop(context)),
@@ -55,9 +56,7 @@ class _InfoEventoState extends State<InfoEvento> {
                 children.add(const AllPageLoadTransparent());
               }
               if (snapshot.hasData) {
-                children.add(Container(
-                  child: Text(evento!.nome),
-                ));
+                children.add(DetailPageEvento(evento: evento!));
               }
               return AbsorbPointer(
                 absorbing: !(snapshot.hasData || snapshot.hasError),
