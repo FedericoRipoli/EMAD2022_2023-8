@@ -14,6 +14,7 @@ import '../../components/filtri/DropDownTextFilter.dart';
 import '../../components/filtri/FilterBar.dart';
 import '../../components/filtri/GenericFilter.dart';
 import '../../components/filtri/TextFilter.dart';
+import '../../components/generali/CustomPagedListView.dart';
 import '../../services/dto/PuntoMappaDTO.dart';
 import '../../theme/theme.dart';
 import 'MapTab.dart';
@@ -22,6 +23,7 @@ class ServiziScreen extends StatefulWidget {
   bool isFilterOpen = true;
   TextEditingController filtroNomeController = TextEditingController();
   String? idAreaSelected;
+
   ServiziScreen({Key? key, this.idAreaSelected}) : super(key: key);
 
   @override
@@ -63,6 +65,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   }
 
   late Future<List<DropDownFilterItem>> initEnti;
+
   Future<List<DropDownFilterItem>> loadListEnti() async {
     listEnti = await enteService.enteList(
         null, null, "sort=denominazione&denominazione.dir=asc");
@@ -84,6 +87,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   }
 
   late Future<List<DropDownFilterItem>> initAree;
+
   Future<List<DropDownFilterItem>> loadListAree() async {
     listAree = await areeService.areeList(null);
     itemsAree.add(DropDownFilterItem(
@@ -99,8 +103,8 @@ class _ServiziScreenState extends State<ServiziScreen>
       }).toList());
       //dropdownValueArea = listAree!.first.id;
     }
-    if(widget.idAreaSelected!=null){
-      filterArea=dropdownValueArea=widget.idAreaSelected;
+    if (widget.idAreaSelected != null) {
+      filterArea = dropdownValueArea = widget.idAreaSelected;
       _pullRefresh();
       initCallMap = loadMapView();
       setState(() {});
@@ -112,6 +116,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   String? filterArea;
   String? filterEnte;
   late Future<List<PuntoMappaDto>?> initCallMap;
+
   Future<List<PuntoMappaDto>?> loadMapView() async {
     ServizioService servizioService = ServizioService();
     return servizioService.findPuntiMappa(filterNome, filterEnte, filterArea);
@@ -237,7 +242,8 @@ class _ServiziScreenState extends State<ServiziScreen>
                         DropDownFilter(
                             name: "Seleziona Area",
                             positionType: GenericFilterPositionType.row,
-                            valueChange: _filterAreaChange, //TODO
+                            valueChange: _filterAreaChange,
+                            //TODO
                             values: itemsAree,
                             defaultValue: dropdownValueArea),
                         DropDownTextFilter(
@@ -265,19 +271,16 @@ class _ServiziScreenState extends State<ServiziScreen>
       onRefresh: _pullRefresh,
       child: Column(children: <Widget>[
         Flexible(
-          child: PagedListView<int, Servizio>(
-            shrinkWrap: false,
-            pagingController: _pagingController,
-            builderDelegate: PagedChildBuilderDelegate<Servizio>(
-                itemBuilder: (context, item, index) => CardServizio(
-                      idServizio: item.id!,
-                      nomeServizio: item.nome,
-                      ente: item.struttura!.ente!.denominazione,
-                      aree: item.aree!,
-                      posizione: item.struttura?.posizione?.indirizzo,
-                    )),
-          ),
-        )
+          child: CustomPagedListView<Servizio>(
+              pagingController: _pagingController,
+              itemBuilder: (context, item, index) => CardServizio(
+                    idServizio: item.id!,
+                    nomeServizio: item.nome,
+                    ente: item.struttura!.ente!.denominazione,
+                    aree: item.aree!,
+                    posizione: item.struttura?.posizione?.indirizzo,
+                  )),
+        ),
       ]));
 
   @override

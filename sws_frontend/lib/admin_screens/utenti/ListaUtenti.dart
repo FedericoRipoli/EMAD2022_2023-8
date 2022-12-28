@@ -13,6 +13,7 @@ import '../../components/filtri/GenericFilter.dart';
 import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
+import '../../components/generali/CustomPagedListView.dart';
 import '../../theme/theme.dart';
 
 class ListaUtenti extends StatefulWidget {
@@ -49,6 +50,7 @@ class _ListaUtentiState extends State<ListaUtenti> {
 
   String? filterEnte;
   String? filterUtente;
+
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await utenteService.usersList(
@@ -103,38 +105,32 @@ class _ListaUtentiState extends State<ListaUtenti> {
                     valueChange: _filterUtenteChange),
               ]),
               Flexible(
-                child: PagedListView<int, Utente>(
-                  shrinkWrap: false,
-                  pagingController: _pagingController,
-                  builderDelegate: PagedChildBuilderDelegate<Utente>(
-                      itemBuilder: (context, item, index) => UtenteListItem(
-                            name: item.username,
-                            id: item.id!,
-                            ente: item.nomeEnte,
-                            onTap: () => {
-                              Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              GestioneUtente(item.id)))
-                                  .then((v) => _pullRefresh())
-                            },
-                            onDelete: () {
-                              utenteService
-                                  .deleteUtente(item.id!)
-                                  .then((value) {
-                                if (value) {
-                                  ToastUtil.success(
-                                      "Utente eliminato", context);
-                                } else {
-                                  ToastUtil.error("Errore server", context);
-                                }
-                                _pullRefresh();
-                              });
-                            },
-                          )),
-                ),
-              )
+                child: CustomPagedListView<Utente>(
+                    pagingController: _pagingController,
+                    itemBuilder: (context, item, index) => UtenteListItem(
+                          name: item.username,
+                          id: item.id!,
+                          ente: item.nomeEnte,
+                          onTap: () => {
+                            Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            GestioneUtente(item.id)))
+                                .then((v) => _pullRefresh())
+                          },
+                          onDelete: () {
+                            utenteService.deleteUtente(item.id!).then((value) {
+                              if (value) {
+                                ToastUtil.success("Utente eliminato", context);
+                              } else {
+                                ToastUtil.error("Errore server", context);
+                              }
+                              _pullRefresh();
+                            });
+                          },
+                        )),
+              ),
             ])));
   }
 

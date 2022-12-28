@@ -9,6 +9,7 @@ import '../../components/filtri/GenericFilter.dart';
 import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
+import '../../components/generali/CustomPagedListView.dart';
 import '../../components/servizi/ServizioListItem.dart';
 import '../../services/ServizioService.dart';
 import '../../services/UserService.dart';
@@ -117,24 +118,22 @@ class _ListaServiziDaValidareState extends State<ListaServiziDaValidare> {
                     defaultValue: filterStato)
               ]),
               Flexible(
-                child: PagedListView<int, Servizio>(
-                  shrinkWrap: false,
-                  pagingController: _pagingController,
-                  builderDelegate: PagedChildBuilderDelegate<Servizio>(
-                      itemBuilder: (context, item, index) => ServizioListItem(
-                            name: item.nome,
-                            id: item.id!,
-                            statoOperazione: item.stato!,
-                            onTap: () => {
-                              Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              GestioneValidazioneServizio(
-                                                  idServizio: item.id)))
-                                  .then((v) => _pullRefresh())
-                            },
-                            /*onDelete: () {
+                child: CustomPagedListView<Servizio>(
+                    pagingController: _pagingController,
+                    itemBuilder: (context, item, index) => ServizioListItem(
+                          name: item.nome,
+                          id: item.id!,
+                          statoOperazione: item.stato!,
+                          onTap: () => {
+                            Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            GestioneValidazioneServizio(
+                                                idServizio: item.id)))
+                                .then((v) => _pullRefresh())
+                          },
+                          /*onDelete: () {
                           servizioService
                               .deleteServizio(item.id!)
                               .then((value) {
@@ -147,9 +146,8 @@ class _ListaServiziDaValidareState extends State<ListaServiziDaValidare> {
                             _pullRefresh();
                           });
                         },*/
-                          )),
-                ),
-              )
+                        )),
+              ),
             ])));
   }
 

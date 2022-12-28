@@ -7,6 +7,7 @@ import '../../components/filtri/DropDownFilter.dart';
 import '../../components/filtri/FilterBar.dart';
 import '../../components/filtri/GenericFilter.dart';
 import '../../components/filtri/TextFilter.dart';
+import '../../components/generali/CustomPagedListView.dart';
 import '../../services/AreeService.dart';
 import '../../services/EventoService.dart';
 import '../../services/entity/Area.dart';
@@ -202,10 +203,9 @@ class _EventiScreenState extends State<EventiScreen>
           onRefresh: _pullRefresh,
           child: Column(children: <Widget>[
             Flexible(
-              child: PagedListView<int, Evento>(
-                shrinkWrap: false,
-                pagingController: _pagingController,
-                builderDelegate: PagedChildBuilderDelegate<Evento>(
+              child:  CustomPagedListView<Evento>(
+                    pagingController: _pagingController,
+
                     itemBuilder: (context, item, index) => CardEvento(
                           idEvento: item.id!,
                           nomeEvento: item.nome,
@@ -213,7 +213,7 @@ class _EventiScreenState extends State<EventiScreen>
                           luogo: 'Salerno (SA)',
                         )),
               ),
-            )
+
           ])),
     );
   }

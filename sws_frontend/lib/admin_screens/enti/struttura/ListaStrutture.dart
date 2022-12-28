@@ -6,6 +6,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../components/filtri/FilterBar.dart';
 import '../../../components/filtri/GenericFilter.dart';
 import '../../../components/filtri/TextFilter.dart';
+import '../../../components/generali/CustomPagedListView.dart';
 import '../../../services/entity/Struttura.dart';
 import '../../../components/generali/CustomAppBar.dart';
 import '../../../components/generali/CustomFloatingButton.dart';
@@ -95,11 +96,9 @@ class _ListaStruttureState extends State<ListaStrutture> {
                     valueChange: _filterNomeChanged),
               ]),
               Flexible(
-                  child: PagedListView<int, Struttura>(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: false,
-                pagingController: _pagingController,
-                builderDelegate: PagedChildBuilderDelegate<Struttura>(
+                  child:   CustomPagedListView<Struttura>(
+                    pagingController: _pagingController,
+
                     itemBuilder: (context, item, index) => StrutturaListItem(
                         denominazione: item.denominazione!,
                         id: item.id!,
@@ -125,7 +124,7 @@ class _ListaStruttureState extends State<ListaStrutture> {
                                                   idEnte: widget.idEnte)))
                                   .then((v) => _pullRefresh())
                             })),
-              ))
+              )
             ])));
   }
 

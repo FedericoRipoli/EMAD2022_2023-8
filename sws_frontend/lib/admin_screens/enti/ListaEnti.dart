@@ -10,6 +10,7 @@ import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
 import '../../components/enti/EnteListItem.dart';
+import '../../components/generali/CustomPagedListView.dart';
 import '../../theme/theme.dart';
 import '../../util/ToastUtil.dart';
 import 'GestioneEnte.dart';
@@ -96,11 +97,8 @@ class _ListaEntiState extends State<ListaEnti> {
                     valueChange: _filterNomeChanged),
               ]),
               Flexible(
-                  child: PagedListView<int, Ente>(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: false,
-                pagingController: _pagingController,
-                builderDelegate: PagedChildBuilderDelegate<Ente>(
+                child: CustomPagedListView<Ente>(
+                    pagingController: _pagingController,
                     itemBuilder: (context, item, index) => EnteListItem(
                         denominazione: item.denominazione,
                         id: item.id!,
@@ -122,7 +120,7 @@ class _ListaEntiState extends State<ListaEnti> {
                                               GestioneEnte(item.id)))
                                   .then((v) => _pullRefresh())
                             })),
-              ))
+              )
             ])));
   }
 

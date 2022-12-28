@@ -9,6 +9,7 @@ import '../../components/filtri/GenericFilter.dart';
 import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomAppBar.dart';
 import '../../components/generali/CustomFloatingButton.dart';
+import '../../components/generali/CustomPagedListView.dart';
 import '../../components/menu/DrawerMenu.dart';
 import '../../services/entity/Evento.dart';
 import '../../theme/theme.dart';
@@ -114,11 +115,9 @@ class _ListaEventiState extends State<ListaEventi> {
                     values: itemsFilterStato)
               ]),
               Flexible(
-                child: PagedListView<int, Evento>(
+                child:  CustomPagedListView<Evento>(
+                      pagingController: _pagingController,
 
-                  shrinkWrap: false,
-                  pagingController: _pagingController,
-                  builderDelegate: PagedChildBuilderDelegate<Evento>(
                       itemBuilder: (context, item, index) => EventoListItem(
 
                             name: item.nome,
@@ -147,7 +146,7 @@ class _ListaEventiState extends State<ListaEventi> {
                             },
                           )),
                 ),
-              )
+
             ])));
   }
 
