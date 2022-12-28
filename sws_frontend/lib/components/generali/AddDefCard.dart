@@ -17,12 +17,12 @@ class AddDefCard extends StatelessWidget {
                 backgroundBlendMode: BlendMode.saturation,
               ),
         child: Card(
-          elevation: 8,
+          elevation: 6,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
           margin: const EdgeInsets.all(16),
-          color: AppColors.detailBlue,
+          color: AppColors.white,
           child: ListTile(
             onTap: disabled
                 ? null

@@ -1,7 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:path/path.dart' as p;
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend_sws/services/EventoService.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:mime/mime.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 // componenti
 import '../../components/generali/CustomAppBar.dart';
@@ -13,6 +19,7 @@ import '../../services/AreeService.dart';
 import '../../services/entity/Area.dart';
 import '../../services/entity/Contatto.dart';
 import '../../services/entity/Evento.dart';
+import '../../services/entity/ImageData.dart';
 import '../../theme/theme.dart';
 import '../../util/ToastUtil.dart';
 
@@ -42,6 +49,9 @@ class _GestioneEventoState extends State<GestioneEvento> {
   // keys
   final _formGlobalKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKeyAdmin = GlobalKey<ScaffoldState>();
+
+  bool errorImmagine = false;
+  PickedFile? imageFile;
 
   // controller
   TextEditingController noteController = TextEditingController();
@@ -140,6 +150,15 @@ class _GestioneEventoState extends State<GestioneEvento> {
     return true;
   }
 
+  bool validateNoFormField() {
+    bool ret = false;
+    errorImmagine = false;
+    if (imageFile == null) {
+      ret = errorImmagine = true;
+    }
+    return !ret;
+  }
+
   void savePage() async {
     if (_formGlobalKey.currentState!.validate()) {
       _formGlobalKey.currentState?.save();
@@ -149,18 +168,25 @@ class _GestioneEventoState extends State<GestioneEvento> {
       Evento? nEvento;
       if (widget.idEvento == null) {
         nEvento = await eventoService.createEvento(Evento(
-          nome: nomeController.value.text,
-          contenuto: contenutoController.value.text,
-          contatto: Contatto(
-            telefono: telefonoController.value.text,
-            email: emailController.value.text,
-            sitoWeb: sitoWebController.value.text,
-          ),
-          hashtags: tagController.getTags,
-          idAree: areeValues,
-          dataInizio: dataInizioController.value.text,
-          dataFine: dataFineController.value.text,
-        ));
+            nome: nomeController.value.text,
+            contenuto: contenutoController.value.text,
+            contatto: Contatto(
+              telefono: telefonoController.value.text,
+              email: emailController.value.text,
+              sitoWeb: sitoWebController.value.text,
+            ),
+            hashtags: tagController.getTags,
+            idAree: areeValues,
+            dataInizio: dataInizioController.value.text,
+            dataFine: dataFineController.value.text,
+            locandina: (imageFile != null)
+                ? ImageData(
+                    imageData: base64Encode(await imageFile!.readAsBytes()),
+                    type: lookupMimeType(imageFile!.path) != null
+                        ? lookupMimeType(imageFile!.path)!
+                        : "image",
+                    nome: p.basename(imageFile!.path))
+                : null));
       } else {
         evento!.nome = nomeController.value.text;
         evento!.contatto!.telefono = telefonoController.value.text;
@@ -171,6 +197,14 @@ class _GestioneEventoState extends State<GestioneEvento> {
         evento!.hashtags = tagController.getTags;
         evento!.dataInizio = dataInizioController.value.text;
         evento!.dataFine = dataFineController.value.text;
+        if (imageFile != null) {
+          evento!.locandina = ImageData(
+              imageData: base64Encode(await imageFile!.readAsBytes()),
+              type: lookupMimeType(imageFile!.path) != null
+                  ? lookupMimeType(imageFile!.path)!
+                  : "image",
+              nome: p.basename(imageFile!.path));
+        }
         nEvento = await eventoService.editEvento(evento!);
       }
       if (mounted) {}
@@ -515,6 +549,76 @@ class _GestioneEventoState extends State<GestioneEvento> {
                       const SizedBox(
                         height: 20,
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CustomButton(
+                            onPressed: (evento == null ||
+                                    Evento.canEnteEdit(evento!.stato))
+                                ? _getFromGallery
+                                : null,
+                            textButton: "Galleria",
+                            icon: Icons.photo_library,
+                          ),
+                          CustomButton(
+                            onPressed: (evento == null ||
+                                    Evento.canEnteEdit(evento!.stato))
+                                ? _getFromCamera
+                                : null,
+                            textButton: "Fotocamera",
+                            icon: Icons.camera_alt,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Container(
+                        child: imageFile != null
+                            ? (kIsWeb
+                                ? Image.network(imageFile!.path)
+                                : Image.file(File(imageFile!.path)))
+                            : evento != null && evento!.locandina != null
+                                ? Column(
+                                    children: [
+                                      Image.memory(base64Decode(
+                                          evento!.locandina!.imageData)),
+                                      TextButton(
+                                          onPressed: evento == null ||
+                                                  Evento.canEnteEdit(
+                                                      evento!.stato)
+                                              ? () {
+                                                  imageFile = null;
+                                                  evento!.locandina = null;
+                                                  setState(() {});
+                                                }
+                                              : null,
+                                          child: const Text(
+                                            "RIMUOVI IMMAGINE",
+                                            style: TextStyle(
+                                                color:
+                                                    AppColors.logoCadmiumOrange,
+                                                fontWeight: FontWeight.w700),
+                                          ))
+                                    ],
+                                  )
+                                : const Text(
+                                    "Nessuna immagine selezionata",
+                                    textAlign: TextAlign.center,
+                                  ),
+                      ),
+                      errorImmagine
+                          ? const Text("Devi inserire una foto!",
+                              style: TextStyle(color: Colors.red))
+                          : Container(),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      // termini privacy
+                      const Divider(
+                        thickness: 2,
+                      ),
                       (evento != null && evento!.note != null)
                           ? TextField(
                               enabled: false,
@@ -561,18 +665,23 @@ class _GestioneEventoState extends State<GestioneEvento> {
           }),
         ));
   }
-}
 
-// campi
-/**
- * contenuto
- * data_fine
- * data_inizio
- * nome
- * note
- * stato
- * contatto
- * id_ente
- * posizione
- * locandina
- */
+  Future _getImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      setState(() => imageFile = PickedFile(image.path));
+    } catch (e) {
+      print('Errore inserimento immagine: $e');
+    }
+  }
+
+  Future _getFromGallery() async {
+    _getImage(ImageSource.gallery);
+  }
+
+  /// Get from Camera
+  Future _getFromCamera() async {
+    _getImage(ImageSource.camera);
+  }
+}

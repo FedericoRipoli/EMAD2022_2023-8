@@ -29,7 +29,7 @@ class TopicCard extends StatelessWidget {
                 elevation: 6,
                 margin: const EdgeInsets.only(
                     left: 12, right: 12, bottom: 12, top: 5),
-                color: AppColors.detailBlue,
+                color: AppColors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),

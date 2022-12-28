@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'ImageData.dart';
 import 'Contatto.dart';
 import 'Area.dart';
 
@@ -39,7 +40,7 @@ class Evento {
   List<Area>? aree;
   Contatto? contatto;
   List<String>? idAree;
-  String? idEnte;
+  ImageData? locandina;
 
   Evento(
       {this.id,
@@ -55,7 +56,7 @@ class Evento {
       this.aree,
       this.contatto,
       this.idAree,
-      this.idEnte});
+      this.locandina});
 
   factory Evento.fromJson(Map<String, dynamic> json) => Evento(
         id: json["id"],
@@ -77,7 +78,9 @@ class Evento {
             ? Contatto.fromJson(json["contatto"])
             : null,
         idAree: json["idAree"] != null ? jsonDecode(json["idAree"]) : null,
-        idEnte: json["idEnte"],
+        locandina: json["locandina"] != null
+            ? ImageData.fromJson(json["locandina"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -98,6 +101,6 @@ class Evento {
             : null,
         "contatto": contatto != null ? contatto!.toJson() : null,
         "idAree": idAree,
-        "idEnte": idEnte
+        "locandina": locandina != null ? locandina!.toJson() : null
       };
 }
