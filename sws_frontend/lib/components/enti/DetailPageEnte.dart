@@ -26,7 +26,6 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
     try {
       strutture =
           (await strutturaService.struttureList(null, widget.ente.id!))!;
-      print(strutture[0].denominazione);
     } catch (error) {
       print(error);
     }
@@ -65,10 +64,10 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
                                   color: AppColors.white,
                                   overflow: TextOverflow.ellipsis,
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 20),
+                                  fontSize: 18),
                             ),
                             const SizedBox(
-                              width: 12,
+                              width: 2,
                             ),
                             const CustomAvatar(size: 32, icon: Icons.home_work)
                           ],
@@ -119,8 +118,8 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
                   height: 6,
                 ),
                 strutture != null
-                    ? SizedBox(
-                        height: 200, // Some height
+                    ? Container(
+                        height: 400, // Some height
                         child: Column(
                           children: [
                             Expanded(

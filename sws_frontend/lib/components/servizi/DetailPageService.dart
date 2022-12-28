@@ -109,7 +109,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                     widget.servizio.nome,
                     style: const TextStyle(
                         color: AppColors.black,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700,
                         fontSize: 18),
                   ),
                   subTitle: Text(

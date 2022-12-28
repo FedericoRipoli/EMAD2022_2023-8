@@ -5,15 +5,14 @@ import '../../theme/theme.dart';
 import '../../util/ManageDate.dart';
 
 class CardEvento extends StatelessWidget {
-  final String luogo, nomeEvento, idEvento;
+  final String nomeEvento, idEvento;
   final String? contenuto, imgPath, telefono, email;
   final List<String>? tags;
   final List<Area>? aree;
-  final String? dataInizio, dataFine;
+  final String? dataInizio, dataFine, posizione;
 
   const CardEvento({
     Key? key,
-    required this.luogo,
     required this.nomeEvento,
     required this.idEvento,
     this.contenuto,
@@ -22,6 +21,7 @@ class CardEvento extends StatelessWidget {
     this.imgPath,
     this.telefono,
     this.email,
+    this.posizione,
     this.aree,
     this.tags,
   }) : super(key: key);
@@ -68,57 +68,24 @@ class CardEvento extends StatelessWidget {
                             color: AppColors.logoCadmiumOrange,
                             size: 28,
                           ),
-                          subtitle: Text(
-                            contenuto ?? "",
-                            style: const TextStyle(
-                                color: AppColors.black, fontSize: 16),
-                          ),
                         ),
-                        const Divider(
-                          thickness: 2,
+                        const SizedBox(
+                          height: 3,
                         ),
                         ListTile(
                           minVerticalPadding: 6,
                           title: Text(
-                            "DA ${ManageDate.formatDate(DateTime.parse(dataInizio!), context)}"
-                            "\nA ${ManageDate.formatDate(DateTime.parse(dataFine!), context)}",
+                            "Da ${ManageDate.formatDate(DateTime.parse(dataInizio!), context)}"
+                            "\na ${ManageDate.formatDate(DateTime.parse(dataFine!), context)}",
                             style: const TextStyle(
                               color: Colors.black,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                          trailing: const Icon(
-                            Icons.calendar_month,
-                            color: AppColors.logoCadmiumOrange,
-                            size: 28,
-                          ),
-                          subtitle: Text(
-                            luogo,
-                            style: const TextStyle(
-                                color: AppColors.black, fontSize: 16),
-                          ),
-                        ),
-                        const Divider(
-                          thickness: 2,
-                        ),
-                        ListTile(
-                          minVerticalPadding: 6,
-                          title: Text(
-                            telefono ?? "Nessun contatto",
-                            style: const TextStyle(
-                              color: AppColors.logoBlue,
                               fontSize: 16.0,
                             ),
                           ),
-                          trailing: const Icon(
-                            Icons.contact_mail,
-                            color: AppColors.logoCadmiumOrange,
-                            size: 28,
-                          ),
                           subtitle: Text(
-                            email ?? "Nessuna email",
+                            posizione!,
                             style: const TextStyle(
-                                color: AppColors.logoBlue, fontSize: 16),
+                                color: AppColors.black, fontSize: 16),
                           ),
                         ),
                         const SizedBox(

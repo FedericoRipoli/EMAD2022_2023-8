@@ -92,7 +92,7 @@ class _EventiScreenState extends State<EventiScreen>
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await eventoService.eventiList(
-          filterNome, filterArea,  pageKey, false);
+          filterNome, filterArea, pageKey, false);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -211,7 +211,7 @@ class _EventiScreenState extends State<EventiScreen>
                       idEvento: item.id!,
                       nomeEvento: item.nome,
                       contenuto: item.contenuto,
-                      luogo: 'Salerno (SA)',
+                      posizione: 'Salerno (SA)',
                       telefono: item.contatto?.telefono,
                       email: item.contatto?.email,
                       dataInizio: item.dataInizio,

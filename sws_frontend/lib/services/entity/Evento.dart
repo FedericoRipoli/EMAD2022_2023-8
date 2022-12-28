@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'ImageData.dart';
 import 'Contatto.dart';
 import 'Area.dart';
+import 'Posizione.dart';
 
 Evento eventoFromJson(String str) => Evento.fromJson(json.decode(str));
 
@@ -41,6 +42,7 @@ class Evento {
   Contatto? contatto;
   List<String>? idAree;
   ImageData? locandina;
+  Posizione? posizione;
 
   Evento(
       {this.id,
@@ -56,7 +58,8 @@ class Evento {
       this.aree,
       this.contatto,
       this.idAree,
-      this.locandina});
+      this.locandina,
+      this.posizione});
 
   factory Evento.fromJson(Map<String, dynamic> json) => Evento(
         id: json["id"],
@@ -81,6 +84,9 @@ class Evento {
         locandina: json["locandina"] != null
             ? ImageData.fromJson(json["locandina"])
             : null,
+        posizione: json["posizione"] == null
+            ? null
+            : Posizione.fromJson(json["posizione"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -101,6 +107,7 @@ class Evento {
             : null,
         "contatto": contatto != null ? contatto!.toJson() : null,
         "idAree": idAree,
-        "locandina": locandina != null ? locandina!.toJson() : null
+        "locandina": locandina != null ? locandina!.toJson() : null,
+        "posizione": posizione != null ? posizione!.toJson() : null,
       };
 }
