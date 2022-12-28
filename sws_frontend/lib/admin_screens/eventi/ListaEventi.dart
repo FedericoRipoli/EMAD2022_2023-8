@@ -26,12 +26,12 @@ class ListaEventi extends StatefulWidget {
 
 class _ListaEventiState extends State<ListaEventi> {
   EventoService eventoService = EventoService();
-  List<DropDownFilterItem> itemsFilterStato = [];
+
   UserService userService = UserService();
   final PagingController<int, Evento> _pagingController =
       PagingController(firstPageKey: 0);
   String? filterNome;
-  String? filterStato;
+
 
   @override
   void initState() {
@@ -39,12 +39,7 @@ class _ListaEventiState extends State<ListaEventi> {
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
-    itemsFilterStato.add(DropDownFilterItem(name: "Tutti"));
 
-    itemsFilterStato.addAll(Evento.getStatiList()
-        .entries
-        .map((e) => DropDownFilterItem(name: e.value, id: e.key))
-        .toList());
 
     super.initState();
   }
@@ -54,15 +49,11 @@ class _ListaEventiState extends State<ListaEventi> {
     _pullRefresh();
   }
 
-  void _filterStatoChanged(String? text) {
-    filterStato = text;
-    _pullRefresh();
-  }
 
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await eventoService.eventiList(
-          filterNome, null, filterStato, pageKey, true);
+          filterNome, null, pageKey, true);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -108,11 +99,6 @@ class _ListaEventiState extends State<ListaEventi> {
                     name: 'Nome',
                     positionType: GenericFilterPositionType.row,
                     valueChange: _filterNomeChanged),
-                DropDownFilter(
-                    name: "Stato",
-                    positionType: GenericFilterPositionType.row,
-                    valueChange: _filterStatoChanged,
-                    values: itemsFilterStato)
               ]),
               Flexible(
                 child:  CustomPagedListView<Evento>(

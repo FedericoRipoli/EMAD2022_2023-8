@@ -1,6 +1,7 @@
 package it.unisa.emad.comunesalerno.sws.web;
 
 import it.unisa.emad.comunesalerno.sws.entity.*;
+import it.unisa.emad.comunesalerno.sws.repository.AreaRepository;
 import it.unisa.emad.comunesalerno.sws.repository.EventoRepository;
 import it.unisa.emad.comunesalerno.sws.repository.search.specification.EventoSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ import java.util.*;
 public class EventoController {
     @Autowired
     EventoRepository eventoRepository;
-
+    @Autowired
+    AreaRepository areeRepository;
     @GetMapping
     public ResponseEntity listEventi(@AuthenticationPrincipal Utente user,
                                      @RequestParam(value = "name", required = false) String name,
@@ -51,6 +53,7 @@ public class EventoController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity create(@RequestBody Evento evento) {
+        evento = setValues(evento);
         eventoRepository.save(evento);
         return ResponseEntity.ok(evento);
     }
@@ -60,9 +63,23 @@ public class EventoController {
     public ResponseEntity edit(@PathVariable String id, @RequestBody Evento evento) {
         if (eventoRepository.existsById(id)) {
             evento.setId(id);
+            evento = setValues(evento);
             eventoRepository.save(evento);
             return ResponseEntity.ok(evento);
         }
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    }
+    private Evento setValues(Evento evento) {
+
+
+        evento.setAree(new LinkedList<>());
+        for (String area : evento.getIdAree()) {
+            evento.getAree().add(areeRepository.findById(area).orElseThrow());
+
+        }
+
+
+
+        return evento;
     }
 }

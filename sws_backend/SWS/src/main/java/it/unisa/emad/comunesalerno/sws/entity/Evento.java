@@ -1,5 +1,7 @@
 package it.unisa.emad.comunesalerno.sws.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -28,7 +30,8 @@ public class Evento {
     private Contatto contatto;
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ImageData locandina;
 
 
@@ -50,6 +53,10 @@ public class Evento {
 
     @ElementCollection
     private Set<String> hashtags;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Transient
+    private List<String> idAree;
 
     @PrePersist
     public void prePersist(){

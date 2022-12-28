@@ -11,7 +11,7 @@ class EventoService {
   final log = Logger('EventoServiceLogger');
   UserService userService = UserService();
 
-  Future<List<Evento>?> eventiList(String? nome, String? idArea, String? stato,
+  Future<List<Evento>?> eventiList(String? nome, String? idArea,
       int page, bool logged) async {
     String? token;
     if (logged) {
@@ -26,9 +26,6 @@ class EventoService {
       }
       if (idArea != null) {
         queryStringUtil.add("idArea", idArea);
-      }
-      if (stato != null) {
-        queryStringUtil.add("stato", stato);
       }
 
       Uri u = Uri.parse(

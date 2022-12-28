@@ -92,7 +92,7 @@ class _EventiScreenState extends State<EventiScreen>
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await eventoService.eventiList(
-          filterNome, filterArea, null, pageKey, false);
+          filterNome, filterArea,  pageKey, false);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);

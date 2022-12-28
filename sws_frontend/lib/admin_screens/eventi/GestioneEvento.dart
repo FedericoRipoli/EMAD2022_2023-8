@@ -125,10 +125,10 @@ class _GestioneEventoState extends State<GestioneEvento> {
         contenutoController.text = (evento!.contenuto!);
       }
       if (evento!.dataInizio != null) {
-        dataInizioController.text = (evento!.dataInizio!);
+        dataInizioController.text = (DateFormat("yyyy-MM-dd").format(DateTime.parse(evento!.dataInizio!)));
       }
       if (evento!.dataFine != null) {
-        dataFineController.text = (evento!.dataFine!);
+        dataFineController.text = (DateFormat("yyyy-MM-dd").format(DateTime.parse(evento!.dataFine!)));
       }
       if (evento!.note != null) {
         noteController.text = (evento!.note!);
@@ -289,17 +289,14 @@ class _GestioneEventoState extends State<GestioneEvento> {
                       CustomTextField(
                         controller: emailController,
                         label: "Email referente",
-                        validator: "Inserisci il campo email",
                       ),
                       CustomTextField(
                         controller: telefonoController,
                         label: "Telefono referente",
-                        validator: "Inserisci il campo telefono",
                       ),
                       CustomTextField(
                         controller: sitoWebController,
                         label: "Sito WEB evento",
-                        validator: "Inserisci il campo sito WEB",
                       ),
                       CustomTextField(
                           controller: contenutoController,
@@ -435,7 +432,7 @@ class _GestioneEventoState extends State<GestioneEvento> {
                       ),
                       TextFieldTags(
                           textfieldTagsController: tagController,
-                          initialTags: const ["evento"],
+                          initialTags: [],
                           textSeparators: const [' ', ','],
                           inputfieldBuilder: (context, tec, fn, error,
                               onChanged, onSubmitted) {
@@ -633,7 +630,7 @@ class _GestioneEventoState extends State<GestioneEvento> {
                               height: 0,
                             ),
                       CustomButton(
-                        onPressed: () => !loaded ||
+                        onPressed: !loaded ||
                                 (evento != null &&
                                     !Evento.canEnteEdit(evento!.stato))
                             ? null
