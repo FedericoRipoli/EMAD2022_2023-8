@@ -49,7 +49,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
             )
           : null,
       //searchBar: false,
-      elevation: 1,
+      elevation: 0,
       backgroundColor: appTheme.primaryColor,
       actions: widget.actions,
       bottom: widget.bottom,

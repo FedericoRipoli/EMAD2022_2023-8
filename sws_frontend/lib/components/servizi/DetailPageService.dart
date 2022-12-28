@@ -6,8 +6,11 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:frontend_sws/components/generali/CustomButton.dart';
 import 'package:frontend_sws/services/entity/Servizio.dart';
 import 'package:frontend_sws/theme/theme.dart';
+import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:frontend_sws/screens/ente/InfoEnte.dart';
 
 class DetailPageService extends StatefulWidget {
   Servizio servizio;
@@ -29,326 +32,308 @@ class _DetailPageServiceState extends State<DetailPageService> {
     return Scaffold(
         //backgroundColor: Colors.black,
         backgroundColor: Colors.white,
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-                pinned: true,
-                floating: false,
-                centerTitle: true,
-                title: Container(
-                  width: MediaQuery.of(context).size.width,
-                  //color: const Color.fromARGB(50, 255, 255, 255),
-                  child: Text(
-                    widget.servizio.nome,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: AppColors.black,
-                    ),
-                  ),
-                ),
-                automaticallyImplyLeading: false,
-                expandedHeight: MediaQuery.of(context).size.height * 0.16,
-                flexibleSpace: Container(
-                  color: Colors.black,
-                  padding: const EdgeInsets.only(
-                      top: 0, left: 0, right: 0, bottom: 0),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                        bottomRight: Radius.circular(0),
-                        bottomLeft: Radius.circular(0),
-                        topRight: Radius.circular(0),
-                        topLeft: Radius.circular(0)),
-                    child:
-                        Image.asset("assets/images/bg.jpg", fit: BoxFit.cover),
-                  ),
-                )),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return Container(
-                    margin: const EdgeInsets.only(top: 5),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                        )),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10, left: 16, right: 16, bottom: 5),
+        body: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    ClipPath(
+                      clipper: WaveClipperOne(),
+                      child: Container(
+                        height: 120,
+                        color: AppColors.logoBlue,
+                        child: Center(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Wrap(children: [
-                                  const Icon(
-                                    Icons.accessibility,
-                                    color: AppColors.logoCadmiumOrange,
-                                  ),
-                                  const SizedBox(width: 3),
-                                  Text(
-                                    (widget.servizio.aree != null ||
-                                            widget.servizio.aree!.isNotEmpty)
-                                        ? widget.servizio.aree!
-                                            .map((e) => e.nome)
-                                            .join(", ")
-                                        : "Nessuna area di riferimento",
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      letterSpacing: 0,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ]),
-                                Wrap(
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              widget.servizio.nome,
+                              style: const TextStyle(
+                                  color: AppColors.white,
+                                  overflow: TextOverflow.ellipsis,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20),
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => InfoEnte(
+                                            idEnte: widget.servizio.struttura!
+                                                .ente!.id!)),
+                                  );
+                                },
+                                child: Wrap(
                                   children: [
                                     const Icon(
                                       Icons.home_work,
                                       color: AppColors.logoCadmiumOrange,
                                     ),
-                                    const SizedBox(width: 3),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
                                     Text(
-                                      widget.servizio.struttura
-                                                  ?.denominazione !=
-                                              null
-                                          ? "Struttura: ${widget.servizio.struttura!.denominazione!}"
-                                          : "Struttura non disponinile",
+                                      widget.servizio.struttura!.ente!
+                                              .denominazione ??
+                                          "Nessuna struttura",
                                       style: const TextStyle(
-                                        fontWeight: FontWeight.w200,
-                                        fontSize: 16,
-                                        letterSpacing: 0.27,
-                                        color: Colors.black,
-                                      ),
+                                          color: AppColors.detailBlue,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18),
                                     ),
                                   ],
-                                ),
-                                Wrap(
-                                  children: [
-                                    const Icon(
-                                      Icons.location_on,
-                                      color: AppColors.logoCadmiumOrange,
-                                    ),
-                                    const SizedBox(width: 3),
-                                    Text(
-                                      widget.servizio.struttura?.posizione
-                                                  ?.indirizzo !=
-                                              null
-                                          ? widget.servizio.struttura!
-                                              .posizione!.indirizzo!
-                                          : "Indirizzo non disponibile",
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.w200,
-                                        fontSize: 16,
-                                        letterSpacing: 0.57,
-                                        color: AppColors.logoBlue,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            )),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
-                          height: 200,
-                          child: FlutterMap(
-                              options: MapOptions(
-                                center: LatLng(
+                                )),
+                          ],
+                        )),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                const Text(
+                  "Informazioni",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.logoCadmiumOrange),
+                ),
+                GFListTile(
+                  title: Text(
+                    widget.servizio.nome,
+                    style: const TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18),
+                  ),
+                  subTitle: Text(
+                    widget.servizio.struttura?.denominazione != null
+                        ? "Struttura: ${widget.servizio.struttura!.denominazione!}"
+                        : "Struttura non disponinile",
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  description: Text(
+                    widget.servizio.struttura?.posizione?.indirizzo != null
+                        ? widget.servizio.struttura!.posizione!.indirizzo!
+                        : "Indirizzo non disponibile",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: AppColors.black,
+                    ),
+                  ),
+                  icon: const Icon(
+                    Icons.location_on,
+                    color: AppColors.logoCadmiumOrange,
+                  ),
+                ),
+                GFListTile(
+                  title: Text(
+                    (widget.servizio.aree != null ||
+                            widget.servizio.aree!.isNotEmpty)
+                        ? widget.servizio.aree!.map((e) => e.nome).join(", ")
+                        : "Nessuna area di riferimento",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                  subTitle: Text(
+                    widget.servizio.contatto?.telefono != null
+                        ? "Telefono: +39 ${widget.servizio.contatto!.telefono!}"
+                        : "Telefono non disponinile",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                  description: Text(
+                    widget.servizio.contatto?.email != null
+                        ? "Email: ${widget.servizio.contatto!.email!}"
+                        : "Email non disponinile",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                  icon: const Icon(
+                    Icons.contact_phone,
+                    color: AppColors.logoCadmiumOrange,
+                  ),
+                ),
+                GFListTile(
+                  description: Text(
+                    (widget.servizio.contenuto != null)
+                        ? widget.servizio.contenuto!
+                        : "Nessuna descrizione",
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                    //maxLines: 4,
+                    //overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                const Text(
+                  "Guarda sulla mappa",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.logoCadmiumOrange),
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                SizedBox(
+                  height: 200,
+                  child: FlutterMap(
+                      options: MapOptions(
+                        center: LatLng(
+                            double.parse(widget
+                                .servizio.struttura!.posizione!.latitudine!),
+                            double.parse(widget
+                                .servizio.struttura!.posizione!.longitudine!)),
+                        zoom: 15.0,
+                        maxZoom: 30.0,
+                        enableScrollWheel: true,
+                        scrollWheelVelocity: 0.005,
+                      ),
+                      children: [
+                        TileLayer(
+                            urlTemplate:
+                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
+                        MarkerClusterLayerWidget(
+                          options: MarkerClusterLayerOptions(
+                            spiderfyCircleRadius: 80,
+                            spiderfySpiralDistanceMultiplier: 2,
+                            circleSpiralSwitchover: 12,
+                            maxClusterRadius: 120,
+                            rotate: true,
+                            size: const Size(40, 40),
+                            anchor: AnchorPos.align(AnchorAlign.center),
+                            fitBoundsOptions: const FitBoundsOptions(
+                              padding: EdgeInsets.all(50),
+                              maxZoom: 15,
+                            ),
+                            markers: [
+                              Marker(
+                                point: LatLng(
                                     double.parse(widget.servizio.struttura!
                                         .posizione!.latitudine!),
                                     double.parse(widget.servizio.struttura!
                                         .posizione!.longitudine!)),
-                                zoom: 15.0,
-                                maxZoom: 30.0,
-                                enableScrollWheel: true,
-                                scrollWheelVelocity: 0.005,
-                              ),
-                              children: [
-                                TileLayer(
-                                    urlTemplate:
-                                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
-                                MarkerClusterLayerWidget(
-                                  options: MarkerClusterLayerOptions(
-                                    spiderfyCircleRadius: 80,
-                                    spiderfySpiralDistanceMultiplier: 2,
-                                    circleSpiralSwitchover: 12,
-                                    maxClusterRadius: 120,
-                                    rotate: true,
-                                    size: const Size(40, 40),
-                                    anchor: AnchorPos.align(AnchorAlign.center),
-                                    fitBoundsOptions: const FitBoundsOptions(
-                                      padding: EdgeInsets.all(50),
-                                      maxZoom: 15,
-                                    ),
-                                    markers: [
-                                      Marker(
-                                        point: LatLng(
-                                            double.parse(widget
-                                                .servizio
-                                                .struttura!
-                                                .posizione!
-                                                .latitudine!),
-                                            double.parse(widget
-                                                .servizio
-                                                .struttura!
-                                                .posizione!
-                                                .longitudine!)),
-                                        builder: (ctx) => Icon(
-                                          widget.servizio.customIcon != null
-                                              ? widget.servizio.getIconData()
-                                              : Icons.location_on,
-                                          size: 50,
-                                          color: AppColors.logoCadmiumOrange,
-                                        ),
-                                        width: 50.0,
-                                        height: 50.0,
-                                      )
-                                    ],
-                                    polygonOptions: const PolygonOptions(
-                                        borderColor: AppColors.logoBlue,
-                                        color: Colors.black12,
-                                        borderStrokeWidth: 3),
-                                    builder: (context, markers) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: AppColors.logoBlue),
-                                        child: Center(
-                                          child: Text(
-                                            markers.length.toString(),
-                                            style: const TextStyle(
-                                                color: Colors.white),
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                builder: (ctx) => Icon(
+                                  widget.servizio.customIcon != null
+                                      ? widget.servizio.getIconData()
+                                      : Icons.location_on,
+                                  size: 50,
+                                  color: AppColors.logoCadmiumOrange,
+                                ),
+                                width: 50.0,
+                                height: 50.0,
+                              )
+                            ],
+                            polygonOptions: const PolygonOptions(
+                                borderColor: AppColors.logoBlue,
+                                color: Colors.black12,
+                                borderStrokeWidth: 3),
+                            builder: (context, markers) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: AppColors.logoBlue),
+                                child: Center(
+                                  child: Text(
+                                    markers.length.toString(),
+                                    style: const TextStyle(color: Colors.white),
                                   ),
                                 ),
-                              ]),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const Divider(
-                          thickness: 2,
-                        ),
-                        widget.servizio.immagine!=null?
-                            Padding(padding: const EdgeInsets.all(10),child: Image.memory(base64Decode(widget.servizio.immagine!.imageData)),)
-
-                            : const Text("Nessuna immagine",
-                            textAlign: TextAlign.justify,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15,
-                              letterSpacing: 0,
-                              color: Colors.black,
-                            )
-                        ),
-                        const Divider(
-                          thickness: 2,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                                child: Padding(
-                                    padding: defaultPaddingElement,
-                                    child: CustomButton(
-                                      onPressed: () => isContactDisable
-                                          ? null
-                                          : () async {
-                                              String number = widget
-                                                  .servizio.contatto!.telefono!;
-                                              Uri tel =
-                                                  Uri.parse("tel:$number");
-                                              await launchUrl(tel);
-                                            },
-                                      textButton: 'Telefona',
-                                      bgColor: isContactDisable
-                                          ? Colors.grey
-                                          : AppColors.logoBlue,
-                                      icon: Icons.phone,
-                                    ))),
-                            Expanded(
-                                child: Padding(
-                                    padding: defaultPaddingElement,
-                                    child: CustomButton(
-                                      textButton: "E-mail",
-                                      onPressed: () => isEmailDisable
-                                          ? null
-                                          : () async {
-                                              String email =
-                                                  Uri.encodeComponent(widget
-                                                      .servizio
-                                                      .contatto!
-                                                      .email!);
-                                              String subject = Uri.encodeComponent(
-                                                  "Informazioni su ${widget.servizio.nome}");
-                                              String body = Uri.encodeComponent(
-                                                  "Salve, la contatto in merito...");
-                                              Uri mail = Uri.parse(
-                                                  "mailto:$email?subject=$subject&body=$body");
-                                              await launchUrl(mail);
-                                            },
-                                      icon: Icons.email,
-                                      bgColor: isEmailDisable
-                                          ? Colors.grey
-                                          : AppColors.logoBlue,
-                                    )))
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const Text(
-                          "Informazioni sul servizio",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            letterSpacing: 0.57,
-                            color: Colors.black,
+                              );
+                            },
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Padding(
-                          padding: defaultPaddingElement,
-                          child: Text(
-                            (widget.servizio.contenuto != null)
-                                ? widget.servizio.contenuto!
-                                : "Nessuna descrizione",
-                            textAlign: TextAlign.justify,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15,
-                              letterSpacing: 0,
-                              color: Colors.black,
-                            ),
-                            //maxLines: 4,
-                            //overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                childCount: 1, // 1000 list items
-              ),
+                      ]),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                widget.servizio.immagine != null
+                    ? Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Image.memory(
+                            base64Decode(widget.servizio.immagine!.imageData)),
+                      )
+                    : const Text("Nessuna immagine",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: AppColors.logoCadmiumOrange,
+                        )),
+                const SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        child: Padding(
+                            padding: defaultPaddingElement,
+                            child: CustomButton(
+                              onPressed: () => isContactDisable
+                                  ? null
+                                  : () async {
+                                      String number =
+                                          widget.servizio.contatto!.telefono!;
+                                      Uri tel = Uri.parse("tel:$number");
+                                      await launchUrl(tel);
+                                    },
+                              textButton: 'Telefona',
+                              bgColor: isContactDisable
+                                  ? Colors.grey
+                                  : AppColors.logoBlue,
+                              icon: Icons.phone,
+                            ))),
+                    Expanded(
+                        child: Padding(
+                            padding: defaultPaddingElement,
+                            child: CustomButton(
+                              textButton: "E-mail",
+                              onPressed: () => isEmailDisable
+                                  ? null
+                                  : () async {
+                                      String email = Uri.encodeComponent(
+                                          widget.servizio.contatto!.email!);
+                                      String subject = Uri.encodeComponent(
+                                          "Informazioni su ${widget.servizio.nome}");
+                                      String body = Uri.encodeComponent(
+                                          "Salve, la contatto in merito...");
+                                      Uri mail = Uri.parse(
+                                          "mailto:$email?subject=$subject&body=$body");
+                                      await launchUrl(mail);
+                                    },
+                              icon: Icons.email,
+                              bgColor: isEmailDisable
+                                  ? Colors.grey
+                                  : AppColors.logoBlue,
+                            )))
+                  ],
+                ),
+              ],
             ),
-          ],
+          ),
         ));
   }
 }

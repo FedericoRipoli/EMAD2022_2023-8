@@ -34,7 +34,7 @@ class AppTitle extends StatelessWidget {
           fontFamily: "Lexend",
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          letterSpacing: 1,
+          letterSpacing: 1.4,
           color: color ?? AppColors.white,
         ));
   }
