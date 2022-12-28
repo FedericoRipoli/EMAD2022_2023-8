@@ -22,7 +22,6 @@ class DetailPageService extends StatefulWidget {
 }
 
 class _DetailPageServiceState extends State<DetailPageService> {
-  final double infoHeight = 364.0;
   bool isContactDisable = true;
   bool isEmailDisable = true;
 
@@ -30,7 +29,6 @@ class _DetailPageServiceState extends State<DetailPageService> {
   Widget build(BuildContext context) {
     EdgeInsets defaultPaddingElement = const EdgeInsets.fromLTRB(30, 0, 30, 0);
     return Scaffold(
-        //backgroundColor: Colors.black,
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
@@ -85,7 +83,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                                           "Nessuna struttura",
                                       style: const TextStyle(
                                           color: AppColors.detailBlue,
-                                          fontWeight: FontWeight.w500,
+                                          fontWeight: FontWeight.w600,
                                           fontSize: 18),
                                     ),
                                   ],
