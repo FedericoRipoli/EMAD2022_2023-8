@@ -10,6 +10,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:mime/mime.dart';
 import 'dart:io';
 import '../components/generali/CustomButton.dart';
+import '../components/generali/CustomHtmlView.dart';
 import '../components/loading/AllPageLoad.dart';
 import '../services/ImpostazioniService.dart';
 import '../services/ServizioService.dart';
@@ -256,23 +257,12 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
                               ),
                               TextButton(
                                   onPressed: () {
-                                    showDialog(
-                                      context: context,
-                                      builder: (ctx) => AlertDialog(
-                                        shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20.0))),
-                                        title: const Text("Privacy Policy"),
-                                        content: const Text(
-                                            "Qui andranno le policy"),
-                                        actions: <Widget>[
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.of(ctx).pop();
-                                              },
-                                              child: const Text("Chiudi")),
-                                        ],
-                                      ),
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => CustomHtmlView(
+                                        title: "Privacy policy",
+                                        html: impostazioni!.privacyPolicy,
+                                      )),
                                     );
                                   },
                                   child: const Text(
