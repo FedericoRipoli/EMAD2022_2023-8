@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 import '../../services/entity/Area.dart';
 import '../../theme/theme.dart';
-import '../../screens/InfoServizio.dart';
+import '../../screens/servizi/InfoServizio.dart';
 import 'package:frontend_sws/components/generali/ChipGenerale.dart';
 import 'package:frontend_sws/components/generali/ChipGenerale.dart';
 

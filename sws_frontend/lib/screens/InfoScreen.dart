@@ -73,12 +73,12 @@ class _InfoScreenState extends State<InfoScreen> {
                 ),
                 const Text(
                     "L'applicazione Salerno Amica nasce come punto di aggregazione di tutti i servizi"
-                    "che il Comune di Saleno, mette a disposizione dei suoi cittadini, gratuitamente"),
+                    "che il Comune di Saleno, mette a disposizione dei suoi cittadini, gratuitamente.\n"
+                    "Visualizza i Servizi, gli Eventi, i Defibrillatori..."),
                 const SizedBox(
                   height: 8,
                 ),
                 _infoTile('App name', 'Salerno Amica'),
-                _infoTile('Package name', _packageInfo.packageName),
                 _infoTile('App version', _packageInfo.version),
                 _infoTile('Build number', _packageInfo.buildNumber),
                 _infoTile('Build signature', _packageInfo.buildSignature),
