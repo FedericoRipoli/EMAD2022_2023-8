@@ -3,7 +3,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:frontend_sws/theme/theme.dart';
 
 class CustomButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String textButton;
   final IconData? icon;
   final Color? bgColor;
@@ -11,7 +11,7 @@ class CustomButton extends StatelessWidget {
 
   const CustomButton(
       {Key? key,
-      required this.onPressed,
+      this.onPressed,
       required this.textButton,
       this.icon,
       this.bgColor,

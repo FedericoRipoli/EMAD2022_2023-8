@@ -1,11 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:path/path.dart' as p;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:frontend_sws/components/generali/CustomTextField.dart';
 import 'package:frontend_sws/services/entity/Struttura.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:frontend_sws/theme/theme.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mime/mime.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../components/generali/CustomAppBar.dart';
@@ -20,6 +26,7 @@ import '../../services/ServizioService.dart';
 import '../../services/StrutturaService.dart';
 import '../../services/entity/Area.dart';
 import '../../services/entity/Contatto.dart';
+import '../../services/entity/ImageData.dart';
 import '../../services/entity/Servizio.dart';
 import '../../util/ToastUtil.dart';
 
@@ -38,6 +45,8 @@ class GestioneServizio extends StatefulWidget {
 class _GestioneServizio extends State<GestioneServizio> {
   late Future<bool> initCall;
   ServizioService servizioService = ServizioService();
+  bool errorImmagine = false;
+  PickedFile? imageFile;
 
   AreeService areeService = AreeService();
   StrutturaService strutturaService = StrutturaService();
@@ -161,6 +170,15 @@ class _GestioneServizio extends State<GestioneServizio> {
     return true;
   }
 
+  bool validateNoFormField() {
+    bool ret = false;
+    errorImmagine = false;
+    if (imageFile == null) {
+      ret = errorImmagine = true;
+    }
+    return !ret;
+  }
+
   void savePage() async {
     if (_formGlobalKey.currentState!.validate()) {
       _formGlobalKey.currentState?.save();
@@ -170,18 +188,26 @@ class _GestioneServizio extends State<GestioneServizio> {
       Servizio? nServizio;
       if (widget.idServizio == null) {
         nServizio = await servizioService.createServizio(Servizio(
-          nome: nomeController.value.text,
-          contenuto: contenutoController.value.text,
-          contatto: Contatto(
-            telefono: telefonoController.value.text,
-            email: emailController.value.text,
-            sitoWeb: sitoWebController.value.text,
-          ),
-          hashtags: tagController.getTags,
-          idAree: areeValues,
-          idStruttura: strutturaValue,
-          customIcon: _icon != null ? _icon!.icon!.codePoint.toString() : null,
-        ));
+            nome: nomeController.value.text,
+            contenuto: contenutoController.value.text,
+            contatto: Contatto(
+              telefono: telefonoController.value.text,
+              email: emailController.value.text,
+              sitoWeb: sitoWebController.value.text,
+            ),
+            hashtags: tagController.getTags,
+            idAree: areeValues,
+            idStruttura: strutturaValue,
+            customIcon:
+                _icon != null ? _icon!.icon!.codePoint.toString() : null,
+            immagine: (imageFile != null)
+                ? ImageData(
+                    imageData: base64Encode(await imageFile!.readAsBytes()),
+                    type: lookupMimeType(imageFile!.path) != null
+                        ? lookupMimeType(imageFile!.path)!
+                        : "image",
+                    nome: p.basename(imageFile!.path))
+                : null));
       } else {
         servizio!.nome = nomeController.value.text;
         servizio!.contatto!.telefono = telefonoController.value.text;
@@ -193,7 +219,16 @@ class _GestioneServizio extends State<GestioneServizio> {
         servizio!.hashtags = tagController.getTags;
         servizio!.customIcon =
             _icon != null ? _icon!.icon!.codePoint.toString() : null;
+        if (imageFile != null) {
+          servizio!.immagine = ImageData(
+              imageData: base64Encode(await imageFile!.readAsBytes()),
+              type: lookupMimeType(imageFile!.path) != null
+                  ? lookupMimeType(imageFile!.path)!
+                  : "image",
+              nome: p.basename(imageFile!.path));
+        }
         nServizio = await servizioService.editServizio(servizio!);
+
       }
       if (mounted) {}
       if (nServizio != null) {
@@ -279,7 +314,6 @@ class _GestioneServizio extends State<GestioneServizio> {
                         CustomTextField(
                           controller: emailController,
                           label: "Email referente",
-                          validator: "Inserisci il campo email",
                           enabled: (servizio == null ||
                               Servizio.canEnteEdit(servizio!.stato)),
                         ),
@@ -293,7 +327,6 @@ class _GestioneServizio extends State<GestioneServizio> {
                         CustomTextField(
                           controller: sitoWebController,
                           label: "Sito WEB",
-                          validator: "Inserisci il campo sito WEB",
                           enabled: (servizio == null ||
                               Servizio.canEnteEdit(servizio!.stato)),
                         ),
@@ -517,9 +550,12 @@ class _GestioneServizio extends State<GestioneServizio> {
                               });
                             }),
                         TextButton(
-                            onPressed: () {
-                              tagController.clearTags();
-                            },
+                            onPressed: servizio == null ||
+                                    Servizio.canEnteEdit(servizio!.stato)
+                                ? () {
+                                    tagController.clearTags();
+                                  }
+                                : null,
                             child: const Text(
                               "SVUOTA TAG",
                               style: TextStyle(
@@ -567,6 +603,79 @@ class _GestioneServizio extends State<GestioneServizio> {
                           thickness: 2,
                         ),
                         const SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CustomButton(
+                              onPressed: (servizio == null ||
+                                  Servizio.canEnteEdit(
+                                      servizio!.stato)) ? _getFromGallery : null,
+                              textButton: "Galleria",
+                              icon: Icons.photo_library,
+                            ),
+                            CustomButton(
+                              onPressed: (servizio == null ||
+                                  Servizio.canEnteEdit(
+                                      servizio!.stato)) ? _getFromCamera : null,
+                              textButton: "Fotocamera",
+                              icon: Icons.camera_alt,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Container(
+                          child: imageFile != null
+                              ? (kIsWeb
+                                  ? Image.network(imageFile!.path)
+                                  : Image.file(File(imageFile!.path)))
+                              : servizio != null && servizio!.immagine != null
+                                  ? Column(
+
+                            children: [
+                              Image.memory(base64Decode(
+                                  servizio!.immagine!.imageData)),
+                              TextButton(
+                                  onPressed: servizio == null ||
+                                      Servizio.canEnteEdit(servizio!.stato)
+                                      ? () {
+                                    imageFile=null;
+                                    servizio!.immagine=null;
+                                    setState(() {
+
+                                    });
+                                  }
+                                      : null,
+                                  child: const Text(
+                                    "RIMUOVI IMMAGINE",
+                                    style: TextStyle(
+                                        color: AppColors.logoCadmiumOrange,
+                                        fontWeight: FontWeight.w700),
+                                  ))
+                            ],
+                          )
+
+                                  : const Text(
+                                      "Nessuna immagine selezionata",
+                                      textAlign: TextAlign.center,
+                                    ),
+                        ),
+                        errorImmagine
+                            ? const Text("Devi inserire una foto!",
+                                style: TextStyle(color: Colors.red))
+                            : Container(),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        // termini privacy
+                        const Divider(
+                          thickness: 2,
+                        ),
+                        const SizedBox(
                           height: 20,
                         ),
                         (servizio != null && servizio!.note != null)
@@ -583,7 +692,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                                 height: 0,
                               ),
                         CustomButton(
-                          onPressed: () => !loaded ||
+                          onPressed: !loaded ||
                                   (servizio != null &&
                                       !Servizio.canEnteEdit(servizio!.stato))
                               ? null
@@ -627,5 +736,24 @@ class _GestioneServizio extends State<GestioneServizio> {
   _removeIcon() {
     _icon = null;
     setState(() {});
+  }
+
+  Future _getImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      setState(() => imageFile = PickedFile(image.path));
+    } catch (e) {
+      print('Errore inserimento immagine: $e');
+    }
+  }
+
+  Future _getFromGallery() async {
+    _getImage(ImageSource.gallery);
+  }
+
+  /// Get from Camera
+  Future _getFromCamera() async {
+    _getImage(ImageSource.camera);
   }
 }
