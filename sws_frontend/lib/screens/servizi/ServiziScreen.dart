@@ -13,6 +13,8 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../components/filtri/DropDownTextFilter.dart';
 import '../../components/filtri/FilterBar.dart';
 import '../../components/filtri/GenericFilter.dart';
+import '../../components/filtri/NoOpsFilter.dart';
+import '../../components/filtri/OrderFilter.dart';
 import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomPagedListView.dart';
 import '../../services/dto/PuntoMappaDTO.dart';
@@ -237,20 +239,34 @@ class _ServiziScreenState extends State<ServiziScreen>
                         TextFilter(
                             name: 'Cerca un servizio...',
                             textEditingController: widget.filtroNomeController,
-                            positionType: GenericFilterPositionType.col,
+                            positionType: GenericFilterPositionType.row,
+                            flex:9,
                             valueChange: _filterNomeChange),
+                        OrderFilter(
+                          name: "Ordinamento",
+                          flex:1,
+                          positionType: GenericFilterPositionType.row,
+                          valueChange: _filterEnteChange, //
+                        ),
+                        NoOpsFilter(
+                          name: "newline",
+                          positionType: GenericFilterPositionType.col,
+                          valueChange: (s){}, //
+                        ),
                         DropDownFilter(
                             name: "Seleziona Area",
                             positionType: GenericFilterPositionType.row,
                             valueChange: _filterAreaChange,
-                            //TODO
+                            flex:4,
                             values: itemsAree,
                             defaultValue: dropdownValueArea),
                         DropDownTextFilter(
                             name: "Seleziona Ente",
                             positionType: GenericFilterPositionType.row,
+                            flex:4,
                             valueChange: _filterEnteChange, //TODO
-                            values: itemsEnti)
+                            values: itemsEnti),
+
                       ]),
                     ],
                   ),

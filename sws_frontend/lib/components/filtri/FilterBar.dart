@@ -34,7 +34,7 @@ class _FilterBar extends State<FilterBar> {
               )
             : Row(
                 children: [
-                  Expanded(
+                  Expanded(flex:filter.flex,
                       child: Padding(padding: defaultPadding, child: toadd))
                 ],
               ));
@@ -47,7 +47,7 @@ class _FilterBar extends State<FilterBar> {
         } else if (filter.positionType == GenericFilterPositionType.row &&
             lastChild is Row) {
           (lastChild).children.add(
-              Expanded(child: Padding(padding: defaultPadding, child: toadd)));
+              Expanded(flex:filter.flex,child: Padding(padding: defaultPadding, child: toadd)));
         } else {
           columnChild.add(filter.positionType == GenericFilterPositionType.col
               ? Column(
@@ -56,6 +56,7 @@ class _FilterBar extends State<FilterBar> {
               : Row(
                   children: [
                     Expanded(
+                        flex:filter.flex,
                         child: Padding(padding: defaultPadding, child: toadd))
                   ],
                 ));

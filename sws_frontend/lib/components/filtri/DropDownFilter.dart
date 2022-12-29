@@ -14,7 +14,8 @@ class DropDownFilter extends GenericFilter {
       required super.positionType,
       required super.valueChange,
       required this.values,
-      this.defaultValue});
+      this.defaultValue,
+        super.flex=1});
 
   @override
   Widget getWidget() {

@@ -13,7 +13,9 @@ class TextFilter extends GenericFilter {
       required super.valueChange,
       this.delayMilliSec = 750,
       this.textEditingController,
-      this.debounce});
+      this.debounce,
+      super.flex = 1});
+
   Timer? debounce;
   int delayMilliSec;
   TextEditingController? textEditingController;
