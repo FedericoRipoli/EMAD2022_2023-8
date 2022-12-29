@@ -93,6 +93,14 @@ public class ServizioController {
 
     }
 
+    @GetMapping("/api/servizistruttura/{id}")
+    public ResponseEntity listServiziStruttura(@PathVariable String id) {
+
+        return ResponseEntity.ok(servizioRepository.findAllByStruttura_Id(id));
+
+
+    }
+
     @GetMapping("/api/servizi/{id}")
     public ResponseEntity getServizio(@PathVariable String id) {
         return ResponseEntity.ok(servizioRepository.findById(id).orElseThrow());

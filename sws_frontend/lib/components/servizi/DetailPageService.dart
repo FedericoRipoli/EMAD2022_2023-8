@@ -59,6 +59,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                               height: 6,
                             ),
                             TextButton(
+
                                 onPressed: () {
                                   Navigator.push(
                                     context,
@@ -80,8 +81,11 @@ class _DetailPageServiceState extends State<DetailPageService> {
                                     Text(
                                       widget.servizio.struttura!.ente!
                                               .denominazione ??
-                                          "Nessuna struttura",
+                                          "",
                                       style: const TextStyle(
+                                        decoration: TextDecoration.underline,
+                                          decorationColor: AppColors.logoCadmiumOrange,
+                                          decorationThickness: 5,
                                           color: AppColors.detailBlue,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 18),
@@ -115,7 +119,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                   subTitle: Text(
                     widget.servizio.struttura?.denominazione != null
                         ? "Struttura: ${widget.servizio.struttura!.denominazione!}"
-                        : "Struttura non disponinile",
+                        : "Struttura non disponibile",
                     style: const TextStyle(fontSize: 16),
                   ),
                   description: Text(

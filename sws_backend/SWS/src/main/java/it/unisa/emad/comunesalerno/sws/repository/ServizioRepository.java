@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 public interface ServizioRepository extends JpaRepository<Servizio, String>, JpaSpecificationExecutor<Servizio>, ServizioRepositoryCustom {
 
@@ -28,4 +30,6 @@ public interface ServizioRepository extends JpaRepository<Servizio, String>, Jpa
     Page<Servizio> findAll(Specification sp, Pageable p);
 
     boolean existsAllByStatoEqualsAndContatto_EmailEquals(StatoOperazione stato,String email);
+
+    List<Servizio> findAllByStruttura_Id(String id);
 }

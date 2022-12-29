@@ -101,6 +101,7 @@ class _ListaStruttureState extends State<ListaStrutture> {
 
                     itemBuilder: (context, item, index) => StrutturaListItem(
                         denominazione: item.denominazione!,
+                        indirizzo: item.posizione!.indirizzo!,
                         id: item.id!,
                         onDelete: () {
                           strutturaService
