@@ -30,11 +30,13 @@ class CustomButton extends StatelessWidget {
       text: textButton,
       textStyle: const TextStyle(
           color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 18),
-      icon: Icon(
-        icon,
-        color: AppColors.white,
-        size: MediaQuery.of(context).size.height * 0.02,
-      ),
+      icon: icon == null
+          ? null
+          : Icon(
+              icon,
+              color: AppColors.white,
+              size: MediaQuery.of(context).size.height * 0.02,
+            ),
       buttonBoxShadow: false,
       borderSide: BorderSide.none,
       shape: GFButtonShape.pills,

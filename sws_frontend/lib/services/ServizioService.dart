@@ -21,7 +21,7 @@ class ServizioService {
   UserService userService = UserService();
 
   Future<List<Servizio>?> serviziList(String? nome, String? idEnte,
-      String? idArea, String? stato, int page, bool logged) async {
+      String? idArea, String? stato, int page, bool logged, String? orderString) async {
     String? token;
     if (logged) {
       token = await userService.getUser();
@@ -41,6 +41,9 @@ class ServizioService {
       }
       if (stato != null) {
         queryStringUtil.add("stato", stato);
+      }
+      if (orderString != null) {
+        queryStringUtil.addString(orderString);
       }
 
       Uri u = Uri.parse(
