@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:frontend_sws/services/entity/Posizione.dart';
 import 'package:path/path.dart' as p;
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,7 @@ class _GestioneEventoState extends State<GestioneEvento> {
   TextEditingController emailController = TextEditingController();
   TextEditingController sitoWebController = TextEditingController();
   TextfieldTagsController tagController = TextfieldTagsController();
-
+  TextEditingController indirizzoController = TextEditingController();
   // date picker
 
   @override
@@ -125,13 +126,18 @@ class _GestioneEventoState extends State<GestioneEvento> {
         contenutoController.text = (evento!.contenuto!);
       }
       if (evento!.dataInizio != null) {
-        dataInizioController.text = (DateFormat("yyyy-MM-dd").format(DateTime.parse(evento!.dataInizio!)));
+        dataInizioController.text = (DateFormat("yyyy-MM-dd")
+            .format(DateTime.parse(evento!.dataInizio!)));
       }
       if (evento!.dataFine != null) {
-        dataFineController.text = (DateFormat("yyyy-MM-dd").format(DateTime.parse(evento!.dataFine!)));
+        dataFineController.text = (DateFormat("yyyy-MM-dd")
+            .format(DateTime.parse(evento!.dataFine!)));
       }
       if (evento!.note != null) {
         noteController.text = (evento!.note!);
+      }
+      if (evento!.posizione != null) {
+        indirizzoController.text = (evento!.posizione!.indirizzo!);
       }
       if (evento!.contatto != null) {
         sitoWebController.text =
@@ -175,6 +181,7 @@ class _GestioneEventoState extends State<GestioneEvento> {
               email: emailController.value.text,
               sitoWeb: sitoWebController.value.text,
             ),
+            posizione: Posizione(indirizzo: indirizzoController.value.text),
             hashtags: tagController.getTags,
             idAree: areeValues,
             dataInizio: dataInizioController.value.text,
@@ -192,6 +199,7 @@ class _GestioneEventoState extends State<GestioneEvento> {
         evento!.contatto!.telefono = telefonoController.value.text;
         evento!.contatto!.email = emailController.value.text;
         evento!.contatto!.sitoWeb = sitoWebController.value.text;
+        evento!.posizione!.indirizzo = indirizzoController.value.text;
         evento!.contenuto = contenutoController.value.text;
         evento!.idAree = areeValues;
         evento!.hashtags = tagController.getTags;
@@ -297,6 +305,10 @@ class _GestioneEventoState extends State<GestioneEvento> {
                       CustomTextField(
                         controller: sitoWebController,
                         label: "Sito WEB evento",
+                      ),
+                      CustomTextField(
+                        controller: indirizzoController,
+                        label: "Luogo dell'evento",
                       ),
                       CustomTextField(
                           controller: contenutoController,

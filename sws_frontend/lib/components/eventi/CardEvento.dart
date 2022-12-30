@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import '../../screens/eventi/InfoEvento.dart';
 import '../../services/entity/Area.dart';
+import '../../services/entity/ImageData.dart';
 import '../../theme/theme.dart';
 import '../../util/ManageDate.dart';
+import '../generali/ImageVisualizer.dart';
 
 class CardEvento extends StatelessWidget {
   final String nomeEvento, idEvento;
@@ -10,6 +13,7 @@ class CardEvento extends StatelessWidget {
   final List<String>? tags;
   final List<Area>? aree;
   final String? dataInizio, dataFine, posizione;
+  final ImageData? locandina;
 
   const CardEvento({
     Key? key,
@@ -24,6 +28,7 @@ class CardEvento extends StatelessWidget {
     this.posizione,
     this.aree,
     this.tags,
+    this.locandina,
   }) : super(key: key);
 
   @override
@@ -63,11 +68,6 @@ class CardEvento extends StatelessWidget {
                               fontSize: 20.0,
                             ),
                           ),
-                          trailing: const Icon(
-                            Icons.event_available,
-                            color: AppColors.logoCadmiumOrange,
-                            size: 28,
-                          ),
                         ),
                         const SizedBox(
                           height: 3,
@@ -85,7 +85,7 @@ class CardEvento extends StatelessWidget {
                           subtitle: Text(
                             posizione!,
                             style: const TextStyle(
-                                color: AppColors.black, fontSize: 16),
+                                color: AppColors.black, fontSize: 15),
                           ),
                         ),
                         const SizedBox(
@@ -120,17 +120,27 @@ class CardEvento extends StatelessWidget {
                         )
                       ]),
                 ),
-                Expanded(
+                const Expanded(
                   flex: 1,
-                  child: Container(
-                      child: Image.asset(
-                    "images/img_placeholder.jpg",
-                    fit: BoxFit.fitHeight,
-                  )),
+                  child: Center(
+                    child: Icon(
+                      Icons.event_note,
+                      color: AppColors.logoCadmiumOrange,
+                      size: 36,
+                    ),
+                  ),
                 ),
               ],
             )));
   }
 }
 
-/**/
+/*child: ImageVisualizer(
+                      tag: "Locandina",
+                      imageData: locandina!.imageData,
+                    )*/
+
+/*Image.asset(
+"images/img_placeholder.jpg",
+fit: BoxFit.fitHeight,
+)*/

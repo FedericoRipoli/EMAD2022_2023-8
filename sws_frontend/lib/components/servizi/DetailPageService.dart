@@ -12,6 +12,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:frontend_sws/screens/ente/InfoEnte.dart';
 
+import '../generali/ImageVisualizer.dart';
+
 class DetailPageService extends StatefulWidget {
   Servizio servizio;
 
@@ -59,7 +61,6 @@ class _DetailPageServiceState extends State<DetailPageService> {
                               height: 6,
                             ),
                             TextButton(
-
                                 onPressed: () {
                                   Navigator.push(
                                     context,
@@ -83,8 +84,9 @@ class _DetailPageServiceState extends State<DetailPageService> {
                                               .denominazione ??
                                           "",
                                       style: const TextStyle(
-                                        decoration: TextDecoration.underline,
-                                          decorationColor: AppColors.logoCadmiumOrange,
+                                          decoration: TextDecoration.underline,
+                                          decorationColor:
+                                              AppColors.logoCadmiumOrange,
                                           decorationThickness: 5,
                                           color: AppColors.detailBlue,
                                           fontWeight: FontWeight.w600,
@@ -276,9 +278,10 @@ class _DetailPageServiceState extends State<DetailPageService> {
                 widget.servizio.immagine != null
                     ? Padding(
                         padding: const EdgeInsets.all(10),
-                        child: Image.memory(
-                            base64Decode(widget.servizio.immagine!.imageData)),
-                      )
+                        child: ImageVisualizer(
+                          tag: "Locandina",
+                          imageData: widget.servizio.immagine!.imageData,
+                        ))
                     : const Text("Nessuna immagine",
                         style: TextStyle(
                           fontWeight: FontWeight.w400,

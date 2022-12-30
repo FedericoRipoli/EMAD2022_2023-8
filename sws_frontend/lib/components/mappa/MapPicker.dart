@@ -1,5 +1,4 @@
 import 'package:geolocator/geolocator.dart' as gl;
-import 'package:location/location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -8,7 +7,7 @@ import '../loading/AllPageLoad.dart';
 
 class MapPicker extends StatefulWidget {
   final ValueChanged<LatLng?> mapValueChanged;
-  const MapPicker({Key? key,required this.mapValueChanged}) : super(key: key);
+  const MapPicker({Key? key, required this.mapValueChanged}) : super(key: key);
 
   @override
   _MapPicker createState() {
@@ -18,12 +17,8 @@ class MapPicker extends StatefulWidget {
 
 class _MapPicker extends State<MapPicker> {
   late Marker _locationMarker;
-  LatLng centerPosition=LatLng(40.6824408, 14.7680961);
-  bool loaded=false;
-
-
-
-
+  LatLng centerPosition = LatLng(40.6824408, 14.7680961);
+  bool loaded = false;
 
   /// Determine the current position of the device.
   ///
@@ -63,73 +58,72 @@ class _MapPicker extends State<MapPicker> {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    gl.Position currentPosition = await  gl.Geolocator.getCurrentPosition(desiredAccuracy: gl.LocationAccuracy.bestForNavigation);
-    centerPosition=LatLng(currentPosition.latitude, currentPosition.longitude);
+    gl.Position currentPosition = await gl.Geolocator.getCurrentPosition(
+        desiredAccuracy: gl.LocationAccuracy.bestForNavigation);
+    centerPosition =
+        LatLng(currentPosition.latitude, currentPosition.longitude);
     _locationMarker = Marker(
         point: centerPosition,
         builder: (ctx) => const Icon(
-          Icons.location_on,
-          color: Colors.red,
-          size: 32,
-        ));
+              Icons.location_on,
+              color: Colors.red,
+              size: 32,
+            ));
     widget.mapValueChanged!(centerPosition);
 
-    loaded=true;
+    loaded = true;
 
-    setState(() {
-
-    });
+    setState(() {});
   }
+
   @override
   void initState() {
     super.initState();
     _determinePosition();
     widget.mapValueChanged!(centerPosition);
-
   }
 
   // get user current location
 
-
-
   @override
   Widget build(BuildContext context) {
-    return !loaded?
-    const AllPageLoad()
-    : SizedBox(
-        height: 250,
-        child: FlutterMap(
-          options: MapOptions(
-            center: centerPosition,
-            zoom: 15.0,
-            maxZoom: 30.0,
-            enableScrollWheel: true,
-            scrollWheelVelocity: 0.005,
-            onTap: (tapPosition, point)  {
-              // salvare la posizione qui
-              setState(() {
-                _locationMarker = Marker(
-                    point: point,
-                    builder: (ctx) => const Icon(
-                          Icons.location_on,
-                          color: Colors.red,
-                          size: 32,
-                        ));
-              });
-              widget.mapValueChanged!(point);
-            },
-          ),
-          children: [
-            TileLayer(
-              urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-              subdomains: const <String>['a', 'b', 'c'],
-            ),
-            MarkerLayer(
-              markers: [
-                _locationMarker,
+    return !loaded
+        ? const AllPageLoad()
+        : SizedBox(
+            height: 250,
+            child: FlutterMap(
+              options: MapOptions(
+                center: centerPosition,
+                zoom: 15.0,
+                maxZoom: 30.0,
+                enableScrollWheel: true,
+                scrollWheelVelocity: 0.005,
+                onTap: (tapPosition, point) {
+                  // salvare la posizione qui
+                  setState(() {
+                    _locationMarker = Marker(
+                        point: point,
+                        builder: (ctx) => const Icon(
+                              Icons.location_on,
+                              color: Colors.red,
+                              size: 32,
+                            ));
+                  });
+                  widget.mapValueChanged!(point);
+                },
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate:
+                      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  subdomains: const <String>['a', 'b', 'c'],
+                ),
+                MarkerLayer(
+                  markers: [
+                    _locationMarker,
+                  ],
+                ),
               ],
-            ),
-          ],
-        ));
+            ));
   }
 }

@@ -40,12 +40,12 @@ class _EventiScreenState extends State<EventiScreen>
   List<DropDownFilterItem> itemsAree = [];
   String? dropdownValueArea;
 
-  bool asc=true;
-  String orderBy="nome";
-  String orderString="sort=nome,ASC";
+  bool asc = true;
+  String orderBy = "nome";
+  String orderString = "sort=nome,ASC";
 
   void _orderChange(String? text) {
-    orderString=text??orderString;
+    orderString = text ?? orderString;
     _pullRefresh();
 
     setState(() {});
@@ -161,23 +161,27 @@ class _EventiScreenState extends State<EventiScreen>
                     FilterBar(filters: [
                       TextFilter(
                           name: 'Cerca un evento...',
-                          flex:9,
+                          flex: 9,
                           textEditingController: widget.filtroNomeController,
                           positionType: GenericFilterPositionType.row,
                           valueChange: _filterNomeChange),
                       OrderFilter(
                         name: "Ordinamento",
-                        flex:1,
-                        elements: {"nome": "Nome", "dataInizio": "Data inizio", "dataFine": "Data fine",},
+                        flex: 1,
+                        elements: {
+                          "nome": "Nome",
+                          "dataInizio": "Data inizio",
+                          "dataFine": "Data fine",
+                        },
                         positionType: GenericFilterPositionType.row,
                         valueChange: _orderChange,
-                        orderString:orderString,
-                        context:context,
+                        orderString: orderString,
+                        context: context,
                       ),
                       NoOpsFilter(
                         name: "newline",
                         positionType: GenericFilterPositionType.col,
-                        valueChange: (s){}, //
+                        valueChange: (s) {}, //
                       ),
                       DropDownFilter(
                           name: "Seleziona Area",
@@ -260,12 +264,13 @@ class _EventiScreenState extends State<EventiScreen>
                       idEvento: item.id!,
                       nomeEvento: item.nome,
                       contenuto: item.contenuto,
-                      posizione: 'Salerno (SA)',
+                      posizione: item.posizione?.indirizzo ?? "",
                       telefono: item.contatto?.telefono,
                       email: item.contatto?.email,
                       dataInizio: item.dataInizio,
                       dataFine: item.dataFine,
                       aree: item.aree,
+                      locandina: item.locandina,
                       tags: item.hashtags)),
             ),
           ])),

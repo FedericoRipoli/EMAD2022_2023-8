@@ -78,6 +78,13 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                         fontWeight: FontWeight.w700,
                         fontSize: 18),
                   ),
+                  subTitle: Text(
+                    widget.evento.posizione!.indirizzo!,
+                    style: const TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16),
+                  ),
                   description: Text(
                     widget.evento.dataInizio != null
                         ? "Da ${ManageDate.formatDate(DateTime.parse(widget.evento.dataInizio!), context)}\na ${ManageDate.formatDate(DateTime.parse(widget.evento.dataFine!), context)}"
@@ -105,16 +112,6 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                 ),
                 const SizedBox(
                   height: 12,
-                ),
-                const Text(
-                  "Guarda sulla mappa",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.logoCadmiumOrange),
-                ),
-                const SizedBox(
-                  height: 6,
                 ),
                 /*SizedBox(
                   height: 200,
@@ -183,9 +180,6 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                         ),
                       ]),
                 ),*/
-                const SizedBox(
-                  height: 12,
-                ),
                 widget.evento.locandina != null
                     ? Padding(
                         padding: const EdgeInsets.all(10),
