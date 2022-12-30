@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import '../../screens/eventi/InfoEvento.dart';
 import '../../services/entity/Area.dart';
 import '../../services/entity/ImageData.dart';
