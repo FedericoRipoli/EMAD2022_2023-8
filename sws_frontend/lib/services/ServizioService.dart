@@ -16,17 +16,14 @@ import 'package:frontend_sws/util/JwtUtil.dart';
 
 import 'entity/Servizio.dart';
 
-
 class ServizioService {
-
   final log = Logger('ServizioServiceLogger');
   UserService userService = UserService();
 
-  Future<List<Servizio>?> serviziList(
-      String? nome,String? idEnte, String? idArea,String? stato, int page, bool logged) async {
-
+  Future<List<Servizio>?> serviziList(String? nome, String? idEnte,
+      String? idArea, String? stato, int page, bool logged, String? orderString) async {
     String? token;
-    if(logged){
+    if (logged) {
       token = await userService.getUser();
     }
     try {
@@ -45,10 +42,16 @@ class ServizioService {
       if (stato != null) {
         queryStringUtil.add("stato", stato);
       }
+      if (orderString != null) {
+        queryStringUtil.addString(orderString);
+      }
 
       Uri u = Uri.parse(
           "${RestURL.servizioService}?${queryStringUtil.getQueryString()}");
-      var response = await http.get(u, headers: token!=null?RestURL.authHeader(token!):RestURL.defaultHeader);
+      var response = await http.get(u,
+          headers: token != null
+              ? RestURL.authHeader(token!)
+              : RestURL.defaultHeader);
       if (response.statusCode == 200) {
         ListResponse<Servizio> l = ListResponse<Servizio>.fromJson(
             jsonDecode(utf8.decode(response.bodyBytes)), Servizio.fromJson);
@@ -62,8 +65,7 @@ class ServizioService {
 
   Future<Servizio?> getServizio(String id) async {
     try {
-      var response = await http.get(
-          Uri.parse("${RestURL.servizioService}/$id"),
+      var response = await http.get(Uri.parse("${RestURL.servizioService}/$id"),
           headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
         return servizioFromJson(utf8.decode(response.bodyBytes));
@@ -89,6 +91,7 @@ class ServizioService {
     }
     return false;
   }
+
   Future<Servizio?> editServizio(Servizio servizio) async {
     String? token = await userService.getUser();
     try {
@@ -106,7 +109,6 @@ class ServizioService {
     return null;
   }
 
-
   Future<Servizio?> createServizio(Servizio servizio) async {
     String? token = await userService.getUser();
     try {
@@ -122,8 +124,8 @@ class ServizioService {
     return null;
   }
 
-  Future<List<PuntoMappaDto>?> findPuntiMappa(String? nome, String? idEnte, String? idArea) async {
-
+  Future<List<PuntoMappaDto>?> findPuntiMappa(
+      String? nome, String? idEnte, String? idArea) async {
     try {
       QueryStringUtil queryStringUtil = QueryStringUtil();
       queryStringUtil.add("punti", "true");
@@ -142,7 +144,8 @@ class ServizioService {
       var response = await http.get(u, headers: RestURL.defaultHeader);
       if (response.statusCode == 200) {
         var l = json.decode(utf8.decode(response.bodyBytes));
-        return List<PuntoMappaDto>.from(l.map((model) => PuntoMappaDto.fromJson(model)));
+        return List<PuntoMappaDto>.from(
+            l.map((model) => PuntoMappaDto.fromJson(model)));
       }
     } catch (e) {
       log.severe(e);
@@ -150,26 +153,20 @@ class ServizioService {
     return null;
   }
 
-
-
-  Future<Servizio?> editStatoServizio(String id, String stato, String? note) async {
+  Future<Servizio?> editStatoServizio(
+      String id, String stato, String? note) async {
     String? token = await userService.getUser();
     try {
       QueryStringUtil queryStringUtil = QueryStringUtil();
 
-
-        queryStringUtil.add("stato", stato);
+      queryStringUtil.add("stato", stato);
       if (note != null) {
         queryStringUtil.add("note", note);
       }
       Uri u = Uri.parse(
           "${RestURL.editStatoServizioService}/$id?${queryStringUtil.getQueryString()}");
 
-
-
-      var response = await http.put(
-         u,
-          headers: RestURL.authHeader(token!));
+      var response = await http.put(u, headers: RestURL.authHeader(token!));
 
       if (response.statusCode == 200) {
         return servizioFromJson(utf8.decode(response.bodyBytes));
@@ -179,26 +176,38 @@ class ServizioService {
     }
     return null;
   }
+
   Future<Servizio?> createDefibrillatore(Servizio servizio) async {
-    Response? response ;
+    Response? response;
     try {
       response = (await http.post(Uri.parse(RestURL.defibrillatoriService),
           body: servizioToJson(servizio), headers: RestURL.defaultHeader));
-
-
     } catch (e) {
       log.severe(e);
     }
-    if(response!=null) {
+    if (response != null) {
       if (response.statusCode == 200) {
         return servizioFromJson(utf8.decode(response.bodyBytes));
-      }
-      else if(response.statusCode==405){
-        throw Exception("L'ultimo defibrillatore inserito è ancora in validazione");
+      } else if (response.statusCode == 405) {
+        throw Exception(
+            "L'ultimo defibrillatore inserito è ancora in validazione");
       }
     }
     return null;
   }
 
-
+  Future<List<Servizio>?> serviziListByStruttura(String idStruttura) async {
+    try {
+      Uri u = Uri.parse("${RestURL.servizioStrutturaService}/$idStruttura");
+      var response = await http.get(u, headers: RestURL.defaultHeader);
+      if (response.statusCode == 200) {
+        var l = json.decode(utf8.decode(response.bodyBytes));
+        return List<Servizio>.from(
+            l.map((model) => Servizio.fromJson(model)));
+      }
+    } catch (e) {
+      log.severe(e);
+    }
+    return null;
+  }
 }

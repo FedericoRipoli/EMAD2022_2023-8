@@ -6,14 +6,16 @@ import '../../generali/ConfirmBox.dart';
 import '../../generali/CustomAvatar.dart';
 
 class StrutturaListItem extends StatelessWidget {
-  final String denominazione, id;
-  final VoidCallback onTap, onDelete;
+  final String denominazione, id, indirizzo;
+  final VoidCallback? onTap;
+  final VoidCallback?  onDelete;
   const StrutturaListItem(
       {super.key,
       required this.denominazione,
+        required this.indirizzo,
       required this.id,
-      required this.onTap,
-      required this.onDelete});
+      this.onTap,
+      this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +34,15 @@ class StrutturaListItem extends StatelessWidget {
         ),
         onTap: onTap,
         titleText: denominazione,
-        icon: IconButton(
+        subTitleText: indirizzo,
+        icon:onDelete==null?null: IconButton(
           onPressed: () => {
             showDialog(
               context: context,
               builder: (context) {
                 return ConfirmBox(
                   label: denominazione,
-                  onDelete: onDelete,
+                  onDelete: onDelete!,
                 );
               },
             ),

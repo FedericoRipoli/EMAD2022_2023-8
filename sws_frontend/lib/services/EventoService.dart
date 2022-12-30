@@ -12,7 +12,7 @@ class EventoService {
   UserService userService = UserService();
 
   Future<List<Evento>?> eventiList(String? nome, String? idArea,
-      int page, bool logged) async {
+      int page, bool logged, String? orderString) async {
     String? token;
     if (logged) {
       token = await userService.getUser();
@@ -27,6 +27,10 @@ class EventoService {
       if (idArea != null) {
         queryStringUtil.add("idArea", idArea);
       }
+      if (orderString != null) {
+        queryStringUtil.addString(orderString);
+      }
+
 
       Uri u = Uri.parse(
           "${RestURL.eventoService}?${queryStringUtil.getQueryString()}");
