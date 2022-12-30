@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 import '../../components/filtri/DropDownFilter.dart';
 import '../../components/filtri/FilterBar.dart';
 import '../../components/filtri/GenericFilter.dart';
+import '../../components/filtri/NoOpsFilter.dart';
+import '../../components/filtri/OrderFilter.dart';
 import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomPagedListView.dart';
 import '../../services/AreeService.dart';
@@ -37,6 +39,17 @@ class _EventiScreenState extends State<EventiScreen>
   List<Area>? listAree;
   List<DropDownFilterItem> itemsAree = [];
   String? dropdownValueArea;
+
+  bool asc=true;
+  String orderBy="nome";
+  String orderString="sort=nome,ASC";
+
+  void _orderChange(String? text) {
+    orderString=text??orderString;
+    _pullRefresh();
+
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -92,7 +105,7 @@ class _EventiScreenState extends State<EventiScreen>
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await eventoService.eventiList(
-          filterNome, filterArea, pageKey, false);
+          filterNome, filterArea, pageKey, false, orderString);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -148,9 +161,24 @@ class _EventiScreenState extends State<EventiScreen>
                     FilterBar(filters: [
                       TextFilter(
                           name: 'Cerca un evento...',
+                          flex:9,
                           textEditingController: widget.filtroNomeController,
-                          positionType: GenericFilterPositionType.col,
+                          positionType: GenericFilterPositionType.row,
                           valueChange: _filterNomeChange),
+                      OrderFilter(
+                        name: "Ordinamento",
+                        flex:1,
+                        elements: {"nome": "Nome", "dataInizio": "Data inizio", "dataFine": "Data fine",},
+                        positionType: GenericFilterPositionType.row,
+                        valueChange: _orderChange,
+                        orderString:orderString,
+                        context:context,
+                      ),
+                      NoOpsFilter(
+                        name: "newline",
+                        positionType: GenericFilterPositionType.col,
+                        valueChange: (s){}, //
+                      ),
                       DropDownFilter(
                           name: "Seleziona Area",
                           positionType: GenericFilterPositionType.row,
