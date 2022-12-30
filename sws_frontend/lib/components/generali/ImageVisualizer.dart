@@ -1,12 +1,18 @@
+import 'dart:convert';
+import 'dart:html';
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 class ImageVisualizer extends StatelessWidget {
   String defaultImage = "images/img_placeholder.jpg";
-  final String tag;
+  final String imageData;
+  String? tag;
   //final String imgPath;
-  ImageVisualizer({Key? key, required this.tag}) : super(key: key);
+  ImageVisualizer({Key? key, this.tag, required this.imageData})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,10 @@ class ImageVisualizer extends StatelessWidget {
       height: 200.0,
       child: ClipRect(
         child: PhotoView(
-          imageProvider: AssetImage(defaultImage),
+          imageProvider: Image.memory(
+            convertBase64Image(imageData),
+            gaplessPlayback: true,
+          ).image,
           maxScale: PhotoViewComputedScale.covered * 2.0,
           minScale: PhotoViewComputedScale.contained * 0.8,
           initialScale: PhotoViewComputedScale.covered,
@@ -26,4 +35,9 @@ class ImageVisualizer extends StatelessWidget {
       ),
     );
   }
+
+  Uint8List convertBase64Image(String base64String) {
+    return const Base64Decoder().convert(base64String.split(',').last);
+  }
 }
+// Image.memory(base64Decode(widget.evento.locandina!.imageData)),

@@ -36,7 +36,7 @@ class OrderFilter extends GenericFilter {
               content: OrderFilterDialog(
                 valueChange: valueChange,
                 defaultValue: orderString.split("=")[1].split(",")[0],
-                asc: orderString.split("=")[1].split(",")[1]=="ASC",
+                asc: orderString.split("=")[1].split(",")[1] == "ASC",
                 elements: elements,
               ),
             );
@@ -85,11 +85,10 @@ class _OrderFilterDialogState extends State<OrderFilterDialog> {
       const SizedBox(
         height: 5,
       ),
-      Row(children: [
+      Column(children: [
         TextButton.icon(
             style: asc
-                ? TextButton.styleFrom(
-                    backgroundColor: AppColors.logoCadmiumOrange)
+                ? TextButton.styleFrom(backgroundColor: AppColors.detailBlue)
                 : null,
             onPressed: () {
               setState(() {
@@ -100,8 +99,7 @@ class _OrderFilterDialogState extends State<OrderFilterDialog> {
             label: const Text("Ascendente")),
         TextButton.icon(
             style: !asc
-                ? TextButton.styleFrom(
-                    backgroundColor: AppColors.logoCadmiumOrange)
+                ? TextButton.styleFrom(backgroundColor: AppColors.detailBlue)
                 : null,
             onPressed: () {
               setState(() {
@@ -118,8 +116,7 @@ class _OrderFilterDialogState extends State<OrderFilterDialog> {
         children: widget.elements.entries.map((e) {
           return TextButton(
               style: e.key == valueSelected
-                  ? TextButton.styleFrom(
-                      backgroundColor: AppColors.logoCadmiumOrange)
+                  ? TextButton.styleFrom(backgroundColor: AppColors.detailBlue)
                   : null,
               onPressed: () {
                 setState(() {
@@ -144,7 +141,8 @@ class _OrderFilterDialogState extends State<OrderFilterDialog> {
       )
     ]);
   }
-  String getOrderString(){
-    return "sort=$valueSelected,${asc?'ASC':'DESC'}";
+
+  String getOrderString() {
+    return "sort=$valueSelected,${asc ? 'ASC' : 'DESC'}";
   }
 }

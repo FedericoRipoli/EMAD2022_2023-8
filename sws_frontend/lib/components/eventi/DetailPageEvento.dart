@@ -2,13 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:frontend_sws/components/generali/CustomButton.dart';
 import 'package:frontend_sws/components/generali/ImageVisualizer.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../services/entity/Evento.dart';
@@ -192,10 +189,11 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                 widget.evento.locandina != null
                     ? Padding(
                         padding: const EdgeInsets.all(10),
-                        child: Image.memory(
-                            base64Decode(widget.evento.locandina!.imageData)),
-                      )
-                    : const Text("Nessuna immagine",
+                        child: ImageVisualizer(
+                          tag: "Locandina",
+                          imageData: widget.evento.locandina!.imageData,
+                        ))
+                    : const Text("Nessuna Locandina",
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
@@ -204,7 +202,6 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                 const SizedBox(
                   height: 12,
                 ),
-                ImageVisualizer(tag: "ciao"),
                 Row(
                   children: [
                     Expanded(
@@ -249,6 +246,9 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                                   : AppColors.logoBlue,
                             )))
                   ],
+                ),
+                const SizedBox(
+                  height: 10,
                 ),
               ],
             ),
