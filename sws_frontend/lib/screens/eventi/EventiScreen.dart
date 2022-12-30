@@ -140,7 +140,7 @@ class _EventiScreenState extends State<EventiScreen>
         automaticallyImplyLeading: true,
         title: const AppTitle(label: "Eventi"),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(widget.isFilterOpen ? 180 : 0),
+          preferredSize: Size.fromHeight(widget.isFilterOpen ? 230 : 0),
           child: widget.isFilterOpen
               ? Container(
                   child: Column(
@@ -158,30 +158,51 @@ class _EventiScreenState extends State<EventiScreen>
                           values: itemsAree),
                     ]),
                     Container(
-                      margin: const EdgeInsets.all(6),
-                      child: _selectedDateRange == null
-                          ? Wrap(
-                              children: [
-                                const Icon(
-                                  Icons.date_range,
-                                  color: AppColors.white,
-                                ),
-                                TextButton(
-                                    onPressed: _showDatePicker,
-                                    child: const Text(
-                                      "SELEZIONA RANGE DI DATE",
-                                      style: TextStyle(color: AppColors.white),
-                                    ))
-                              ],
-                            )
-                          : Text(
-                              "DA ${ManageDate.formatDate(_selectedDateRange?.start, context)}"
-                              "\nA ${ManageDate.formatDate(_selectedDateRange?.end, context)}",
-                              style: const TextStyle(
-                                  color: AppColors.white, fontSize: 16),
-                              textAlign: TextAlign.center,
-                            ),
-                    ),
+                        margin: const EdgeInsets.all(6),
+                        child: _selectedDateRange == null
+                            ? Wrap(
+                                children: [
+                                  const Icon(
+                                    Icons.date_range,
+                                    color: AppColors.white,
+                                  ),
+                                  TextButton(
+                                      onPressed: _showDatePicker,
+                                      child: const Text(
+                                        "Filtra eventi per date",
+                                        style: TextStyle(
+                                            color: AppColors.white,
+                                            fontSize: 16),
+                                      ))
+                                ],
+                              )
+                            : Column(
+                                children: [
+                                  Wrap(
+                                    children: [
+                                      const Icon(
+                                        Icons.date_range,
+                                        color: AppColors.white,
+                                      ),
+                                      TextButton(
+                                          onPressed: _showDatePicker,
+                                          child: const Text(
+                                            "Filtra eventi per date",
+                                            style: TextStyle(
+                                                color: AppColors.white,
+                                                fontSize: 16),
+                                          ))
+                                    ],
+                                  ),
+                                  Text(
+                                    "Da ${ManageDate.formatDate(_selectedDateRange?.start, context)}"
+                                    "\na ${ManageDate.formatDate(_selectedDateRange?.end, context)}",
+                                    style: const TextStyle(
+                                        color: AppColors.white, fontSize: 16),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              )),
                   ],
                 ))
               : Container(),

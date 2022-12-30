@@ -5,6 +5,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:frontend_sws/components/generali/CustomButton.dart';
+import 'package:frontend_sws/components/generali/ImageVisualizer.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 import 'package:latlong2/latlong.dart';
@@ -28,7 +29,7 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
 
   @override
   Widget build(BuildContext context) {
-    EdgeInsets defaultPaddingElement = const EdgeInsets.fromLTRB(30, 0, 30, 0);
+    EdgeInsets defaultPaddingElement = const EdgeInsets.fromLTRB(15, 0, 15, 0);
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -40,7 +41,7 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                     ClipPath(
                       clipper: WaveClipperOne(),
                       child: Container(
-                        height: 120,
+                        height: 100,
                         color: AppColors.logoBlue,
                         child: Center(
                             child: Column(
@@ -203,6 +204,7 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                 const SizedBox(
                   height: 12,
                 ),
+                ImageVisualizer(tag: "ciao"),
                 Row(
                   children: [
                     Expanded(

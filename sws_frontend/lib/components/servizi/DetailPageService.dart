@@ -27,7 +27,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
 
   @override
   Widget build(BuildContext context) {
-    EdgeInsets defaultPaddingElement = const EdgeInsets.fromLTRB(30, 0, 30, 0);
+    EdgeInsets defaultPaddingElement = const EdgeInsets.fromLTRB(15, 0, 15, 0);
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -329,6 +329,9 @@ class _DetailPageServiceState extends State<DetailPageService> {
                             )))
                   ],
                 ),
+                const SizedBox(
+                  height: 10,
+                )
               ],
             ),
           ),
