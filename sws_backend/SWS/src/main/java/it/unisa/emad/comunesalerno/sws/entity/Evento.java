@@ -35,7 +35,7 @@ public class Evento {
     private ImageData locandina;
 
 
-    @OneToMany
+    @ManyToMany
     private List<Area> aree;
 
     @Temporal(TemporalType.TIMESTAMP)

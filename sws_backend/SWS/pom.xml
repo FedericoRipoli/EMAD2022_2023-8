@@ -82,6 +82,11 @@
             <artifactId>hibernate-jpamodelgen</artifactId>
             <version>5.4.33.Final</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+            <version>9.1.1</version>
+        </dependency>
     </dependencies>
 
     <build>

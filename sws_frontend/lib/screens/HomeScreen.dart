@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Future<void> registerNotification() async {
     FirebaseMessaging _messaging = FirebaseMessaging.instance;
-
+    _messaging.subscribeToTopic("all");
     await _messaging.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,

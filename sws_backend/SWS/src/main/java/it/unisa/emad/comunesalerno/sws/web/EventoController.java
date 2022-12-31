@@ -1,9 +1,11 @@
 package it.unisa.emad.comunesalerno.sws.web;
 
+import it.unisa.emad.comunesalerno.sws.dto.NoteNotifica;
 import it.unisa.emad.comunesalerno.sws.entity.*;
 import it.unisa.emad.comunesalerno.sws.repository.AreaRepository;
 import it.unisa.emad.comunesalerno.sws.repository.EventoRepository;
 import it.unisa.emad.comunesalerno.sws.repository.search.specification.EventoSpecification;
+import it.unisa.emad.comunesalerno.sws.service.FirebaseMessagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,8 @@ import java.util.*;
 public class EventoController {
     @Autowired
     EventoRepository eventoRepository;
+    @Autowired
+    FirebaseMessagingService firebaseMessagingService;
     @Autowired
     AreaRepository areeRepository;
     @GetMapping
@@ -55,6 +59,17 @@ public class EventoController {
     public ResponseEntity create(@RequestBody Evento evento) {
         evento = setValues(evento);
         eventoRepository.save(evento);
+        try{
+            NoteNotifica note=new NoteNotifica();
+            note.setSubject("Nuovo Evento");
+            note.setContent("Nuovo evento inserito");
+            note.getData().put("idEvento",evento.getId());
+            firebaseMessagingService.sendNotification(note);
+        }
+        catch(Exception e ){
+
+        }
+
         return ResponseEntity.ok(evento);
     }
 

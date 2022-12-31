@@ -1,10 +1,13 @@
 package it.unisa.emad.comunesalerno.sws.web;
 
+import com.google.firebase.messaging.FirebaseMessagingException;
+import it.unisa.emad.comunesalerno.sws.dto.NoteNotifica;
 import it.unisa.emad.comunesalerno.sws.entity.Area;
 import it.unisa.emad.comunesalerno.sws.entity.Impostazioni;
 import it.unisa.emad.comunesalerno.sws.repository.AreaRepository;
 import it.unisa.emad.comunesalerno.sws.repository.ImportServiziRepository;
 import it.unisa.emad.comunesalerno.sws.repository.ImpostazioniRepository;
+import it.unisa.emad.comunesalerno.sws.service.FirebaseMessagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +23,9 @@ public class ImpostazioniController {
     @Autowired
     ImpostazioniRepository impostazioniRepository;
 
+
     @GetMapping
-    public ResponseEntity get() {
+    public ResponseEntity get() throws FirebaseMessagingException {
 
         return ResponseEntity.ok(impostazioniRepository.findAll().stream().findFirst());
     }

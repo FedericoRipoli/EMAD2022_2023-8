@@ -1,10 +1,12 @@
 package it.unisa.emad.comunesalerno.sws.web;
 
+import it.unisa.emad.comunesalerno.sws.dto.NoteNotifica;
 import it.unisa.emad.comunesalerno.sws.dto.PuntoMappaDTO;
 import it.unisa.emad.comunesalerno.sws.dto.ServizioMappaDTO;
 import it.unisa.emad.comunesalerno.sws.entity.*;
 import it.unisa.emad.comunesalerno.sws.repository.*;
 import it.unisa.emad.comunesalerno.sws.repository.search.specification.ServizioSpecification;
+import it.unisa.emad.comunesalerno.sws.service.FirebaseMessagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +21,8 @@ import java.util.*;
 @RestController
 @RequestMapping
 public class ServizioController {
-
+    @Autowired
+    FirebaseMessagingService firebaseMessagingService;
     @Autowired
     ImpostazioniRepository impostazioniRepository;
     @Autowired
@@ -151,7 +154,21 @@ public class ServizioController {
             if(note!=null){
                 s.setNote(note);
             }
-            return ResponseEntity.ok(servizioRepository.save(s));
+            servizioRepository.save(s);
+            if(stato.equals(StatoOperazione.APPROVATO.toString())){
+                try{
+                    NoteNotifica noteNotifica=new NoteNotifica();
+                    noteNotifica.setSubject("Nuovo Servizio");
+                    noteNotifica.setContent("Nuovo servizio inserito");
+                    noteNotifica.getData().put("idServizio",s.getId());
+                    firebaseMessagingService.sendNotification(noteNotifica);
+                }
+                catch(Exception e ){
+
+                }
+
+            }
+            return ResponseEntity.ok(s);
         }
         return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
