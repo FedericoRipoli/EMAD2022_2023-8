@@ -28,7 +28,7 @@ class CardServizio extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InfoServizio(idServizio)),
+          MaterialPageRoute(builder: (context) => InfoServizio(idServizio: idServizio)),
         );
       },
       child: Card(

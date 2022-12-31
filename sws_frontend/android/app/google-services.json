@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "415241971363",
+    "project_id": "salerno-f01f8",
+    "storage_bucket": "salerno-f01f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415241971363:android:8a9dd700c0b87ca8604116",
+        "android_client_info": {
+          "package_name": "com.sws.frontend_sws"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "415241971363-svm0hdk23e6ikuukmc60ijll2ihmd4s9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK8drNF2ts_wRb0rNZHDZ5MLpVt1VsU5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "415241971363-svm0hdk23e6ikuukmc60ijll2ihmd4s9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "415241971363-vmeo655i1mo96lkvevppid1herderiu6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sws.frontendSws"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

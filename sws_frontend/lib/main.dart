@@ -1,11 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:frontend_sws/admin_screens/servizi/ListaServizi.dart';
 import 'package:frontend_sws/components/generali/Splash.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+@pragma('vm:entry-point')
+Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  debugPrint("Handling a background message: ${message.messageId}");
+}
+void main() async{
+  await WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   runApp(MaterialApp(
     builder: (context, widget) => ResponsiveWrapper.builder(
       ClampingScrollWrapper.builder(context, widget!),

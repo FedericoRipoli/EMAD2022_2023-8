@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../components/eventi/DetailPageEvento.dart';
 import '../../components/generali/CustomAppBar.dart';
+import '../../components/loading/AllPageLoad.dart';
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../services/EventoService.dart';
 import '../../services/entity/Evento.dart';

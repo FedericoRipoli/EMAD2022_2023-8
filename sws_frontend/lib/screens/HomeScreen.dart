@@ -1,12 +1,19 @@
+import 'dart:convert';
 import 'dart:ui';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:draggable_home/draggable_home.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:frontend_sws/components/generali/AddDefCard.dart';
 import 'package:frontend_sws/components/generali/CustomFloatingButton.dart';
+import 'package:frontend_sws/screens/eventi/InfoEvento.dart';
+import 'package:frontend_sws/screens/servizi/InfoServizio.dart';
 import 'package:frontend_sws/services/ImpostazioniService.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:getwidget/components/button/gf_icon_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
+import '../admin_screens/servizi/ListaServizi.dart';
 import '../components/generali/LoginForm.dart';
 import '../components/generali/TopicCard.dart';
 import '../components/menu/DrawerMenu.dart';
@@ -32,14 +39,99 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   ImpostazioniService impostazioniService = ImpostazioniService();
   late Future<bool> initCall;
   Impostazioni? impostazioni;
+
+  void notificationTapMessage(Map<String, dynamic> data) {
+    debugPrint("onMessageOpenedApp");
+    if (data.containsKey("idEvento")) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => InfoEvento(idEvento: data["idEvento"])));
+    } else if (data.containsKey("idServizio")) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  InfoServizio(idServizio: data["idServizio"])));
+    } else {}
+  }
+
+
+
+  Future<void> showNotification(RemoteMessage payload) async {
+    var android = const AndroidInitializationSettings('icon');
+    var initiallizationSettingsIOS = const DarwinInitializationSettings();
+    var initialSetting = InitializationSettings(
+        android: android, iOS: initiallizationSettingsIOS);
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.initialize(
+      initialSetting,
+      onDidReceiveNotificationResponse: (details) {
+        Map<String, dynamic> map = jsonDecode(details.payload!);
+        notificationTapMessage(map);
+      },
+    );
+
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
+      'default_notification_channel_id',
+      'Notification',
+      channelDescription: 'All Notification is Here',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+      icon: "icon",
+      playSound: true,
+    );
+    const iOSDetails = DarwinNotificationDetails();
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidDetails, iOS: iOSDetails);
+
+    await flutterLocalNotificationsPlugin.show(0, payload.notification!.title,
+        payload.notification!.body, platformChannelSpecifics,
+        payload: jsonEncode(payload.data));
+  }
+
+  Future<void> registerNotification() async {
+    FirebaseMessaging _messaging = FirebaseMessaging.instance;
+
+    await _messaging.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    NotificationSettings settings = await _messaging.requestPermission(
+      alert: true,
+      badge: true,
+      provisional: false,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      await _messaging.getToken();
+
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        showNotification(message);
+      });
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        notificationTapMessage(message.data);
+      });
+    } else {
+      debugPrint('User declined or has not accepted permission');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+
     initCall = load();
   }
 
   Future<bool> load() async {
     impostazioni = await impostazioniService.getImpostazioni();
+    await registerNotification();
     setState(() {});
     return true;
   }

@@ -10,7 +10,7 @@ import '../../theme/theme.dart';
 class InfoServizio extends StatefulWidget {
   String idServizio;
 
-  InfoServizio(this.idServizio, {super.key});
+  InfoServizio({super.key, required this.idServizio});
 
   @override
   State<StatefulWidget> createState() => _InfoServizioState();

@@ -111,7 +111,7 @@ class _MapTabState extends State<MapTab> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        InfoServizio(e.id)));
+                                                        InfoServizio(idServizio: e.id)));
                                           },
                                           customIcon: e.getIconData(),
                                           nome: e.nome,
