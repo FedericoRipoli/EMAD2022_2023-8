@@ -11,7 +11,7 @@ class EventoService {
   final log = Logger('EventoServiceLogger');
   UserService userService = UserService();
 
-  Future<List<Evento>?> eventiList(String? nome, String? idArea,
+  Future<List<Evento>?> eventiList(String? nome, String? idArea, String? dataInizio, String? dataFine,
       int page, bool logged, String? orderString) async {
     String? token;
     if (logged) {
@@ -26,6 +26,12 @@ class EventoService {
       }
       if (idArea != null) {
         queryStringUtil.add("idArea", idArea);
+      }
+      if (dataInizio != null) {
+        queryStringUtil.add("dataInizio", dataInizio);
+      }
+      if (dataFine != null) {
+        queryStringUtil.add("dataFine", dataFine);
       }
       if (orderString != null) {
         queryStringUtil.addString(orderString);

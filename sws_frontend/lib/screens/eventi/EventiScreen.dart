@@ -44,6 +44,8 @@ class _EventiScreenState extends State<EventiScreen>
   String orderBy = "nome";
   String orderString = "sort=nome,ASC";
 
+  String? filtroInizio;
+  String? filtroFine;
   void _orderChange(String? text) {
     orderString = text ?? orderString;
     _pullRefresh();
@@ -97,7 +99,10 @@ class _EventiScreenState extends State<EventiScreen>
           start: DateTime.parse(formattedStartDate),
           end: DateTime.parse(formattedEndDate));
       setState(() {
-        _selectedDateRange = formattedResult;
+        filtroInizio=formattedStartDate;
+        filtroFine=formattedEndDate;
+        _selectedDateRange=formattedResult;
+        _pullRefresh();
       });
     }
   }
@@ -105,7 +110,7 @@ class _EventiScreenState extends State<EventiScreen>
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await eventoService.eventiList(
-          filterNome, filterArea, pageKey, false, orderString);
+          filterNome, filterArea,filtroInizio,filtroFine, pageKey, false, orderString);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);

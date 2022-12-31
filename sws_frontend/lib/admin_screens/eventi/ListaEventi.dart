@@ -53,7 +53,7 @@ class _ListaEventiState extends State<ListaEventi> {
   Future<void> _fetchPage(int pageKey) async {
     try {
       final newItems = await eventoService.eventiList(
-          filterNome, null, pageKey, true, null);
+          filterNome, null,null,null, pageKey, true, null);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);

@@ -9,6 +9,7 @@ import it.unisa.emad.comunesalerno.sws.service.FirebaseMessagingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,8 +31,8 @@ public class EventoController {
     public ResponseEntity listEventi(@AuthenticationPrincipal Utente user,
                                      @RequestParam(value = "name", required = false) String name,
                                      @RequestParam(value = "idArea", required = false) String idArea,
-                                     @RequestParam(value = "dataInizio", required = false) Date dataInizio,
-                                     @RequestParam(value = "dataFine", required = false) Date dataFine,
+                                     @RequestParam(value = "dataInizio", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataInizio,
+                                     @RequestParam(value = "dataFine", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataFine,
                                      Pageable pageable) {
 
         EventoSpecification specification = new EventoSpecification(name, idArea, dataInizio, dataFine);
