@@ -122,7 +122,7 @@ class Introduction extends StatelessWidget {
 
   Widget buildImage(String imagePath) {
     String baseAndroid = "assets/svg/";
-    String baseWeb = "vg/";
+    String baseWeb = "svg/";
     String path;
     if (kIsWeb) {
       path = baseWeb + imagePath;
