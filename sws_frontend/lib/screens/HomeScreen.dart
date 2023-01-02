@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -131,7 +132,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Future<bool> load() async {
     impostazioni = await impostazioniService.getImpostazioni();
-    await registerNotification();
+    if (!kIsWeb) {
+      await registerNotification();
+
+    }
     setState(() {});
     return true;
   }

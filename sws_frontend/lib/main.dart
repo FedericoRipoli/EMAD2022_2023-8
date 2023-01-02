@@ -16,21 +16,12 @@ Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 void main() async{
   await WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb){
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: "AIzaSyCK8drNF2ts_wRb0rNZHDZ5MLpVt1VsU5w",
-        appId: "com.sws.frontend_sws",
-        messagingSenderId: "web_id",
-        projectId: "salerno-f01f8",
-      ),
-    );
-  }
-  else{
+  if (!kIsWeb){
     await Firebase.initializeApp();
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   }
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
 
   runApp(MaterialApp(
     builder: (context, widget) => ResponsiveWrapper.builder(
