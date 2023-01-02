@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend_sws/screens/HomeScreen.dart';
@@ -19,7 +20,7 @@ class Introduction extends StatelessWidget {
               title: 'Benvenuto in Salerno Amica',
               body: "Salerno Amica è l'applicazione che racchiude tutti i "
                   'servizi in ambito Politiche Sociali e Giovanili del Comune di Salerno e provincia',
-              image: buildImage("/svg/intro_welcome.svg"),
+              image: buildImage("intro_welcome.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -28,7 +29,7 @@ class Introduction extends StatelessWidget {
               body:
                   "A portata di smartphone tutti i servizi gratuiti che il Comune di Salerno offre ai suoi cittadini. Cerca i "
                   "servizi filtrando le informazioni che ti interessano o esplora la mappa interattiva",
-              image: buildImage("svg/intro_explain.svg"),
+              image: buildImage("intro_explain.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -37,7 +38,7 @@ class Introduction extends StatelessWidget {
               body:
                   "L'app pone particolare attenzione sull'accessibilità, l'obiettivo primario di Salerno Amica è "
                   "rendere l'esperienza d'utilizzo semplice e intuitiva per tutti",
-              image: buildImage("svg/intro_access.svg"),
+              image: buildImage("intro_access.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -45,7 +46,7 @@ class Introduction extends StatelessWidget {
               title: 'Tieniti aggiornato sugli ultimi eventi',
               body:
                   'Non sai cosa fare stasera? guarda tutti gli eventi in programma nella zona di Salerno e dintorni',
-              image: buildImage("svg/intro_event.svg"),
+              image: buildImage("intro_event.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -53,7 +54,7 @@ class Introduction extends StatelessWidget {
               title: 'La mappa dei defibrillatori a portata di mano',
               body:
                   'Visualizza sulla mappa interattiva i defibrillatori presenti sul territorio e quelli più vicini a te',
-              image: buildImage("svg/intro_def.svg"),
+              image: buildImage("intro_def.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -62,7 +63,7 @@ class Introduction extends StatelessWidget {
               body:
                   'Hai dubbi sui servizi offerti dal Comune di Salerno o su cosa fare? Interagisci '
                   'con Olivia, ti aiuterà a comprendere meglio Salerno Amica',
-              image: buildImage("svg/intro_chatbot.svg"),
+              image: buildImage("intro_chatbot.svg"),
               //getPageDecoration, a method to customise the page style
               decoration: getPageDecoration(),
             ),
@@ -120,11 +121,19 @@ class Introduction extends StatelessWidget {
   }
 
   Widget buildImage(String imagePath) {
+    String baseAndroid = "assets/svg/";
+    String baseWeb = "svg/";
+    String path;
+    if (kIsWeb) {
+      path = baseWeb + imagePath;
+    } else {
+      path = baseAndroid + imagePath;
+    }
     return Container(
         margin: const EdgeInsets.all(5),
         child: Center(
           child: SvgPicture.asset(
-            imagePath,
+            path,
             width: 380,
           ),
         ));
