@@ -57,8 +57,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     } else {}
   }
 
-
-
   Future<void> showNotification(RemoteMessage payload) async {
     var android = const AndroidInitializationSettings('icon');
     var initiallizationSettingsIOS = const DarwinInitializationSettings();
@@ -202,7 +200,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       alwaysShowLeadingAndAction: true,
       headerWidget: headerWidgetWithImage(context),
       curvedBodyRadius: 20,
-      headerExpandedHeight: 0.26,
+      headerExpandedHeight: 0.24,
       body: [
         const Text(
           "Esplora le funzionalità",
@@ -311,7 +309,7 @@ Widget headerWidgetWithImage(BuildContext context) {
                     const HomeTitle(),
                     Image.asset(
                       "assets/images/logo.png",
-                      width: 82,
+                      width: 80,
                     ),
                   ],
                 ))),

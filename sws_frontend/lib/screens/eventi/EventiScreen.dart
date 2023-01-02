@@ -11,6 +11,7 @@ import '../../components/filtri/NoOpsFilter.dart';
 import '../../components/filtri/OrderFilter.dart';
 import '../../components/filtri/TextFilter.dart';
 import '../../components/generali/CustomPagedListView.dart';
+import '../../components/generali/CustomTextField.dart';
 import '../../services/AreeService.dart';
 import '../../services/EventoService.dart';
 import '../../services/entity/Area.dart';
@@ -33,7 +34,11 @@ class _EventiScreenState extends State<EventiScreen>
       PagingController(firstPageKey: 0);
   EventoService eventoService = EventoService();
   String? filterNome, filterArea;
-  DateTimeRange? _selectedDateRange;
+
+  bool dataInizioSetted = false;
+  bool dataFineSetted = false;
+  DateTime dataInizio = DateTime.now();
+  DateTime dataFine = DateTime.now();
 
   AreeService areeService = AreeService();
   List<Area>? listAree;
@@ -82,35 +87,46 @@ class _EventiScreenState extends State<EventiScreen>
     return itemsAree;
   }
 
-  void _showDatePicker() async {
-    final DateTimeRange? result = await showDateRangePicker(
-      context: context,
-      locale: const Locale('it'),
-      firstDate: DateTime(2022, 1, 1),
-      lastDate: DateTime(2030, 12, 31),
-      currentDate: DateTime.now(),
-      saveText: 'SALVA SCELTA',
-    );
+  void _showDateInizioPicker() async {
+    DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1950),
+        lastDate: DateTime(2100));
 
-    if (result != null) {
-      String formattedStartDate = DateFormat('yyyy-MM-dd').format(result.start);
-      String formattedEndDate = DateFormat('yyyy-MM-dd').format(result.end);
-      DateTimeRange formattedResult = DateTimeRange(
-          start: DateTime.parse(formattedStartDate),
-          end: DateTime.parse(formattedEndDate));
+    if (pickedDate != null) {
+      dataInizio = pickedDate;
+      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
       setState(() {
-        filtroInizio=formattedStartDate;
-        filtroFine=formattedEndDate;
-        _selectedDateRange=formattedResult;
+        filtroInizio = formattedDate;
         _pullRefresh();
+        dataInizioSetted = true;
+      });
+    }
+  }
+
+  void _showDateFinePicker() async {
+    DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1950),
+        lastDate: DateTime(2100));
+
+    if (pickedDate != null) {
+      dataFine = pickedDate;
+      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+      setState(() {
+        filtroFine = formattedDate;
+        _pullRefresh();
+        dataFineSetted = true;
       });
     }
   }
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await eventoService.eventiList(
-          filterNome, filterArea,filtroInizio,filtroFine, pageKey, false, orderString);
+      final newItems = await eventoService.eventiList(filterNome, filterArea,
+          filtroInizio, filtroFine, pageKey, false, orderString);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -158,7 +174,7 @@ class _EventiScreenState extends State<EventiScreen>
         automaticallyImplyLeading: true,
         title: const AppTitle(label: "Eventi"),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(widget.isFilterOpen ? 230 : 0),
+          preferredSize: Size.fromHeight(widget.isFilterOpen ? 270 : 0),
           child: widget.isFilterOpen
               ? Container(
                   child: Column(
@@ -195,51 +211,71 @@ class _EventiScreenState extends State<EventiScreen>
                           values: itemsAree),
                     ]),
                     Container(
-                        margin: const EdgeInsets.all(6),
-                        child: _selectedDateRange == null
-                            ? Wrap(
-                                children: [
-                                  const Icon(
-                                    Icons.date_range,
-                                    color: AppColors.white,
-                                  ),
-                                  TextButton(
-                                      onPressed: _showDatePicker,
-                                      child: const Text(
-                                        "Filtra eventi per date",
-                                        style: TextStyle(
+                      margin: const EdgeInsets.all(5),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.date_range,
+                                color: AppColors.white,
+                              ),
+                              TextButton(
+                                  onPressed: _showDateInizioPicker,
+                                  child: const Text(
+                                    "Data inizio evento",
+                                    style: TextStyle(
+                                        color: AppColors.white, fontSize: 14),
+                                  )),
+                              TextButton(
+                                onPressed: _showDateFinePicker,
+                                child: const Text(
+                                  "Data fine evento",
+                                  style: TextStyle(
+                                      color: AppColors.white, fontSize: 14),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              !dataInizioSetted
+                                  ? Container(
+                                      child: const SizedBox(
+                                      height: 6,
+                                    ))
+                                  : Container(
+                                      child: Text(
+                                        "Da ${ManageDate.formatDate(dataInizio, context)}",
+                                        style: const TextStyle(
                                             color: AppColors.white,
-                                            fontSize: 16),
-                                      ))
-                                ],
-                              )
-                            : Column(
-                                children: [
-                                  Wrap(
-                                    children: [
-                                      const Icon(
-                                        Icons.date_range,
-                                        color: AppColors.white,
+                                            fontSize: 14),
+                                        textAlign: TextAlign.center,
                                       ),
-                                      TextButton(
-                                          onPressed: _showDatePicker,
-                                          child: const Text(
-                                            "Filtra eventi per date",
-                                            style: TextStyle(
-                                                color: AppColors.white,
-                                                fontSize: 16),
-                                          ))
-                                    ],
-                                  ),
-                                  Text(
-                                    "Da ${ManageDate.formatDate(_selectedDateRange?.start, context)}"
-                                    "\na ${ManageDate.formatDate(_selectedDateRange?.end, context)}",
-                                    style: const TextStyle(
-                                        color: AppColors.white, fontSize: 16),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              )),
+                                    ),
+                              !dataFineSetted
+                                  ? Container(
+                                      child: const SizedBox(
+                                        height: 6,
+                                      ),
+                                    )
+                                  : Container(
+                                      child: Text(
+                                        "Fino a ${ManageDate.formatDate(dataFine, context)}",
+                                        style: const TextStyle(
+                                            color: AppColors.white,
+                                            fontSize: 14),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ))
               : Container(),
