@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -15,8 +16,20 @@ Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 void main() async{
   await WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb){
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyCK8drNF2ts_wRb0rNZHDZ5MLpVt1VsU5w",
+        appId: "com.sws.frontend_sws",
+        messagingSenderId: "web_id",
+        projectId: "salerno-f01f8",
+      ),
+    );
+  }
+  else{
+    await Firebase.initializeApp();
 
-  await Firebase.initializeApp();
+  }
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(MaterialApp(
