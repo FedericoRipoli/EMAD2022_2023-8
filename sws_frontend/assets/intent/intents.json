@@ -1,0 +1,114 @@
+[
+    {
+      "tag": "servizi",
+      "patterns": [
+        "Mostrami i servizi",
+        "Voglio vedere tutti i servizi",
+        "Quali servizi ci sono",
+        "Che servizi offri",
+        "Ho bisogno di un servizio",
+        "Fammi vedere tutti i servizi",
+        "Portami alla pagina dei servizi",
+        "Dammi i servizi"
+      ],
+      "responses": [
+        "Ecco a te tutti i servizi offerti dal Comune di Salerno"
+      ],
+      "context": ""
+    },
+    {
+        "tag": "eventi",
+        "patterns": [
+          "Mostrami gli eventi",
+          "Voglio vedere tutti gli eventi",
+          "Ultimi eventi",
+          "Quali eventi ci sono",
+          "Che eventi offri",
+          "Ho bisogno di un evento",
+          "A cosa posso partecipare",
+          "Eventi in zona",
+          "Dammi gli eventi"
+        ],
+        "responses": [
+          "Ecco a te tutti gli eventi nella zona di Salerno e dintorni"
+        ],
+        "context": ""
+    },
+    {
+        "tag": "defibrillatori",
+        "patterns": [
+            "Mostrami i defibrillatori",
+            "Voglio vedere tutti i defibrillatori",
+            "Dove trovo un defibrillatore",
+            "Quali defibrillatori ci sono",
+            "Che cosa fare per trovare un defibrillatore",
+            "Dammi i defibrillatori",
+            "Ho bisogno di un defibrillatore",
+            "Quanto è lontano un defibrillatore",
+            "Mi serve un defibrillatore",
+            "Defibrillatore nelle vicinanze"
+        ],
+        "responses": [
+          "Ecco tutti i defibrillatori presenti intorno a te"
+        ],
+        "context": ""
+    },
+    {
+        "tag": "ricerca_servizi",
+        "patterns": [
+          "Mostrami i servizi per i",
+          "Mostrami i servizi dell'ente",
+          "Mostrami i servizi per le persone con",
+          "Voglio vedere tutti i servizi per i",
+          "Voglio vedere tutti i servizi per le persone con",
+          "Quali servizi ci sono per",
+          "Quali servizi offre l'ente",
+          "Cosa offre l'ente",
+        "Voglio i servizi per ",
+          "Servizi per ",
+          "Che servizi offri per i",
+          "Che servizi offri per l'area ",
+          "Che servizi offri per l'ente ",
+          "Che servizi offri per gli",
+          "Ho bisogno di un servizio per"
+        ],
+        "responses": [
+          "Sto cercando per te i Servizi per ",
+          "Verrai indirizzati verso i Servizi più adatti a te",
+          "Ecco a te i servizi filtrati"
+        ],
+        "context": ""
+    },
+    {
+        "tag": "ricerca_eventi",
+        "patterns": [
+          "Mostrami gli eventi per le persone",
+          "Mostrami gli eventi dell'area",
+          "Mostrami gli eventi per le persone con",
+          "Voglio vedere tutti gli eventi per ",
+          "Voglio vedere tutti gli eventi per le persone con",
+          "Quali eventi ci sono per",
+          "Quali eventi offre l'area",
+          "Eventi per ",
+          "Voglio gli eventi per",
+          "Che eventi ci sono per i",
+          "Che eventi ci sono per l'area ",
+          "Che eventi offri per l'area ",
+          "Che eventi offri per gli",
+          "Ho bisogno di un evento dal",
+          "Quali eventi ci sono da",  
+          "Quali eventi ci sono fino a",
+          "Che eventi offri dopo ",
+          "A cosa posso partecipare dal",
+          "Quali eventi ci sono in programma da",
+          "Quali eventi ci sono in programma fino"
+
+        ],
+        "responses": [
+          "Sto cercando per te gli Eventi",
+          "Verrai indirizzato verso gli Eventi più adatti a te",
+          "Ecco a te gli eventi filtrati"
+        ],
+        "context": ""
+    }
+]

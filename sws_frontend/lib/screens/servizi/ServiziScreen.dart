@@ -49,10 +49,9 @@ class _ServiziScreenState extends State<ServiziScreen>
   List<DropDownFilterItem> itemsAree = [];
   String? dropdownValueArea;
 
-
-  bool asc=true;
-  String orderBy="nome";
-  String orderString="sort=nome,ASC";
+  bool asc = true;
+  String orderBy = "nome";
+  String orderString = "sort=nome,ASC";
 
   @override
   void initState() {
@@ -151,7 +150,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   }
 
   void _orderChange(String? text) {
-    orderString=text??orderString;
+    orderString = text ?? orderString;
     _pullRefresh();
 
     setState(() {});
@@ -165,8 +164,8 @@ class _ServiziScreenState extends State<ServiziScreen>
 
   Future<void> _fetchPage(int pageKey) async {
     try {
-      final newItems = await servizioService.serviziList(
-          filterNome, filterEnte, filterArea, null, pageKey, false, orderString);
+      final newItems = await servizioService.serviziList(filterNome, filterEnte,
+          filterArea, null, pageKey, false, orderString);
       final isLastPage = newItems == null || newItems.isEmpty;
       if (isLastPage) {
         _pagingController.appendLastPage(newItems!);
@@ -242,48 +241,50 @@ class _ServiziScreenState extends State<ServiziScreen>
               ))
         ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(widget.isFilterOpen ? 150 : 0),
+          preferredSize: Size.fromHeight(widget.isFilterOpen ? 170 : 0),
           child: widget.isFilterOpen
               ? Column(
-                children: [
-                  FilterBar(filters: [
-                    TextFilter(
-                        name: 'Cerca un servizio...',
-                        textEditingController: widget.filtroNomeController,
+                  children: [
+                    FilterBar(filters: [
+                      TextFilter(
+                          name: 'Cerca un servizio...',
+                          textEditingController: widget.filtroNomeController,
+                          positionType: GenericFilterPositionType.row,
+                          flex: 9,
+                          valueChange: _filterNomeChange),
+                      OrderFilter(
+                        name: "Ordinamento",
+                        flex: 1,
+                        elements: {
+                          "nome": "Nome",
+                          "struttura.ente.denominazione": "Ente",
+                        },
                         positionType: GenericFilterPositionType.row,
-                        flex:9,
-                        valueChange: _filterNomeChange),
-                    OrderFilter(
-                      name: "Ordinamento",
-                      flex:1,
-                      elements: {"nome": "Nome", "struttura.ente.denominazione": "Ente", },
-                      positionType: GenericFilterPositionType.row,
-                      valueChange: _orderChange,
-                      orderString:orderString,
-                      context:context,
-                    ),
-                    NoOpsFilter(
-                      name: "newline",
-                      positionType: GenericFilterPositionType.col,
-                      valueChange: (s){}, //
-                    ),
-                    DropDownFilter(
-                        name: "Seleziona Area",
-                        positionType: GenericFilterPositionType.row,
-                        valueChange: _filterAreaChange,
-                        flex:4,
-                        values: itemsAree,
-                        defaultValue: dropdownValueArea),
-                    DropDownTextFilter(
-                        name: "Seleziona Ente",
-                        positionType: GenericFilterPositionType.row,
-                        flex:4,
-                        valueChange: _filterEnteChange, //TODO
-                        values: itemsEnti),
-
-                  ]),
-                ],
-              )
+                        valueChange: _orderChange,
+                        orderString: orderString,
+                        context: context,
+                      ),
+                      NoOpsFilter(
+                        name: "newline",
+                        positionType: GenericFilterPositionType.col,
+                        valueChange: (s) {}, //
+                      ),
+                      DropDownFilter(
+                          name: "Seleziona Area",
+                          positionType: GenericFilterPositionType.row,
+                          valueChange: _filterAreaChange,
+                          flex: 4,
+                          values: itemsAree,
+                          defaultValue: dropdownValueArea),
+                      DropDownTextFilter(
+                          name: "Seleziona Ente",
+                          positionType: GenericFilterPositionType.row,
+                          flex: 4,
+                          valueChange: _filterEnteChange, //TODO
+                          values: itemsEnti),
+                    ]),
+                  ],
+                )
               : Container(),
         ),
       ),
