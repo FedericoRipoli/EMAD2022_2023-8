@@ -11,12 +11,18 @@ class ChatBotService {
   final log = Logger('AreeServiceLoger');
   late WebSocketChannel channel;
   final ValueChanged<OliviaReceiveMessage> valueChanged;
+  final Function(Function?) onError;
+  ChatBotService(this.valueChanged, this.onError){
 
-  ChatBotService(this.valueChanged){
-    channel = WebSocketChannel.connect(RestURL.oliviaService);
-    channel.stream.listen((event) {
-      valueChanged(oliviaReceiveMessageFromJson(event));
-    });
+      channel = WebSocketChannel.connect(RestURL.oliviaService);
+      channel.stream.listen((event) {
+        valueChanged(oliviaReceiveMessageFromJson(event));
+      }).onError(
+          onError
+      );
+
+
+
   }
 
 
