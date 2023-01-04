@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../theme/theme.dart';
@@ -26,7 +27,7 @@ class CustomFloatingButton extends StatelessWidget {
         backgroundColor: AppColors.logoBlue,
         child: isOlivia != null
             ? SvgPicture.asset(
-                "svg/chatbot.svg",
+                kIsWeb ? "svg/chatbot.svg" : "assets/svg/chatbot.svg",
                 color: AppColors.white,
                 width: 36,
               )

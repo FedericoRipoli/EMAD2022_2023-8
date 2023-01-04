@@ -17,7 +17,7 @@ class _ConfirmBoxState extends State<ConfirmBox> {
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(34.0))),
+          borderRadius: BorderRadius.all(Radius.circular(20.0))),
       title: const Text(
         "Attenzione",
         style: TextStyle(
@@ -42,7 +42,7 @@ class _ConfirmBoxState extends State<ConfirmBox> {
           onPressed: () {
             widget.onDelete.call();
             Navigator.pop(context);
-            },
+          },
           color: Colors.green,
           text: "Conferma",
           icon: const Icon(

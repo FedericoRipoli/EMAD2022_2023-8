@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend_sws/theme/theme.dart';
@@ -42,7 +43,9 @@ class TopicCard extends StatelessWidget {
                     children: [
                       isOlivia != null
                           ? SvgPicture.asset(
-                              "svg/chatbot.svg",
+                              kIsWeb
+                                  ? "svg/chatbot.svg"
+                                  : "assets/svg/chatbot.svg",
                               color: AppColors.logoCadmiumOrange,
                               width: 46,
                             )

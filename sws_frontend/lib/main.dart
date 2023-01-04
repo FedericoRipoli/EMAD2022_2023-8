@@ -4,24 +4,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:frontend_sws/admin_screens/servizi/ListaServizi.dart';
 import 'package:frontend_sws/components/generali/Splash.dart';
 import 'package:frontend_sws/theme/theme.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 @pragma('vm:entry-point')
 Future _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint("Handling a background message: ${message.messageId}");
 }
-void main() async{
+
+void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
-  if (!kIsWeb){
+  if (!kIsWeb) {
     await Firebase.initializeApp();
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
   }
-
 
   runApp(MaterialApp(
     builder: (context, widget) => ResponsiveWrapper.builder(
@@ -63,10 +62,9 @@ ThemeData appTheme = ThemeData(
   primarySwatch: blueMaterialColor,
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: Colors.white,
-    ),
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark),
   ),
 );
 // E0E3EC

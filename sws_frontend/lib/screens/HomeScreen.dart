@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -124,8 +125,59 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
+    if (!kIsWeb) {
+      _showConnectionAlert();
+    }
     initCall = load();
+  }
+
+  Future<bool> _checkConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      return true;
+    }
+    return false;
+  }
+
+  _showConnectionAlert() async {
+    if (!(await _checkConnectivity())) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20.0))),
+            title: Wrap(
+              children: const [
+                Icon(
+                  Icons.signal_wifi_off,
+                  color: AppColors.logoCadmiumOrange,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "Sei Offline",
+                  style: TextStyle(
+                      color: AppColors.logoCadmiumOrange,
+                      fontWeight: FontWeight.w700),
+                ),
+              ],
+            ),
+            content: const Text(
+                "Per utilizzare al meglio Salerno Amica attiva la connessione ad Internet"),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("CHIUDI")),
+            ],
+          );
+        },
+      );
+    }
   }
 
   Future<bool> load() async {
@@ -199,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       alwaysShowLeadingAndAction: true,
       headerWidget: headerWidgetWithImage(context),
-      curvedBodyRadius: 20,
+      curvedBodyRadius: 18,
       headerExpandedHeight: 0.24,
       body: [
         const Text(
