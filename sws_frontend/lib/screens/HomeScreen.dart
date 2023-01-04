@@ -213,6 +213,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           crossAxisCount: 2,
           mainAxisSpacing: 1,
           crossAxisSpacing: 1,
+          physics: const NeverScrollableScrollPhysics(),
           children: [
             TopicCard(
               title: "Servizi",

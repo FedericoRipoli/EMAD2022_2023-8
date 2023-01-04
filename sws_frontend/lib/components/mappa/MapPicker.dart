@@ -62,16 +62,6 @@ class _MapPicker extends State<MapPicker> {
         desiredAccuracy: gl.LocationAccuracy.bestForNavigation);
     centerPosition =
         LatLng(currentPosition.latitude, currentPosition.longitude);
-    _locationMarker = Marker(
-        point: centerPosition,
-        builder: (ctx) => const Icon(
-              Icons.location_on,
-              color: Colors.red,
-              size: 32,
-            ));
-    widget.mapValueChanged!(centerPosition);
-
-    loaded = true;
 
     setState(() {});
   }
@@ -80,7 +70,16 @@ class _MapPicker extends State<MapPicker> {
   void initState() {
     super.initState();
     _determinePosition();
+    _locationMarker = Marker(
+        point: centerPosition,
+        builder: (ctx) => const Icon(
+          Icons.location_on,
+          color: Colors.red,
+          size: 32,
+        ));
     widget.mapValueChanged!(centerPosition);
+
+    loaded = true;
   }
 
   // get user current location
