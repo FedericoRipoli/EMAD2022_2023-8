@@ -56,6 +56,9 @@ class _ServiziScreenState extends State<ServiziScreen>
   @override
   void initState() {
     super.initState();
+    if(widget.idAreaSelected!=null){
+      filterArea=widget.idAreaSelected;
+    }
     _pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
@@ -68,6 +71,7 @@ class _ServiziScreenState extends State<ServiziScreen>
         setState(() {});
       });
     });
+
   }
 
   late Future<List<DropDownFilterItem>> initEnti;
