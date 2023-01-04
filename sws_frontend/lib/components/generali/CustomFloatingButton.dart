@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../theme/theme.dart';
 
 class CustomFloatingButton extends StatelessWidget {
   final IconData iconData;
   final VoidCallback onPressed;
+  final bool? isOlivia;
 
   const CustomFloatingButton(
-      {Key? key, required this.iconData, required this.onPressed})
+      {Key? key,
+      required this.iconData,
+      required this.onPressed,
+      this.isOlivia})
       : super(key: key);
 
   @override
@@ -19,10 +24,16 @@ class CustomFloatingButton extends StatelessWidget {
         hoverElevation: 2,
         onPressed: onPressed,
         backgroundColor: AppColors.logoBlue,
-        child: Icon(
-          iconData,
-          size: 28,
-          color: Colors.white,
-        ));
+        child: isOlivia != null
+            ? SvgPicture.asset(
+                "svg/chatbot.svg",
+                color: AppColors.white,
+                width: 36,
+              )
+            : Icon(
+                iconData,
+                size: 28,
+                color: Colors.white,
+              ));
   }
 }

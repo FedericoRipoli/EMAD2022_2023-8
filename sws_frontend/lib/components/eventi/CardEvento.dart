@@ -84,7 +84,9 @@ class CardEvento extends StatelessWidget {
                           subtitle: Text(
                             posizione!,
                             style: const TextStyle(
-                                color: AppColors.black, fontSize: 15),
+                                color: AppColors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w700),
                           ),
                         ),
                         const SizedBox(

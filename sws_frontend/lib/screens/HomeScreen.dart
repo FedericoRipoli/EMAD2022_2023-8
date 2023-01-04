@@ -132,7 +132,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     impostazioni = await impostazioniService.getImpostazioni();
     if (!kIsWeb) {
       await registerNotification();
-
     }
     setState(() {});
     return true;
@@ -187,6 +186,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ],
       floatingActionButton: CustomFloatingButton(
         iconData: Icons.headset_mic,
+        isOlivia: true,
         onPressed: () {
           if (mounted) {
             Navigator.push(
@@ -238,6 +238,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             TopicCard(
               title: "Olivia",
               icon: Icons.live_help_rounded,
+              isOlivia: true,
               onTap: () {
                 Navigator.push(
                   context,
