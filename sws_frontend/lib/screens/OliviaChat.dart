@@ -22,6 +22,7 @@ import '../services/dto/OliviaSendMessage.dart';
 import '../theme/theme.dart';
 import '../util/ToastUtil.dart';
 import '../util/TtsManager.dart';
+import 'eventi/EventiScreen.dart';
 
 class OliviaChat extends StatefulWidget {
   const OliviaChat({super.key});
@@ -157,6 +158,12 @@ class _OliviaChatState extends State<OliviaChat> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ServiziScreen()),
+        );
+        break;
+      case "OPENEVENT":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EventiScreen()),
         );
         break;
       default:break;

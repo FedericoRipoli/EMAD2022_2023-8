@@ -231,9 +231,22 @@ func init() {
 				"Dove trovo i servizi",
 			},
 			Responses: []string{
-				"Apro la pagina servizi",
+				"Apri la pagina servizi",
 			},
 			Replacer: modules.OpenServiceReplacer,
+		},
+		{
+			Tag: modules.OpenEventTag,
+			Patterns: []string{
+				"Voglio cercare gli eventi",
+				"Quali eventi ci sono?",
+				"Aiutami a cercare gli eventi",
+				"Dove trovo gli eventi",
+			},
+			Responses: []string{
+				"Apri la pagina eventi",
+			},
+			Replacer: modules.OpenEventReplacer,
 		},
 	})
 
