@@ -9,66 +9,66 @@ func init() {
 		// AREA
 		// For modules related to countries, please add the translations of the countries' names
 		// or open an issue to ask for translations.
+		/*
+			{
+				Tag: modules.AreaTag,
+				Patterns: []string{
+					"Qual è la superficie ",
+					"Dammi la superficie ",
+				},
+				Responses: []string{
+					"La superficie %s è %gkm²",
+				},
+				Replacer: modules.AreaReplacer,
+			},
 
-		{
-			Tag: modules.AreaTag,
-			Patterns: []string{
-				"Qual è la superficie ",
-				"Dammi la superficie ",
+			// CAPITAL
+			{
+				Tag: modules.CapitalTag,
+				Patterns: []string{
+					"Qual è la capitale ",
+					"Dimmi la capitale ",
+					"Dammi la capitale ",
+					"Come si chiama la capitale",
+				},
+				Responses: []string{
+					"La capitale %s è %s",
+				},
+				Replacer: modules.CapitalReplacer,
 			},
-			Responses: []string{
-				"La superficie %s è %gkm²",
-			},
-			Replacer: modules.AreaReplacer,
-		},
 
-		// CAPITAL
-		{
-			Tag: modules.CapitalTag,
-			Patterns: []string{
-				"Qual è la capitale ",
-				"Dimmi la capitale ",
-				"Dammi la capitale ",
-				"Come si chiama la capitale",
+			// CURRENCY
+			{
+				Tag: modules.CurrencyTag,
+				Patterns: []string{
+					"Che moneta è usata in ",
+					"Dimmi la moneta usata in ",
+					"Qual è la moneta in ",
+					"Che moneta si usa in ",
+				},
+				Responses: []string{
+					"La moneta %s è %s",
+				},
+				Replacer: modules.CurrencyReplacer,
 			},
-			Responses: []string{
-				"La capitale %s è %s",
-			},
-			Replacer: modules.CapitalReplacer,
-		},
 
-		// CURRENCY
-		{
-			Tag: modules.CurrencyTag,
-			Patterns: []string{
-				"Che moneta è usata in ",
-				"Dimmi la moneta usata in ",
-				"Qual è la moneta in ",
-				"Che moneta si usa in ",
-			},
-			Responses: []string{
-				"La moneta %s è %s",
-			},
-			Replacer: modules.CurrencyReplacer,
-		},
+			// MATH
+			// A regex translation is also required in `language/math.go`, please don't forget to translate it.
+			// Otherwise, remove the registration of the Math module in this file.
 
-		// MATH
-		// A regex translation is also required in `language/math.go`, please don't forget to translate it.
-		// Otherwise, remove the registration of the Math module in this file.
-
-		{
-			Tag: modules.MathTag,
-			Patterns: []string{
-				"Dammi il risultato di ",
-				"Calcola ",
+			{
+				Tag: modules.MathTag,
+				Patterns: []string{
+					"Dammi il risultato di ",
+					"Calcola ",
+				},
+				Responses: []string{
+					"Il risultato è %s",
+					"Il risultato ottenuto è %s",
+				},
+				Replacer: modules.MathReplacer,
 			},
-			Responses: []string{
-				"Il risultato è %s",
-				"Il risultato ottenuto è %s",
-			},
-			Replacer: modules.MathReplacer,
-		},
-
+		*/
 		// MOVIES
 		// A translation of movies genres is also required in `language/movies.go`, please don't forget
 		// to translate it.
@@ -199,7 +199,7 @@ func init() {
 		// A translation is needed in `language/music`, please don't forget to translate it.
 		// Otherwise, remove the registration of the Spotify modules in this file.
 		*/
-		{
+		/*{
 			Tag: modules.SpotifySetterTag,
 			Patterns: []string{
 				"I miei token di spotify",
@@ -220,7 +220,7 @@ func init() {
 				"In riproduzione %s da %s su Spotify.",
 			},
 			Replacer: modules.SpotifyPlayerReplacer,
-		},
+		},*/
 
 		{
 			Tag: modules.OpenServiceTag,

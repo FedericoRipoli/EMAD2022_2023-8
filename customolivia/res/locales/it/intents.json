@@ -103,7 +103,7 @@
       "puoi aiutarmi"
     ],
     "responses": [
-      "Posso fare molte cose, queste sono alcune delle cose che puoi chiedermi: la capitale di un paese o la monetta utilizzata. Un numero a caso. Calcolarti un operazione matematica."
+      "Posso fare molte cose, queste sono alcune delle cose che puoi chiedermi: ricerca servizi, ricerca eventi."
     ],
     "context": ""
   },
@@ -168,7 +168,7 @@
       
     ],
     "responses": [
-      "Sono in un server posizionato in Europa!"
+      "Un pò quà un pò là"
     ],
     "context": ""
   },
@@ -203,6 +203,17 @@
     ],
     "responses": [
       "Ovviamente! Sono al tuo servizio."
+    ],
+    "context": ""
+  },
+  {
+    "tag": "training",
+    "patterns": [
+      "Presentami il Team",
+      "Chi ti ha addestrato"
+    ],
+    "responses": [
+      "Ti presento la squadra: U' Mammuth, U' Trichecu, Me Cugnatu, U' Demolitore, Sig. Napoli, U' Massone e Sig. Peppe "
     ],
     "context": ""
   }
