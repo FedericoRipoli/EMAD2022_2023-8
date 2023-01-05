@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as chattypes;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:frontend_sws/components/loading/AllPageLoad.dart';
+import 'package:frontend_sws/screens/servizi/ServiziScreen.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:getwidget/size/gf_size.dart';
@@ -15,6 +16,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../components/generali/CustomAppBar.dart';
 import '../services/ChatBotService.dart';
+import '../services/dto/OliviaAction.dart';
 import '../services/dto/OliviaReceiveMessage.dart';
 import '../services/dto/OliviaSendMessage.dart';
 import '../theme/theme.dart';
@@ -49,6 +51,11 @@ class _OliviaChatState extends State<OliviaChat> {
   void onMessageReceive(OliviaReceiveMessage message) {
     if (message.content != null) {
       _sendMessage(message.content!, _bot);
+
+      if(message.action!=null){
+        _sendActionMessage(message, _bot);
+
+      }
     } else {
       _sendMessage("Errore", _bot);
     }
@@ -126,6 +133,35 @@ class _OliviaChatState extends State<OliviaChat> {
           ],
         ));
   }
+  Widget _buildAction(chattypes.CustomMessage message) {
+    return Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            UserName(author: message.author),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: const TextStyle(fontSize: 20),
+              ),
+              onPressed: ()=>performAction(message.metadata!["action"]),
+              child: const Text('Vai!'),
+            ),
+          ],
+        ));
+  }
+  void performAction(String actionJson){
+    OliviaAction oa=oliviaActionFromJson(actionJson);
+    switch (oa.type){
+      case "OPENSERVICE":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ServiziScreen()),
+        );
+        break;
+      default:break;
+    }
+  }
 
   void removeTyping() {
     List<chattypes.CustomMessage> toDelete = _messages
@@ -151,6 +187,8 @@ class _OliviaChatState extends State<OliviaChat> {
                     if (message.metadata!.containsKey("typing")) {
                       removeTyping();
                       return _buildTyping(message);
+                    } else if(message.metadata!.containsKey("action")){
+                      return _buildAction(message);
                     }
                   }
                   return const Text("ERRORE");
@@ -285,6 +323,15 @@ class _OliviaChatState extends State<OliviaChat> {
     );
 
     _addMessage(textMessage);
+  }
+  void _sendActionMessage(OliviaReceiveMessage message, chattypes.User sender) {
+    _addMessage(chattypes.CustomMessage(
+        author: _bot,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: const Uuid().v4(),
+        type: chattypes.MessageType.custom,
+        metadata: {"action": oliviaActionToJson(message.action!)}));
+
   }
 
   void _addMessage(chattypes.Message message) {
