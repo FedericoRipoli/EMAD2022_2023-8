@@ -216,5 +216,167 @@
       "Ti presento la squadra: U' Mammuth, U' Trichecu, Me Cugnatu, U' Demolitore, Sig. Napoli, U' Massone e Sig. Peppe "
     ],
     "context": ""
+  },
+  {
+    "tag": "servizi",
+    "patterns": [
+      "Mostrami i servizi",
+      "Voglio vedere tutti i servizi",
+      "Quali servizi ci sono",
+      "Che servizi offri",
+      "Ho bisogno di un servizio",
+      "Fammi vedere tutti i servizi",
+      "Portami alla pagina dei servizi",
+      "Dammi i servizi"
+    ],
+    "responses": [
+      "Ecco a te tutti i Servizi offerti dal Comune di Salerno",
+      "Ti mostro tutti i Servizi disponibili",
+      "Ecco qui i servizi"
+    ],
+    "context": ""
+  },
+  {
+      "tag": "eventi",
+      "patterns": [
+        "Mostrami gli eventi",
+        "Voglio vedere tutti gli eventi",
+        "Ultimi eventi",
+        "Quali eventi ci sono",
+        "Che eventi offri",
+        "Ho bisogno di un evento",
+        "A cosa posso partecipare",
+        "Eventi in zona",
+        "Dammi gli eventi"
+      ],
+      "responses": [
+        "Ecco a te tutti gli eventi nella zona di Salerno e dintorni",
+        "Ti mostro tutti gli Eventi disponibili",
+        "Ecco qui gli Eventi"
+      ],
+      "context": ""
+  },
+  {
+      "tag": "defibrillatori",
+      "patterns": [
+          "Mostrami i defibrillatori",
+          "Voglio vedere tutti i defibrillatori",
+          "Dove trovo un defibrillatore",
+          "Quali defibrillatori ci sono",
+          "Che cosa fare per trovare un defibrillatore",
+          "Dammi i defibrillatori",
+          "Ho bisogno di un defibrillatore",
+          "Quanto è lontano un defibrillatore",
+          "Mi serve un defibrillatore",
+          "Defibrillatore nelle vicinanze"
+      ],
+      "responses": [
+        "Ecco tutti i Defibrillatori presenti intorno a te",
+        "Ti mostro tutti i Defibrillatori disponibili",
+        "Ecco qui i Defibrillatori"
+      ],
+      "context": ""
+  },
+  {
+      "tag": "ricerca_servizi",
+      "patterns": [
+        "Mostrami i servizi per %s",
+        "Mostrami i servizi dell'ente %s",
+        "Mostrami i servizi per le persone con %s",
+        "Voglio vedere tutti i servizi per %s",
+        "Voglio vedere tutti i servizi per le persone con %s",
+        "Quali servizi ci sono per %s",
+        "Quali servizi offre l'ente %s",
+        "Cosa offre l'ente %s",
+      "Voglio i servizi per %s",
+        "Servizi per %s",
+        "Che servizi offri per %s",
+        "Che servizi offri per l'area %s",
+        "Che servizi offri per l'ente %s",
+        "Che servizi offri per gli %s",
+        "Ho bisogno di un servizio per %s"
+      ],
+      "responses": [
+        "Sto cercando per te i Servizi per %s",
+        "Verrai indirizzati verso i Servizi più adatti a te",
+        "Ecco a te i Servizi filtrati"
+      ],
+      "context": ""
+  },
+  {
+      "tag": "ricerca_eventi",
+      "patterns": [
+        "Mostrami gli eventi per le persone %s",
+        "Mostrami gli eventi dell'area %s",
+        "Mostrami gli eventi per le persone con %s",
+        "Voglio vedere tutti gli eventi per %s",
+        "Voglio vedere tutti gli eventi per le persone con %s",
+        "Quali eventi ci sono per %s",
+        "Quali eventi offre l'area %s",
+        "Eventi per %s",
+        "Voglio gli eventi per %s",
+        "Che eventi ci sono per %s",
+        "Che eventi ci sono per l'area %s",
+        "Che eventi offri per l'area %s",
+        "Che eventi offri per gli %s",
+        "Ho bisogno di un evento dal %s",
+        "Quali eventi ci sono da %s",  
+        "Quali eventi ci sono fino a %s",
+        "Che eventi offri dopo %s",
+        "A cosa posso partecipare dal %s",
+        "Quali eventi ci sono in programma da %s",
+        "Quali eventi ci sono in programma fino %s"
+      ],
+      "responses": [
+        "Sto cercando per te gli Eventi",
+        "Verrai indirizzato verso gli Eventi più adatti a te",
+        "Ecco a te gli Eventi filtrati"
+      ],
+      "context": ""
+  },
+  {
+    "tag": "info",
+    "patterns": [
+      "Cosa devo fare",
+      "Come funziona",
+      "Non ho capito cosa devo fare",
+      "Non ho capito come funziona",
+      "Spiegami cosa fare",
+      "Spiega cosa fare",
+      "Come funziona l'app",
+      "Come si usa",
+      "Quali cose posso fare",
+      "Che funzioni posso usare"
+    ],
+    "responses": [
+      "Nella pagina principale di Salerno Amica ci sono le 4 funzionalità principali:\n1.Servizi: Puoi cercare i servizi, filtrandoli per area di riferimento ed ente, sia sotto forma di lista o come punti su una mappa.\n2. Eventi: Puoi visualizzare e filtrare gli eventi disponibili a Salerno e dintorni.\n3. Defibrillatori: visualizza i Defibrillatori disponibili a Salerno a dintorni.\n4. Olivia: Sono io, la tua assistente, interagisci con me se hai dei dubbi",
+      "Salerno Amica è l'applicazione delle Politiche Sociali e Giovanili del Comune di Salerno. Sono tre le funzioni principali: \n1. Ricerca di Servizi: visualizza i Servizi sulla mappa o come lista, filtra per area di riferimento, per ente\n2. Visualizzazione degli Eventi: tutti gli Eventi organizzati nella zona di Salerno e dintorni, filtra per data di inizio e/o fine o per area di riferimento.\n Cerca i Defibrillatori: controlla sulla mappa quali defibrillatori sono presenti in zona. Ovviamente se hai dubbi puoi chiedere a me"
+    ],
+    "context": ""
+  },
+  {
+    "tag": "info_admin",
+    "patterns": [
+      "Cosa deve fare un ente",
+      "Come funziona se voglio inserire un mio servizio sull'app",
+      "Non ho capito cosa devo fare in quanto admin di un ente",
+      "Non ho capito come funziona per gli enti",
+      "Spiegami cosa fare se sono un nuovo ente",
+      "Spiega cosa fare agli admin ",
+      "Come funziona l'app per gli enti",
+      "Come funziona se ho le credenziali del Comune",
+      "Come si usa da gestore ente",
+      "Quali cose posso fare come ente",
+      "Quali cose posso fare come gestore",
+      "Quali cose posso fare come admin",
+      "Che funzioni posso usare da admin",
+      "Che funzioni posso usare come gestore",
+      "Che funzioni posso usare come ente"
+    ],
+    "responses": [
+      "Vuoi aggiungere i tuoi servizi nell'app?\nChiedi al Comune per ricevere le credenziali di accesso o informati sui bandi. \nPossiedi già le tue credenziali? Nella pagina principale, premendo sull'icona, puoi inserire le credenziali per effettuare l'accesso. Una volta fatto l'accesso dal menù a comparsa puoi accedere alle varie opzioni di modifica e inserimento delle informazioni dei tuoi servizi.",
+      "Salerno Amica è l'applicazione delle Politiche Sociali e Giovanili del Comune di Salerno. Nel caso tu sia un nuovo ente e vuoi entrare a far parte dell'app ti basterà contattare il comune per ricevere, previa verifica, le tue credenziali. Nel caso tu possegga già le credenziali, ti basterà accedere dalla pagina principali per utilizzare le funzionalità di gestione a te dedicate."
+    ],
+    "context": ""
   }
 ]
