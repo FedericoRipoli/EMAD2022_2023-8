@@ -6,19 +6,16 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as chattypes;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:frontend_sws/components/loading/AllPageLoad.dart';
 import 'package:frontend_sws/screens/servizi/ServiziScreen.dart';
-import 'package:getwidget/components/button/gf_button.dart';
-import 'package:getwidget/shape/gf_button_shape.dart';
-import 'package:getwidget/size/gf_size.dart';
-import 'package:getwidget/types/gf_button_type.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:uuid/uuid.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../components/generali/CustomAppBar.dart';
 import '../services/ChatBotService.dart';
+import '../services/ImpostazioniService.dart';
 import '../services/dto/OliviaAction.dart';
 import '../services/dto/OliviaReceiveMessage.dart';
 import '../services/dto/OliviaSendMessage.dart';
+import '../services/entity/Impostazioni.dart';
 import '../theme/theme.dart';
 import '../util/ToastUtil.dart';
 import '../util/TtsManager.dart';
@@ -39,6 +36,10 @@ class _OliviaChatState extends State<OliviaChat> {
   final _user = const chattypes.User(id: 'current');
   bool loaded = false;
 
+  // impostazioni def
+  ImpostazioniService impostazioniService = ImpostazioniService();
+  Impostazioni? impostazioni;
+
   bool loadStt = false;
   bool loadWebSocket = true;
   bool loadTts = false;
@@ -53,9 +54,8 @@ class _OliviaChatState extends State<OliviaChat> {
     if (message.content != null) {
       _sendMessage(message.content!, _bot);
 
-      if(message.action!=null){
+      if (message.action != null) {
         _sendActionMessage(message, _bot);
-
       }
     } else {
       _sendMessage("Errore", _bot);
@@ -75,20 +75,20 @@ class _OliviaChatState extends State<OliviaChat> {
     try {
       await _speechToText.initialize();
       loadStt = true;
-    } on Exception catch (_, e) {
-
-    }
+    } on Exception catch (_, e) {}
     loaded = true;
     setState(() {});
   }
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
     try {
       _ttsManager = TtsManager();
       loadTts = true;
     } on Exception catch (_, e) {}
+
+    impostazioni = await impostazioniService.getImpostazioni();
 
     chatBotService = ChatBotService(onMessageReceive, onError);
     _addMessage(chattypes.TextMessage(
@@ -134,6 +134,7 @@ class _OliviaChatState extends State<OliviaChat> {
           ],
         ));
   }
+
   Widget _buildAction(chattypes.CustomMessage message) {
     return Padding(
         padding: const EdgeInsets.all(20),
@@ -145,15 +146,16 @@ class _OliviaChatState extends State<OliviaChat> {
               style: TextButton.styleFrom(
                 textStyle: const TextStyle(fontSize: 20),
               ),
-              onPressed: ()=>performAction(message.metadata!["action"]),
+              onPressed: () => performAction(message.metadata!["action"]),
               child: const Text('Vai!'),
             ),
           ],
         ));
   }
-  void performAction(String actionJson){
-    OliviaAction oa=oliviaActionFromJson(actionJson);
-    switch (oa.type){
+
+  void performAction(String actionJson) {
+    OliviaAction oa = oliviaActionFromJson(actionJson);
+    switch (oa.type) {
       case "OPENSERVICE":
         Navigator.push(
           context,
@@ -165,8 +167,17 @@ class _OliviaChatState extends State<OliviaChat> {
           context,
           MaterialPageRoute(builder: (context) => EventiScreen()),
         );
+      case "OPENDEF":
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ServiziScreen(
+                    idAreaSelected: impostazioni?.idArea,
+                  )),
+        );
         break;
-      default:break;
+      default:
+        break;
     }
   }
 
@@ -194,7 +205,7 @@ class _OliviaChatState extends State<OliviaChat> {
                     if (message.metadata!.containsKey("typing")) {
                       removeTyping();
                       return _buildTyping(message);
-                    } else if(message.metadata!.containsKey("action")){
+                    } else if (message.metadata!.containsKey("action")) {
                       return _buildAction(message);
                     }
                   }
@@ -331,6 +342,7 @@ class _OliviaChatState extends State<OliviaChat> {
 
     _addMessage(textMessage);
   }
+
   void _sendActionMessage(OliviaReceiveMessage message, chattypes.User sender) {
     _addMessage(chattypes.CustomMessage(
         author: _bot,
@@ -338,7 +350,6 @@ class _OliviaChatState extends State<OliviaChat> {
         id: const Uuid().v4(),
         type: chattypes.MessageType.custom,
         metadata: {"action": oliviaActionToJson(message.action!)}));
-
   }
 
   void _addMessage(chattypes.Message message) {

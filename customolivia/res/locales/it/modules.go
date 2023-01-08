@@ -248,6 +248,20 @@ func init() {
 			},
 			Replacer: modules.OpenEventReplacer,
 		},
+		{
+			Tag: modules.OpenDefTag,
+			Patterns: []string{
+				"Voglio cercare i defibrillatori",
+				"Quali defibrillatori ci sono?",
+				"Aiutami a cercare i defibrillatori",
+				"Dove trovo un defibrillatore",
+				"Dov'è il defibrillatore più vicino",
+			},
+			Responses: []string{
+				"Apri la pagina defibrillatori",
+			},
+			Replacer: modules.OpenDefReplacer,
+		},
 	})
 
 	// COUNTRIES
