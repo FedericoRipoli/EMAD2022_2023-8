@@ -80,15 +80,19 @@ class _OliviaChatState extends State<OliviaChat> {
     setState(() {});
   }
 
+  void findImpostazioni() async {
+    impostazioni = await impostazioniService.getImpostazioni();
+  }
+
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
     try {
       _ttsManager = TtsManager();
       loadTts = true;
     } on Exception catch (_, e) {}
 
-    impostazioni = await impostazioniService.getImpostazioni();
+    findImpostazioni();
 
     chatBotService = ChatBotService(onMessageReceive, onError);
     _addMessage(chattypes.TextMessage(
@@ -147,7 +151,7 @@ class _OliviaChatState extends State<OliviaChat> {
                 textStyle: const TextStyle(fontSize: 20),
               ),
               onPressed: () => performAction(message.metadata!["action"]),
-              child: const Text('Vai!'),
+              child: const Text('Clicca qui!'),
             ),
           ],
         ));
@@ -167,14 +171,21 @@ class _OliviaChatState extends State<OliviaChat> {
           context,
           MaterialPageRoute(builder: (context) => EventiScreen()),
         );
+        break;
       case "OPENDEF":
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ServiziScreen(
-                    idAreaSelected: impostazioni?.idArea,
-                  )),
-        );
+        if (impostazioni != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ServiziScreen(
+                      idAreaSelected: impostazioni?.idArea,
+                    )),
+          );
+        } else {
+          ToastUtil.show("L'area defibrillatori non è al momento accedibile",
+              context, Icons.warning, Colors.red);
+        }
+
         break;
       default:
         break;
