@@ -1,7 +1,7 @@
 class RestURL {
 
 
-  static String baseURL = "http://192.168.178.32:8080/api/";
+  static String baseURL = "http://localhost:8080/api/";
 
   static Uri login = Uri.parse("${baseURL}auth/login");
   static Uri register = Uri.parse("${baseURL}auth/register");
