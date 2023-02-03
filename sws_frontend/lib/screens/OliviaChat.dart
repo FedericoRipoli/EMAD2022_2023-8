@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:bubble/bubble.dart';
@@ -10,11 +12,13 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:uuid/uuid.dart';
 
 import '../components/generali/CustomAppBar.dart';
+import '../services/AreeService.dart';
 import '../services/ChatBotService.dart';
 import '../services/ImpostazioniService.dart';
 import '../services/dto/OliviaAction.dart';
 import '../services/dto/OliviaReceiveMessage.dart';
 import '../services/dto/OliviaSendMessage.dart';
+import '../services/entity/Area.dart';
 import '../services/entity/Impostazioni.dart';
 import '../theme/theme.dart';
 import '../util/ToastUtil.dart';
@@ -157,7 +161,16 @@ class _OliviaChatState extends State<OliviaChat> {
         ));
   }
 
-  void performAction(String actionJson) {
+  Future<String?> getIdArea(String nameArea) async {
+    AreeService areaService = AreeService();
+    List<Area>? findedAree = await areaService.areeList(nameArea);
+    if (findedAree != null && findedAree.isNotEmpty) {
+      return findedAree[0].id;
+    }
+    return null;
+  }
+
+  Future<void> performAction(String actionJson) async {
     OliviaAction oa = oliviaActionFromJson(actionJson);
     switch (oa.type) {
       case "OPENSERVICE":
@@ -165,6 +178,18 @@ class _OliviaChatState extends State<OliviaChat> {
           context,
           MaterialPageRoute(builder: (context) => ServiziScreen()),
         );
+        break;
+      case "OPENSERVICEAREAPOVERTA":
+        String? resultId = await getIdArea("Area Contrasto Alla Povertà");
+        if (context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ServiziScreen(
+                      idAreaSelected: resultId,
+                    )),
+          );
+        }
         break;
       case "OPENEVENT":
         Navigator.push(

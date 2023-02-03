@@ -15,7 +15,7 @@ public class AreaController {
     AreaRepository areaRepository;
 
     @GetMapping
-    public ResponseEntity list(@RequestParam(name = "name",required = false)String name) {
+    public ResponseEntity list(@RequestParam(name = "name", required = false) String name) {
         return ResponseEntity.ok(areaRepository.findAllByNomeContainingIgnoreCase(name));
     }
 
@@ -42,7 +42,7 @@ public class AreaController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity edit(@PathVariable String id, @RequestBody Area area) {
         if (areaRepository.existsById(id)) {
-            Area areaDb =areaRepository.findById(id).orElseThrow();
+            Area areaDb = areaRepository.findById(id).orElseThrow();
             areaDb.setNome(area.getNome());
             areaRepository.save(areaDb);
             return ResponseEntity.ok(areaDb);

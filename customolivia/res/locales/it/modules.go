@@ -236,6 +236,19 @@ func init() {
 			Replacer: modules.OpenServiceReplacer,
 		},
 		{
+			Tag: modules.OpenServiceAreaPovertaTag,
+			Patterns: []string{
+				"Voglio cercare i servizi per area contrasto alla povertà",
+				"Quali servizi ci sono per i poveri?",
+				"Aiutami a cercare i servizi per povertà",
+				"Dove trovo i servizi per contrasto alla povertà",
+			},
+			Responses: []string{
+				"Apri la pagina servizi per l'area Contrasto alla povertà",
+			},
+			Replacer: modules.OpenServiceAreaPovertaReplacer,
+		},
+		{
 			Tag: modules.OpenEventTag,
 			Patterns: []string{
 				"Voglio cercare gli eventi",
