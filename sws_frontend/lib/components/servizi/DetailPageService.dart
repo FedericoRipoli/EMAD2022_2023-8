@@ -78,9 +78,9 @@ class _DetailPageServiceState extends State<DetailPageService> {
                 Stack(
                   children: [
                     ClipPath(
-                      clipper: WaveClipperOne(),
+                      clipper: OvalBottomBorderClipper(),
                       child: Container(
-                        height: 150,
+                        height: 165,
                         color: AppColors.logoBlue,
                         child: Center(
                             child: Column(
@@ -89,13 +89,13 @@ class _DetailPageServiceState extends State<DetailPageService> {
                               height: 10,
                             ),
                             ListTile(
-                              minVerticalPadding: 8,
+                              minVerticalPadding: 4,
                               title: Text(
                                 widget.servizio.nome,
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18.0,
                                 ),
                               ),
                               subtitle: TextButton(

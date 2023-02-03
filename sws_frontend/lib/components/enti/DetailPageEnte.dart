@@ -53,29 +53,21 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
               Stack(
                 children: [
                   ClipPath(
-                    clipper: WaveClipperOne(),
+                    clipper: WaveClipperTwo(),
                     child: Container(
+                      padding: const EdgeInsets.all(4),
                       height: 120,
                       color: AppColors.logoBlue,
-                      child: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            widget.ente.denominazione,
-                            style: const TextStyle(
-                                color: AppColors.white,
-                                overflow: TextOverflow.ellipsis,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18),
-                          ),
-                          const SizedBox(
-                            width: 2,
-                          ),
-                          const CustomAvatar(size: 32, icon: Icons.home_work)
-                        ],
-                      )),
+                      child: ListTile(
+                        title: Text(
+                          widget.ente.denominazione,
+                          style: const TextStyle(
+                              color: AppColors.white,
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18),
+                        ),
+                      ),
                     ),
                   ),
                 ],
