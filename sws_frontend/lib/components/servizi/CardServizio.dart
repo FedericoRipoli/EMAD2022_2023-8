@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 import '../../services/entity/Area.dart';
 import '../../theme/theme.dart';
 import '../../screens/servizi/InfoServizio.dart';
-import 'package:frontend_sws/components/generali/ChipGenerale.dart';
-import 'package:frontend_sws/components/generali/ChipGenerale.dart';
 
 class CardServizio extends StatelessWidget {
   final String nomeServizio, ente, idServizio;
@@ -28,7 +24,8 @@ class CardServizio extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InfoServizio(idServizio: idServizio)),
+          MaterialPageRoute(
+              builder: (context) => InfoServizio(idServizio: idServizio)),
         );
       },
       child: Card(
@@ -60,7 +57,7 @@ class CardServizio extends StatelessWidget {
               subtitle: Text(
                 ente,
                 style: const TextStyle(
-                    color: AppColors.logoBlue,
+                    color: AppColors.logoCadmiumOrange,
                     fontWeight: FontWeight.w600,
                     fontSize: 16),
               ),
@@ -92,8 +89,6 @@ class CardServizio extends StatelessWidget {
                           ),
                         ),
                         elevation: 4,
-                        avatar: const Icon(Icons.accessibility,
-                            color: AppColors.logoBlue),
                       ));
                 }).toList(),
               ),

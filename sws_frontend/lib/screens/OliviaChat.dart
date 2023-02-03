@@ -198,8 +198,8 @@ class _OliviaChatState extends State<OliviaChat> {
             context,
             MaterialPageRoute(
                 builder: (context) => ServiziScreen(
-                  idAreaSelected: resultId,
-                )),
+                      idAreaSelected: resultId,
+                    )),
           );
         }
         break;
@@ -210,8 +210,8 @@ class _OliviaChatState extends State<OliviaChat> {
             context,
             MaterialPageRoute(
                 builder: (context) => ServiziScreen(
-                  idAreaSelected: resultId,
-                )),
+                      idAreaSelected: resultId,
+                    )),
           );
         }
         break;
@@ -222,8 +222,8 @@ class _OliviaChatState extends State<OliviaChat> {
             context,
             MaterialPageRoute(
                 builder: (context) => ServiziScreen(
-                  idAreaSelected: resultId,
-                )),
+                      idAreaSelected: resultId,
+                    )),
           );
         }
         break;
@@ -234,8 +234,8 @@ class _OliviaChatState extends State<OliviaChat> {
             context,
             MaterialPageRoute(
                 builder: (context) => ServiziScreen(
-                  idAreaSelected: resultId,
-                )),
+                      idAreaSelected: resultId,
+                    )),
           );
         }
         break;
@@ -246,20 +246,20 @@ class _OliviaChatState extends State<OliviaChat> {
             context,
             MaterialPageRoute(
                 builder: (context) => ServiziScreen(
-                  idAreaSelected: resultId,
-                )),
+                      idAreaSelected: resultId,
+                    )),
           );
         }
         break;
-      case "OPENSERVICEAREAASILINIDO":
+      case "OPENSERVICEAREAASILONIDO":
         String? resultId = await getIdArea("Asili Nido");
         if (mounted) {
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => ServiziScreen(
-                  idAreaSelected: resultId,
-                )),
+                      idAreaSelected: resultId,
+                    )),
           );
         }
         break;

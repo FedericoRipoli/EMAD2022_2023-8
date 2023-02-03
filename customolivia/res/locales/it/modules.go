@@ -301,7 +301,7 @@ func init() {
 				"Quali servizi ci sono per gli immigrati?",
 				"Aiutami a cercare i servizi per gli immigrati",
 				"Dove trovo i servizi per gli immigrati",
-				"Mostrami i servizi per gli immigrati",
+				"Mostrami i servizi per l'immigrazione",
 			},
 			Responses: []string{
 				"Apri la pagina servizi per l'Area Immigrazione",
@@ -325,7 +325,7 @@ func init() {
 			Replacer: modules.OpenServiceAreaIntegrazioneReplacer,
 		},
 		{
-			Tag: modules.OpenServiceAreaIntegrazioneTag,
+			Tag: modules.OpenServiceAreaAsiloNidoTag,
 			Patterns: []string{
 				"Voglio cercare i servizi per l'area asilo nido",
 				"Quali sono i servizi offerti per l'educazione?",
@@ -338,7 +338,7 @@ func init() {
 			Responses: []string{
 				"Apri la pagina servizi per l'Area Asili Nido",
 			},
-			Replacer: modules.OpenServiceAreaIntegrazioneReplacer,
+			Replacer: modules.OpenServiceAreaAsiloNidoReplacer,
 		},
 		{
 			Tag: modules.OpenEventTag,
