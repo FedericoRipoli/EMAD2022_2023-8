@@ -181,13 +181,85 @@ class _OliviaChatState extends State<OliviaChat> {
         break;
       case "OPENSERVICEAREAPOVERTA":
         String? resultId = await getIdArea("Area Contrasto Alla Povertà");
-        if (context.mounted) {
+        if (mounted) {
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => ServiziScreen(
                       idAreaSelected: resultId,
                     )),
+          );
+        }
+        break;
+      case "OPENSERVICEAREADISABILITA":
+        String? resultId = await getIdArea("Area Disabilità");
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ServiziScreen(
+                  idAreaSelected: resultId,
+                )),
+          );
+        }
+        break;
+      case "OPENSERVICEAREAMINORI":
+        String? resultId = await getIdArea("Area Minori");
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ServiziScreen(
+                  idAreaSelected: resultId,
+                )),
+          );
+        }
+        break;
+      case "OPENSERVICEAREAANZIANI":
+        String? resultId = await getIdArea("Area Persone Anziane");
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ServiziScreen(
+                  idAreaSelected: resultId,
+                )),
+          );
+        }
+        break;
+      case "OPENSERVICEAREAIMMIGRAZIONE":
+        String? resultId = await getIdArea("Area Immigrazione");
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ServiziScreen(
+                  idAreaSelected: resultId,
+                )),
+          );
+        }
+        break;
+      case "OPENSERVICEAREAINTEGRAZIONE":
+        String? resultId = await getIdArea("Area Integrazione Socio-Sanitaria");
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ServiziScreen(
+                  idAreaSelected: resultId,
+                )),
+          );
+        }
+        break;
+      case "OPENSERVICEAREAASILINIDO":
+        String? resultId = await getIdArea("Asili Nido");
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ServiziScreen(
+                  idAreaSelected: resultId,
+                )),
           );
         }
         break;

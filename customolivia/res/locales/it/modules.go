@@ -231,7 +231,7 @@ func init() {
 				"Dove trovo i servizi",
 			},
 			Responses: []string{
-				"Apri la pagina servizi",
+				"Apri la pagina Servizi",
 			},
 			Replacer: modules.OpenServiceReplacer,
 		},
@@ -242,11 +242,103 @@ func init() {
 				"Quali servizi ci sono per i poveri?",
 				"Aiutami a cercare i servizi per povertà",
 				"Dove trovo i servizi per contrasto alla povertà",
+				"Mostrami i servizi per i poveri",
 			},
 			Responses: []string{
-				"Apri la pagina servizi per l'area Contrasto alla povertà",
+				"Apri la pagina servizi per l'Area Contrasto alla povertà",
 			},
 			Replacer: modules.OpenServiceAreaPovertaReplacer,
+		},
+		{
+			Tag: modules.OpenServiceAreaDisabilitaTag,
+			Patterns: []string{
+				"Voglio cercare i servizi per area disabilità",
+				"Quali servizi ci sono per i disabili?",
+				"Aiutami a cercare i servizi per disabili",
+				"Dove trovo i servizi per i disabili",
+				"Mostrami i servizi per i disabili",
+			},
+			Responses: []string{
+				"Apri la pagina servizi per l'Area Disabilità",
+			},
+			Replacer: modules.OpenServiceAreaDisabilitaReplacer,
+		},
+		{
+			Tag: modules.OpenServiceAreaMinoriTag,
+			Patterns: []string{
+				"Voglio cercare i servizi per area minori",
+				"Quali servizi ci sono per i minorenni?",
+				"Aiutami a cercare i servizi per i minorenni",
+				"Dove trovo i servizi per i minori di 18 anni",
+				"Mostrami i servizi per i minorenni",
+			},
+			Responses: []string{
+				"Apri la pagina servizi per l'Area Minori",
+			},
+			Replacer: modules.OpenServiceAreaMinoriReplacer,
+		},
+		{
+			Tag: modules.OpenServiceAreaAnzianiTag,
+			Patterns: []string{
+				"Voglio cercare i servizi per persone anziane",
+				"Quali servizi ci sono per gli anziani?",
+				"Quali servizi ci sono per i vecchi?",
+				"Aiutami a cercare i servizi per gli anziani",
+				"Dove trovo i servizi per i vecchi",
+				"Dove trovo i servizi per gli anziani",
+				"Mostrami i servizi per gli anziani",
+				"Mostrami i servizi per i vecchi",
+			},
+			Responses: []string{
+				"Apri la pagina servizi per l'Area Persone Anziane",
+			},
+			Replacer: modules.OpenServiceAreaAnzianiReplacer,
+		},
+		{
+			Tag: modules.OpenServiceAreaImmigrazioneTag,
+			Patterns: []string{
+				"Voglio cercare i servizi per l'area immigrazione",
+				"Quali servizi ci sono per gli immigrati?",
+				"Aiutami a cercare i servizi per gli immigrati",
+				"Dove trovo i servizi per gli immigrati",
+				"Mostrami i servizi per gli immigrati",
+			},
+			Responses: []string{
+				"Apri la pagina servizi per l'Area Immigrazione",
+			},
+			Replacer: modules.OpenServiceAreaImmigrazioneReplacer,
+		},
+		{
+			Tag: modules.OpenServiceAreaIntegrazioneTag,
+			Patterns: []string{
+				"Voglio cercare i servizi per l'area integrazione socio-sanitaria",
+				"Quali sono i servizi sociali offerti?",
+				"Quali sono i servizi sanitari offerti?",
+				"Quali sono i percorsi assistenziali offerti?",
+				"Aiutami a cercare i servizi socio-sanitari",
+				"Dove trovo i servizi socio-sanitari",
+				"Mostrami i percorsi assistenziali",
+			},
+			Responses: []string{
+				"Apri la pagina servizi per l'Area Integrazione Socio-Sanitaria",
+			},
+			Replacer: modules.OpenServiceAreaIntegrazioneReplacer,
+		},
+		{
+			Tag: modules.OpenServiceAreaIntegrazioneTag,
+			Patterns: []string{
+				"Voglio cercare i servizi per l'area asilo nido",
+				"Quali sono i servizi offerti per l'educazione?",
+				"Quali sono i servizi offerti per i neonati?",
+				"Quali sono i servizi offerti per i bambini?",
+				"Aiutami a cercare gli asili nido",
+				"Dove trovo i servizi per l'educazione",
+				"Mostrami gli asili nido",
+			},
+			Responses: []string{
+				"Apri la pagina servizi per l'Area Asili Nido",
+			},
+			Replacer: modules.OpenServiceAreaIntegrazioneReplacer,
 		},
 		{
 			Tag: modules.OpenEventTag,
@@ -257,7 +349,7 @@ func init() {
 				"Dove trovo gli eventi",
 			},
 			Responses: []string{
-				"Apri la pagina eventi",
+				"Apri la pagina Eventi",
 			},
 			Replacer: modules.OpenEventReplacer,
 		},
@@ -271,7 +363,7 @@ func init() {
 				"Dov'è il defibrillatore più vicino",
 			},
 			Responses: []string{
-				"Apri la pagina defibrillatori",
+				"Apri la pagina Defibrillatori",
 			},
 			Replacer: modules.OpenDefReplacer,
 		},
