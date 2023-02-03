@@ -26,6 +26,45 @@ class DetailPageService extends StatefulWidget {
 class _DetailPageServiceState extends State<DetailPageService> {
   bool isContactDisable = true;
   bool isEmailDisable = true;
+  bool isSitoDisable = true;
+
+  @override
+  void initState() {
+    setDisable();
+    super.initState();
+  }
+
+  void setDisable() {
+    if (widget.servizio.contatto?.telefono != null) {
+      setState(() {
+        isContactDisable = false;
+      });
+    } else {
+      setState(() {
+        isContactDisable = true;
+      });
+    }
+    if (widget.servizio.contatto?.email != null &&
+        RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(widget.servizio.contatto!.email!)) {
+      setState(() {
+        isEmailDisable = false;
+      });
+    } else {
+      setState(() {
+        isEmailDisable = true;
+      });
+    }
+    if (widget.servizio.contatto?.sitoWeb != null) {
+      setState(() {
+        isSitoDisable = false;
+      });
+    } else {
+      setState(() {
+        isSitoDisable = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +80,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                     ClipPath(
                       clipper: WaveClipperOne(),
                       child: Container(
-                        height: 120,
+                        height: 150,
                         color: AppColors.logoBlue,
                         child: Center(
                             child: Column(
@@ -49,51 +88,52 @@ class _DetailPageServiceState extends State<DetailPageService> {
                             const SizedBox(
                               height: 10,
                             ),
-                            Text(
-                              widget.servizio.nome,
-                              style: const TextStyle(
-                                  color: AppColors.white,
-                                  overflow: TextOverflow.ellipsis,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20),
+                            ListTile(
+                              minVerticalPadding: 8,
+                              title: Text(
+                                widget.servizio.nome,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20.0,
+                                ),
+                              ),
+                              subtitle: TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => InfoEnte(
+                                              idEnte: widget.servizio.struttura!
+                                                  .ente!.id!)),
+                                    );
+                                  },
+                                  child: Wrap(
+                                    children: [
+                                      const Icon(
+                                        Icons.home_work,
+                                        color: AppColors.logoCadmiumOrange,
+                                      ),
+                                      const SizedBox(
+                                        width: 4,
+                                      ),
+                                      Text(
+                                        widget.servizio.struttura!.ente!
+                                                .denominazione ??
+                                            "",
+                                        style: const TextStyle(
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationColor:
+                                                AppColors.logoCadmiumOrange,
+                                            decorationThickness: 5,
+                                            color: AppColors.detailBlue,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18),
+                                      ),
+                                    ],
+                                  )),
                             ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => InfoEnte(
-                                            idEnte: widget.servizio.struttura!
-                                                .ente!.id!)),
-                                  );
-                                },
-                                child: Wrap(
-                                  children: [
-                                    const Icon(
-                                      Icons.home_work,
-                                      color: AppColors.logoCadmiumOrange,
-                                    ),
-                                    const SizedBox(
-                                      width: 4,
-                                    ),
-                                    Text(
-                                      widget.servizio.struttura!.ente!
-                                              .denominazione ??
-                                          "",
-                                      style: const TextStyle(
-                                          decoration: TextDecoration.underline,
-                                          decorationColor:
-                                              AppColors.logoCadmiumOrange,
-                                          decorationThickness: 5,
-                                          color: AppColors.detailBlue,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 18),
-                                    ),
-                                  ],
-                                )),
                           ],
                         )),
                       ),
@@ -106,7 +146,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                 const Text(
                   "Informazioni",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.w700,
                       color: AppColors.logoCadmiumOrange),
                 ),
@@ -151,21 +191,19 @@ class _DetailPageServiceState extends State<DetailPageService> {
                     ),
                   ),
                   subTitle: Text(
-                    widget.servizio.contatto?.telefono != null
-                        ? "Telefono: +39 ${widget.servizio.contatto!.telefono!}"
-                        : "Telefono non disponinile",
+                    isContactDisable
+                        ? "Telefono non disponibile"
+                        : "Telefono: +39 ${widget.servizio.contatto?.telefono!}",
                     style: const TextStyle(
-                      fontWeight: FontWeight.bold,
                       fontSize: 16,
                       color: Colors.black,
                     ),
                   ),
                   description: Text(
-                    widget.servizio.contatto?.email != null
-                        ? "Email: ${widget.servizio.contatto!.email!}"
-                        : "Email non disponinile",
+                    isEmailDisable
+                        ? "Email non disponibile"
+                        : "Email: ${widget.servizio.contatto?.email!}",
                     style: const TextStyle(
-                      fontWeight: FontWeight.bold,
                       fontSize: 16,
                       color: Colors.black,
                     ),
@@ -189,11 +227,30 @@ class _DetailPageServiceState extends State<DetailPageService> {
                     //overflow: TextOverflow.ellipsis,
                   ),
                 ),
+                GFListTile(
+                  description: TextButton(
+                      onPressed: () => isSitoDisable
+                          ? null
+                          : () async {
+                              Uri url = Uri.parse(
+                                  "https:${widget.servizio.contatto?.sitoWeb}");
+                              await launchUrl(url);
+                            },
+                      child: Text(
+                        isSitoDisable
+                            ? "Nessun Sito WEB"
+                            : widget.servizio.contatto!.sitoWeb!,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: AppColors.primaryBlue,
+                        ),
+                      )),
+                ),
                 const SizedBox(
                   height: 12,
                 ),
                 const Text(
-                  "Guarda sulla mappa",
+                  "Trovaci sulla mappa",
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
@@ -286,7 +343,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 16,
-                          color: AppColors.logoCadmiumOrange,
+                          color: AppColors.black,
                         )),
                 const SizedBox(
                   height: 12,

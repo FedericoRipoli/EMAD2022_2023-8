@@ -49,7 +49,7 @@ class _InfoScreenState extends State<InfoScreen> {
         ),
       ),
       body: SingleChildScrollView(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(18),
           scrollDirection: Axis.vertical,
           child: Center(
             child: Column(
@@ -61,25 +61,30 @@ class _InfoScreenState extends State<InfoScreen> {
                   width: 86,
                 ),
                 const SizedBox(
-                  height: 12,
+                  height: 14,
                 ),
                 const Text(
-                  "CHE COS'È SALERNO AMICA",
+                  "CHE COS'È SALERNO AMICA?",
                   style: TextStyle(
-                      fontWeight: FontWeight.w700, fontFamily: "Lexend"),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "Lexend",
+                      fontSize: 20),
                 ),
                 const SizedBox(
                   height: 8,
                 ),
                 const Text(
-                    "L'applicazione Salerno Amica nasce come punto di aggregazione di tutti i servizi"
-                    "che il Comune di Saleno, mette a disposizione dei suoi cittadini, gratuitamente.\n"
-                    "Visualizza i Servizi, gli Eventi, i Defibrillatori..."),
+                  "L'applicazione Salerno Amica nasce come punto di aggregazione di tutti i servizi"
+                  " che il Comune di Saleno, mette a disposizione dei suoi cittadini, gratuitamente.\n"
+                  "Visualizza tutti i Servizi tramite gli appositi filtri di ricerca o utilizzando la comoda mappa. "
+                  "Aiuta i tuoi concittadini aggiungendo la posizione dei defibrillatori per permetterne il facile ritrovamento.",
+                  style: TextStyle(fontSize: 18),
+                ),
                 const SizedBox(
                   height: 8,
                 ),
                 _infoTile('App name', 'Salerno Amica'),
-                _infoTile('App version', _packageInfo.version), 
+                _infoTile('App version', _packageInfo.version),
               ],
             ),
           )),

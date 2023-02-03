@@ -124,41 +124,32 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
               ),
               strutture != null
                   ? ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: strutture!.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return StrutturaListItem(
-                                      denominazione:
-                                          strutture![index].denominazione!,
-                                      indirizzo: strutture![index]
-                                          .posizione!
-                                          .indirizzo!,
-                                      id: strutture![index].id!,
-                                      onTap: () => {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    InfoStruttura(
-                                                      idStruttura:
-                                                          strutture![index].id!,
-                                                    )))
-                                      },
-                                    );
-                                  }
-
-                      )
-
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: strutture!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return StrutturaListItem(
+                          denominazione: strutture![index].denominazione!,
+                          indirizzo: strutture![index].posizione!.indirizzo!,
+                          id: strutture![index].id!,
+                          onTap: () => {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => InfoStruttura(
+                                          idStruttura: strutture![index].id!,
+                                        )))
+                          },
+                        );
+                      })
                   : const Center(
                       child: Text(
-                    "Nessuna struttura",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.logoCadmiumOrange),
-                  )),
+                      "Nessuna struttura",
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.logoCadmiumOrange),
+                    )),
             ],
           ),
         ));
