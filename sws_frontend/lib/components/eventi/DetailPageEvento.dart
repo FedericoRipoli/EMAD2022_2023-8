@@ -23,6 +23,45 @@ class DetailPageEvento extends StatefulWidget {
 class _DetailPageEventoState extends State<DetailPageEvento> {
   bool isContactDisable = true;
   bool isEmailDisable = true;
+  bool isSitoDisable = true;
+
+  @override
+  void initState() {
+    setDisable();
+    super.initState();
+  }
+
+  void setDisable() {
+    if (widget.evento.contatto?.telefono != null) {
+      setState(() {
+        isContactDisable = false;
+      });
+    } else {
+      setState(() {
+        isContactDisable = true;
+      });
+    }
+    if (widget.evento.contatto?.email != null &&
+        RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+            .hasMatch(widget.evento.contatto!.email!)) {
+      setState(() {
+        isEmailDisable = false;
+      });
+    } else {
+      setState(() {
+        isEmailDisable = true;
+      });
+    }
+    if (widget.evento.contatto?.sitoWeb != null) {
+      setState(() {
+        isSitoDisable = false;
+      });
+    } else {
+      setState(() {
+        isSitoDisable = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +118,9 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                         fontSize: 18),
                   ),
                   subTitle: Text(
-                    widget.evento.posizione!.indirizzo!,
+                    widget.evento.posizione?.indirizzo != null
+                        ? "${widget.evento.posizione?.indirizzo}"
+                        : "Indirizzo non disponibile",
                     style: const TextStyle(
                         color: AppColors.black,
                         fontWeight: FontWeight.w500,
@@ -97,6 +138,23 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                   ),
                 ),
                 GFListTile(
+                  subTitle: TextButton(
+                      onPressed: () => isSitoDisable
+                          ? null
+                          : () async {
+                              Uri url = Uri.parse(
+                                  "https:${widget.evento.contatto?.sitoWeb}");
+                              await launchUrl(url);
+                            },
+                      child: Text(
+                        isSitoDisable
+                            ? "Nessun Sito WEB"
+                            : widget.evento.contatto!.sitoWeb!,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: AppColors.primaryBlue,
+                        ),
+                      )),
                   description: Text(
                     (widget.evento.contenuto != null)
                         ? widget.evento.contenuto!

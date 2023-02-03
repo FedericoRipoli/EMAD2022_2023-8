@@ -22,8 +22,6 @@ class DetailPageEnte extends StatefulWidget {
 }
 
 class _DetailPageEnteState extends State<DetailPageEnte> {
-  bool isContactDisable = true;
-  bool isEmailDisable = true;
   List<Struttura>? strutture = null;
   StrutturaService strutturaService = StrutturaService();
 

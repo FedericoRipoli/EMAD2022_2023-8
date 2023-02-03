@@ -174,110 +174,113 @@ class _EventiScreenState extends State<EventiScreen>
         automaticallyImplyLeading: true,
         title: const AppTitle(label: "Eventi"),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(widget.isFilterOpen ? 270 : 0),
+          preferredSize: Size.fromHeight(widget.isFilterOpen ? 230 : 0),
           child: widget.isFilterOpen
-              ? Container(
-                  child: Column(
-                  children: [
-                    FilterBar(filters: [
-                      TextFilter(
-                          name: 'Cerca un evento...',
-                          flex: 9,
-                          textEditingController: widget.filtroNomeController,
-                          positionType: GenericFilterPositionType.row,
-                          valueChange: _filterNomeChange),
-                      OrderFilter(
-                        name: "Ordinamento",
-                        flex: 1,
-                        elements: {
-                          "nome": "Nome",
-                          "dataInizio": "Data inizio",
-                          "dataFine": "Data fine",
-                        },
-                        positionType: GenericFilterPositionType.row,
-                        valueChange: _orderChange,
-                        orderString: orderString,
-                        context: context,
-                      ),
-                      NoOpsFilter(
-                        name: "newline",
-                        positionType: GenericFilterPositionType.col,
-                        valueChange: (s) {}, //
-                      ),
-                      DropDownFilter(
-                          name: "Seleziona Area",
-                          positionType: GenericFilterPositionType.row,
-                          valueChange: _filterAreaChange,
-                          values: itemsAree),
-                    ]),
-                    Container(
-                      margin: const EdgeInsets.all(5),
+              ? AppBar(
+                  toolbarHeight: 230,
+                  flexibleSpace: Container(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.date_range,
-                                color: AppColors.white,
-                              ),
-                              TextButton(
-                                  onPressed: _showDateInizioPicker,
+                    children: [
+                      FilterBar(filters: [
+                        TextFilter(
+                            name: 'Cerca un evento...',
+                            flex: 9,
+                            textEditingController: widget.filtroNomeController,
+                            positionType: GenericFilterPositionType.row,
+                            valueChange: _filterNomeChange),
+                        OrderFilter(
+                          name: "Ordinamento",
+                          flex: 1,
+                          elements: {
+                            "nome": "Nome",
+                            "dataInizio": "Data inizio",
+                            "dataFine": "Data fine",
+                          },
+                          positionType: GenericFilterPositionType.row,
+                          valueChange: _orderChange,
+                          orderString: orderString,
+                          context: context,
+                        ),
+                        NoOpsFilter(
+                          name: "newline",
+                          positionType: GenericFilterPositionType.col,
+                          valueChange: (s) {}, //
+                        ),
+                        DropDownFilter(
+                            name: "Seleziona Area",
+                            positionType: GenericFilterPositionType.row,
+                            valueChange: _filterAreaChange,
+                            values: itemsAree),
+                      ]),
+                      Container(
+                        margin: const EdgeInsets.all(5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.date_range,
+                                  color: AppColors.white,
+                                ),
+                                TextButton(
+                                    onPressed: _showDateInizioPicker,
+                                    child: const Text(
+                                      "Data inizio evento",
+                                      style: TextStyle(
+                                          color: AppColors.white, fontSize: 14),
+                                    )),
+                                TextButton(
+                                  onPressed: _showDateFinePicker,
                                   child: const Text(
-                                    "Data inizio evento",
+                                    "Data fine evento",
                                     style: TextStyle(
                                         color: AppColors.white, fontSize: 14),
-                                  )),
-                              TextButton(
-                                onPressed: _showDateFinePicker,
-                                child: const Text(
-                                  "Data fine evento",
-                                  style: TextStyle(
-                                      color: AppColors.white, fontSize: 14),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              !dataInizioSetted
-                                  ? Container(
-                                      child: const SizedBox(
-                                      height: 6,
-                                    ))
-                                  : Container(
-                                      child: Text(
-                                        "Da ${ManageDate.formatDate(dataInizio, context)}",
-                                        style: const TextStyle(
-                                            color: AppColors.white,
-                                            fontSize: 14),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                              !dataFineSetted
-                                  ? Container(
-                                      child: const SizedBox(
+                              ],
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                !dataInizioSetted
+                                    ? Container(
+                                        child: const SizedBox(
                                         height: 6,
+                                      ))
+                                    : Container(
+                                        child: Text(
+                                          "Da ${ManageDate.formatDate(dataInizio, context)}",
+                                          style: const TextStyle(
+                                              color: AppColors.white,
+                                              fontSize: 14),
+                                          textAlign: TextAlign.center,
+                                        ),
                                       ),
-                                    )
-                                  : Container(
-                                      child: Text(
-                                        "Fino a ${ManageDate.formatDate(dataFine, context)}",
-                                        style: const TextStyle(
-                                            color: AppColors.white,
-                                            fontSize: 14),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    )
-                            ],
-                          ),
-                        ],
+                                !dataFineSetted
+                                    ? Container(
+                                        child: const SizedBox(
+                                          height: 6,
+                                        ),
+                                      )
+                                    : Container(
+                                        child: Text(
+                                          "Fino a ${ManageDate.formatDate(dataFine, context)}",
+                                          style: const TextStyle(
+                                              color: AppColors.white,
+                                              fontSize: 14),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ))
+                    ],
+                  )),
+                )
               : Container(),
         ),
         actions: [
