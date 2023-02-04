@@ -16,7 +16,11 @@
     <string>camera</string>
     <!-- Permission options for the `microphone` group -->
     <key>NSMicrophoneUsageDescription</key>
-    <string>microphone</string>
+    <string>microphone for chatbot</string>
+    <key>NSFaceIDUsageDescription</key>
+    <string>FaceID</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Speech Recognition for Chatbot</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>App needs access to location and direction when open.</string>
     <!-- Permission options for the `photos` group -->
@@ -26,7 +30,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Frontend Sws</string>
+	<string>Salerno Amica</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
