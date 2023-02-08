@@ -4,6 +4,7 @@ import 'package:frontend_sws/components/enti/struttura/DetailPageStruttura.dart'
 import 'package:frontend_sws/components/enti/struttura/StrutturaListItem.dart';
 import 'package:frontend_sws/components/generali/CustomAvatar.dart';
 import 'package:frontend_sws/components/loading/AllPageLoad.dart';
+import 'package:getwidget/components/card/gf_card.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 
 import '../../screens/ente/strutture/InfoStruttura.dart';
@@ -60,12 +61,12 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
                       color: AppColors.logoBlue,
                       child: ListTile(
                         title: Text(
-                          widget.ente.denominazione,
+                          "ENTE ${widget.ente.denominazione}",
                           style: const TextStyle(
                               color: AppColors.white,
                               overflow: TextOverflow.ellipsis,
                               fontWeight: FontWeight.w700,
-                              fontSize: 18),
+                              fontSize: 22),
                         ),
                       ),
                     ),
@@ -78,25 +79,29 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
               const Text(
                 "Informazioni",
                 style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 22,
                     fontWeight: FontWeight.w700,
                     color: AppColors.logoCadmiumOrange),
               ),
-              GFListTile(
-                title: Text(
-                  widget.ente.denominazione,
-                  style: const TextStyle(
-                      color: AppColors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18),
-                ),
-                description: Text(
-                  widget.ente.descrizione ?? "Descrizione non disponibile",
-                  style: const TextStyle(color: AppColors.black, fontSize: 16),
-                ),
-                icon: const Icon(
-                  Icons.info,
-                  color: AppColors.logoCadmiumOrange,
+              GFCard(
+                elevation: 3,
+                title: GFListTile(
+                  title: Text(
+                    widget.ente.denominazione,
+                    style: const TextStyle(
+                        color: AppColors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18),
+                  ),
+                  description: Text(
+                    widget.ente.descrizione ?? "Descrizione non disponibile",
+                    style:
+                        const TextStyle(color: AppColors.black, fontSize: 16),
+                  ),
+                  icon: const Icon(
+                    Icons.info,
+                    color: AppColors.logoCadmiumOrange,
+                  ),
                 ),
               ),
               const SizedBox(
@@ -105,7 +110,7 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
               const Text(
                 "Le nostre strutture",
                 style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 22,
                     fontWeight: FontWeight.w700,
                     color: AppColors.logoCadmiumOrange),
               ),

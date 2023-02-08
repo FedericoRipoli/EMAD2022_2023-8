@@ -143,7 +143,8 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
                               ),
                               CustomTextField(
                                 controller: indirizzoController,
-                                label: "Indirizzo completo (via, città, provincia, cap)",
+                                label:
+                                    "Indirizzo completo (via, città, provincia, cap)",
                                 validator: "Inserisci il campo indirizzo",
                               ),
                               const Divider(
@@ -259,10 +260,12 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
                                   onPressed: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => CustomHtmlView(
-                                        title: "Privacy policy",
-                                        html: impostazioni!.privacyPolicy,
-                                      )),
+                                      MaterialPageRoute(
+                                          builder: (context) => CustomHtmlView(
+                                                title: "Privacy policy",
+                                                html:
+                                                    impostazioni!.privacyPolicy,
+                                              )),
                                     );
                                   },
                                   child: const Text(
@@ -296,6 +299,9 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
                                 onPressed: savePage,
                                 icon: Icons.add,
                                 textButton: 'AGGIUNGI',
+                                bgColor: acceptPolicy
+                                    ? AppColors.logoBlue
+                                    : Colors.grey,
                               )
                             ])),
                   ],

@@ -57,7 +57,7 @@ class CardServizio extends StatelessWidget {
               subtitle: Text(
                 ente,
                 style: const TextStyle(
-                    color: AppColors.logoCadmiumOrange,
+                    color: AppColors.logoBlue,
                     fontWeight: FontWeight.w600,
                     fontSize: 16),
               ),

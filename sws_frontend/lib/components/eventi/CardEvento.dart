@@ -82,10 +82,12 @@ class CardEvento extends StatelessWidget {
                             ),
                           ),
                           subtitle: Text(
-                            posizione!,
+                            posizione != null
+                                ? posizione!
+                                : "Luogo non disponibile",
                             style: const TextStyle(
                                 color: AppColors.black,
-                                fontSize: 15,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w700),
                           ),
                         ),
@@ -113,8 +115,6 @@ class CardEvento extends StatelessWidget {
                                       ),
                                     ),
                                     elevation: 4,
-                                    avatar: const Icon(Icons.accessibility,
-                                        color: AppColors.logoBlue),
                                   ));
                             }).toList(),
                           ),

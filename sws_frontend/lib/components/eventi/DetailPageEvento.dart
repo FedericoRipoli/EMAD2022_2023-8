@@ -5,6 +5,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:frontend_sws/components/generali/CustomButton.dart';
 import 'package:frontend_sws/components/generali/ImageVisualizer.dart';
 import 'package:frontend_sws/theme/theme.dart';
+import 'package:getwidget/components/card/gf_card.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -91,7 +92,7 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                                   color: AppColors.white,
                                   overflow: TextOverflow.ellipsis,
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 20),
+                                  fontSize: 22),
                             ),
                           ],
                         )),
@@ -105,67 +106,81 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                 const Text(
                   "Informazioni",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 22,
                       fontWeight: FontWeight.w700,
                       color: AppColors.logoCadmiumOrange),
                 ),
-                GFListTile(
-                  title: Text(
-                    widget.evento.nome,
-                    style: const TextStyle(
-                        color: AppColors.black,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18),
-                  ),
-                  subTitle: Text(
-                    widget.evento.posizione?.indirizzo != null
-                        ? "${widget.evento.posizione?.indirizzo}"
-                        : "Indirizzo non disponibile",
-                    style: const TextStyle(
-                        color: AppColors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16),
-                  ),
-                  description: Text(
-                    widget.evento.dataInizio != null
-                        ? "Da ${ManageDate.formatDate(DateTime.parse(widget.evento.dataInizio!), context)}\na ${ManageDate.formatDate(DateTime.parse(widget.evento.dataFine!), context)}"
-                        : "Data non disponibile",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  icon: const Icon(
-                    Icons.location_on,
-                    color: AppColors.logoCadmiumOrange,
+                GFCard(
+                  elevation: 3,
+                  title: GFListTile(
+                    title: Text(
+                      widget.evento.nome,
+                      style: const TextStyle(
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18),
+                    ),
+                    subTitle: Text(
+                      widget.evento.posizione?.indirizzo != null
+                          ? "${widget.evento.posizione?.indirizzo}"
+                          : "Indirizzo non disponibile",
+                      style: const TextStyle(
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16),
+                    ),
+                    description: Text(
+                      widget.evento.dataInizio != null
+                          ? "Da ${ManageDate.formatDate(DateTime.parse(widget.evento.dataInizio!), context)}\na ${ManageDate.formatDate(DateTime.parse(widget.evento.dataFine!), context)}"
+                          : "Data non disponibile",
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    icon: const Icon(
+                      Icons.location_on,
+                      color: AppColors.logoCadmiumOrange,
+                    ),
                   ),
                 ),
-                GFListTile(
-                  subTitle: TextButton(
-                      onPressed: () => isSitoDisable
-                          ? null
-                          : () async {
-                              Uri url = Uri.parse(
-                                  "https:${widget.evento.contatto?.sitoWeb}");
-                              await launchUrl(url);
-                            },
-                      child: Text(
-                        isSitoDisable
-                            ? "Nessun Sito WEB"
-                            : widget.evento.contatto!.sitoWeb!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: AppColors.primaryBlue,
-                        ),
-                      )),
-                  description: Text(
-                    (widget.evento.contenuto != null)
-                        ? widget.evento.contenuto!
-                        : "Nessuna descrizione",
-                    textAlign: TextAlign.justify,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
+                GFCard(
+                  elevation: 3,
+                  title: GFListTile(
+                    title: const Text(
+                      "Descrizione",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
                     ),
-                    //maxLines: 4,
-                    //overflow: TextOverflow.ellipsis,
+                    icon: const Icon(
+                      Icons.info_outline_rounded,
+                      color: AppColors.logoCadmiumOrange,
+                    ),
+                    subTitle: TextButton(
+                        onPressed: () => isSitoDisable
+                            ? null
+                            : () async {
+                                Uri url = Uri.parse(
+                                    "https:${widget.evento.contatto?.sitoWeb}");
+                                await launchUrl(url);
+                              },
+                        child: Text(
+                          isSitoDisable
+                              ? "Nessun Sito WEB"
+                              : widget.evento.contatto!.sitoWeb!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: AppColors.logoBlue,
+                          ),
+                        )),
+                    description: Text(
+                      (widget.evento.contenuto != null)
+                          ? widget.evento.contenuto!
+                          : "Nessuna descrizione",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                      //maxLines: 4,
+                      //overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
                 const SizedBox(

@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:frontend_sws/components/generali/CustomAvatar.dart';
 import 'package:frontend_sws/components/loading/AllPageLoad.dart';
+import 'package:getwidget/components/card/gf_card.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -65,18 +66,19 @@ class _DetailPageStrutturaState extends State<DetailPageStruttura> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
+                          const CustomAvatar(size: 28, icon: Icons.home_work),
+                          Flexible(
+                              child: Text(
                             widget.struttura.denominazione!,
                             style: const TextStyle(
                                 color: AppColors.white,
                                 overflow: TextOverflow.ellipsis,
                                 fontWeight: FontWeight.w700,
-                                fontSize: 18),
-                          ),
+                                fontSize: 20),
+                          )),
                           const SizedBox(
                             width: 2,
                           ),
-                          const CustomAvatar(size: 32, icon: Icons.home_work)
                         ],
                       )),
                     ),
@@ -87,25 +89,28 @@ class _DetailPageStrutturaState extends State<DetailPageStruttura> {
                 height: 8,
               ),
               const Text(
-                "Posizione",
+                "Dove siamo",
                 style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 22,
                     fontWeight: FontWeight.w700,
                     color: AppColors.logoCadmiumOrange),
               ),
-              GFListTile(
-                description: Text(
-                  widget.struttura?.posizione?.indirizzo != null
-                      ? widget.struttura!.posizione!.indirizzo!
-                      : "Indirizzo non disponibile",
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: AppColors.black,
+              GFCard(
+                elevation: 3,
+                title: GFListTile(
+                  description: Text(
+                    widget.struttura?.posizione?.indirizzo != null
+                        ? widget.struttura!.posizione!.indirizzo!
+                        : "Indirizzo non disponibile",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: AppColors.black,
+                    ),
                   ),
-                ),
-                icon: const Icon(
-                  Icons.location_on,
-                  color: AppColors.logoCadmiumOrange,
+                  icon: const Icon(
+                    Icons.location_on,
+                    color: AppColors.logoCadmiumOrange,
+                  ),
                 ),
               ),
               SizedBox(
@@ -182,7 +187,7 @@ class _DetailPageStrutturaState extends State<DetailPageStruttura> {
               const Text(
                 "I servizi offerti",
                 style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 22,
                     fontWeight: FontWeight.w700,
                     color: AppColors.logoCadmiumOrange),
               ),

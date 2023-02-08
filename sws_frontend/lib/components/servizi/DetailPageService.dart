@@ -6,6 +6,7 @@ import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:frontend_sws/components/generali/CustomButton.dart';
 import 'package:frontend_sws/services/entity/Servizio.dart';
 import 'package:frontend_sws/theme/theme.dart';
+import 'package:getwidget/components/card/gf_card.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -89,16 +90,19 @@ class _DetailPageServiceState extends State<DetailPageService> {
                               height: 10,
                             ),
                             ListTile(
-                              minVerticalPadding: 4,
+                              minVerticalPadding: 14,
                               title: Text(
                                 widget.servizio.nome,
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20.0,
                                 ),
                               ),
-                              subtitle: TextButton(
+                              subtitle: Container(
+                                margin: const EdgeInsets.only(
+                                    top: 12, left: 10, right: 10),
+                                child: TextButton(
                                   onPressed: () {
                                     Navigator.push(
                                       context,
@@ -108,11 +112,16 @@ class _DetailPageServiceState extends State<DetailPageService> {
                                                   .ente!.id!)),
                                     );
                                   },
+                                  style: TextButton.styleFrom(
+                                      elevation: 4,
+                                      backgroundColor: AppColors.logoBlue,
+                                      padding: const EdgeInsets.all(8),
+                                      textStyle: const TextStyle(fontSize: 20)),
                                   child: Wrap(
                                     children: [
                                       const Icon(
                                         Icons.home_work,
-                                        color: AppColors.logoCadmiumOrange,
+                                        color: AppColors.white,
                                       ),
                                       const SizedBox(
                                         width: 4,
@@ -122,17 +131,14 @@ class _DetailPageServiceState extends State<DetailPageService> {
                                                 .denominazione ??
                                             "",
                                         style: const TextStyle(
-                                            decoration:
-                                                TextDecoration.underline,
-                                            decorationColor:
-                                                AppColors.logoCadmiumOrange,
-                                            decorationThickness: 5,
-                                            color: AppColors.detailBlue,
+                                            color: AppColors.white,
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 18),
+                                            fontSize: 20),
                                       ),
                                     ],
-                                  )),
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         )),
@@ -146,105 +152,106 @@ class _DetailPageServiceState extends State<DetailPageService> {
                 const Text(
                   "Informazioni",
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 22,
                       fontWeight: FontWeight.w700,
                       color: AppColors.logoCadmiumOrange),
                 ),
-                GFListTile(
-                  title: Text(
-                    widget.servizio.nome,
-                    style: const TextStyle(
+                GFCard(
+                  elevation: 3,
+                  title: GFListTile(
+                    title: Text(
+                      widget.servizio.nome,
+                      style: const TextStyle(
+                          color: AppColors.black,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18),
+                    ),
+                    subTitle: Text(
+                      widget.servizio.struttura?.denominazione != null
+                          ? "Struttura: ${widget.servizio.struttura!.denominazione!}"
+                          : "Struttura non disponibile",
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                    description: Text(
+                      widget.servizio.struttura?.posizione?.indirizzo != null
+                          ? widget.servizio.struttura!.posizione!.indirizzo!
+                          : "Indirizzo non disponibile",
+                      style: const TextStyle(
+                        fontSize: 16,
                         color: AppColors.black,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18),
-                  ),
-                  subTitle: Text(
-                    widget.servizio.struttura?.denominazione != null
-                        ? "Struttura: ${widget.servizio.struttura!.denominazione!}"
-                        : "Struttura non disponibile",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  description: Text(
-                    widget.servizio.struttura?.posizione?.indirizzo != null
-                        ? widget.servizio.struttura!.posizione!.indirizzo!
-                        : "Indirizzo non disponibile",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: AppColors.black,
+                      ),
                     ),
-                  ),
-                  icon: const Icon(
-                    Icons.location_on,
-                    color: AppColors.logoCadmiumOrange,
+                    icon: const Icon(
+                      Icons.location_on,
+                      color: AppColors.logoCadmiumOrange,
+                    ),
                   ),
                 ),
-                GFListTile(
-                  title: Text(
-                    (widget.servizio.aree != null ||
-                            widget.servizio.aree!.isNotEmpty)
-                        ? widget.servizio.aree!.map((e) => e.nome).join(", ")
-                        : "Nessuna area di riferimento",
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.black,
+                GFCard(
+                  elevation: 3,
+                  title: GFListTile(
+                    title: Text(
+                      (widget.servizio.aree != null ||
+                              widget.servizio.aree!.isNotEmpty)
+                          ? widget.servizio.aree!.map((e) => e.nome).join(", ")
+                          : "Nessuna area di riferimento",
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                    subTitle: Text(
+                      isContactDisable
+                          ? "Telefono non disponibile"
+                          : "Telefono: +39 ${widget.servizio.contatto?.telefono!}",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                    description: Text(
+                      isEmailDisable
+                          ? "Email non disponibile"
+                          : "Email: ${widget.servizio.contatto?.email!}",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                    icon: const Icon(
+                      Icons.contact_phone,
+                      color: AppColors.logoCadmiumOrange,
                     ),
                   ),
-                  subTitle: Text(
-                    isContactDisable
-                        ? "Telefono non disponibile"
-                        : "Telefono: +39 ${widget.servizio.contatto?.telefono!}",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
+                  content: GFListTile(
+                    subTitle: Text(
+                      (widget.servizio.contenuto != null)
+                          ? widget.servizio.contenuto!
+                          : "Nessuna descrizione",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
                     ),
+                    description: TextButton(
+                        onPressed: () => isSitoDisable
+                            ? null
+                            : () async {
+                                Uri url = Uri.parse(
+                                    "https:${widget.servizio.contatto?.sitoWeb}");
+                                await launchUrl(url);
+                              },
+                        child: Text(
+                          isSitoDisable
+                              ? "Nessun Sito WEB"
+                              : widget.servizio.contatto!.sitoWeb!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: AppColors.primaryBlue,
+                          ),
+                        )),
                   ),
-                  description: Text(
-                    isEmailDisable
-                        ? "Email non disponibile"
-                        : "Email: ${widget.servizio.contatto?.email!}",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-                  ),
-                  icon: const Icon(
-                    Icons.contact_phone,
-                    color: AppColors.logoCadmiumOrange,
-                  ),
-                ),
-                GFListTile(
-                  description: Text(
-                    (widget.servizio.contenuto != null)
-                        ? widget.servizio.contenuto!
-                        : "Nessuna descrizione",
-                    textAlign: TextAlign.justify,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-                    //maxLines: 4,
-                    //overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                GFListTile(
-                  description: TextButton(
-                      onPressed: () => isSitoDisable
-                          ? null
-                          : () async {
-                              Uri url = Uri.parse(
-                                  "https:${widget.servizio.contatto?.sitoWeb}");
-                              await launchUrl(url);
-                            },
-                      child: Text(
-                        isSitoDisable
-                            ? "Nessun Sito WEB"
-                            : widget.servizio.contatto!.sitoWeb!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: AppColors.primaryBlue,
-                        ),
-                      )),
                 ),
                 const SizedBox(
                   height: 12,
@@ -252,7 +259,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                 const Text(
                   "Trovaci sulla mappa",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 22,
                       fontWeight: FontWeight.w700,
                       color: AppColors.logoCadmiumOrange),
                 ),
