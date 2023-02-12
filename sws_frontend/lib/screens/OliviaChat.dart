@@ -44,6 +44,7 @@ class _OliviaChatState extends State<OliviaChat> {
   ImpostazioniService impostazioniService = ImpostazioniService();
   Impostazioni? impostazioni;
 
+  bool isMicOn = false;
   bool loadStt = false;
   bool loadWebSocket = true;
   bool loadTts = false;
@@ -343,7 +344,10 @@ class _OliviaChatState extends State<OliviaChat> {
                           children: [
                             AvatarGlow(
                                 glowColor: AppColors.logoCadmiumOrange,
+                                repeatPauseDuration: Duration.zero,
+                                curve: Curves.bounceOut,
                                 animate: isListen,
+                                duration: Duration(seconds: 1),
                                 endRadius: 50,
                                 child: FloatingActionButton(
                                   backgroundColor:
@@ -355,8 +359,8 @@ class _OliviaChatState extends State<OliviaChat> {
                                       : null,
                                   child: loadStt
                                       ? Icon(
-                                          isListen ? Icons.mic_off : Icons.mic,
-                                          color: Colors.white,
+                                          Icons.mic,
+                                          color: isMicOn? AppColors.logoCadmiumOrange : Colors.white,
                                         )
                                       : const Icon(Icons.mic_off,
                                           color: AppColors.logoRed),
@@ -409,6 +413,7 @@ class _OliviaChatState extends State<OliviaChat> {
   }
 
   void startListen() async {
+    isMicOn = true;
     isListen = true;
     await _speechToText.listen(
       partialResults: true,
@@ -425,6 +430,7 @@ class _OliviaChatState extends State<OliviaChat> {
   void stopListen() async {
     await _speechToText.stop();
     isListen = false;
+    isMicOn = false;
     setState(() {});
   }
 

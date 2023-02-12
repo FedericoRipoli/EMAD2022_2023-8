@@ -101,7 +101,7 @@ class CardEvento extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: aree!.map((e) {
-                              return Container(
+                              return e.nome.isNotEmpty? Container(
                                   margin: const EdgeInsets.all(3),
                                   child: Chip(
                                     backgroundColor: AppColors.bgWhite,
@@ -115,7 +115,7 @@ class CardEvento extends StatelessWidget {
                                       ),
                                     ),
                                     elevation: 4,
-                                  ));
+                                  )) : Container();
                             }).toList(),
                           ),
                         )
