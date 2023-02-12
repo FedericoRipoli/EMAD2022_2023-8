@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:frontend_sws/components/loading/AllPageLoadTransparent.dart';
 import 'package:path/path.dart' as p;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,7 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
   @override
   Widget build(BuildContext context) {
     return !loaded
-        ? const AllPageLoad()
+        ? const AllPageLoadTransparent()
         : Scaffold(
             appBar: const CustomAppBar(
               title: AppTitle(
