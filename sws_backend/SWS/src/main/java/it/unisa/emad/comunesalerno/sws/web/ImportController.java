@@ -66,7 +66,13 @@ public class ImportController {
                 e.setDenominazione(linea.getEnte());
                 enteRepository.save(e);
             }
-            String nomeStruttura= linea.getStruttura();
+            String nomeStruttura;
+            if(linea.getStruttura()==null || linea.getStruttura().isEmpty()){
+                nomeStruttura=e.getDenominazione()+" - Struttura senza nome";
+            }
+            else{
+                nomeStruttura=linea.getStruttura();
+            }
             if(e.getStrutture()==null){
                 e.setStrutture(new LinkedList<>());
             }
@@ -93,8 +99,10 @@ public class ImportController {
             serv.setStruttura(s);
             serv.setStato(StatoOperazione.APPROVATO);
             serv.setNome(linea.getServizio());
+            serv.setContenuto(linea.getDescrizione());
             Contatto c=new Contatto();
             c.setEmail(linea.getEmail());
+            c.setSitoWeb(linea.getSitoWeb());
             c.setTelefono(c.getTelefono());
             serv.setContatto(c);
             serv.setAree(new LinkedList<>());

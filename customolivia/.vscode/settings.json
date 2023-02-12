@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/0fb52d0e-1df5-45f6-a6f3-7c955d8f27de/appservices/subscriptions/0fb52d0e-1df5-45f6-a6f3-7c955d8f27de/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/emadolivia",
+    "appService.deploySubpath": "."
+}

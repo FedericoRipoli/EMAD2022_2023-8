@@ -6,7 +6,7 @@ refresh-token:
   public: ${REFRESH_TOKEN_PUBLIC_KEY_PATH}
 spring:
   profiles:
-    active: dev
+    active: prod
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB}

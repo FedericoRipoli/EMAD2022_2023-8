@@ -31,5 +31,9 @@ public class ImportServizi {
     private String area;
     @Lob
     private String servizio;
+    @Lob
+    private String descrizione;
+    @Lob
+    private String sitoWeb;
 
 }
