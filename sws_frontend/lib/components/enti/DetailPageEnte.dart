@@ -66,7 +66,7 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
                               color: AppColors.white,
                               overflow: TextOverflow.ellipsis,
                               fontWeight: FontWeight.w700,
-                              fontSize: 22),
+                              fontSize: 20),
                         ),
                       ),
                     ),

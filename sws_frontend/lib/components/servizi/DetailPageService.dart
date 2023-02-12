@@ -67,6 +67,39 @@ class _DetailPageServiceState extends State<DetailPageService> {
     }
   }
 
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
+  String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((MapEntry<String, String> e) =>
+            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
+
+  Future<void> _sendEmail(String email, String subject, String body) async {
+    final Uri launchUri = Uri(
+        scheme: 'mailto',
+        path: email,
+        query: encodeQueryParameters(
+            <String, String>{'subject': subject, 'body': body}));
+    await launchUrl(launchUri);
+  }
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     EdgeInsets defaultPaddingElement = const EdgeInsets.fromLTRB(15, 0, 15, 0);
@@ -81,16 +114,13 @@ class _DetailPageServiceState extends State<DetailPageService> {
                     ClipPath(
                       clipper: OvalBottomBorderClipper(),
                       child: Container(
-                        height: 165,
+                        height: 200,
                         color: AppColors.logoBlue,
                         child: Center(
                             child: Column(
                           children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
                             ListTile(
-                              minVerticalPadding: 14,
+                              minVerticalPadding: 4,
                               title: Text(
                                 widget.servizio.nome,
                                 style: const TextStyle(
@@ -133,7 +163,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                                         style: const TextStyle(
                                             color: AppColors.white,
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 20),
+                                            fontSize: 16),
                                       ),
                                     ],
                                   ),
@@ -237,11 +267,8 @@ class _DetailPageServiceState extends State<DetailPageService> {
                     description: TextButton(
                         onPressed: () => isSitoDisable
                             ? null
-                            : () async {
-                                Uri url = Uri.parse(
-                                    "https:${widget.servizio.contatto?.sitoWeb}");
-                                await launchUrl(url);
-                              },
+                            : _launchInBrowser(Uri.parse(
+                                "https://${widget.servizio.contatto?.sitoWeb?.substring(4)}")),
                         child: Text(
                           isSitoDisable
                               ? "Nessun Sito WEB"
@@ -380,12 +407,8 @@ class _DetailPageServiceState extends State<DetailPageService> {
                             child: CustomButton(
                               onPressed: () => isContactDisable
                                   ? null
-                                  : () async {
-                                      String number =
-                                          widget.servizio.contatto!.telefono!;
-                                      Uri tel = Uri.parse("tel:$number");
-                                      await launchUrl(tel);
-                                    },
+                                  : _makePhoneCall(
+                                      widget.servizio.contatto!.telefono!),
                               textButton: 'Telefona',
                               bgColor: isContactDisable
                                   ? Colors.grey
@@ -399,17 +422,10 @@ class _DetailPageServiceState extends State<DetailPageService> {
                               textButton: "E-mail",
                               onPressed: () => isEmailDisable
                                   ? null
-                                  : () async {
-                                      String email = Uri.encodeComponent(
-                                          widget.servizio.contatto!.email!);
-                                      String subject = Uri.encodeComponent(
-                                          "Informazioni su ${widget.servizio.nome}");
-                                      String body = Uri.encodeComponent(
-                                          "Salve, la contatto in merito...");
-                                      Uri mail = Uri.parse(
-                                          "mailto:$email?subject=$subject&body=$body");
-                                      await launchUrl(mail);
-                                    },
+                                  : _sendEmail(
+                                      widget.servizio.contatto!.email!,
+                                      "Informazioni su ${widget.servizio.nome}",
+                                      "Salve, la contatto in merito..."),
                               icon: Icons.email,
                               bgColor: isEmailDisable
                                   ? Colors.grey

@@ -64,6 +64,39 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
     }
   }
 
+  Future<void> _makePhoneCall(String phoneNumber) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
+  }
+
+  String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((MapEntry<String, String> e) =>
+            '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
+
+  Future<void> _sendEmail(String email, String subject, String body) async {
+    final Uri launchUri = Uri(
+        scheme: 'mailto',
+        path: email,
+        query: encodeQueryParameters(
+            <String, String>{'subject': subject, 'body': body}));
+    await launchUrl(launchUri);
+  }
+
+  Future<void> _launchInBrowser(Uri url) async {
+    if (!await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     EdgeInsets defaultPaddingElement = const EdgeInsets.fromLTRB(15, 0, 15, 0);
@@ -156,11 +189,8 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                     subTitle: TextButton(
                         onPressed: () => isSitoDisable
                             ? null
-                            : () async {
-                                Uri url = Uri.parse(
-                                    "https:${widget.evento.contatto?.sitoWeb}");
-                                await launchUrl(url);
-                              },
+                            : _launchInBrowser(Uri.parse(
+                                "https://${widget.evento.contatto?.sitoWeb?.substring(4)}")),
                         child: Text(
                           isSitoDisable
                               ? "Nessun Sito WEB"
@@ -277,12 +307,8 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                             child: CustomButton(
                               onPressed: () => isContactDisable
                                   ? null
-                                  : () async {
-                                      String number =
-                                          widget.evento.contatto!.telefono!;
-                                      Uri tel = Uri.parse("tel:$number");
-                                      await launchUrl(tel);
-                                    },
+                                  : _makePhoneCall(
+                                      widget.evento.contatto!.telefono!),
                               textButton: 'Telefona',
                               bgColor: isContactDisable
                                   ? Colors.grey
@@ -296,17 +322,10 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                               textButton: "E-mail",
                               onPressed: () => isEmailDisable
                                   ? null
-                                  : () async {
-                                      String email = Uri.encodeComponent(
-                                          widget.evento.contatto!.email!);
-                                      String subject = Uri.encodeComponent(
-                                          "Informazioni su ${widget.evento.nome}");
-                                      String body = Uri.encodeComponent(
-                                          "Salve, la contatto in merito...");
-                                      Uri mail = Uri.parse(
-                                          "mailto:$email?subject=$subject&body=$body");
-                                      await launchUrl(mail);
-                                    },
+                                  : _sendEmail(
+                                      widget.evento.contatto!.email!,
+                                      "Informazioni su ${widget.evento.nome}",
+                                      "Salve, la contatto in merito..."),
                               icon: Icons.email,
                               bgColor: isEmailDisable
                                   ? Colors.grey
