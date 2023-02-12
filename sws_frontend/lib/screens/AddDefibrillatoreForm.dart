@@ -70,7 +70,7 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
   @override
   Widget build(BuildContext context) {
     return !loaded
-        ? const AllPageLoadTransparent()
+        ? const AllPageLoad()
         : Scaffold(
             appBar: const CustomAppBar(
               title: AppTitle(
