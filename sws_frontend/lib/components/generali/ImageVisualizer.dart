@@ -20,16 +20,17 @@ class ImageVisualizer extends StatelessWidget {
         vertical: 20.0,
         horizontal: 20.0,
       ),
-      height: 200.0,
+      height: 400,
       child: ClipRect(
         child: PhotoView(
+          backgroundDecoration: BoxDecoration(color: Colors.white),
           imageProvider: Image.memory(
             convertBase64Image(imageData),
             gaplessPlayback: true,
           ).image,
           maxScale: PhotoViewComputedScale.covered * 2.0,
           minScale: PhotoViewComputedScale.contained * 0.8,
-          initialScale: PhotoViewComputedScale.covered,
+          initialScale: PhotoViewComputedScale.contained,
         ),
       ),
     );

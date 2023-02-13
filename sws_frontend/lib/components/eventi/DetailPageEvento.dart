@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:frontend_sws/components/generali/CustomButton.dart';
@@ -210,84 +208,15 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                         fontSize: 16,
                         color: Colors.black,
                       ),
-                      //maxLines: 4,
-                      //overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 12,
                 ),
-                /*SizedBox(
-                  height: 200,
-                  child: FlutterMap(
-                      options: MapOptions(
-                        center: LatLng(
-                            double.parse(widget.evento.posizione!.latitudine!),
-                            double.parse(
-                                widget.evento.posizione!.longitudine!)),
-                        zoom: 15.0,
-                        maxZoom: 30.0,
-                        enableScrollWheel: true,
-                        scrollWheelVelocity: 0.005,
-                      ),
-                      children: [
-                        TileLayer(
-                            urlTemplate:
-                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png'),
-                        MarkerClusterLayerWidget(
-                          options: MarkerClusterLayerOptions(
-                            spiderfyCircleRadius: 80,
-                            spiderfySpiralDistanceMultiplier: 2,
-                            circleSpiralSwitchover: 12,
-                            maxClusterRadius: 120,
-                            rotate: true,
-                            size: const Size(40, 40),
-                            anchor: AnchorPos.align(AnchorAlign.center),
-                            fitBoundsOptions: const FitBoundsOptions(
-                              padding: EdgeInsets.all(50),
-                              maxZoom: 15,
-                            ),
-                            markers: [
-                              Marker(
-                                point: LatLng(
-                                    double.parse(
-                                        widget.evento.posizione!.latitudine!),
-                                    double.parse(
-                                        widget.evento.posizione!.longitudine!)),
-                                builder: (ctx) => const Icon(
-                                  Icons.location_on,
-                                  size: 50,
-                                  color: AppColors.logoCadmiumOrange,
-                                ),
-                                width: 50.0,
-                                height: 50.0,
-                              )
-                            ],
-                            polygonOptions: const PolygonOptions(
-                                borderColor: AppColors.logoBlue,
-                                color: Colors.black12,
-                                borderStrokeWidth: 3),
-                            builder: (context, markers) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: AppColors.logoBlue),
-                                child: Center(
-                                  child: Text(
-                                    markers.length.toString(),
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ]),
-                ),*/
                 widget.evento.locandina != null
                     ? Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(0),
                         child: ImageVisualizer(
                           tag: "Locandina",
                           imageData: widget.evento.locandina!.imageData,
