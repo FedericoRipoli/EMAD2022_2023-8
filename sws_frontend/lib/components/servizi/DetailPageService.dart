@@ -36,7 +36,8 @@ class _DetailPageServiceState extends State<DetailPageService> {
   }
 
   void setDisable() {
-    if (widget.servizio.contatto?.telefono != null) {
+    if (widget.servizio.contatto?.telefono != null &&
+        widget.servizio.contatto?.telefono != "") {
       setState(() {
         isContactDisable = false;
       });
@@ -56,7 +57,8 @@ class _DetailPageServiceState extends State<DetailPageService> {
         isEmailDisable = true;
       });
     }
-    if (widget.servizio.contatto?.sitoWeb != null) {
+    if (widget.servizio.contatto?.sitoWeb != null &&
+        widget.servizio.contatto?.sitoWeb?.trim() != "") {
       setState(() {
         isSitoDisable = false;
       });
