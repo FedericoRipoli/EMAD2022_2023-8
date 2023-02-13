@@ -15,7 +15,7 @@ class DropDownFilter extends GenericFilter {
       required super.valueChange,
       required this.values,
       this.defaultValue,
-        super.flex=1});
+      super.flex = 1});
 
   @override
   Widget getWidget() {
@@ -66,6 +66,10 @@ class DropDownFilterItem extends DropdownMenuItem<String> {
     required this.name,
   }) : super(
           value: id,
-          child: Text(name, overflow: TextOverflow.ellipsis),
+          child: Text(
+            name,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 11.7),
+          ),
         );
 }

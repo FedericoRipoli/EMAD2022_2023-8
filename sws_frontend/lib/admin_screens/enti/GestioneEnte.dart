@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:frontend_sws/admin_screens/enti/struttura/GestioneStruttura.dart';
 import 'package:frontend_sws/admin_screens/enti/struttura/ListaStrutture.dart';
 import 'package:frontend_sws/components/generali/CustomButton.dart';
 import 'package:frontend_sws/services/EnteService.dart';
@@ -187,21 +188,20 @@ class _GestioneEnte extends State<GestioneEnte> {
                               fontSize: 16, fontWeight: FontWeight.w700),
                           textAlign: TextAlign.center,
                         ),
-
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ListaStrutture(idEnte: ente!.id!)));
-                            },
-                            child: Text(
-                              ente?.id != null
-                                  ? "Modifica Strutture"
-                                  : "Aggiungi strutture",
-                              style: const TextStyle(fontSize: 18),
-                            )),
+                        ente?.id != null
+                            ? TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ListaStrutture(
+                                              idEnte: ente!.id!)));
+                                },
+                                child: const Text(
+                                  "Aggiungi/Modifica Strutture",
+                                  style: TextStyle(fontSize: 18),
+                                ))
+                            : Container(),
                         const Divider(
                           thickness: 2,
                         ),
