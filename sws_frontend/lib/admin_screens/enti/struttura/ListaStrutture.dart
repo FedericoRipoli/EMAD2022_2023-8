@@ -47,13 +47,15 @@ class _ListaStruttureState extends State<ListaStrutture> {
   }
 
   Future<void> _fetchPage(int pageKey) async {
-    try {
-      final newItems =
-          await strutturaService.struttureList(filterNome, widget.idEnte);
+    if (widget.idEnte != "") {
+      try {
+        final newItems =
+            await strutturaService.struttureList(filterNome, widget.idEnte);
 
-      _pagingController.appendLastPage(newItems!);
-    } catch (error) {
-      _pagingController.error = error;
+        _pagingController.appendLastPage(newItems!);
+      } catch (error) {
+        _pagingController.error = error;
+      }
     }
   }
 
@@ -96,35 +98,41 @@ class _ListaStruttureState extends State<ListaStrutture> {
                     valueChange: _filterNomeChanged),
               ]),
               Flexible(
-                  child:   CustomPagedListView<Struttura>(
-                    pagingController: _pagingController,
-
-                    itemBuilder: (context, item, index) => StrutturaListItem(
-                        denominazione: item.denominazione!,
-                        indirizzo: item.posizione!.indirizzo!,
-                        id: item.id!,
-                        onDelete: () {
-                          strutturaService
-                              .deleteStruttura(item.id!)
-                              .then((value) {
-                            if (value) {
-                              ToastUtil.success("Struttura eliminata", context);
-                            } else {
-                              ToastUtil.error("Errore server", context);
-                            }
-                            _pullRefresh();
-                          });
-                        },
-                        onTap: () => {
-                              Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              GestioneStruttura(
-                                                  idStruttura: item.id,
-                                                  idEnte: widget.idEnte)))
-                                  .then((v) => _pullRefresh())
-                            })),
+                child: widget.idEnte != ""
+                    ? CustomPagedListView<Struttura>(
+                        pagingController: _pagingController,
+                        itemBuilder: (context, item, index) =>
+                            StrutturaListItem(
+                                denominazione: item.denominazione!,
+                                indirizzo: item.posizione!.indirizzo!,
+                                id: item.id!,
+                                onDelete: () {
+                                  strutturaService
+                                      .deleteStruttura(item.id!)
+                                      .then((value) {
+                                    if (value) {
+                                      ToastUtil.success(
+                                          "Struttura eliminata", context);
+                                    } else {
+                                      ToastUtil.error("Errore server", context);
+                                    }
+                                    _pullRefresh();
+                                  });
+                                },
+                                onTap: () => {
+                                      Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      GestioneStruttura(
+                                                          idStruttura: item.id,
+                                                          idEnte:
+                                                              widget.idEnte)))
+                                          .then((v) => _pullRefresh())
+                                    }))
+                    : const Center(
+                        child: Text("Nessuna struttura presente"),
+                      ),
               )
             ])));
   }

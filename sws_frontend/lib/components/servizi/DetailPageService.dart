@@ -116,7 +116,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                     ClipPath(
                       clipper: OvalBottomBorderClipper(),
                       child: Container(
-                        height: 200,
+                        height: 210,
                         color: AppColors.logoBlue,
                         child: Center(
                             child: Column(
@@ -128,7 +128,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 20.0,
+                                  fontSize: 18.0,
                                 ),
                               ),
                               subtitle: Container(
