@@ -108,7 +108,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                 MaterialPageRoute(builder: (context) => const ListaAree()));
           }));
       w.add(CustomMenuItem(
-          text: 'Validazione Servizi',
+          text: 'Gestione Servizi',
           f: () {
             checkChangePage(ListaServiziDaValidare.id);
             Navigator.push(
