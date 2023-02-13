@@ -262,14 +262,15 @@ class _AddDefibrillatoreFormState extends State<AddDefibrillatoreForm>
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => CustomHtmlView(
-                                                title: "Privacy policy",
-                                                html:
-                                                    impostazioni!.privacyPolicy,
+                                                title: "Privacy Policy",
+                                                html:"<h4 style='margin:15;'> Secondo il GDPR, qualsiasi azienda che gestisca dati personali di cittadini dell'UE è tenuta a fornire determinate informazioni a tali consumatori sotto forma di un'informativa sulla privacy. Gli utenti devono fornire il consenso esplicito e informato affinché tu possa elaborare le loro informazioni. </h4><br>"
+                                                    +"<h4 style='margin:15;'>La nostra Privacy Policy:</h4><br>"
+                                                    "<h3 style='margin:20;'>"+impostazioni!.privacyPolicy +"</h3>",
                                               )),
                                     );
                                   },
                                   child: const Text(
-                                    "Leggi la privacy policy",
+                                    "Leggi la Privacy Policy",
                                     style: TextStyle(color: AppColors.logoBlue),
                                   )),
                               CheckboxListTile(

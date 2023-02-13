@@ -262,7 +262,7 @@ class _ImpostazioniDefibrillatori extends State<ImpostazioniDefibrillatori> {
                           height: 40,
                         ),
                         const Text(
-                          "Aggiungi una descrizione",
+                          "Aggiungi Privacy Policy",
                           style: TextStyle(fontSize: 18),
                           textAlign: TextAlign.center,
                         ),

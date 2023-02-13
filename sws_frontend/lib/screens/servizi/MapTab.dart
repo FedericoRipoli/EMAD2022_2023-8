@@ -2,23 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
-import 'package:frontend_sws/components/servizi/DetailPageService.dart';
 import 'package:frontend_sws/screens/servizi/InfoServizio.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../components/loading/AllPageLoadTransparent.dart';
 import '../../components/mappa/MarkerMappa.dart';
 import '../../components/mappa/PopupItemMappa.dart';
-import '../../services/ServizioService.dart';
 import '../../services/dto/PuntoMappaDTO.dart';
-import '../../services/entity/Servizio.dart';
 import '../../theme/theme.dart';
 
 class MapTab extends StatefulWidget {
   Future<List<PuntoMappaDto>?> initCallMap;
-
-  MapTab({Key? key, required this.initCallMap}) : super(key: key);
-
+  Position? currentPos;
+  MapTab({Key? key, required this.initCallMap, this.currentPos }) : super(key: key);
+  LatLng currentLatLng = LatLng(40.6824408, 14.7680961);
   @override
   State<MapTab> createState() => _MapTabState();
 }
@@ -30,6 +28,8 @@ class _MapTabState extends State<MapTab> {
   @override
   void initState() {
     super.initState();
+    if(widget.currentPos != null)
+      widget.currentLatLng = LatLng(widget.currentPos!.latitude, widget.currentPos!.longitude);
   }
 
   @override
@@ -47,7 +47,7 @@ class _MapTabState extends State<MapTab> {
 
           children.add(FlutterMap(
               options: MapOptions(
-                center: LatLng(40.6824408, 14.7680961),
+                center: widget.currentLatLng,
                 zoom: 15.0,
                 maxZoom: 30.0,
                 enableScrollWheel: true,

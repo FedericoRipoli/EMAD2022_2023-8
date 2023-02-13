@@ -579,7 +579,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                   ),
-                                  child: const Text('Seleziona l\'icona'),
+                                  child: const Text('Seleziona l\'icona per la mappa'),
                                 ),
                                 const SizedBox(width: 30),
                                 AnimatedSwitcher(

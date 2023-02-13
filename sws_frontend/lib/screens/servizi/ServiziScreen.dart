@@ -8,8 +8,10 @@ import 'package:frontend_sws/services/ServizioService.dart';
 import 'package:frontend_sws/services/entity/Area.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/services/entity/Servizio.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:latlong2/latlong.dart';
 import '../../components/filtri/DropDownTextFilter.dart';
 import '../../components/filtri/FilterBar.dart';
 import '../../components/filtri/GenericFilter.dart';
@@ -53,6 +55,8 @@ class _ServiziScreenState extends State<ServiziScreen>
   String orderBy = "nome";
   String orderString = "sort=nome,ASC";
 
+  Position? _currentPosition;
+
   @override
   void initState() {
     super.initState();
@@ -64,6 +68,7 @@ class _ServiziScreenState extends State<ServiziScreen>
     });
     tabController = TabController(length: 2, vsync: this);
     initCallMap = loadMapView();
+    _getCurrentPosition();
     initAree = loadListAree();
     initAree.then((vAree) {
       initEnti = loadListEnti();
@@ -132,6 +137,7 @@ class _ServiziScreenState extends State<ServiziScreen>
     return servizioService.findPuntiMappa(filterNome, filterEnte, filterArea);
   }
 
+
   void _filterNomeChange(String? text) {
     filterNome = text;
     _pullRefresh();
@@ -147,7 +153,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   }
 
   void _filterAreaChange(String? text) {
-    filterArea = text;
+    filterArea = text != null && text.isNotEmpty ? text : null;
     _pullRefresh();
     initCallMap = loadMapView();
     setState(() {});
@@ -296,6 +302,8 @@ class _ServiziScreenState extends State<ServiziScreen>
         searchList,
         MapTab(
           initCallMap: initCallMap,
+          currentPos: _currentPosition, //Eliminare currentPos per lasciare che la mappa sia impostata su Salerno
+                                        //Lasciare currentPos per impostare la mappa nei tuoi pressi con poca precisione
         )
       ]),
     );
@@ -320,4 +328,46 @@ class _ServiziScreenState extends State<ServiziScreen>
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => throw UnimplementedError();
+
+  // COORDINATE
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() => _currentPosition = position);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+//COORDINATE
 }
