@@ -197,6 +197,7 @@ class _DetailPageStrutturaState extends State<DetailPageStruttura> {
               servizi != null
                   ? ListView.builder(
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       itemCount: servizi!.length,
                       itemBuilder: (BuildContext context, int index) {

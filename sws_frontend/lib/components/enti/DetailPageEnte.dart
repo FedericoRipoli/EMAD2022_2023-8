@@ -119,6 +119,7 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
               ),
               strutture != null
                   ? ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       itemCount: strutture!.length,

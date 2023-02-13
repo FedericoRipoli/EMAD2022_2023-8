@@ -294,7 +294,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                   height: 6,
                 ),
                 SizedBox(
-                  height: 200,
+                  height: MediaQuery.of(context).size.width,
                   child: widget.servizio.struttura?.posizione?.latitudine !=
                               null &&
                           widget.servizio.struttura?.posizione?.longitudine !=
