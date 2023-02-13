@@ -33,7 +33,8 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
   }
 
   void setDisable() {
-    if (widget.evento.contatto?.telefono != null) {
+    if (widget.evento.contatto?.telefono != null &&
+        widget.evento.contatto?.telefono != "") {
       setState(() {
         isContactDisable = false;
       });
@@ -53,7 +54,8 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
         isEmailDisable = true;
       });
     }
-    if (widget.evento.contatto?.sitoWeb != null) {
+    if (widget.evento.contatto?.sitoWeb != null &&
+        widget.evento.contatto?.sitoWeb?.trim() != "") {
       setState(() {
         isSitoDisable = false;
       });
