@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
@@ -200,7 +198,7 @@ class _DetailPageServiceState extends State<DetailPageService> {
                     ),
                     subTitle: Text(
                       widget.servizio.struttura?.denominazione != null
-                          ? "Struttura: ${widget.servizio.struttura!.denominazione!}"
+                          ? widget.servizio.struttura!.denominazione!
                           : "Struttura non disponibile",
                       style: const TextStyle(fontSize: 16),
                     ),

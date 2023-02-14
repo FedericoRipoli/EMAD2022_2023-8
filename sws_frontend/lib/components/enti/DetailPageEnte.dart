@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:frontend_sws/components/enti/struttura/DetailPageStruttura.dart';
 import 'package:frontend_sws/components/enti/struttura/StrutturaListItem.dart';
-import 'package:frontend_sws/components/generali/CustomAvatar.dart';
-import 'package:frontend_sws/components/loading/AllPageLoad.dart';
 import 'package:getwidget/components/card/gf_card.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 
@@ -45,7 +42,6 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
 
   @override
   Widget build(BuildContext context) {
-    EdgeInsets defaultPaddingElement = const EdgeInsets.fromLTRB(30, 0, 30, 0);
     return Scaffold(
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -61,12 +57,12 @@ class _DetailPageEnteState extends State<DetailPageEnte> {
                       color: AppColors.logoBlue,
                       child: ListTile(
                         title: Text(
-                          "ENTE ${widget.ente.denominazione}",
+                          widget.ente.denominazione,
                           style: const TextStyle(
                               color: AppColors.white,
                               overflow: TextOverflow.ellipsis,
                               fontWeight: FontWeight.w700,
-                              fontSize: 20),
+                              fontSize: 18),
                         ),
                       ),
                     ),
