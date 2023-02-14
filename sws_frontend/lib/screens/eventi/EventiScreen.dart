@@ -153,7 +153,7 @@ class _EventiScreenState extends State<EventiScreen>
   }
 
   void _filterAreaChange(String? text) {
-    filterArea = text;
+    filterArea = text != null && text.isNotEmpty ? text : null;
     _pullRefresh();
     setState(() {});
   }
