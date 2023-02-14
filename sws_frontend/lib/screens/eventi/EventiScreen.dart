@@ -65,6 +65,9 @@ class _EventiScreenState extends State<EventiScreen>
       _fetchPage(pageKey);
     });
     initAree = loadListAree();
+    initAree.then((vAree) {
+      setState(() {});
+    });
   }
 
   late Future<List<DropDownFilterItem>> initAree;
