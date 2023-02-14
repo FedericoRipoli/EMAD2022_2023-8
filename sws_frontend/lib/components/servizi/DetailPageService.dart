@@ -114,7 +114,8 @@ class _DetailPageServiceState extends State<DetailPageService> {
                     ClipPath(
                       clipper: OvalBottomBorderClipper(),
                       child: Container(
-                        height: 210,
+                        height:
+                            widget.servizio.nome != "Defibrillatore" ? 180 : 90,
                         color: AppColors.logoBlue,
                         child: Center(
                             child: Column(
@@ -129,46 +130,49 @@ class _DetailPageServiceState extends State<DetailPageService> {
                                   fontSize: 18.0,
                                 ),
                               ),
-                              subtitle: Container(
-                                margin: const EdgeInsets.only(
-                                    top: 12, left: 10, right: 10),
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => InfoEnte(
-                                              idEnte: widget.servizio.struttura!
-                                                  .ente!.id!)),
-                                    );
-                                  },
-                                  style: TextButton.styleFrom(
-                                      elevation: 4,
-                                      backgroundColor: AppColors.logoBlue,
-                                      padding: const EdgeInsets.all(8),
-                                      textStyle: const TextStyle(fontSize: 20)),
-                                  child: Wrap(
-                                    children: [
-                                      const Icon(
-                                        Icons.home_work,
-                                        color: AppColors.white,
+                              subtitle: widget.servizio.nome != "Defibrillatore"
+                                  ? Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 12, left: 10, right: 10),
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => InfoEnte(
+                                                    idEnte: widget.servizio
+                                                        .struttura!.ente!.id!)),
+                                          );
+                                        },
+                                        style: TextButton.styleFrom(
+                                            elevation: 4,
+                                            backgroundColor: AppColors.logoBlue,
+                                            padding: const EdgeInsets.all(8),
+                                            textStyle:
+                                                const TextStyle(fontSize: 20)),
+                                        child: Wrap(
+                                          children: [
+                                            const Icon(
+                                              Icons.home_work,
+                                              color: AppColors.white,
+                                            ),
+                                            const SizedBox(
+                                              width: 4,
+                                            ),
+                                            Text(
+                                              widget.servizio.struttura!.ente!
+                                                      .denominazione ??
+                                                  "",
+                                              style: const TextStyle(
+                                                  color: AppColors.white,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      const SizedBox(
-                                        width: 4,
-                                      ),
-                                      Text(
-                                        widget.servizio.struttura!.ente!
-                                                .denominazione ??
-                                            "",
-                                        style: const TextStyle(
-                                            color: AppColors.white,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 16),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                                    )
+                                  : Container(),
                             ),
                           ],
                         )),
@@ -220,17 +224,25 @@ class _DetailPageServiceState extends State<DetailPageService> {
                 GFCard(
                   elevation: 3,
                   title: GFListTile(
-                    title: Text(
-                      (widget.servizio.aree != null ||
-                              widget.servizio.aree!.isNotEmpty)
-                          ? widget.servizio.aree!.map((e) => e.nome).join(", ")
-                          : "Nessuna area di riferimento",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                    ),
+                    title: widget.servizio.nome != "Defibrillatore"
+                        ? Text(
+                            (widget.servizio.aree != null ||
+                                    widget.servizio.aree!.isNotEmpty)
+                                ? widget.servizio.aree!
+                                    .map((e) => e.nome)
+                                    .join(", ")
+                                : "Nessuna area di riferimento",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          )
+                        : const Text(
+                            "Contatti Utili",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 18),
+                          ),
                     subTitle: Text(
                       isContactDisable
                           ? "Telefono non disponibile"

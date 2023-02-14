@@ -111,7 +111,7 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                     ClipPath(
                       clipper: WaveClipperOne(),
                       child: Container(
-                        height: 100,
+                        height: 120,
                         color: AppColors.logoBlue,
                         child: Center(
                             child: Column(
@@ -125,7 +125,7 @@ class _DetailPageEventoState extends State<DetailPageEvento> {
                                   color: AppColors.white,
                                   overflow: TextOverflow.ellipsis,
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 22),
+                                  fontSize: 20),
                             ),
                           ],
                         )),

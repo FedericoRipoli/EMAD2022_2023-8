@@ -55,7 +55,7 @@ class CardServizio extends StatelessWidget {
                 size: 32,
               ),
               subtitle: Text(
-                ente,
+                nomeServizio != "Defibrillatore" ? ente : posizione!,
                 style: const TextStyle(
                     color: AppColors.logoBlue,
                     fontWeight: FontWeight.w600,
