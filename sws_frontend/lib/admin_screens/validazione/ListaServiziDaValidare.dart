@@ -101,7 +101,7 @@ class _ListaServiziDaValidareState extends State<ListaServiziDaValidare> {
               }
             }),*/
         appBar:
-            const CustomAppBar(title: AppTitle(label: "Servizi Da Validare")),
+            const CustomAppBar(title: AppTitle(label: "Gestione Servizi")),
         body: RefreshIndicator(
             onRefresh: _pullRefresh,
             child: Column(children: <Widget>[

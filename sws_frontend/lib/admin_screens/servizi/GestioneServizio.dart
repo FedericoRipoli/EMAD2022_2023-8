@@ -342,7 +342,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                           height: 16,
                         ),
                         const Text(
-                          "Scegli l'aree di riferimento di cui il servizio fa parte e i tag per facilitare la ricerca",
+                          "Scegli la struttura che offre il servizio e l'area di riferimento",
                           style: TextStyle(fontSize: 16),
                           textAlign: TextAlign.center,
                         ),
@@ -579,7 +579,7 @@ class _GestioneServizio extends State<GestioneServizio> {
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                   ),
-                                  child: const Text('Seleziona l\'icona per la mappa'),
+                                  child: const Text('Icona su mappa'),
                                 ),
                                 const SizedBox(width: 30),
                                 AnimatedSwitcher(

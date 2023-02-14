@@ -162,12 +162,12 @@ class _GestioneStruttura extends State<GestioneStruttura> {
 
                         CustomTextField(
                           controller: latitudineController,
-                          label: "Latitudine",
+                          label: "Latitudine (Esempio: 40.6824408)",
                           validator: "Inserisci latitudine struttura",
                         ),
                         CustomTextField(
                           controller: longitudineController,
-                          label: "Longitudine",
+                          label: "Longitudine (Esempio: 14.7680961)",
                           validator: "Inserisci longitudine struttura",
                         ),
                         const Divider(
