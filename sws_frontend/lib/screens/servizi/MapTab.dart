@@ -14,8 +14,8 @@ import '../../theme/theme.dart';
 
 class MapTab extends StatefulWidget {
   Future<List<PuntoMappaDto>?> initCallMap;
-  Position? currentPos;
-  MapTab({Key? key, required this.initCallMap, this.currentPos }) : super(key: key);
+  LatLng? centerPos;
+  MapTab({Key? key, required this.initCallMap, this.centerPos }) : super(key: key);
   LatLng currentLatLng = LatLng(40.6824408, 14.7680961);
   @override
   State<MapTab> createState() => _MapTabState();
@@ -28,8 +28,8 @@ class _MapTabState extends State<MapTab> {
   @override
   void initState() {
     super.initState();
-    if(widget.currentPos != null)
-      widget.currentLatLng = LatLng(widget.currentPos!.latitude, widget.currentPos!.longitude);
+    if(widget.centerPos != null)
+      widget.currentLatLng = widget.centerPos!;
   }
 
   @override
@@ -135,6 +135,18 @@ class _MapTabState extends State<MapTab> {
                     },
                   ),
                 ),
+                MarkerLayer(
+                  markers: (widget.currentLatLng.latitude != 40.6824408 &&
+                      widget.currentLatLng.longitude != 14.7680961)? [
+                    Marker(
+                    point: widget.currentLatLng,
+                    builder: (ctx) => const Icon(
+                      Icons.man_outlined,
+                      color: Colors.red,
+                      size: 40,
+                    )),
+                  ]:[],
+                )
               ]));
           if (!snapshot.hasData && !snapshot.hasError) {
             children.add(const AllPageLoadTransparent());

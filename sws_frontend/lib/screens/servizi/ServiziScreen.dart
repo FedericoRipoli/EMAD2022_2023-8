@@ -8,7 +8,7 @@ import 'package:frontend_sws/services/ServizioService.dart';
 import 'package:frontend_sws/services/entity/Area.dart';
 import 'package:frontend_sws/services/entity/Ente.dart';
 import 'package:frontend_sws/services/entity/Servizio.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart' as gl;
 import 'package:getwidget/getwidget.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:latlong2/latlong.dart';
@@ -55,7 +55,7 @@ class _ServiziScreenState extends State<ServiziScreen>
   String orderBy = "nome";
   String orderString = "sort=nome,ASC";
 
-  Position? _currentPosition;
+  LatLng centerPosition = LatLng(40.6824408, 14.7680961);
 
   @override
   void initState() {
@@ -68,7 +68,7 @@ class _ServiziScreenState extends State<ServiziScreen>
     });
     tabController = TabController(length: 2, vsync: this);
     initCallMap = loadMapView();
-    _getCurrentPosition();
+    _determinePosition();
     initAree = loadListAree();
     initAree.then((vAree) {
       initEnti = loadListEnti();
@@ -76,7 +76,6 @@ class _ServiziScreenState extends State<ServiziScreen>
         setState(() {});
       });
     });
-
   }
 
   late Future<List<DropDownFilterItem>> initEnti;
@@ -95,9 +94,7 @@ class _ServiziScreenState extends State<ServiziScreen>
           name: value.denominazione,
         );
       }).toList());
-      //dropdownValueEnti = listEnti!.first.id;
     }
-
     return itemsEnti;
   }
 
@@ -116,7 +113,6 @@ class _ServiziScreenState extends State<ServiziScreen>
           name: value.nome,
         );
       }).toList());
-      //dropdownValueArea = listAree!.first.id;
     }
     if (widget.idAreaSelected != null) {
       filterArea = dropdownValueArea = widget.idAreaSelected;
@@ -136,7 +132,6 @@ class _ServiziScreenState extends State<ServiziScreen>
     ServizioService servizioService = ServizioService();
     return servizioService.findPuntiMappa(filterNome, filterEnte, filterArea);
   }
-
 
   void _filterNomeChange(String? text) {
     filterNome = text;
@@ -302,8 +297,7 @@ class _ServiziScreenState extends State<ServiziScreen>
         searchList,
         MapTab(
           initCallMap: initCallMap,
-          currentPos: _currentPosition, //Eliminare currentPos per lasciare che la mappa sia impostata su Salerno
-                                        //Lasciare currentPos per impostare la mappa nei tuoi pressi con poca precisione
+          centerPos: centerPosition,
         )
       ]),
     );
@@ -328,46 +322,43 @@ class _ServiziScreenState extends State<ServiziScreen>
   @override
   // TODO: implement wantKeepAlive
   bool get wantKeepAlive => throw UnimplementedError();
-
-  // COORDINATE
-  Future<bool> _handleLocationPermission() async {
+  /// Determine the current position of the device.
+  /// When the location services are not enabled or permissions
+  /// are denied the `Future` will return an error.
+  void _determinePosition() async {
     bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    gl.LocationPermission permission;
+    // Test if location services are enabled.
+    serviceEnabled = await gl.Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Location services are disabled. Please enable the services')));
-      return false;
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
     }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
-        return false;
+    permission = await gl.Geolocator.checkPermission();
+    if (permission == gl.LocationPermission.denied) {
+      permission = await gl.Geolocator.requestPermission();
+      if (permission == gl.LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
       }
     }
-    if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Location permissions are permanently denied, we cannot request permissions.')));
-      return false;
+    if (permission == gl.LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
-    return true;
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    gl.Position currentPosition = await gl.Geolocator.getCurrentPosition(
+        desiredAccuracy: gl.LocationAccuracy.bestForNavigation);
+    centerPosition =
+        LatLng(currentPosition.latitude, currentPosition.longitude);
+    setState(() {});
   }
-
-  Future<void> _getCurrentPosition() async {
-    final hasPermission = await _handleLocationPermission();
-    if (!hasPermission) return;
-    await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.best)
-        .then((Position position) {
-      setState(() => _currentPosition = position);
-    }).catchError((e) {
-      debugPrint(e);
-    });
-  }
-
-//COORDINATE
 }
