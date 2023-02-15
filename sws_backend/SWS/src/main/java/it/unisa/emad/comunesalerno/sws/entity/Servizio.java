@@ -47,7 +47,7 @@ public class Servizio {
     @ManyToMany
     private List<Area> aree;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Struttura struttura;
 
     private String customIcon;
